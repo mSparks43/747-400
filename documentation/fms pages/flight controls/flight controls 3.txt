@@ -1,0 +1,15 @@
+**************************	
+*    GROUND TESTS     1/1*
+*          	         *		               
+*< FLAP CONTROL-L        *
+*         	         *
+*< FLAP CONTROL-C        *
+*                        *
+*< FLAP CONTROL-R        *
+*  INHIBITED             *
+*< LE FLAPS PROX SYS     *
+*                        *
+*                        *
+*------------------------*
+*<RETURN            HELP>* 
+**************************
