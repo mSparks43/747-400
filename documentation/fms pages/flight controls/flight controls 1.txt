@@ -1,0 +1,69 @@
+**************************	
+*          MENU          *
+*	                 *		               
+* <FMC           EFIS CP *
+*                        *       
+*               EICAS CP *	 
+*                        *
+*                        *
+*                        *
+*                        *
+*                        *
+*                        *
+*                        *
+*<CMC    <ACT>           * 
+**************************
+
+
+
+**************************	
+*     POS INIT	      1/2*
+*	                 *		               
+*<PRESENT LEG FAULTS     *
+*         	         *
+*<CONFIDENCE TESTS       *
+*                        *
+*<EICAS MAINT PAGES      *
+*                        *
+*<GROUND TESTS           *
+*                        *
+*                        *
+*------------------------*
+*            	    HELP>* 
+**************************
+
+
+
+**************************	
+*    GROUND TESTS     2/6*
+*	                 *		               
+*<23 COMMUNICATION       *
+*         	         *
+*<24 ELECTRICAL POWER    *
+*                        *
+*<26 FIRE PROTECTION     *
+*                        *
+*<27 AILERON LOCKOUT     *
+*                        *
+*<27 RUDDER RATIO        *
+*------------------------*
+*<RETURN            HELP>* 
+**************************
+
+
+
+**************************	
+*    GROUND TESTS     1/1*
+* INHIBITED	         *		               
+*< AIL LO ACTUATORS      *
+*         	         *
+*                        *
+*                        *
+*                        *
+*                        *
+*                        *
+*                        *
+*                        *
+*------------------------*
+*<RETURN            HELP>* 
+**************************
