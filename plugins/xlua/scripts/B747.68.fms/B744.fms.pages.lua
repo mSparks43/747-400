@@ -44,7 +44,7 @@ fmsFunctionsDefs["INDEX"]["L2"]={"setpage","ACARS"}
 fmsPages["RTE1"]=createPage("RTE1")
 fmsPages["RTE1"].getPage=function(self,pgNo,fmsID)
   local page={
-  "     ACT RTE 1      " .. string.sub(cleanFMSLine(B747DR_srcfms[fmsID][1]),-4,-1) ,
+  "      ACT RTE 1     " .. string.sub(cleanFMSLine(B747DR_srcfms[fmsID][1]),-4,-1) ,
   cleanFMSLine(B747DR_srcfms[fmsID][2]),
   cleanFMSLine(B747DR_srcfms[fmsID][3]),
   cleanFMSLine(B747DR_srcfms[fmsID][4]),
@@ -56,7 +56,7 @@ fmsPages["RTE1"].getPage=function(self,pgNo,fmsID)
   cleanFMSLine(B747DR_srcfms[fmsID][10]),
   cleanFMSLine(B747DR_srcfms[fmsID][11]),
   cleanFMSLine(B747DR_srcfms[fmsID][12]),
-  "<RTE 2                  ",
+  "<RTE 2             PERF>",
   }
   return page 
 end
@@ -71,15 +71,30 @@ fmsFunctionsDefs["RTE1"]["R2"]={"custom2fmc","R2"}
 fmsFunctionsDefs["RTE1"]["R3"]={"custom2fmc","R3"}
 fmsFunctionsDefs["RTE1"]["R4"]={"custom2fmc","R4"}
 fmsFunctionsDefs["RTE1"]["R5"]={"custom2fmc","R5"}
-fmsFunctionsDefs["RTE1"]["R6"]={"custom2fmc","R6"}
+fmsFunctionsDefs["RTE1"]["R6"]={"setpage","PERFINIT"}
 
 fmsFunctionsDefs["RTE1"]["next"]={"custom2fmc","next"}
 fmsFunctionsDefs["RTE1"]["prev"]={"custom2fmc","prev"}
 dofile("B744.fms.pages.posinit.lua")
+dofile("B744.fms.pages.perfinit.lua")
+dofile("B744.fms.pages.thrustlim.lua")
+dofile("B744.fms.pages.takeoff.lua")
+dofile("B744.fms.pages.approach.lua")
+dofile("B744.fms.pages.maint.lua")
+dofile("B744.fms.pages.maintbite.lua")
+dofile("B744.fms.pages.maintcrossload.lua")
+dofile("B744.fms.pages.maintirsmonitor.lua")
+dofile("B744.fms.pages.maintperffactor.lua")
+dofile("B744.fms.pages.actrte1.lua")
+dofile("B744.fms.pages.actclb.lua")
+dofile("B744.fms.pages.actcrz.lua")
+dofile("B744.fms.pages.actdes.lua")
+
+
 fmsPages["INITREF"]=createPage("INITREF")
 fmsPages["INITREF"]["template"]={
 
-"     INIT/REF INDEX     ",
+"     INIT/REF INDEX 1/1 ",
 "                        ",
 "<IDENT         NAV DATA>",
 "                        ",
@@ -91,13 +106,18 @@ fmsPages["INITREF"]["template"]={
 "                        ",
 "<TAKEOFF                ", 
 "                        ",
-"<APPROACH               "
+"<APPROACH         MAINT>"
 }
 
 
 fmsFunctionsDefs["INITREF"]={}
 fmsFunctionsDefs["INITREF"]["L1"]={"setpage","IDENT"}
 fmsFunctionsDefs["INITREF"]["L2"]={"setpage","POSINIT"}
+fmsFunctionsDefs["INITREF"]["L3"]={"setpage","PERFINIT"}
+fmsFunctionsDefs["INITREF"]["L4"]={"setpage","THRUSTLIM"}
+fmsFunctionsDefs["INITREF"]["L5"]={"setpage","TAKEOFF"}
+fmsFunctionsDefs["INITREF"]["L6"]={"setpage","APPROACH"}
+fmsFunctionsDefs["INITREF"]["R6"]={"setpage","MAINT"}
 fmsFunctionsDefs["INITREF"]["R1"]={"setpage","DATABASE"}
 
 

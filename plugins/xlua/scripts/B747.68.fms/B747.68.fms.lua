@@ -48,6 +48,9 @@ simDR_radio_nav04_ID                = find_dataref("sim/cockpit2/radios/indicato
 simDR_radio_adf1_freq_hz            = find_dataref("sim/cockpit2/radios/actuators/adf1_frequency_hz")
 simDR_radio_adf2_freq_hz            = find_dataref("sim/cockpit2/radios/actuators/adf2_frequency_hz")
 
+simDR_fueL_tank_weight_total_kg     = find_dataref("sim/flightmodel/weight/m_fuel_total")
+
+
 
 
 B747DR_fms1_display_mode            = find_dataref("laminar/B747/fms1/display_mode")
@@ -109,6 +112,28 @@ fmsModules["data"]={
   rpttimehh="**",
   rpttimemm="**",
   acarsAddress="*******",
+  grwt="***.*",
+  crzalt="*****",
+  fuel="***.*",
+  zfw="***.*",
+  reserves="***.*",
+  costindex="****",
+  crzcg="**.*",
+  thrustsel="**",
+  thrustn1="**.*",
+  toflap="**",
+  v1="***",
+  vr="***",
+  v2="***",
+  origin="****",
+  runway="*****",
+  destination="****",
+  flightnumber="******",
+  coroute="*****",
+  grosswt="***.*",
+  vref1="***",
+  vref2="***",
+  flapspeed="**/***",
 setData=function(self,id,value)
   --always retain the same length
   len=string.len(self[id])

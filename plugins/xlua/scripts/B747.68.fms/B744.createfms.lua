@@ -52,6 +52,7 @@ function keyDown(fmsModule,key)
       fmsModules[fmsModule].inCustomFMC=false
       simCMD_FMS_key[fmsModule]["clb"]:once()
       --fmsModules[fmsModule].currentPage="VNAV"
+	  fmsModules[fmsModule].currentPage="ACTCLB"
       return
   elseif key=="dir_intc" then
       fmsModules[fmsModule].inCustomFMC=false
@@ -260,7 +261,7 @@ function setDREFs(fmsO,cduid,fmsid,keyid,fmskeyid)
   B747DR_fms_s[fmsO.id][7]                = find_dataref("laminar/B747/"..fmsid.."/Line07_S", "string")
   B747DR_fms_s[fmsO.id][8]                = find_dataref("laminar/B747/"..fmsid.."/Line08_S", "string")
   B747DR_fms_s[fmsO.id][9]                = find_dataref("laminar/B747/"..fmsid.."/Line09_S", "string")
-  B747DR_fms_s[fmsO.id][0]                = find_dataref("laminar/B747/"..fmsid.."/Line10_S", "string")
+  B747DR_fms_s[fmsO.id][10]                = find_dataref("laminar/B747/"..fmsid.."/Line10_S", "string")
   B747DR_fms_s[fmsO.id][11]                = find_dataref("laminar/B747/"..fmsid.."/Line11_S", "string")
   B747DR_fms_s[fmsO.id][12]                = find_dataref("laminar/B747/"..fmsid.."/Line12_S", "string")
   B747DR_fms_s[fmsO.id][13]                = find_dataref("laminar/B747/"..fmsid.."/Line13_S", "string")
