@@ -33,6 +33,43 @@ fmsPages["THRUSTLIM"]["templateSmall"]={
 "                        "
 }
 
+--[[ Only if in the air!
+fmsPages["THRUSTLIM"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be this way
+    return{
+"       THRUST LIM       ",
+"                        ",
+"             "..fmsModules["data"]["thrustn1"],
+"                        ",
+"<GA                 CLB>",
+"                        ",
+"<CON              CLB 1>",
+"                        ",
+"<CRZ              CLB 2>",
+"                        ",
+"                        ", 
+"------------------------",
+"<INDEX         APPROACH>"
+         }
+end
+
+fmsPages["THRUSTLIM"]["templateSmall"]={
+"                        ",
+"               CLB 1 N1 ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"  5%                    ",
+"                        ",
+"  20%                   ",
+"                        ", 
+"                        ",
+"                        "
+}
+
+]]
+
 fmsFunctionsDefs["THRUSTLIM"]={}
 fmsFunctionsDefs["THRUSTLIM"]["L6"]={"setpage","INITREF"}
 fmsFunctionsDefs["THRUSTLIM"]["R6"]={"setpage","TAKEOFF"}

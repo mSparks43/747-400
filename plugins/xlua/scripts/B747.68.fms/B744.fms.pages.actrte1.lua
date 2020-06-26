@@ -14,32 +14,8 @@ fmsPages["ACTRTE1"].getPage=function(self,pgNo,fmsID)
     "<RTE COPY          SEND>", 
     "                        ",
     "<RTE 2        PERF INIT>"
-	}
-end
-
-
-fmsPages["ACTRTE1"].getSmallPage=function(self,pgNo,fmsID)
-  if pgNo==1 then return {
-	"                    1/3 ",
-    " ORIGIN             DEST",
-    "                        ",
-    " RUNWAY           FLT NO",
-    "                        ",
-    " REQUEST        CO ROUTE",
-    "                        ",
-    "ROUTE UPLINK            ",
-    "                        ",
-    "                        ",
-    "                        ", 
-    "                        ",
-    "                        "
-	}
-end
-end
-
---[[
-fmsPages["ACTRTE1"].getPage=function(self,pgNo,fmsID)
-  if pgNo==2 then return {
+    }
+  elseif pgNo==2 then return {
     "      ACT RTE 1         ",
     "                        ",
     "                        ",
@@ -56,9 +32,25 @@ fmsPages["ACTRTE1"].getPage=function(self,pgNo,fmsID)
     }
 end
 end
+
 fmsPages["ACTRTE1"].getSmallPage=function(self,pgNo,fmsID)
-  if pgNo==2 then return {
-	"                    2/3 ",
+  if pgNo==1 then return {
+"                    1/3 ",
+" ORIGIN             DEST",
+"                        ",
+" RUNWAY           FLT NO",
+"                        ",
+" REQUEST        CO ROUTE",
+"                        ",
+"ROUTE UPLINK -----------",
+"                        ",
+"               CO REPORT",
+"                        ", 
+"                        ",
+"                        "
+}
+elseif pgNo==2 then return {
+    "                    2/3 ",
     " VIA                  TO",
     "                        ",
     "                        ",
@@ -71,15 +63,8 @@ fmsPages["ACTRTE1"].getSmallPage=function(self,pgNo,fmsID)
     "                        ", 
     "                        ",
     "                        "
-	} 
+    } 
 end
-end
-]]
-
-end
-
-fmsPages["ACTRTE1"].getNumPages=function(self)
-  return 2
 end
 
 

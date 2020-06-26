@@ -47,5 +47,5 @@ fmsFunctionsDefs["ACTDES"]["R1"]={"setpage",""}
 fmsFunctionsDefs["ACTDES"]["R2"]={"setpage",""}
 fmsFunctionsDefs["ACTDES"]["R3"]={"setpage",""}
 fmsFunctionsDefs["ACTDES"]["R4"]={"setpage",""}
-fmsFunctionsDefs["ACTDES"]["R5"]={"setpage","FORECAST"}
+fmsFunctionsDefs["ACTDES"]["R5"]={"setpage","DESCENTFORECAST"}
 fmsFunctionsDefs["ACTDES"]["R6"]={"setpage","DESDIR"}

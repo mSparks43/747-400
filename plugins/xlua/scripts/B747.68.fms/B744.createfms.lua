@@ -52,7 +52,6 @@ function keyDown(fmsModule,key)
       fmsModules[fmsModule].inCustomFMC=false
       simCMD_FMS_key[fmsModule]["clb"]:once()
       --fmsModules[fmsModule].currentPage="VNAV"
-	  fmsModules[fmsModule].currentPage="ACTCLB"
       return
   elseif key=="dir_intc" then
       fmsModules[fmsModule].inCustomFMC=false
