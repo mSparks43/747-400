@@ -1309,7 +1309,7 @@ end
 
 ----- IAS/MACH MODE ---------------------------------------------------------------------
 function B747_ap_ias_mach_mode()
-	if simDR_autopilot_autothrottle_enabled == 0 and B747DR_engine_TOGA_mode == 1 and simDR_radarAlt1>400 then							-- AUTOTHROTTLE IS "OFF"
+	if simDR_autopilot_autothrottle_enabled == 0 and B747DR_engine_TOGA_mode == 1 and simDR_radarAlt1>3000 then							-- AUTOTHROTTLE IS "OFF"
 	  simCMD_autopilot_autothrottle_on:once()									-- ACTIVATE THE AUTOTHROTTLE
 	  B747CMD_ap_switch_flch_mode:once()
 	  B747DR_engine_TOGA_mode = 0 

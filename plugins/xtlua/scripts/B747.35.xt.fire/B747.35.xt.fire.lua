@@ -96,7 +96,7 @@ B747DR_init_fire_CD                         = deferred_dataref("laminar/B747/fir
 ----- FIRE/OVERHEAT TEST ----------------------------------------------------------------
 function B747_fire_ovht_test_button_CMDhandler(phase, duration)
     if phase == 0 then
-        B747DR_fire_ovht_button_pos = 1
+	      B747DR_fire_ovht_button_pos = 1
     elseif phase == 2 then
         B747DR_fire_ovht_button_pos = 0
     end
@@ -310,12 +310,19 @@ function B747_fire_extingiuisher_locks()
 end
 
 
+B747DR_engine_fire			    = deferred_dataref("laminar/B747/annunciators/engine_fires", "array[4)")
 
 
 
 ----- FIRE EXTINGUISHER SWITCH ANIMATION ------------------------------------------------
 function B747_fire_ext_switch_animation()
-
+    for i = 0, 3 do
+      if  B747DR_fire_ovht_button_pos==1 then 
+	  B747DR_engine_fire[i]=1
+      else
+	B747DR_engine_fire[i]=simDR_engine_fire[i]
+      end
+    end
     B747DR_engine01_fire_ext_switch_pos_arm = B747_set_animation_position(B747DR_engine01_fire_ext_switch_pos_arm, fire_extinguisher_switch_pos_arm_target[1], 0.0, 1.0, 10)
     B747DR_engine02_fire_ext_switch_pos_arm = B747_set_animation_position(B747DR_engine02_fire_ext_switch_pos_arm, fire_extinguisher_switch_pos_arm_target[2], 0.0, 1.0, 10)
     B747DR_engine03_fire_ext_switch_pos_arm = B747_set_animation_position(B747DR_engine03_fire_ext_switch_pos_arm, fire_extinguisher_switch_pos_arm_target[3], 0.0, 1.0, 10)

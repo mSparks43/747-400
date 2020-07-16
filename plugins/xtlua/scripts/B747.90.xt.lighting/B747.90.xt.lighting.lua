@@ -178,7 +178,7 @@ simDR_flap_ratio_control        	= find_dataref("sim/cockpit2/controls/flap_rati
 
 B747DR_button_switch_position       = find_dataref("laminar/B747/button_switch/position")
 B747DR_toggle_switch_position       = find_dataref("laminar/B747/toggle_switch/position")
-
+B747DR_engine_TOGA_mode             = find_dataref("laminar/B747/engines/TOGA_mode")
 B747DR_elec_ext_pwr1_available      = find_dataref("laminar/B747/electrical/ext_pwr1_avail")
 
 B747DR_gear_handle 					= find_dataref("laminar/B747/actuator/gear_handle")
@@ -1437,7 +1437,7 @@ function B747_annunciators()
 
 
     -- MCP AUTOPILOT BUTTON SWITCHES ---------------------------------------------
-	annun.b.ap_thrust 	= 0
+	annun.b.ap_thrust 	= B747_ternary(B747DR_engine_TOGA_mode >0 , 1, 0)
     annun.b.ap_speed 	= B747_ternary(simDR_autopilot_autothrottle_enabled == 1, 1, 0)
     annun.b.ap_lnav 	= B747_ternary(simDR_autopilot_gpss_status > 0, 1, 0)
     annun.b.ap_vnav 	= B747_ternary(simDR_autopilot_fms_vnav_status > 0, 1, 0)
