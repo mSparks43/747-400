@@ -99,8 +99,10 @@ function keyDown(fmsModule,key)
     
      
      if key=="clear" then
+       simCMD_FMS_key[fmsModule]["clear"]:once()
        if string.len(fmsModules[fmsModule].notify)>0 then 
 	 fmsModules[fmsModule].notify=""
+	 
 	else 
 	  fmsModules[fmsModule].scratchpad="" 
 	end
@@ -486,7 +488,7 @@ function fms:B747_fms_display()
     local thisID=self.id
     local inCustomFMC=self.inCustomFMC
     local page=self.currentPage
-    if B747DR_srcfms[thisID][14]=="[NAV DATA OUT OF DATE  ]" then simCMD_FMS_key[thisID]["clear"]:once() end
+    if B747DR_srcfms[thisID][14]=="[NAV DATA OUT OF DATE  ]" then simCMD_FMS_key[thisID]["clear"]:once() return end
     if not inCustomFMC then
       for i=1,14,1 do
 	B747DR_fms[thisID][i]=cleanFMSLine(B747DR_srcfms[thisID][i])
@@ -502,7 +504,11 @@ function fms:B747_fms_display()
       for i=1,13,1 do
 	B747DR_fms_s[thisID][i]=fmsPagesmall[i]
       end
-      if string.len(self.notify)>0 then 
+      if string.len(string.gsub(B747DR_srcfms[thisID][14],"[ %[%]]",""))>0 then 
+	B747DR_fms[thisID][14]=B747DR_srcfms[thisID][14]
+	self.notify=B747DR_srcfms[thisID][14]--string.gsub(B747DR_srcfms[thisID][14],"[ %[%]]","")
+	--print("notify["..self.notify.."]")
+      elseif string.len(self.notify)>0 then 
 	B747DR_fms[thisID][14]=self.notify
       else
 	B747DR_fms[thisID][14]=self.scratchpad;

@@ -259,6 +259,14 @@ function fmsFunctions.custom2fmc(fmsO,value)
   simCMD_FMS_key[fmsO["id"]][value]:once()
   fmsO["scratchpad"]=""
 end
+local updateFrom="fmsL"
+function updateCRZ()
+  local setVal=string.sub(B747DR_srcfms[updateFrom][3],20,24)
+  print("from line".. updateFrom.." "..B747DR_srcfms[updateFrom][3])
+  print("to:"..setVal)
+  fmsModules["data"]:setData("crzalt",setVal)
+end
+
 function fmsFunctions.setdata(fmsO,value) 
   if value=="depdst" then
     dep=string.sub(fmsO["scratchpad"],1,4)
@@ -279,6 +287,17 @@ function fmsFunctions.setdata(fmsO,value)
     setFMSData("rpttimemm",mmV)
   elseif value=="fltdate" then 
     setFMSData("fltdate",os.date("%Y%m%d"))
+  elseif value=="crzalt" then
+
+   simCMD_FMS_key[fmsO.id]["fpln"]:once()--make sure we arent on the vnav page
+    simCMD_FMS_key[fmsO.id]["clb"]:once()--go to the vnav page
+     simCMD_FMS_key[fmsO.id]["next"]:once() --go to the vnav page 2
+    --simCMD_FMS_key[fmsO.id]["L6"]:once()
+    --local setVal=fmsO["scratchpad"]
+    fmsFunctions["custom2fmc"](fmsO,"R1")
+    updateFrom=fmsO.id
+    local toGet=B747DR_srcfms[updateFrom][3] --make sure we update it
+    run_after_time(updateCRZ,0.5)
   else
     setFMSData(value,fmsO["scratchpad"])
   end
@@ -300,6 +319,7 @@ function fmsFunctions.setDref(fmsO,value)
   if value=="CLB" then clbderate=0 end
   if value=="CLB1" then clbderate=1 end
   if value=="CLB2" then clbderate=2 end
+  
   fmsO["scratchpad"]=""
 end
 function fmsFunctions.showmessage(fmsO,value)
