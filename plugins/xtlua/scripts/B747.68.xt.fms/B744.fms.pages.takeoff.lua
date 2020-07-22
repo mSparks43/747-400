@@ -10,10 +10,11 @@ function roundToIncrement(number, increment)
     return z
 
 end
-simDR_wing_flap1_deg                = find_dataref("sim/flightmodel2/wing/flap1_deg")
+--simDR_wing_flap1_deg                = find_dataref("sim/flightmodel2/wing/flap1_deg")
+B747DR_airspeed_flapsRef                              = find_dataref("laminar/B747/airspeed/flapsRef")
 fmsPages["TAKEOFF"]=createPage("TAKEOFF")
 fmsPages["TAKEOFF"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be this way
-  local flaps = roundToIncrement(simDR_wing_flap1_deg[0], 5)
+  local flaps = roundToIncrement(B747DR_airspeed_flapsRef, 5)
   local v1="***"
   local vr="***"
   local v2="***"
@@ -84,4 +85,4 @@ fmsFunctionsDefs["TAKEOFF"]["R6"]={"setpage","POSINIT"}
 fmsFunctionsDefs["TAKEOFF"]["R1"]={"setdata","v1"}
 fmsFunctionsDefs["TAKEOFF"]["R2"]={"setdata","vr"}
 fmsFunctionsDefs["TAKEOFF"]["R3"]={"setdata","v2"}
-fmsFunctionsDefs["TAKEOFF"]["L1"]={"setdata","toflap"}
+fmsFunctionsDefs["TAKEOFF"]["L1"]={"setDref","flapsRef"}

@@ -313,6 +313,7 @@ function fmsFunctions.setDref(fmsO,value)
   if value=="CRSR" then simDR_radio_nav_obs_deg[3]=val end
   if value=="ADFL" then simDR_radio_adf1_freq_hz=val end
   if value=="ADFR" then simDR_radio_adf2_freq_hz=val end
+  if value=="flapsRef" then B747DR_airspeed_flapsRef=val end
   if value=="TO" then toderate=0 clbderate=0 end
   if value=="TO1" then toderate=1 clbderate=1 end
   if value=="TO2" then toderate=2 clbderate=2 end

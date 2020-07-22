@@ -2495,13 +2495,13 @@ end
 
 
 
-
+B747DR_airspeed_flapsRef                              = find_dataref("laminar/B747/airspeed/flapsRef")
 -- V1 / Vr / V2
 function B747_setV1VrV2()
 
     local weight_max = math.min(420000, roundUpToIncrement(simDR_acf_weight_total_kg, 20000))
     local weight_min = math.max(200000, weight_max-20000)
-    local flaps = roundToIncrement(simDR_wing_flap1_deg[0], 10)
+    local flaps = roundToIncrement(B747DR_airspeed_flapsRef, 10)
 
     if flaps >= 10.0 and flaps <= 20.0 then
 

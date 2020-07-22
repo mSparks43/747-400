@@ -155,6 +155,7 @@ B747DR_radio_altitude                           = deferred_dataref("laminar/B747
 
 B747DR_vertical_speed_fpm                       = deferred_dataref("laminar/B747/vsi/fpm", "number")
 
+B747DR_airspeed_flapsRef                              = deferred_dataref("laminar/B747/airspeed/flapsRef", "number")
 B747DR_airspeed_V1                              = deferred_dataref("laminar/B747/airspeed/V1", "number")
 B747DR_airspeed_Vr                              = deferred_dataref("laminar/B747/airspeed/Vr", "number")
 B747DR_airspeed_V2                              = deferred_dataref("laminar/B747/airspeed/V2", "number")
