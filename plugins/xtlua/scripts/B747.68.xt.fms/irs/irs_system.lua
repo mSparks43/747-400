@@ -75,12 +75,21 @@ irsSystem["motion"]={irsL=false,irsC=false,irsR=false}
 irsSystem["irsL"]=irsL
 irsSystem["irsC"]=irsC
 irsSystem["irsR"]=irsR
+irsSystem["irsLat"]=fmsModules["data"]["irsLat"]
+irsSystem["irsLon"]=fmsModules["data"]["irsLon"]
 irsSystem["gpsL"]=gpsL
 irsSystem["gpsR"]=gpsR
-
+function irsFromNum(num)
+  if num==0 then return "irsL" end
+  if num==1 then return "irsC" end
+  return "irsR"
+end
 irsSystem.update=function()
-   
-  if B747DR_iru_status[0]==1 and B747DR_iru_mode_sel_pos[0]==2 then B747DR_iru_status[0]=4 irsSystem.align("irsL",false)
+    if irsSystem[irsFromNum(B747DR_irs_src_capt)]["aligned"]==true then B747DR_pfd_mode_capt=1 else B747DR_pfd_mode_capt=0 end
+    if irsSystem[irsFromNum(B747DR_irs_src_fo)]["aligned"]==true then B747DR_pfd_mode_fo=1 else B747DR_pfd_mode_fo=0 end
+  
+    
+    if B747DR_iru_status[0]==1 and B747DR_iru_mode_sel_pos[0]==2 then B747DR_iru_status[0]=4 irsSystem.align("irsL",false)
     elseif B747DR_iru_status[0]==1 then
       irsSystem["irsL"]["aligned"]=false
     end
@@ -122,6 +131,14 @@ end
 irsSystem.getLon=function(systemID)
  return irsSystem[systemID].getLon(irsSystem[systemID])
 end
+irsSystem.getLatPos=function()
+ if irsSystem["irsL"]["aligned"]==true or irsSystem["irsC"]["aligned"]==true or irsSystem["irsR"]["aligned"]==true then return irsSystem["calcLatA"]() end
+ return irsSystem["irsLat"]
+end
+irsSystem.getLonPos=function()
+ if irsSystem["irsL"]["aligned"]==true or irsSystem["irsC"]["aligned"]==true or irsSystem["irsR"]["aligned"]==true then return irsSystem["calcLonA"]() end
+ return irsSystem["irsLon"]
+end
 irsSystem.getLatD=function(systemID)
  return irsSystem[systemID].getLatD(irsSystem[systemID])
 end
@@ -135,7 +152,7 @@ irsSystem.calcLatA=function()
  if irsSystem["irsL"]["aligned"]==true then alignedIRS=alignedIRS+1 calcLat=calcLat+irsSystem.getLatD("irsL") end
  if irsSystem["irsC"]["aligned"]==true then alignedIRS=alignedIRS+1 calcLat=calcLat+irsSystem.getLatD("irsC") end
  if irsSystem["irsR"]["aligned"]==true then alignedIRS=alignedIRS+1 calcLat=calcLat+irsSystem.getLatD("irsR") end
- if alignedIRS>1 then return toDMS((calcLat/alignedIRS),true) else return "***`**.*" end
+ if alignedIRS>1 then return toDMS((calcLat/alignedIRS),true) else return fmsModules["data"]["irsLat"] end
 end
 irsSystem.calcLonA=function()
  local alignedIRS=0
@@ -143,7 +160,7 @@ irsSystem.calcLonA=function()
  if irsSystem["irsL"]["aligned"]==true then alignedIRS=alignedIRS+1 calcLon=calcLon+irsSystem.getLonD("irsL") end
  if irsSystem["irsC"]["aligned"]==true then alignedIRS=alignedIRS+1 calcLon=calcLon+irsSystem.getLonD("irsC") end
  if irsSystem["irsR"]["aligned"]==true then alignedIRS=alignedIRS+1 calcLon=calcLon+irsSystem.getLonD("irsR") end
- if alignedIRS>1 then return toDMS((calcLon/alignedIRS),false) else return "***`**.*" end
+ if alignedIRS>1 then return toDMS((calcLon/alignedIRS),false) else return fmsModules["data"]["irsLon"] end
 end
 irsSystem.getGS=function(systemID)
  return irsSystem[systemID].getGS(irsSystem[systemID])
@@ -171,7 +188,7 @@ irsSystem.align=function(systemID,instant)
   if instant==false and is_timer_scheduled(doIRSAlign[systemID]) == false then
         print("aligning "..systemID)
 	irsSystem["motion"][systemID]=false
-        run_after_time(doIRSAlign[systemID], 600.0)
+        run_after_time(doIRSAlign[systemID], 300.0)
   elseif instant==false then
         irsSystem["motion"][systemID]=false
   elseif instant==true then

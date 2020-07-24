@@ -21490,16 +21490,16 @@ ANIM_begin
 	TRIS	2250 36
 ANIM_end
 ATTR_cockpit
-ATTR_manip_axis_knob	rotate_large	0	1	0.01	0.15	sim/cockpit2/switches/instrument_brightness_ratio[3]	First Officer Inboard CRT
+ATTR_manip_axis_knob	rotate_large	0	1	0.01	0.15	laminar/B747/switches/instrument_brightness_ratio[3]	First Officer Inboard CRT
 ATTR_draw_disable
 TRIS	2286 30
-ATTR_manip_axis_knob	rotate_large	0	1.0	0.01	0.15	sim/cockpit2/switches/instrument_brightness_ratio[0]	Captain Inboard CRT
+ATTR_manip_axis_knob	rotate_large	0	1.0	0.01	0.15	laminar/B747/switches/instrument_brightness_ratio[0]	Captain Inboard CRT
 TRIS	2316 30
-ATTR_manip_axis_knob	rotate_large	0	1.0	0.01	0.15	sim/cockpit2/switches/instrument_brightness_ratio[6]	Captain Panel Brightness
+ATTR_manip_axis_knob	rotate_large	0	1.0	0.01	0.15	laminar/B747/switches/instrument_brightness_ratio[6]	Captain Panel Brightness
 TRIS	2346 30
-ATTR_manip_axis_knob	rotate_large	0.0	1.0	0.01	0.15	sim/cockpit2/switches/instrument_brightness_ratio[10]	Lower EICAS Display
+ATTR_manip_axis_knob	rotate_large	0.0	1.0	0.01	0.15	laminar/B747/switches/instrument_brightness_ratio[10]	Lower EICAS Display
 TRIS	2376 30
-ATTR_manip_axis_knob	rotate_large	0.0	1.0	0.01	0.15	sim/cockpit2/switches/instrument_brightness_ratio[8]	First Officer Panel Lights
+ATTR_manip_axis_knob	rotate_large	0.0	1.0	0.01	0.15	laminar/B747/switches/instrument_brightness_ratio[8]	First Officer Panel Lights
 TRIS	2406 30
 ATTR_manip_axis_knob	rotate_large	0.0	1.0	0.01	0.15	sim/cockpit2/switches/panel_brightness_ratio[2]	Aisle Stand Panel Lights
 TRIS	2436 30
@@ -21511,7 +21511,7 @@ ATTR_manip_axis_knob	rotate_medium	0	1	0.01	0.1	laminar/B747/air/flt_deck_temp_c
 TRIS	2526 30
 ATTR_manip_axis_knob	rotate_medium	0	1	0.01	0.1	laminar/B747/air/pass_temp_ctrl/rheostat	Passenger Compartment Temp Control
 TRIS	2556 30
-ATTR_manip_axis_knob	rotate_medium	0	1	0.01	0.15	sim/cockpit2/switches/instrument_brightness_ratio[2]	Captain Outboard CRT
+ATTR_manip_axis_knob	rotate_medium	0	1	0.01	0.15	laminar/B747/switches/instrument_brightness_ratio[2]	Captain Outboard CRT
 TRIS	2586 30
 ATTR_manip_axis_knob	rotate_medium	0	1	0.01	0.15	sim/cockpit2/switches/panel_brightness_ratio[1]	First Observer Panel Lights
 TRIS	2616 30
@@ -21519,7 +21519,7 @@ ATTR_manip_axis_knob	rotate_medium	0	1.	.01	.15	laminar/B747/fms1/display_bright
 TRIS	2646 30
 ATTR_manip_axis_knob	rotate_medium	0	1.0	0.01	0.15	laminar/B747/light/map/rheostat/captain	Captain Map Light
 TRIS	2676 30
-ATTR_manip_axis_knob	rotate_medium	0	1.0	0.01	0.15	sim/cockpit2/switches/instrument_brightness_ratio[5]	First Officer Outboard CRT
+ATTR_manip_axis_knob	rotate_medium	0	1.0	0.01	0.15	laminar/B747/switches/instrument_brightness_ratio[5]	First Officer Outboard CRT
 TRIS	2706 30
 ATTR_manip_axis_knob	rotate_medium	0	1000	1	100	laminar/B747/comm/rtp_C/hf_sens_ctrl/rheostat	HF Sensitivity
 TRIS	2736 30
@@ -21543,13 +21543,13 @@ ATTR_manip_axis_knob	rotate_medium	0.0	1.0	0.01	0.15	laminar/B747/light/map/rheo
 TRIS	3006 30
 ATTR_manip_axis_knob	rotate_medium	0.0	1.0	0.01	0.15	laminar/B747/light/map/rheostat/observer	First Observer Map Light
 TRIS	3036 30
-ATTR_manip_axis_knob	rotate_medium	0.0	1.0	0.01	0.15	sim/cockpit2/switches/instrument_brightness_ratio[7]	Overhead/CB Panel Lights
+ATTR_manip_axis_knob	rotate_medium	0.0	1.0	0.01	0.15	laminar/B747/switches/instrument_brightness_ratio[7]	Overhead/CB Panel Lights
 TRIS	3066 30
-ATTR_manip_axis_knob	rotate_medium	0.0	1.0	0.01	0.15	sim/cockpit2/switches/instrument_brightness_ratio[9]	Upper EICAS Display
+ATTR_manip_axis_knob	rotate_medium	0.0	1.0	0.01	0.15	laminar/B747/switches/instrument_brightness_ratio[9]	Upper EICAS Display
 TRIS	3096 30
 ATTR_manip_axis_knob	rotate_medium	9.6	173.7	.1	1	laminar/B747/fuel/fuel_to_remain/rheostat	Fuel to Rmain (after jettison)
 TRIS	3126 30
-ATTR_manip_axis_knob	rotate_small	0	1	0.01	0.15	sim/cockpit2/switches/instrument_brightness_ratio[1]	Captain WX Radar
+ATTR_manip_axis_knob	rotate_small	0	1	0.01	0.15	laminar/B747/switches/instrument_brightness_ratio[1]	Captain WX Radar
 TRIS	3156 30
 ATTR_manip_axis_knob	rotate_small	0.0	1.0	0.01	0.15	laminar/B747/light/flood/rheostat/aisle_stand	Aisle Stand Flood Lights
 TRIS	3186 30
@@ -21559,9 +21559,9 @@ ATTR_manip_axis_knob	rotate_small	0.0	1.0	0.01	0.15	laminar/B747/light/flood/rhe
 TRIS	3246 30
 ATTR_manip_axis_knob	rotate_small	0.0	1.0	0.01	0.15	laminar/B747/light/flood/rheostat/mcp_panel	Glareshield MCP Flood Lights
 TRIS	3276 30
-ATTR_manip_axis_knob	rotate_small	0.0	1.0	0.01	0.15	sim/cockpit2/switches/instrument_brightness_ratio[11]	Lower EICAS WX Radar
+ATTR_manip_axis_knob	rotate_small	0.0	1.0	0.01	0.15	laminar/B747/switches/instrument_brightness_ratio[11]	Lower EICAS WX Radar
 TRIS	3306 30
-ATTR_manip_axis_knob	rotate_small	0.0	1.0	0.01	0.15	sim/cockpit2/switches/instrument_brightness_ratio[4]	First Officer WX Radar Display
+ATTR_manip_axis_knob	rotate_small	0.0	1.0	0.01	0.15	laminar/B747/switches/instrument_brightness_ratio[4]	First Officer WX Radar Display
 TRIS	3336 30
 ATTR_manip_command	button	laminar/B747/air/landing_alt/button	Landing Altitude Button
 TRIS	3366 30

@@ -266,7 +266,17 @@ function updateCRZ()
   print("to:"..setVal)
   fmsModules["data"]:setData("crzalt",setVal)
 end
-
+function fmsFunctions.getdata(fmsO,value) 
+  local data=""
+  if value=="gpspos" then
+    data=irsSystem.getLat("gpsL") .." " .. irsSystem.getLon("gpsL")
+  elseif value=="lastpos" then
+    data=irsSystem.calcLatA() .." "..irsSystem.calcLonA()
+  else
+    data=getFMSData(value)
+  end
+  fmsO["scratchpad"]=data
+end
 function fmsFunctions.setdata(fmsO,value) 
   if value=="depdst" then
     dep=string.sub(fmsO["scratchpad"],1,4)
@@ -275,6 +285,24 @@ function fmsFunctions.setdata(fmsO,value)
     --fmsModules["data"]["fltdst"]=dst
     setFMSData("fltdep",dep)
     setFMSData("fltdst",dst)
+  elseif value=="airportpos" and string.len(fmsO["scratchpad"])>3 then
+    
+    local navAids=json.decode(navAidsJSON)
+    print(table.getn(navAids).." navaids")
+    --print(navAidsJSON)
+    for n=table.getn(navAids),1,-1 do
+      if navAids[n][2] == 1 and navAids[n][8]==fmsO["scratchpad"] then
+	print("navaid "..n.."->".. navAids[n][1].." ".. navAids[n][2].." ".. navAids[n][3].." ".. navAids[n][4].." ".. navAids[n][5].." ".. navAids[n][6].." ".. navAids[n][7].." ".. navAids[n][8])
+	local lat=toDMS(navAids[n][5],true)
+	local lon=toDMS(navAids[n][6],false)
+	
+	setFMSData("irsLat",lat)
+	setFMSData("irsLon",lon)
+	--irsSystem["irsLat"]=lat
+	--irsSystem["irsLon"]=lon
+      end
+      setFMSData("airportpos",fmsO["scratchpad"])
+    end
   elseif value=="flttime" then 
     hhV=string.sub(fmsO["scratchpad"],1,2)
     mmV=string.sub(fmsO["scratchpad"],-2)
@@ -298,6 +326,18 @@ function fmsFunctions.setdata(fmsO,value)
     updateFrom=fmsO.id
     local toGet=B747DR_srcfms[updateFrom][3] --make sure we update it
     run_after_time(updateCRZ,0.5)
+  elseif value=="irspos" and string.len(fmsO["scratchpad"])>10 then
+    print("set irs pos")
+    lat=string.sub(fmsO["scratchpad"],1,9)
+    lon=string.sub(fmsO["scratchpad"],-9)
+    --fmsModules["data"]["fltdep"]=dep
+    --fmsModules["data"]["fltdst"]=dst
+    print(getFMSData("irsLat").." "..lat)
+    print(getFMSData("irsLon").." "..lon)
+    setFMSData("irsLat",lat)
+    setFMSData("irsLon",lon)
+    irsSystem["irsLat"]=lat
+    irsSystem["irsLon"]=lon
   else
     setFMSData(value,fmsO["scratchpad"])
   end

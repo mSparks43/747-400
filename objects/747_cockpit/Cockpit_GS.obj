@@ -9980,10 +9980,10 @@ ANIM_end
 ANIM_begin
 	ANIM_trans	   0.4028    3.0181    5.0690	   0.4028    3.0162    5.0644	0 1	laminar/B747/button_switch/position[88]
 	TRIS	330 330
-ANIM_end
+ANIM_end 
 ANIM_begin
 	ANIM_trans	  -0.7413    2.9291    5.1138	  -0.7413    2.9291    5.1138	0 0	no_ref
-	ANIM_rotate	   0.0001   -0.3744   -0.9272	  0.00  90.00	0 0.3333	sim/cockpit2/switches/instrument_brightness_ratio[6]
+	ANIM_rotate	   0.0001   -0.3744   -0.9272	  0.00  90.00	0 0.3333	laminar/B747/switches/instrument_brightness_ratio[6]
 	TRIS	660 1242
 ANIM_end
 ANIM_begin
@@ -9998,23 +9998,23 @@ ANIM_begin
 ANIM_end
 ANIM_begin
 	ANIM_trans	  -0.8134    2.8562    5.1496	  -0.8134    2.8562    5.1496	0 0	no_ref
-	ANIM_rotate	   0.0002   -0.3747   -0.9271	  0.00  90.00	0 0.3333	sim/cockpit2/switches/instrument_brightness_ratio[2]
+	ANIM_rotate	   0.0002   -0.3747   -0.9271	  0.00  90.00	0 0.3333	laminar/B747/switches/instrument_brightness_ratio[2]
 	TRIS	3873 1647
 ANIM_end
 ANIM_begin
 	ANIM_trans	  -0.7816    2.8552    5.1474	  -0.7816    2.8552    5.1474	0 0	no_ref
-	ANIM_rotate	   0.0002   -0.3747   -0.9271	122.00 212.00	0 0.3333	sim/cockpit2/switches/instrument_brightness_ratio[0]
+	ANIM_rotate	   0.0002   -0.3747   -0.9271	122.00 212.00	0 0.3333	laminar/B747/switches/instrument_brightness_ratio[0]
 	TRIS	5520 1242
 ANIM_end
 ANIM_begin
 	ANIM_trans	  -0.7816    2.8608    5.1613	  -0.7816    2.8608    5.1613	0 0	no_ref
-	ANIM_rotate	   0.0002   -0.3776   -0.9260	 42.44 132.31	0 0.3333	sim/cockpit2/switches/instrument_brightness_ratio[1]
+	ANIM_rotate	   0.0002   -0.3776   -0.9260	 42.44 132.31	0 0.3333	laminar/B747/switches/instrument_brightness_ratio[1]
 	TRIS	6762 675
 ANIM_end
 ANIM_begin
 	ANIM_trans	   0.7179    2.9303    5.1166	   0.7179    2.9303    5.1166	0 0	no_ref
-	ANIM_rotate	   0.0002   -0.3747   -0.9271	172.56   0.00	0 1	sim/cockpit2/switches/instrument_brightness_ratio[8]
-	ANIM_rotate	   0.0081   -0.3762   -0.9265	  0.00 262.56	0 1	sim/cockpit2/switches/instrument_brightness_ratio[8]
+	ANIM_rotate	   0.0002   -0.3747   -0.9271	172.56   0.00	0 1	laminar/B747/switches/instrument_brightness_ratio[8]
+	ANIM_rotate	   0.0081   -0.3762   -0.9265	  0.00 262.56	0 1	laminar/B747/switches/instrument_brightness_ratio[8]
 	TRIS	7437 1242
 ANIM_end
 ANIM_begin
@@ -10030,17 +10030,17 @@ ANIM_begin
 ANIM_end
 ANIM_begin
 	ANIM_trans	   0.7582    2.8553    5.1474	   0.7582    2.8553    5.1474	0 0	no_ref
-	ANIM_rotate	   0.0002   -0.3747   -0.9271	129.62 219.62	0 0.3333	sim/cockpit2/switches/instrument_brightness_ratio[3]
+	ANIM_rotate	   0.0002   -0.3747   -0.9271	129.62 219.62	0 0.3333	laminar/B747/switches/instrument_brightness_ratio[3]
 	TRIS	10650 1242
 ANIM_end
 ANIM_begin
 	ANIM_trans	   0.7582    2.8614    5.1623	   0.7582    2.8614    5.1623	0 0	no_ref
-	ANIM_rotate	   0.0002   -0.3747   -0.9271	 48.26 139.60	0 0.3333	sim/cockpit2/switches/instrument_brightness_ratio[4]
+	ANIM_rotate	   0.0002   -0.3747   -0.9271	 48.26 139.60	0 0.3333	laminar/B747/switches/instrument_brightness_ratio[4]
 	TRIS	11892 675
 ANIM_end
 ANIM_begin
 	ANIM_trans	   0.7900    2.8567    5.1507	   0.7900    2.8567    5.1507	0 0	no_ref
-	ANIM_rotate	  -0.0002    0.3747    0.9271	161.64  71.64	0 0.3333	sim/cockpit2/switches/instrument_brightness_ratio[5]
+	ANIM_rotate	  -0.0002    0.3747    0.9271	161.64  71.64	0 0.3333	laminar/B747/switches/instrument_brightness_ratio[5]
 	TRIS	12567 1647
 ANIM_end
 ANIM_begin

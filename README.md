@@ -16,13 +16,9 @@ In order to use this version.
 MacOS libraries are not tested much yet, if a Mac developer wishes to help out, the source code for xlua with some fixes is here:
 https://github.com/mSparks43/XLua/tree/master
 
-XTlua is described here
+XTlua is described [here](https://forums.x-plane.org/index.php?/forums/topic/209883-xtlua-parallel-lua-for-complex-aircraft-systems/)
 
-https://forums.x-plane.org/index.php?/forums/topic/209883-xtlua-parallel-lua-for-complex-aircraft-systems/
-
-source is here:
-
-https://github.com/mSparks43/XLua/tree/xTLua
+XTlua source is [here](https://github.com/mSparks43/XLua/tree/xTLua)
 
 You can follow progress, make requests and generally chat about the 747 on the acars-747 channel on the AutoATC discord server
 Discord: https://discord.gg/cStTXy5
@@ -30,7 +26,15 @@ Discord: https://discord.gg/cStTXy5
 Yes Aviation have now officially abandoned their github, and begun work on a payware Airbus A350 Series project, you can reach their discord here:
 Discord: https://discord.gg/UbZVAuX
 
+This project continues by the good graces of the X-Plane community and the great work they do.
+
+The latest addition merges the LCF model variant by Lee_Hyeon_Seo (with permission) with the existing improvements, check out the working his [A340 developements](https://forums.x-plane.org/index.php?/forums/topic/203381-3d-cockpit-for-a340/&)
+
+Custom sounds from [FTSim+](https://k-akai.blogspot.com/) (with permission)
+
 Changelog:
+22/07/2020
+* Initial [LCF model varient](https://forums.x-plane.org/index.php?/files/file/59248-xplane-boeing-747lcf-dream-lifter/) by Lee_Hyeon_Seo (Lee7) (with permission)
 
 06/10/2020
 * merge navigationsystems branch

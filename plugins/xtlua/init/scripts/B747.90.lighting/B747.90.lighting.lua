@@ -91,7 +91,7 @@ B747DR_spill_light_observer_map         = deferred_dataref("laminar/B747/light/s
 B747DR_spill_light_mcp_flood            = deferred_dataref("laminar/B747/light/spill/ratio/mcp_panel", "array[" .. tostring(NUM_SPILL_LIGHT_INDICES) .. "]")
 B747DR_spill_light_aisle_stand_flood    = deferred_dataref("laminar/B747/light/spill/ratio/aisle_stand", "array[" .. tostring(NUM_SPILL_LIGHT_INDICES) .. "]")
 B747DR_spill_light_mag_compass_flood    = deferred_dataref("laminar/B747/light/spill/ratio/mag_compass", "array[" .. tostring(NUM_SPILL_LIGHT_INDICES) .. "]")
-
+B747DR_instrument_brightness_ratio      = deferred_dataref("laminar/B747/switches/instrument_brightness_ratio", "array[32]")
 B747DR_init_lighting_CD                 = deferred_dataref("laminar/B747/lighting/init_CD", "number")
 
 

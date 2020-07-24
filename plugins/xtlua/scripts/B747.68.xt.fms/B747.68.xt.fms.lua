@@ -7,6 +7,11 @@ B747DR_CAS_advisory_status       = find_dataref("laminar/B747/CAS/advisory_statu
 
 B747DR_iru_status         	= find_dataref("laminar/B747/flt_mgmt/iru/status")
 B747DR_iru_mode_sel_pos         = find_dataref("laminar/B747/flt_mgmt/iru/mode_sel_dial_pos")
+
+B747DR_pfd_mode_capt		                = find_dataref("laminar/B747/pfd/capt/irs")
+B747DR_pfd_mode_fo		                = find_dataref("laminar/B747/pfd/fo/irs")
+B747DR_irs_src_fo		                = find_dataref("laminar/B747/flt_inst/irs_src/fo/sel_dial_pos")
+B747DR_irs_src_capt		                = find_dataref("laminar/B747/flt_inst/irs_src/capt/sel_dial_pos")
 --Workaround for stack overflow in init.lua namespace_read
 function hasChild(parent,childKey)
   if(parent==nil) then
@@ -77,7 +82,7 @@ simDR_radio_adf2_freq_hz            = find_dataref("sim/cockpit2/radios/actuator
 simDR_fueL_tank_weight_total_kg     = find_dataref("sim/flightmodel/weight/m_fuel_total")
 
 
-
+navAidsJSON   = find_dataref("xtlua/navaids")
 
 B747DR_fms1_display_mode            = find_dataref("laminar/B747/fms1/display_mode")
 
@@ -93,7 +98,7 @@ clbderate=deferred_dataref("laminar/B747/engine/derate/CLB","number")
 
 -- CRT BRIGHTNESS DIAL ------------------------------------------------------------------
 B747DR_fms1_display_brightness      = deferred_dataref("laminar/B747/fms1/display_brightness", "number", B747_fms1_display_brightness_DRhandler)
-dofile("irs/irs_system.lua")
+
 fmsPages={}
 --fmsPagesmall={}
 fmsFunctionsDefs={}
@@ -127,7 +132,11 @@ fmsModules["data"]={
   grosswt="***.*",
   vref1="***",
   vref2="***",
+  irsLat="****`**.*",
+  irsLon="****`**.*",
   flapspeed="**/***",
+  airportpos="*****",
+  airportgate="*****",
 setData=function(self,id,value)
   --always retain the same length
   if value=="" then value="***********" end
@@ -188,6 +197,8 @@ function createPage(page)
   fmsFunctionsDefs[page]={}
   return retVal
 end
+
+dofile("irs/irs_system.lua")
 dofile("B744.fms.pages.lua")
 
 dofile("B744.createfms.lua")

@@ -86,6 +86,7 @@ simDR_panel_brightness_ratio        = find_dataref("sim/cockpit2/electrical/pane
 simDR_instrument_brightness_switch  = find_dataref("sim/cockpit2/switches/instrument_brightness_ratio")
 --simDR_instrument_brightness_ratio   = find_dataref("sim/cockpit2/electrical/instrument_brightness_ratio_manual")
 
+B747DR_instrument_brightness_ratio  = find_dataref("laminar/B747/switches/instrument_brightness_ratio")
 simDR_landing_light_switch          = find_dataref("sim/cockpit2/switches/landing_lights_switch")
 simDR_taxi_light_switch_on          = find_dataref("sim/cockpit2/switches/taxi_light_on")
 simDR_beacon_lights_switch          = find_dataref("sim/cockpit/electrical/beacon_lights_on")
@@ -651,9 +652,9 @@ function B747_init_light_rheostats()
     simDR_panel_brightness_switch[1]        = light_level * 0.85                            -- FIRST OBSERVER PANEL
     simDR_panel_brightness_switch[2]        = light_level * 0.85                            -- AISLE STAND PANEL
     simDR_panel_brightness_switch[3]        = light_level * 0.90                            -- GLARESHIELD PANEL/MCP PANEL/COMPASS
-    simDR_instrument_brightness_switch[6]   = light_level * 0.90                            -- CAPTAIN PANEL
-    simDR_instrument_brightness_switch[7]   = light_level * 0.90                            -- OVERHEAD PANEL
-    simDR_instrument_brightness_switch[8]   = light_level * 0.90                            -- F/O PANEL
+    B747DR_instrument_brightness_ratio[6]   = light_level * 0.90                            -- CAPTAIN PANEL
+    B747DR_instrument_brightness_ratio[7]   = light_level * 0.90                            -- OVERHEAD PANEL
+    B747DR_instrument_brightness_ratio[8]   = light_level * 0.90                            -- F/O PANEL
 
 end
 
@@ -783,11 +784,33 @@ end
 
 
 
+function B747_animate_value(current_value, target, min, max, speed)
 
+    local fps_factor = math.min(0.1, speed * SIM_PERIOD)
 
+    if target >= (max - 0.001) and current_value >= (max - 0.01) then
+        return max
+    elseif target <= (min + 0.001) and current_value <= (min + 0.01) then
+       return min
+    else
+        return current_value + ((target - current_value) * fps_factor)
+    end
+
+end
+
+local brightnessRate={}
+for i = 0, 32 do
+	brightnessRate[i]=0.2+math.random()
+end
 ----- CABIN LIGHTS ----------------------------------------------------------------------
 function B747_cabin_lights()
 
+    for i = 0, 32 do
+	--print(i)
+        simDR_instrument_brightness_switch[i] = B747_animate_value(simDR_instrument_brightness_switch[i],B747DR_instrument_brightness_ratio[i]* simDR_generic_brightness_ratio[63],0,1,brightnessRate[i])
+	--simDR_instrument_brightness_switch[i] = 0.0
+	--B747DR_instrument_brightness_ratio[i] = 0.75
+    end
     local power = B747_ternary(
         (simDR_apu_gen_on == 1                                                          -- APU IS RUNNING
         or
@@ -829,6 +852,7 @@ function B747_cabin_lights()
         end
     end
     simDR_generic_brightness_switch[25] = switch_value
+    
 
 end
 
@@ -1999,7 +2023,8 @@ function B747_aircraft_unload_lighting()
     end
 
     for i = 0, 15 do
-        simDR_instrument_brightness_switch[i] = 0.75
+        simDR_instrument_brightness_switch[i] = 0.0
+	B747DR_instrument_brightness_ratio[i] = 0.75
     end
 
 end
@@ -2027,7 +2052,10 @@ function flight_start()
     print("Lighting start")
     -- GENERIC LIGHT INDEX [63] (USED AS A "POWER SOURCE" VALUE FOR LIGHTS)
     simDR_generic_brightness_switch[63] = 1.0
-    
+    for i = 0, 15 do
+        simDR_instrument_brightness_switch[i] = 0.0
+	B747DR_instrument_brightness_ratio[i] = 0.75
+    end
     B747_flight_start_lighting()
 
 end
@@ -2039,6 +2067,7 @@ debug_lighting     = deferred_dataref("laminar/B747/debug/lighting", "number")
 function after_physics()
 
   if debug_lighting>0 then return end
+  
     B747_landing_light_brightness()
     B747_turnoff_lights()
     B747_taxi_lights()
