@@ -14,6 +14,17 @@ ilsData=deferred_dataref("laminar/B747/radio/ilsData", "string")
 acars=create_dataref("laminar/B747/comm/acars","number")  
 toderate=deferred_dataref("laminar/B747/engine/derate/TO","number") 
 clbderate=deferred_dataref("laminar/B747/engine/derate/CLB","number")
+radioModes=deferred_dataref("laminar/B747/radio/tuningmodes", "string")
+radioModes="AAAMM" --ils,vor l/r,adf l/r (ADF is manual only
+  
+irs_line1=deferred_dataref("laminar/B747/irs/line1", "string")
+irs_line2=deferred_dataref("laminar/B747/irs/line2", "string") 
+irs_line3=deferred_dataref("laminar/B747/irs/line3", "string") 
+irs_line4=deferred_dataref("laminar/B747/irs/line4", "string") 
+irs_line1="TIME TO ALIGN"
+irs_line2="L OFF"
+irs_line3="C OFF"
+irs_line4="R OFF"
 function createFMSDatarefs(fmsid)
 create_dataref("laminar/B747/"..fmsid.."/Line01_L", "string")
 create_dataref("laminar/B747/"..fmsid.."/Line02_L", "string")

@@ -7,94 +7,111 @@
 fms={
   id,
   page1=false,
+  swipeOut=1,
   currentPage="INDEX",
+  targetPage="INDEX",
+  targetpgNo=1,
+  targetCustomFMC=false,
   inCustomFMC=false,scratchpad="",notify="",pgNo=1
 } 
 
 
 simCMD_FMS_key={}
---[[
-local keyRemap={}
-keyRemap["index"]={"initref"}
-keyRemap["fpln"]={"rte"}
-keyRemap["clb"]={"dep_arr"}
-keyRemap["des"]={"vnav"}
-keyRemap["dir_intc"]={"fix"}
-keyRemap["legs"]={"legs"}
-keyRemap["dep_arr"]={"hold"}
-keyRemap["prog"]={"prog"}
-keyRemap["fix"]={"index"} --MENU
-keyRemap["navrad"]={"navrad"}
-]]
+
 function keyDown(fmsModule,key)
-  
+  run_after_time(switchCustomMode, 0.10)
   print(fmsModule.. " do " .. key)
   if key=="index" then
-      fmsModules[fmsModule].inCustomFMC=true
-      fmsModules[fmsModule].currentPage="INITREF"
+      fmsModules[fmsModule].targetCustomFMC=true
+      fmsModules[fmsModule].targetPage="INITREF"
+      fmsModules[fmsModule].targetpgNo=1
       return
   elseif key=="fpln" then --RTE
-      fmsModules[fmsModule].inCustomFMC=true
+      fmsModules[fmsModule].targetCustomFMC=true
       simCMD_FMS_key[fmsModule]["fpln"]:once()
-      fmsModules[fmsModule].currentPage="RTE1"
+      fmsModules[fmsModule].targetPage="RTE1"
+      fmsModules[fmsModule].targetpgNo=1
       --[[fmsModules[fmsModule].inCustomFMC=false
       simCMD_FMS_key[fmsModule]["fpln"]:once()]]
       return
   elseif key=="clb" then
-      fmsModules[fmsModule].inCustomFMC=false
+      fmsModules[fmsModule].targetCustomFMC=false
       simCMD_FMS_key[fmsModule]["dep_arr"]:once()
+      fmsModules[fmsModule].targetpgNo=1
       return
   elseif key=="crz" then
-      fmsModules[fmsModule].inCustomFMC=true
-      fmsModules[fmsModule].currentPage="ATCINDEX"
+      fmsModules[fmsModule].targetCustomFMC=true
+      fmsModules[fmsModule].targetPage="ATCINDEX"
+      fmsModules[fmsModule].targetpgNo=1
       return
   elseif key=="des" then
-      fmsModules[fmsModule].inCustomFMC=false
+      fmsModules[fmsModule].targetCustomFMC=false
       simCMD_FMS_key[fmsModule]["clb"]:once()
-      --fmsModules[fmsModule].currentPage="VNAV"
+      fmsModules[fmsModule].targetPage="VNAV"
+      fmsModules[fmsModule].targetpgNo=1
       return
   elseif key=="dir_intc" then
-      fmsModules[fmsModule].inCustomFMC=false
+      fmsModules[fmsModule].targetCustomFMC=false
       simCMD_FMS_key[fmsModule]["fix"]:once()
+      fmsModules[fmsModule].targetpgNo=1
       return
   elseif key=="legs" then
-      fmsModules[fmsModule].inCustomFMC=false
-      simCMD_FMS_key[fmsModule]["legs"]:once()
+      
+      if simDR_onGround ==1 then
+	fmsModules[fmsModule].targetCustomFMC=true
+	fmsModules[fmsModule].targetPage="LEGS"
+	simCMD_FMS_key[fmsModule]["legs"]:once()
+	fmsModules[fmsModule].targetpgNo=1
+      else
+	fmsModules[fmsModule].targetCustomFMC=false
+	fmsModules[fmsModule].targetPage="RTE2"
+	simCMD_FMS_key[fmsModule]["dir_intc"]:once()
+	fmsModules[fmsModule].targetpgNo=1
+      end
       return
   elseif key=="dep_arr" then
-      fmsModules[fmsModule].inCustomFMC=false
+      fmsModules[fmsModule].targetCustomFMC=false
       simCMD_FMS_key[fmsModule]["hold"]:once()
+      fmsModules[fmsModule].targetpgNo=1
       return
   elseif key=="hold" then --FMC COMM
-      fmsModules[fmsModule].inCustomFMC=true 
-      fmsModules[fmsModule].currentPage="FMCCOMM"
+      fmsModules[fmsModule].targetCustomFMC=true 
+      fmsModules[fmsModule].targetPage="FMCCOMM"
+      fmsModules[fmsModule].targetpgNo=1
       return
   elseif key=="fix" then --menu
-      fmsModules[fmsModule].inCustomFMC=true
-      fmsModules[fmsModule].currentPage="INDEX"
+      fmsModules[fmsModule].targetCustomFMC=true
+      fmsModules[fmsModule].targetPage="INDEX"
+      fmsModules[fmsModule].targetpgNo=1
       return
   elseif key=="navrad" then
-      fmsModules[fmsModule].inCustomFMC=true
-      fmsModules[fmsModule].currentPage="NAVRAD"
+      fmsModules[fmsModule].targetCustomFMC=true
+      fmsModules[fmsModule].targetPage="NAVRAD"
+      fmsModules[fmsModule].targetpgNo=1
       return
   elseif key=="prog" then
-      fmsModules[fmsModule].inCustomFMC=false
+      fmsModules[fmsModule].targetCustomFMC=true
       simCMD_FMS_key[fmsModule][key]:once()
+      fmsModules[fmsModule].targetPage="PROGRESS"
+      fmsModules[fmsModule].targetpgNo=1
       return
   end
-  --[[if key=="fpln" or key=="clb" or key=="crz" or key=="des" or key=="dir_intc" or key=="legs" or key=="dep_arr" or key=="hold" or key=="prog" or key=="fix" then
-      fmsModules[fmsModule].inCustomFMC=false
-      simCMD_FMS_key[fmsModule][key]:once()
-      return
-  end]]
 
-  if not fmsModules[fmsModule].inCustomFMC then
+  if not fmsModules[fmsModule].targetCustomFMC then
     if simCMD_FMS_key[fmsModule][key]~=nil then
       simCMD_FMS_key[fmsModule][key]:once()
       print(fmsModule.. " did " .. key)
     end
+     if key=="clear" then
+       if string.len(fmsModules[fmsModule].notify)>0 then 
+	 fmsModules[fmsModule].notify=""
+	 
+	else 
+	  fmsModules[fmsModule].scratchpad="" 
+	end
+     end
   else
-    page=fmsModules[fmsModule].currentPage
+    page=fmsModules[fmsModule].targetPage
 
     
      
@@ -109,7 +126,9 @@ function keyDown(fmsModule,key)
        return
      end
      
-     if string.len(fmsModules[fmsModule].notify)>0 then return end -- require notification clear
+     --if string.len(fmsModules[fmsModule].notify)>0 and (hasChild(fmsFunctionsDefs[page],key)==false or fmsFunctionsDefs[page][key][1]~="key2fmc") then print("reject "..fmsFunctionsDefs[page][key][1].. " for "..key) return end -- require notification clear
+     
+     
      
      if hasChild(fmsFunctionsDefs[page],key) then
       print(fmsModule.. " found " .. fmsFunctionsDefs[page][key][1] .. " for " .. key)
@@ -125,14 +144,18 @@ function keyDown(fmsModule,key)
        fmsModules[fmsModule].scratchpad=fmsModules[fmsModule].scratchpad.." "
        return
      elseif key=="del" then
-       fmsModules[fmsModule].scratchpad=string.sub(fmsModules[fmsModule].scratchpad,1,-2)
+       if fmsModules[fmsModule].scratchpad=="" then 
+	 fmsModules[fmsModule].scratchpad="DELETE"
+       elseif fmsModules[fmsModule].scratchpad~="DELETE" then
+	  fmsModules[fmsModule].scratchpad=string.sub(fmsModules[fmsModule].scratchpad,1,-2)
+       end
        return
      elseif key=="next" then
-       fmsModules[fmsModule].pgNo=fmsModules[fmsModule].pgNo+1
+       fmsModules[fmsModule].targetpgNo=fmsModules[fmsModule].pgNo+1
        print(fmsModule.. " did " .. key .. " for " .. page)
        return 
      elseif key=="prev" and fmsModules[fmsModule].pgNo > 1 then
-       fmsModules[fmsModule].pgNo=fmsModules[fmsModule].pgNo-1
+       fmsModules[fmsModule].targetpgNo=fmsModules[fmsModule].pgNo-1
        print(fmsModule.. " did " .. key .. " for " .. page)
        return  
      elseif key=="exec" then
@@ -450,42 +473,17 @@ B747CMD_fms1_key_clear              = deferred_command("laminar/B747/".. fmskeyi
 end  
 
 
-    
-    
-
-
-
-function fms:B747_fms_display_customFMC()
-  local line
-  for i=1,13,1 do
-    local line=""
-    if fmslineDefs[self.currentPage] ~= nil and fmslineDefs[self.currentPage][i] ~= nil and fmslineDefs[self.currentPage][i][1] ~= nil then 
-      line=fmsFunctions[fmslineDefs[self.currentPage][i][1]]() 
-    end
-    line=line .. acars[self.currentPage][i]
-    if fmslineDefs[self.currentPage] ~= nil and fmslineDefs[self.currentPage][i] ~= nil and fmslineDefs[self.currentPage][i][2] ~= nil then 
-      line=line .. fmsFunctions[fmslineDefs[self.currentPage][i][2]]() 
-    end
-    self["setfms" .. i](line)
-  end
-  
-  
-  self.B747DR_fms1_Line14_L = cleanFMSLine(fms1_line13)--scratchpad TODO
-  
-  if acarssmall[self.currentPage]~=nil then
-    for i=1,13,1 do
-       self["setfms" .. i .."S"](acarssmall[self.currentPage][i])
-    end  
-      
-  else
-    for i=1,13,1 do
-       self["setfms" .. i .."S"](" ")
-    end 
-  end  
-end
-
 function fms:B747_fms_display()
     local thisID=self.id
+    if self.inCustomFMC~=self.targetCustomFMC or self.currentPage~=self.targetPage then 
+      B747DR_fms[thisID][self.swipeOut]="                        "
+      B747DR_fms_s[thisID][self.swipeOut]="                        "
+      if self.swipeOut<14 then self.swipeOut=self.swipeOut+1 end
+      return 
+    end
+    
+    self.swipeOut=1
+    
     local inCustomFMC=self.inCustomFMC
     local page=self.currentPage
     if B747DR_srcfms[thisID][14]=="[NAV DATA OUT OF DATE  ]" then simCMD_FMS_key[thisID]["clear"]:once() return end
@@ -498,7 +496,9 @@ function fms:B747_fms_display()
       if self.pgNo>fmsPages[page]:getNumPages() then self.pgNo=fmsPages[page]:getNumPages() end
       local fmsPage = fmsPages[page]:getPage(self.pgNo,thisID);
       local fmsPagesmall = fmsPages[page]:getSmallPage(self.pgNo,thisID);
+      local tmpSRC
       for i=1,13,1 do
+	tmpSRC=B747DR_srcfms[thisID][i] -- make sure src is always fresh
 	B747DR_fms[thisID][i]=fmsPage[i]
       end
       for i=1,13,1 do

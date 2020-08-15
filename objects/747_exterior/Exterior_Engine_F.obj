@@ -46612,8 +46612,17 @@ IDX	31783
 IDX	31784
 
 # Image: /Users/JGregory/Applications/X-Plane/XP11/Aircraft/__Laminar Development/Desktop/Heavy Metal/B747_work/objects/747_exterior/Exterior_engine_NEW.png
-TRIS	0 25680
+#TRIS	0 25680
 ANIM_begin
+  ANIM_trans	 -0.04   0   0	 0.04   0   0	-1 1	laminar/B747/engine/vibration_position[2]
+  TRIS 0 12840
+ANIM_end
+ANIM_begin
+  ANIM_trans	 -0.04   0   0	 0.04   0   0	-1 1	laminar/B747/engine/vibration_position[1]
+  TRIS 12840 12840
+ANIM_end
+ANIM_begin
+	ANIM_trans	 -0.04   0   0	 0.04   0   0	-1 1	laminar/B747/engine/vibration_position[3]
 	ANIM_trans	  12.9803   -0.7976   29.2948	  12.9803   -0.7976   29.2948	0 0	no_ref
 	ANIM_rotate_begin	  -0.0002    0.0440   -0.9990	sim/flightmodel2/wing/wing_tip_deflection_deg[0]
 		ANIM_rotate_key	-99.9	  3.14
@@ -46647,6 +46656,7 @@ ANIM_begin
 	ANIM_end
 ANIM_end
 ANIM_begin
+	ANIM_trans	 0.04   0   0	 -0.04   0   0	1 -1	laminar/B747/engine/vibration_position[0]
 	ANIM_trans	 -13.0001   -0.7976   29.2948	 -13.0001   -0.7976   29.2948	0 0	no_ref
 	ANIM_rotate_begin	  -0.0002   -0.0440    0.9990	sim/flightmodel2/wing/wing_tip_deflection_deg[0]
 		ANIM_rotate_key	-99.9	  3.14
@@ -46682,6 +46692,7 @@ ANIM_end
 ANIM_begin
 	ANIM_show	0.0 20.0	sim/flightmodel2/engines/afterburner_on[2]
 	ANIM_hide	20.0 1000.0	sim/flightmodel2/engines/afterburner_on[2]
+	ANIM_trans	 -0.04   0   0	 0.04   0   0	-1 1	laminar/B747/engine/vibration_position[2]
 	ANIM_trans	  11.9133   -3.3509   23.5832	  11.9133   -3.3509   23.5832	0 0	no_ref
 	ANIM_rotate	   0.0000    0.0000   -1.0000	  0.00   1.00	0 1	sim/flightmodel2/engines/engine_rotation_angle_deg[2]
 	TRIS	98976 20748
@@ -46689,6 +46700,7 @@ ANIM_end
 ANIM_begin
 	ANIM_hide	0.0 35.0	sim/flightmodel2/engines/afterburner_on[2]
 	ANIM_show	35.0 1000.0	sim/flightmodel2/engines/afterburner_on[2]
+	ANIM_trans	 -0.04   0   0	 0.04   0   0	-1 1	laminar/B747/engine/vibration_position[2]
 	ANIM_trans	  11.9133   -3.3509   23.5832	  11.9133   -3.3509   23.5832	0 0	no_ref
 	ANIM_rotate	   0.0000    0.0000   -1.0000	  0.00   1.00	0 1	sim/flightmodel2/engines/engine_rotation_angle_deg[2]
 	TRIS	119724 1530
@@ -46696,6 +46708,7 @@ ANIM_end
 ANIM_begin
 	ANIM_show	0.0 35.0	sim/flightmodel2/engines/afterburner_on[2]
 	ANIM_hide	35.0 1000.0	sim/flightmodel2/engines/afterburner_on[2]
+	ANIM_trans	 -0.04   0   0	 0.04   0   0	-1 1	laminar/B747/engine/vibration_position[2]
 	ANIM_trans	  11.9133   -3.3509   23.5832	  11.9133   -3.3509   23.5832	0 0	no_ref
 	ANIM_rotate	   0.0000    0.0000   -1.0000	  0.00   1.00	0 1	sim/flightmodel2/engines/engine_rotation_angle_deg[2]
 	TRIS	121254 1530
@@ -46703,6 +46716,7 @@ ANIM_end
 ANIM_begin
 	ANIM_show	0.0 20.0	sim/flightmodel2/engines/afterburner_on[1]
 	ANIM_hide	20.0 1000.0	sim/flightmodel2/engines/afterburner_on[1]
+	ANIM_trans	 0.04   0   0	 -0.04   0   0	1 -1	laminar/B747/engine/vibration_position[1]
 	ANIM_trans	 -11.9330   -3.3509   23.5832	 -11.9330   -3.3509   23.5832	0 0	no_ref
 	ANIM_rotate	   0.0000    0.0000   -1.0000	  0.00   1.00	0 1	sim/flightmodel2/engines/engine_rotation_angle_deg[1]
 	TRIS	122784 20748
@@ -46710,6 +46724,7 @@ ANIM_end
 ANIM_begin
 	ANIM_show	0.0 35.0	sim/flightmodel2/engines/afterburner_on[1]
 	ANIM_hide	35.0 1000.0	sim/flightmodel2/engines/afterburner_on[1]
+	ANIM_trans	 0.04   0   0	 -0.04   0   0	1 -1	laminar/B747/engine/vibration_position[1]
 	ANIM_trans	 -11.9330   -3.3509   23.5832	 -11.9330   -3.3509   23.5832	0 0	no_ref
 	ANIM_rotate	   0.0000   -0.0000   -1.0000	  0.00   1.00	0 1	sim/flightmodel2/engines/engine_rotation_angle_deg[1]
 	TRIS	143532 1530
@@ -46717,13 +46732,16 @@ ANIM_end
 ANIM_begin
 	ANIM_hide	0.0 35.0	sim/flightmodel2/engines/afterburner_on[1]
 	ANIM_show	35.0 1000.0	sim/flightmodel2/engines/afterburner_on[1]
+	ANIM_trans	 0.04   0   0	-0.04   0   0	1 -1	laminar/B747/engine/vibration_position[1]
 	ANIM_trans	 -11.9330   -3.3509   23.5832	 -11.9330   -3.3509   23.5832	0 0	no_ref
 	ANIM_rotate	   0.0000    0.0000   -1.0000	  0.00   1.00	0 1	sim/flightmodel2/engines/engine_rotation_angle_deg[1]
 	TRIS	145062 1530
 ANIM_end
 TRIS	146592 96
 ANIM_begin
+	
 	ANIM_trans	  12.9803   -0.7976   29.2948	  12.9803   -0.7976   29.2948	0 0	no_ref
+	ANIM_trans	 0.04   0   0	-0.04   0   0	1 -1	laminar/B747/engine/vibration_position[1]
 	ANIM_rotate_begin	  -0.0002    0.0440   -0.9990	sim/flightmodel2/wing/wing_tip_deflection_deg[0]
 		ANIM_rotate_key	-99.9	  3.14
 		ANIM_rotate_key	-13.5	  3.14
@@ -46738,7 +46756,7 @@ ANIM_begin
 		ANIM_show	50.0 1000.0	sim/flightmodel2/engines/afterburner_on[3]
 		ANIM_trans	   7.9862   -1.9100    3.3698	   7.9862   -1.9100    3.3698	0 0	no_ref
 		ANIM_rotate	  -0.0011    0.0002   -1.0000	  0.00   1.00	0 1	sim/flightmodel2/engines/engine_rotation_angle_deg[3]
-		TRIS	146736 48
+		#TRIS	146736 48
 	ANIM_end
 	ANIM_begin
 		ANIM_hide	0.0 20.0	sim/flightmodel2/engines/afterburner_on[3]
@@ -46746,11 +46764,12 @@ ANIM_begin
 		ANIM_hide	50.0 1000.0	sim/flightmodel2/engines/afterburner_on[3]
 		ANIM_trans	   7.9862   -1.9100    3.3698	   7.9862   -1.9100    3.3698	0 0	no_ref
 		ANIM_rotate	  -0.0011    0.0002   -1.0000	  0.00   1.00	0 1	sim/flightmodel2/engines/engine_rotation_angle_deg[3]
-		TRIS	146784 48
+		#TRIS	146784 48
 	ANIM_end
 ANIM_end
 ANIM_begin
 	ANIM_trans	 -13.0001   -0.7976   29.2948	 -13.0001   -0.7976   29.2948	0 0	no_ref
+	ANIM_trans	 0.04   0   0	-0.04   0   0	1 -1	laminar/B747/engine/vibration_position[0]
 	ANIM_rotate_begin	  -0.0002   -0.0440    0.9990	sim/flightmodel2/wing/wing_tip_deflection_deg[0]
 		ANIM_rotate_key	-99.9	  3.14
 		ANIM_rotate_key	-13.5	  3.14
@@ -46780,6 +46799,7 @@ ANIM_begin
 	ANIM_hide	0.0 50.0	sim/flightmodel2/engines/afterburner_on[2]
 	ANIM_show	50.0 1000.0	sim/flightmodel2/engines/afterburner_on[2]
 	ANIM_trans	  11.9133   -3.3509   23.5832	  11.9133   -3.3509   23.5832	0 0	no_ref
+	ANIM_trans	 0.04   0   0	-0.04   0   0	1 -1	laminar/B747/engine/vibration_position[2]
 	ANIM_rotate	  -0.0000    0.0000   -1.0000	  0.00   1.00	0 1	sim/flightmodel2/engines/engine_rotation_angle_deg[2]
 	TRIS	146976 48
 ANIM_end
@@ -46788,6 +46808,7 @@ ANIM_begin
 	ANIM_show	20.0 50.0	sim/flightmodel2/engines/afterburner_on[2]
 	ANIM_hide	50.0 1000.0	sim/flightmodel2/engines/afterburner_on[2]
 	ANIM_trans	  11.9133   -3.3509   23.5832	  11.9133   -3.3509   23.5832	0 0	no_ref
+	ANIM_trans	 0.04   0   0	-0.04   0   0	1 -1	laminar/B747/engine/vibration_position[2]
 	ANIM_rotate	  -0.0000    0.0000   -1.0000	  0.00   1.00	0 1	sim/flightmodel2/engines/engine_rotation_angle_deg[2]
 	TRIS	147024 48
 ANIM_end
@@ -46796,6 +46817,7 @@ ANIM_begin
 	ANIM_show	20.0 50.0	sim/flightmodel2/engines/afterburner_on[1]
 	ANIM_hide	50.0 1000.0	sim/flightmodel2/engines/afterburner_on[1]
 	ANIM_trans	 -11.9330   -3.3509   23.5832	 -11.9330   -3.3509   23.5832	0 0	no_ref
+	ANIM_trans	 0.04   0   0	-0.04   0   0	1 -1	laminar/B747/engine/vibration_position[1]
 	ANIM_rotate	   0.0000    0.0000   -1.0000	  0.00   1.00	0 1	sim/flightmodel2/engines/engine_rotation_angle_deg[1]
 	TRIS	147072 48
 ANIM_end
@@ -46803,6 +46825,7 @@ ANIM_begin
 	ANIM_hide	0.0 50.0	sim/flightmodel2/engines/afterburner_on[1]
 	ANIM_show	50.0 1000.0	sim/flightmodel2/engines/afterburner_on[1]
 	ANIM_trans	 -11.9330   -3.3509   23.5832	 -11.9330   -3.3509   23.5832	0 0	no_ref
+	ANIM_trans	 0.04   0   0	-0.04   0   0	1 -1	laminar/B747/engine/vibration_position[1]
 	ANIM_rotate	   0.0000    0.0000   -1.0000	  0.00   1.00	0 1	sim/flightmodel2/engines/engine_rotation_angle_deg[1]
 	TRIS	147120 48
 ANIM_end

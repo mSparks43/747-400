@@ -7967,17 +7967,29 @@ IDX10	4606 4607 4608 4560 4559 4608 4559 4609 4606 4608
 IDX10	4609 4606 4609 4607 4591 4590 4610 4591 4610 4611
 
 # Image: //objects/747_exterior/Exterior_Wings.png
-TRIS	0 8718
 ANIM_begin
+  ANIM_trans	 -0.04   0   0	 0.04   0   0	-1 1	laminar/B747/engine/vibration_position[2]
+  TRIS	0 4359
+ANIM_end
+ANIM_begin
+  ANIM_trans	 0.04   0   0	 -0.04   0   0	1 -1	laminar/B747/engine/vibration_position[1]
+  TRIS	4359 4359
+ANIM_end
+
+ANIM_begin
+	ANIM_trans	 0.04   0   0	-0.04   0   0	1 -1	laminar/B747/engine/vibration_position[1]
 	ANIM_trans	 -11.9302   -3.3422   26.1803	 -11.9302   -3.3422   26.7803	0 1	sim/flightmodel2/engines/thrust_reverser_deploy_ratio[1]
 	TRIS	8718 936
 ANIM_end
 ANIM_begin
+	ANIM_trans	 -0.04   0   0	 0.04   0   0	-1 1	laminar/B747/engine/vibration_position[2]
 	ANIM_trans	  11.9104   -3.3422   26.1803	  11.9104   -3.3422   26.7803	0 1	sim/flightmodel2/engines/thrust_reverser_deploy_ratio[2]
 	TRIS	9654 936
 ANIM_end
 ANIM_begin
-	ANIM_trans	  12.9803   -0.7976   29.2948	  12.9803   -0.7976   29.2948	0 0	no_ref
+
+	ANIM_trans	  12.9803    -0.7976   29.2948	  12.9803   -0.7976   29.2948	0 0	no_ref
+	ANIM_trans	 -0.04   0   0	 0.04   0   0	-1 1	laminar/B747/engine/vibration_position[3]
 	ANIM_rotate_begin	  -0.0002    0.0440   -0.9990	sim/flightmodel2/wing/wing_tip_deflection_deg[0]
 		ANIM_rotate_key	-99.9	  3.14
 		ANIM_rotate_key	-13.5	  3.14
@@ -7994,6 +8006,7 @@ ANIM_begin
 ANIM_end
 ANIM_begin
 	ANIM_trans	 -13.0001   -0.7976   29.2948	 -13.0001   -0.7976   29.2948	0 0	no_ref
+	ANIM_trans	 0.04   0   0	 -0.04   0   0	1 -1	laminar/B747/engine/vibration_position[0]
 	ANIM_rotate_begin	  -0.0002   -0.0440    0.9990	sim/flightmodel2/wing/wing_tip_deflection_deg[0]
 		ANIM_rotate_key	-99.9	  3.14
 		ANIM_rotate_key	-13.5	  3.14

@@ -98767,6 +98767,7 @@ GROUP Captain ND
     SHOW_EQUAL 1.000000 laminar/B747/nd/map_center/capt
     LOCKED
     GROUP Map/Rose 2
+      SHOW_GREATER 0.100000 laminar/B747/pfd/capt/irs
       LOCKED
       GROUP_OPEN
       EFIS_map_s_HM map_s_HM.png 2
@@ -98896,6 +98897,7 @@ GROUP Captain ND
       END_GROUP
     END_GROUP
     GROUP Digital HDG/TRK 2
+      SHOW_GREATER 0.100000 laminar/B747/pfd/capt/irs
       LOCKED
       GROUP_OPEN
       GROUP APP/VOR/MAP 2
@@ -99657,6 +99659,7 @@ GROUP Captain ND
     SHOW_EQUAL 0.000000 laminar/B747/nd/map_center/capt
     LOCKED
     GROUP Map/Rose 2
+      SHOW_GREATER 0.100000 laminar/B747/pfd/capt/irs
       LOCKED
       GROUP_OPEN
       EFIS_map_t_HM map_t_HM.png 2
@@ -99708,6 +99711,7 @@ GROUP Captain ND
 
     END_GROUP
     GROUP Digital HDG/TRK 2
+      SHOW_GREATER 0.100000 laminar/B747/pfd/capt/irs
       LOCKED
       GROUP_OPEN
       gen_rotary Heading Box 2
@@ -104752,6 +104756,7 @@ GROUP First Officer ND
     SHOW_EQUAL 1.000000 laminar/B747/nd/map_center/fo
     LOCKED
     GROUP Map/Rose
+      SHOW_GREATER 0.100000 laminar/B747/pfd/fo/irs
       LOCKED
       EFIS_map_s_HM map_s_HM.png
         POS 1023.000000 78.000000
@@ -104880,6 +104885,7 @@ GROUP First Officer ND
       END_GROUP
     END_GROUP
     GROUP Digital HDG/TRK
+    SHOW_GREATER 0.100000 laminar/B747/pfd/fo/irs
       LOCKED
       GROUP APP/VOR/MAP
         SHOW_LESS 2.000000 laminar/B747/nd/mode/fo/sel_dial_pos
@@ -105617,6 +105623,7 @@ GROUP First Officer ND
     SHOW_EQUAL 0.000000 laminar/B747/nd/map_center/fo
     LOCKED
     GROUP Map/Rose
+      SHOW_GREATER 0.100000 laminar/B747/pfd/fo/irs
       LOCKED
       EFIS_map_t_HM map_t_HM.png
         POS 1023.000000 -81.000000
@@ -105668,6 +105675,7 @@ GROUP First Officer ND
 
     END_GROUP
     GROUP Digital HDG/TRK
+     SHOW_GREATER 0.100000 laminar/B747/pfd/fo/irs
       LOCKED
       gen_rotary Heading Box
         POS 1022.000000 398.500000

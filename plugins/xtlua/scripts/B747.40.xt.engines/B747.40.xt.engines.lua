@@ -135,7 +135,7 @@ simDR_engine_fuel_mix_ratio     = find_dataref("sim/cockpit2/engine/actuators/mi
 simDR_engine_oil_pressure       = find_dataref("sim/cockpit2/engine/indicators/oil_pressure_psi")
 simDR_engine_oil_temp           = find_dataref("sim/cockpit2/engine/indicators/oil_temperature_deg_C")
 simDR_engine_oil_qty_ratio      = find_dataref("sim/cockpit2/engine/indicators/oil_quantity_ratio")
-
+simDR_engine_fire		= find_dataref("sim/flightmodel2/engines/is_on_fire")
 simDR_flap_deploy_ratio         = find_dataref("sim/flightmodel2/controls/flap_handle_deploy_ratio")
 simDR_allThrottle           	= find_dataref("sim/cockpit2/engine/actuators/throttle_ratio_all")
 simDR_engine_running            = find_dataref("sim/flightmodel/engine/ENGN_running")
@@ -606,6 +606,9 @@ B747DR_engine_fuel_valve_pos        = deferred_dataref("laminar/B747/engines/fue
 B747DR_EICAS2_fuel_on_ind_status    = deferred_dataref("laminar/B747/engines/fuel_on_indicator_status", "array[4)")
 B747DR_EICAS2_oil_press_status      = deferred_dataref("laminar/B747/engines/EICAS2_oil_press_status", "array[4)")
 B747DR_EICAS2_engine_vibration      = deferred_dataref("laminar/B747/engines/vibration", "array[4)")
+B747DR_EICAS2_engine_disturbance    = deferred_dataref("laminar/B747/engines/disturbance", "number")
+B747DR_EICAS2_wingFlex			=find_dataref("sim/flightmodel2/wing/wing_tip_deflection_deg")
+B747DR_engine_vibration_position    = deferred_dataref("laminar/B747/engine/vibration_position", "array[4)")
 B747DR_engine_oil_press_psi         = deferred_dataref("laminar/B747/engines/oil_press_psi", "array[4)")
 B747DR_engine_oil_temp_degC         = deferred_dataref("laminar/B747/engines/oil_temp_degC", "array[4)")
 B747DR_engine_oil_qty_liters        = deferred_dataref("laminar/B747/engines/oil_qty_liters", "array[4)")
@@ -1200,17 +1203,57 @@ end
 local int, frac = math.modf(os.clock())
 local seed = math.random(1, frac*1000.0)
 math.randomseed(seed)
-local B747_engine1_maxVib = math.min(1.3, math.random(0, 1) + math.random())
-local B747_engine2_maxVib = math.min(1.5, math.random(0, 3) + math.random())
-local B747_engine3_maxVib = math.min(1.4, math.random(0, 2) + math.random())
-local B747_engine4_maxVib = math.min(1.6, math.random(0, 3) + math.random())
+--local B747_engine1_maxVib = math.min(1.3, math.random(0, 1) + math.random())
+--local B747_engine2_maxVib = math.min(1.5, math.random(0, 3) + math.random())
+--local B747_engine3_maxVib = math.min(1.4, math.random(0, 2) + math.random())
+--local B747_engine4_maxVib = math.min(1.6, math.random(0, 3) + math.random())
+local B747_engine_maxVib = {}
+local B747_engine_vibPhase = {}
+local B747_engine_lastClock = {}
+local B747_engine_lastPos = {}
+local lastWingFlex=0
+for i = 0, 3 do
+  B747_engine_maxVib[i]= math.min(1.3, math.random(0, 1) + math.random())
+  B747_engine_vibPhase[i] =  math.random(0, 6)
+  B747_engine_lastClock[i] = os.clock()
+  B747_engine_lastPos[i]=0
+end
+function B747_animate_value(current_value, target, min, max, speed)
+
+    local fps_factor = math.min(0.1, speed * SIM_PERIOD)
+
+    if target >= (max - 0.001) and current_value >= (max - 0.01) then
+        return max
+    elseif target <= (min + 0.001) and current_value <= (min + 0.01) then
+       return min
+    else
+        return current_value + ((target - current_value) * fps_factor)
+    end
+
+end
 function B747_secondary_EICAS2_engine_vibration()
+    --local vibrationRate=0
+    local timeNow=0
+    local phaseNow=0
+    local thrust=0
+    local disturbance=math.sqrt((B747DR_EICAS2_wingFlex[0]-lastWingFlex)*(B747DR_EICAS2_wingFlex[0]-lastWingFlex))+4
+    
+    B747DR_EICAS2_engine_disturbance=B747_animate_value(B747DR_EICAS2_engine_disturbance,1,1,5,10)+disturbance
+    B747DR_EICAS2_engine_disturbance=math.min(B747DR_EICAS2_engine_disturbance,4)
+    lastWingFlex=B747_animate_value(lastWingFlex,B747DR_EICAS2_wingFlex[0],-30,30,20)
+    
+    for i = 0, 3 do
+    B747DR_EICAS2_engine_vibration[i] = B747_rescale(0.0, 0.0, 100.0, B747_engine_maxVib[i], simDR_engine_N2_pct[i])
+    timeNow=B747_engine_lastClock[i]+(os.clock()-B747_engine_lastClock[i])
+    thrust=math.max((simDR_engine_N2_pct[i]-60)/10,0)
+    phaseNow=(timeNow*thrust)-(B747_engine_lastClock[i]*thrust)
+    B747_engine_lastPos[i]=B747_engine_lastPos[i]+phaseNow
+  
+    B747DR_engine_vibration_position[i] =B747DR_EICAS2_engine_disturbance*(B747DR_EICAS2_engine_vibration[i]*math.sin(B747_engine_lastPos[i]+ B747_engine_vibPhase[i]))/6
 
-    B747DR_EICAS2_engine_vibration[0] = B747_rescale(0.0, 0.0, 100.0, B747_engine1_maxVib, simDR_engine_N2_pct[0])
-    B747DR_EICAS2_engine_vibration[1] = B747_rescale(0.0, 0.0, 100.0, B747_engine2_maxVib, simDR_engine_N2_pct[1])
-    B747DR_EICAS2_engine_vibration[2] = B747_rescale(0.0, 0.0, 100.0, B747_engine3_maxVib, simDR_engine_N2_pct[2])
-    B747DR_EICAS2_engine_vibration[3] = B747_rescale(0.0, 0.0, 100.0, B747_engine4_maxVib, simDR_engine_N2_pct[3])
-
+    B747_engine_lastClock[i] = os.clock()
+    end
+    
 end
 
 

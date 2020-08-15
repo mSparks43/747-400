@@ -492,8 +492,8 @@ B747_CASmemoMsg   = {
     {DRindex = 11, name = "DOORS MANUAL", status = 0},
     {DRindex = 12, name = "HF DATA OFF", status = 0},
     {DRindex = 13, name = "HIGH ALT LDG", status = 0},
-    {DRindex = 14, name = "IRS ALIGN MODE C", status = 0},
-    {DRindex = 15, name = "IRS ALIGN MODE L", status = 0},
+    {DRindex = 14, name = "IRS ALIGN MODE L", status = 0},
+    {DRindex = 15, name = "IRS ALIGN MODE C", status = 0},
     {DRindex = 16, name = "IRS ALIGN MODE R", status = 0},
     {DRindex = 17, name = "NO SMOKING ON", status = 0},         --
     {DRindex = 18, name = "PACK 1 OFF", status = 0},            --

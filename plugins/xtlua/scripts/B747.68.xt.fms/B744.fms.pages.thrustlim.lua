@@ -10,26 +10,84 @@ fmsPages["THRUSTLIM"].getPage=function(self,pgNo,fmsID)--dynamic pages need to b
   local c1="     "
   local c2="     "
   local c3="     "
-  if clbderate==0 then c1="<ARM>" end
-  if clbderate==1 then c2="<ARM>" end
-  if clbderate==2 then c3="<ARM>" end
-    return{
-"       THRUST LIM       ",
+  if simDR_onGround==1 then
+    fmsFunctionsDefs["THRUSTLIM"]["R6"]={"setpage","TAKEOFF"}
+	  if clbderate==0 then c1="<ARM>" end
+	  if clbderate==1 then c2="<ARM>" end
+	  if clbderate==2 then c3="<ARM>" end
+	    return{
+	"       THRUST LIM       ",
+	"                        ",
+	""..fmsModules["data"]["thrustsel"] .."`C      "..string.format("%02d",simDR_OAT).."`C         ",
+	"                        ",
+	"<TO   "..t1.." "..c1.."    CLB>",
+	"                        ",
+	"<TO 1 "..t2.." "..c2.."  CLB 1>",
+	"                        ",
+	"<TO 2 "..t3.." "..c3.."  CLB 2>",
+	"                        ",
+	"                        ", 
+	"------------------------",
+	"<INDEX          TAKEOFF>"
+		}
+  else
+    fmsFunctionsDefs["THRUSTLIM"]["R6"]={"setpage","APPROACH"}
+	if clbderate==0 then c1="<SEL>" end
+	  if clbderate==1 then c2="<SEL>" end
+	  if clbderate==2 then c3="<SEL>" end
+	    return{
+	"       THRUST LIM       ",
+	"                        ",
+	"          "..string.format("%02d",simDR_OAT).."`C         ",
+	"                        ",
+	"<GA         "..c1.."    CLB>",
+	"                        ",
+	"<CON        "..c2.."  CLB 1>",
+	"                        ",
+	"<CRZ        "..c3.."  CLB 2>",
+	"                        ",
+	"                        ", 
+	"------------------------",
+	"<INDEX         APPROACH>"
+		}
+  end
+end
+fmsPages["THRUSTLIM"].getSmallPage=function(self,pgNo,fmsID)--dynamic pages need to be this way
+if simDR_onGround==1 then
+  return {
 "                        ",
-""..fmsModules["data"]["thrustsel"] .."`C      "..string.format("%02d",simDR_OAT).."`C         ",
+" SEL      OAT D-TO 1 N1 ",
 "                        ",
-"<TO   "..t1.." "..c1.."    CLB>",
 "                        ",
-"<TO 1 "..t2.." "..c2.."  CLB 1>",
 "                        ",
-"<TO 2 "..t3.." "..c3.."  CLB 2>",
+"                        ",
+"                        ",
+"  10%                   ",
+"                        ",
+"  20%                   ",
+"                        ", 
+"                        ",
+"                        "
+}
+else
+  return {
+"                        ",
+"          OAT           ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
 "                        ",
 "                        ", 
-"------------------------",
-"<INDEX          TAKEOFF>"
-         }
+"                        ",
+"                        "
+}
+  
 end
-
+end
 fmsPages["THRUSTLIM"]["templateSmall"]={
 "                        ",
 " SEL      OAT D-TO 1 N1 ",
@@ -95,4 +153,3 @@ fmsFunctionsDefs["THRUSTLIM"]["R1"]={"setdata","thrustn1"}
 fmsFunctionsDefs["THRUSTLIM"]["R2"]={"setDref","CLB"}
 fmsFunctionsDefs["THRUSTLIM"]["R3"]={"setDref","CLB1"}
 fmsFunctionsDefs["THRUSTLIM"]["R4"]={"setDref","CLB2"}
-fmsFunctionsDefs["THRUSTLIM"]["R6"]={"setpage","TAKEOFF"}

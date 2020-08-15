@@ -107,8 +107,10 @@ function fmsFunctions.initAcars(fmsO,value)
     fmsFunctions.acarsSystemSend(fmsO,newInitSend)
   end
   fmsO["pgNo"]=1
-  fmsO["inCustomFMC"]=true
-  fmsO["currentPage"]="PREFLIGHT" 
+  fmsO["targetCustomFMC"]=true
+  fmsO["targetPage"]="PREFLIGHT" 
+  run_after_time(switchCustomMode, 0.15)
+  
 end
 
 
@@ -176,7 +178,8 @@ function fmsFunctions.acarsSystemSend(fmsO,value)
     
     
     acarsSystem.provider.send(json.encode(tMSG))
-    fmsO["inCustomFMC"]=true
+    fmsO["targetCustomFMC"]=true
+    run_after_time(switchCustomMode, 0.15)
     --fmsO["currentPage"]="ACARS" 
     --local tMSG=json.encode({type="msg",msg="Test Message",time="12:00 UTC"})
     --print(tMSG)

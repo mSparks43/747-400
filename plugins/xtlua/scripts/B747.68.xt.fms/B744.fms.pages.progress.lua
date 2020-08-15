@@ -1,6 +1,34 @@
 fmsPages["PROGRESS"]=createPage("PROGRESS")
 fmsPages["PROGRESS"].getPage=function(self,pgNo,fmsID)
-  if pgNo==1 then return {
+  local l13="                        "
+  if pgNo==1 then
+        l13="                POS REF>"
+	fmsFunctionsDefs["PROGRESS"]["R6"]={"setpage_no","POSINIT_2"}
+  else
+    fmsFunctionsDefs["PROGRESS"]["R6"]=nil
+  end
+  
+  local page={
+  cleanFMSLine(B747DR_srcfms[fmsID][1]),
+  cleanFMSLine(B747DR_srcfms[fmsID][2]),
+  cleanFMSLine(B747DR_srcfms[fmsID][3]),
+  cleanFMSLine(B747DR_srcfms[fmsID][4]),
+  cleanFMSLine(B747DR_srcfms[fmsID][5]),
+  cleanFMSLine(B747DR_srcfms[fmsID][6]),
+  cleanFMSLine(B747DR_srcfms[fmsID][7]),
+  cleanFMSLine(B747DR_srcfms[fmsID][8]),
+  cleanFMSLine(B747DR_srcfms[fmsID][9]),
+  cleanFMSLine(B747DR_srcfms[fmsID][10]),
+  cleanFMSLine(B747DR_srcfms[fmsID][11]),
+  cleanFMSLine(B747DR_srcfms[fmsID][12]),
+  l13,
+  }
+  return page 
+  
+end
+
+--[[
+if pgNo==1 then return {
     "          PROGRESS      ",
     " LAST   ALT   ATA   FUEL",
     "                        ",
@@ -46,7 +74,7 @@ fmsPages["PROGRESS"].getPage=function(self,pgNo,fmsID)
     "                        "
     }
 end
-end
+
 
 fmsPages["PROGRESS"].getSmallPage=function(self,pgNo,fmsID)
   if pgNo==1 then return {
@@ -95,7 +123,7 @@ elseif pgNo==2 then return {
     "                        "
     }
 end
-end
+end]]
 
 
 fmsFunctionsDefs["PROGRESS"]={}

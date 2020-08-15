@@ -21,10 +21,9 @@ XTlua is described [here](https://forums.x-plane.org/index.php?/forums/topic/209
 XTlua source is [here](https://github.com/mSparks43/XLua/tree/xTLua)
 
 You can follow progress, make requests and generally chat about the 747 on the acars-747 channel on the AutoATC discord server
-Discord: https://discord.gg/cStTXy5
+[Discord](https://discord.gg/cStTXy5)
 
-Yes Aviation have now officially abandoned their github, and begun work on a payware Airbus A350 Series project, you can reach their discord here:
-Discord: https://discord.gg/UbZVAuX
+Yes Aviation have now officially abandoned and deleted their github, and begun work on a payware Airbus A350 Series project. That's all I know.
 
 This project continues by the good graces of the X-Plane community and the great work they do.
 

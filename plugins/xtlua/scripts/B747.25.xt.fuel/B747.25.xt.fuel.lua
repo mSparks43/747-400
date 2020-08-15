@@ -3051,7 +3051,7 @@ function aircraft_load()
 end
 
 function aircraft_unload()
-
+   
     simDR_override_fuel_system = 0
 
 end
