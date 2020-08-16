@@ -34,12 +34,12 @@ P _cgpt/5/_w_now 0.0
 P _cgpt/5/_w_test 0.0
 P _cgpt/5/_z_ref 115.300003052
 P _cgpt/6/_name fuel tank #6
-P _cgpt/6/_w_max 8809.700195312
+P _cgpt/6/_w_max 8809.700195313
 P _cgpt/6/_w_now 0.0
 P _cgpt/6/_w_test 0.0
 P _cgpt/6/_z_ref 133.0
 P _cgpt/7/_name fuel tank #7
-P _cgpt/7/_w_max 8809.700195312
+P _cgpt/7/_w_max 8809.700195313
 P _cgpt/7/_w_now 0.0
 P _cgpt/7/_w_test 0.0
 P _cgpt/7/_z_ref 133.0
@@ -122,7 +122,7 @@ P _gear/0/_lonE 1.0
 P _gear/0/_lonN 1.0
 P _gear/0/_lonR 117.0
 P _gear/0/_scon 358467.468750000
-P _gear/0/_stat_def 0.165289491
+P _gear/0/_stat_def 0.165289521
 P _gear/0/_steerdeg_hispeed 15.0
 P _gear/0/_steerdeg_lospeed 75.0
 P _gear/0/_strut_comp 0.0
@@ -156,7 +156,7 @@ P _gear/1/_lonE 1.0
 P _gear/1/_lonN 1.0
 P _gear/1/_lonR 140.0
 P _gear/1/_scon 358467.468750000
-P _gear/1/_stat_def 0.627037406
+P _gear/1/_stat_def 0.627037227
 P _gear/1/_steerdeg_hispeed 0.0
 P _gear/1/_steerdeg_lospeed 0.0
 P _gear/1/_strut_comp 0.0
@@ -190,7 +190,7 @@ P _gear/2/_lonE 1.0
 P _gear/2/_lonN 1.0
 P _gear/2/_lonR 140.0
 P _gear/2/_scon 358467.468750000
-P _gear/2/_stat_def 0.627037406
+P _gear/2/_stat_def 0.627037227
 P _gear/2/_steerdeg_hispeed 0.0
 P _gear/2/_steerdeg_lospeed 0.0
 P _gear/2/_strut_comp 0.0
@@ -224,7 +224,7 @@ P _gear/3/_lonE 1.0
 P _gear/3/_lonN 1.0
 P _gear/3/_lonR 10.0
 P _gear/3/_scon 358467.468750000
-P _gear/3/_stat_def 0.559550941
+P _gear/3/_stat_def 0.559550822
 P _gear/3/_steerdeg_hispeed 0.0
 P _gear/3/_steerdeg_lospeed 0.0
 P _gear/3/_strut_comp 0.0
@@ -251,11 +251,11 @@ P _gear/4/_gear_x -17.020000458
 P _gear/4/_gear_y -7.820000172
 P _gear/4/_gear_z 103.970001221
 P _gear/4/_latE 0.0
-P _gear/4/_latN 0.0
+P _gear/4/_latN 28.015472412
 P _gear/4/_latR 91.0
 P _gear/4/_leg_len 9.100000381
 P _gear/4/_lonE 1.0
-P _gear/4/_lonN 1.0
+P _gear/4/_lonN 3.770761013
 P _gear/4/_lonR 10.0
 P _gear/4/_scon 358467.468750000
 P _gear/4/_stat_def 0.559550941
@@ -289,7 +289,7 @@ P _gear/5/_latN 0.0
 P _gear/5/_latR 0.0
 P _gear/5/_leg_len 6.400000095
 P _gear/5/_lonE -36.0
-P _gear/5/_lonN -36.0
+P _gear/5/_lonN -22.454057693
 P _gear/5/_lonR 8.0
 P _gear/5/_scon 358467.468750000
 P _gear/5/_stat_def 0.0
@@ -319,11 +319,11 @@ P _gear/6/_gear_x -3.299999952
 P _gear/6/_gear_y -12.100000381
 P _gear/6/_gear_z 115.150001526
 P _gear/6/_latE -55.0
-P _gear/6/_latN -55.0
+P _gear/6/_latN -64.851593018
 P _gear/6/_latR -87.0
 P _gear/6/_leg_len 3.700000048
 P _gear/6/_lonE 28.0
-P _gear/6/_lonN 28.0
+P _gear/6/_lonN 50.166088104
 P _gear/6/_lonR 100.0
 P _gear/6/_scon 358467.468750000
 P _gear/6/_stat_def 0.0
@@ -353,11 +353,11 @@ P _gear/7/_gear_x 3.299999952
 P _gear/7/_gear_y -12.100000381
 P _gear/7/_gear_z 115.150001526
 P _gear/7/_latE 55.0
-P _gear/7/_latN 55.0
+P _gear/7/_latN 64.851593018
 P _gear/7/_latR 87.0
 P _gear/7/_leg_len 3.700000048
 P _gear/7/_lonE 28.0
-P _gear/7/_lonN 28.0
+P _gear/7/_lonN 50.166088104
 P _gear/7/_lonR 100.0
 P _gear/7/_scon 358467.468750000
 P _gear/7/_stat_def 0.0
@@ -387,7 +387,7 @@ P _gear/8/_gear_x 11.0
 P _gear/8/_gear_y -7.300000191
 P _gear/8/_gear_z 103.900001526
 P _gear/8/_latE 42.0
-P _gear/8/_latN 42.0
+P _gear/8/_latN 29.069782257
 P _gear/8/_latR 0.0
 P _gear/8/_leg_len 8.899999619
 P _gear/8/_lonE 0.0
@@ -421,7 +421,7 @@ P _gear/9/_gear_x -11.0
 P _gear/9/_gear_y -7.300000191
 P _gear/9/_gear_z 103.900001526
 P _gear/9/_latE -42.0
-P _gear/9/_latN -42.0
+P _gear/9/_latN -29.069782257
 P _gear/9/_latR 0.0
 P _gear/9/_leg_len 8.899999619
 P _gear/9/_lonE 0.0
@@ -800,17 +800,6 @@ P _obja/31/_v10_att_y_acf_prt_ref 0.600000024
 P _obja/31/_v10_att_z_acf_prt_ref 0.0
 P _obja/31/_v10_is_internal -1055271720
 P _obja/31/_v10_steers_with_gear 0
-P _obja/32/_obj_flags 0
-P _obja/32/_v10_att_file_stl 747_exterior/particles/particle_747-400.obj
-P _obja/32/_v10_att_part -1
-P _obja/32/_v10_att_phi_ref 0.0
-P _obja/32/_v10_att_psi_ref 0.0
-P _obja/32/_v10_att_the_ref 0.0
-P _obja/32/_v10_att_x_acf_prt_ref 0.0
-P _obja/32/_v10_att_y_acf_prt_ref 0.0
-P _obja/32/_v10_att_z_acf_prt_ref 0.0
-P _obja/32/_v10_is_internal -482764496
-P _obja/32/_v10_steers_with_gear 0
 P _obja/4/_obj_flags 9
 P _obja/4/_v10_att_file_stl 747_cockpit/Cockpit_GS.obj
 P _obja/4/_v10_att_part -1
@@ -877,12 +866,12 @@ P _obja/9/_v10_att_y_acf_prt_ref 0.600000024
 P _obja/9/_v10_att_z_acf_prt_ref 0.0
 P _obja/9/_v10_is_internal 11
 P _obja/9/_v10_steers_with_gear 0
-P _obja/count 33
+P _obja/count 32
 P _panel_inst_3d 0
 P _part/0/_bot_s1 0.0
 P _part/0/_bot_s2 0.015625000
 P _part/0/_bot_t1 0.255859375
-P _part/0/_bot_t2 0.379882812
+P _part/0/_bot_t2 0.379882813
 P _part/0/_geo_xyz/0,0,0 0.0
 P _part/0/_geo_xyz/0,0,1 0.274120092
 P _part/0/_geo_xyz/0,0,2 -1.100000858
@@ -2328,7 +2317,6 @@ P _part/0/_locked/9,8 0
 P _part/0/_locked/9,9 0
 P _part/0/_locked/i_count 20
 P _part/0/_locked/j_count 18
-P _part/0/_part_area_rule 0.0
 P _part/0/_part_cd 0.059999999
 P _part/0/_part_phi 0.0
 P _part/0/_part_psi 0.0
@@ -2348,11 +2336,11 @@ P _part/0/_s_dim 20
 P _part/0/_top_s1 0.0
 P _part/0/_top_s2 0.015625000
 P _part/0/_top_t1 0.255859375
-P _part/0/_top_t2 0.379882812
+P _part/0/_top_t2 0.379882813
 P _part/1/_bot_s1 0.0
 P _part/1/_bot_s2 0.015625000
 P _part/1/_bot_t1 0.255859375
-P _part/1/_bot_t2 0.379882812
+P _part/1/_bot_t2 0.379882813
 P _part/1/_geo_xyz/0,0,0 0.0
 P _part/1/_geo_xyz/0,0,1 0.274120092
 P _part/1/_geo_xyz/0,0,2 -1.100000858
@@ -3798,7 +3786,6 @@ P _part/1/_locked/9,8 0
 P _part/1/_locked/9,9 0
 P _part/1/_locked/i_count 20
 P _part/1/_locked/j_count 18
-P _part/1/_part_area_rule 0.0
 P _part/1/_part_cd 0.059999999
 P _part/1/_part_phi 0.0
 P _part/1/_part_psi 0.0
@@ -3818,7 +3805,7 @@ P _part/1/_s_dim 20
 P _part/1/_top_s1 0.0
 P _part/1/_top_s2 0.015625000
 P _part/1/_top_t1 0.255859375
-P _part/1/_top_t2 0.379882812
+P _part/1/_top_t2 0.379882813
 P _part/10/_bot_s1 0.382999986
 P _part/10/_bot_s2 0.507000029
 P _part/10/_bot_t1 0.586000025
@@ -5268,7 +5255,6 @@ P _part/10/_locked/9,8 0
 P _part/10/_locked/9,9 0
 P _part/10/_locked/i_count 20
 P _part/10/_locked/j_count 18
-P _part/10/_part_area_rule 0.0
 P _part/10/_part_cd 0.059999999
 P _part/10/_part_phi 0.0
 P _part/10/_part_psi 0.0
@@ -5649,7 +5635,7 @@ P _part/11/_geo_xyz/14,17,1 0.0
 P _part/11/_geo_xyz/14,17,2 0.0
 P _part/11/_geo_xyz/14,2,0 63.642986298
 P _part/11/_geo_xyz/14,2,1 -1.219985247
-P _part/11/_geo_xyz/14,2,2 120.961914062
+P _part/11/_geo_xyz/14,2,2 120.961914063
 P _part/11/_geo_xyz/14,3,0 63.652614594
 P _part/11/_geo_xyz/14,3,1 -1.311596513
 P _part/11/_geo_xyz/14,3,2 120.306968689
@@ -6738,7 +6724,6 @@ P _part/11/_locked/9,8 0
 P _part/11/_locked/9,9 0
 P _part/11/_locked/i_count 20
 P _part/11/_locked/j_count 18
-P _part/11/_part_area_rule 0.0
 P _part/11/_part_cd 0.059999999
 P _part/11/_part_phi 0.0
 P _part/11/_part_psi 0.0
@@ -8208,7 +8193,6 @@ P _part/12/_locked/9,8 0
 P _part/12/_locked/9,9 0
 P _part/12/_locked/i_count 20
 P _part/12/_locked/j_count 18
-P _part/12/_part_area_rule 0.0
 P _part/12/_part_cd 0.059999999
 P _part/12/_part_phi 0.0
 P _part/12/_part_psi 0.0
@@ -9678,7 +9662,6 @@ P _part/13/_locked/9,8 0
 P _part/13/_locked/9,9 0
 P _part/13/_locked/i_count 20
 P _part/13/_locked/j_count 18
-P _part/13/_part_area_rule 0.0
 P _part/13/_part_cd 0.059999999
 P _part/13/_part_phi 0.0
 P _part/13/_part_psi 0.0
@@ -9903,7 +9886,7 @@ P _part/14/_geo_xyz/11,3,1 10.401514053
 P _part/14/_geo_xyz/11,3,2 138.844894409
 P _part/14/_geo_xyz/11,4,0 -85.607978821
 P _part/14/_geo_xyz/11,4,1 10.393646240
-P _part/14/_geo_xyz/11,4,2 142.004882812
+P _part/14/_geo_xyz/11,4,2 142.004882813
 P _part/14/_geo_xyz/11,5,0 -85.682983398
 P _part/14/_geo_xyz/11,5,1 10.162804604
 P _part/14/_geo_xyz/11,5,2 144.848266602
@@ -9957,7 +9940,7 @@ P _part/14/_geo_xyz/12,3,1 10.401514053
 P _part/14/_geo_xyz/12,3,2 138.844894409
 P _part/14/_geo_xyz/12,4,0 -85.607978821
 P _part/14/_geo_xyz/12,4,1 10.393646240
-P _part/14/_geo_xyz/12,4,2 142.004882812
+P _part/14/_geo_xyz/12,4,2 142.004882813
 P _part/14/_geo_xyz/12,5,0 -85.682983398
 P _part/14/_geo_xyz/12,5,1 10.162804604
 P _part/14/_geo_xyz/12,5,2 144.848266602
@@ -11148,7 +11131,6 @@ P _part/14/_locked/9,8 0
 P _part/14/_locked/9,9 0
 P _part/14/_locked/i_count 20
 P _part/14/_locked/j_count 18
-P _part/14/_part_area_rule 0.0
 P _part/14/_part_cd 0.059999999
 P _part/14/_part_phi 0.0
 P _part/14/_part_psi 0.0
@@ -11373,7 +11355,7 @@ P _part/15/_geo_xyz/11,3,1 10.401514053
 P _part/15/_geo_xyz/11,3,2 138.844894409
 P _part/15/_geo_xyz/11,4,0 85.607978821
 P _part/15/_geo_xyz/11,4,1 10.393646240
-P _part/15/_geo_xyz/11,4,2 142.004882812
+P _part/15/_geo_xyz/11,4,2 142.004882813
 P _part/15/_geo_xyz/11,5,0 85.682983398
 P _part/15/_geo_xyz/11,5,1 10.162804604
 P _part/15/_geo_xyz/11,5,2 144.848266602
@@ -11427,7 +11409,7 @@ P _part/15/_geo_xyz/12,3,1 10.401514053
 P _part/15/_geo_xyz/12,3,2 138.844894409
 P _part/15/_geo_xyz/12,4,0 85.607978821
 P _part/15/_geo_xyz/12,4,1 10.393646240
-P _part/15/_geo_xyz/12,4,2 142.004882812
+P _part/15/_geo_xyz/12,4,2 142.004882813
 P _part/15/_geo_xyz/12,5,0 85.682983398
 P _part/15/_geo_xyz/12,5,1 10.162804604
 P _part/15/_geo_xyz/12,5,2 144.848266602
@@ -12618,7 +12600,6 @@ P _part/15/_locked/9,8 0
 P _part/15/_locked/9,9 0
 P _part/15/_locked/i_count 20
 P _part/15/_locked/j_count 18
-P _part/15/_part_area_rule 0.0
 P _part/15/_part_cd 0.059999999
 P _part/15/_part_phi 0.0
 P _part/15/_part_psi 0.0
@@ -12957,10 +12938,10 @@ P _part/16/_geo_xyz/13,5,1 7.747411728
 P _part/16/_geo_xyz/13,5,2 223.164642334
 P _part/16/_geo_xyz/13,6,0 -26.591459274
 P _part/16/_geo_xyz/13,6,1 7.600727081
-P _part/16/_geo_xyz/13,6,2 226.747070312
+P _part/16/_geo_xyz/13,6,2 226.747070313
 P _part/16/_geo_xyz/13,7,0 -26.591459274
 P _part/16/_geo_xyz/13,7,1 7.600727081
-P _part/16/_geo_xyz/13,7,2 226.747070312
+P _part/16/_geo_xyz/13,7,2 226.747070313
 P _part/16/_geo_xyz/13,8,0 -26.608156204
 P _part/16/_geo_xyz/13,8,1 7.361938477
 P _part/16/_geo_xyz/13,8,2 223.164642334
@@ -13011,10 +12992,10 @@ P _part/16/_geo_xyz/14,5,1 7.747411728
 P _part/16/_geo_xyz/14,5,2 223.164642334
 P _part/16/_geo_xyz/14,6,0 -26.591459274
 P _part/16/_geo_xyz/14,6,1 7.600727081
-P _part/16/_geo_xyz/14,6,2 226.747070312
+P _part/16/_geo_xyz/14,6,2 226.747070313
 P _part/16/_geo_xyz/14,7,0 -26.591459274
 P _part/16/_geo_xyz/14,7,1 7.600727081
-P _part/16/_geo_xyz/14,7,2 226.747070312
+P _part/16/_geo_xyz/14,7,2 226.747070313
 P _part/16/_geo_xyz/14,8,0 -26.608156204
 P _part/16/_geo_xyz/14,8,1 7.361938477
 P _part/16/_geo_xyz/14,8,2 223.164642334
@@ -13137,7 +13118,7 @@ P _part/16/_geo_xyz/17,1,1 8.183702469
 P _part/16/_geo_xyz/17,1,2 217.995681763
 P _part/16/_geo_xyz/17,10,0 -33.161239624
 P _part/16/_geo_xyz/17,10,1 7.638196945
-P _part/16/_geo_xyz/17,10,2 221.348632812
+P _part/16/_geo_xyz/17,10,2 221.348632813
 P _part/16/_geo_xyz/17,11,0 -33.152820587
 P _part/16/_geo_xyz/17,11,1 7.758583069
 P _part/16/_geo_xyz/17,11,2 219.186370850
@@ -13191,7 +13172,7 @@ P _part/16/_geo_xyz/18,1,1 8.183702469
 P _part/16/_geo_xyz/18,1,2 217.995681763
 P _part/16/_geo_xyz/18,10,0 -33.161239624
 P _part/16/_geo_xyz/18,10,1 7.638196945
-P _part/16/_geo_xyz/18,10,2 221.348632812
+P _part/16/_geo_xyz/18,10,2 221.348632813
 P _part/16/_geo_xyz/18,11,0 -33.152820587
 P _part/16/_geo_xyz/18,11,1 7.758583069
 P _part/16/_geo_xyz/18,11,2 219.186370850
@@ -14088,7 +14069,6 @@ P _part/16/_locked/9,8 0
 P _part/16/_locked/9,9 0
 P _part/16/_locked/i_count 20
 P _part/16/_locked/j_count 18
-P _part/16/_part_area_rule 0.0
 P _part/16/_part_cd 0.059999999
 P _part/16/_part_phi 0.0
 P _part/16/_part_psi 0.0
@@ -14427,10 +14407,10 @@ P _part/17/_geo_xyz/13,5,1 7.747411728
 P _part/17/_geo_xyz/13,5,2 223.164642334
 P _part/17/_geo_xyz/13,6,0 26.591459274
 P _part/17/_geo_xyz/13,6,1 7.600727081
-P _part/17/_geo_xyz/13,6,2 226.747070312
+P _part/17/_geo_xyz/13,6,2 226.747070313
 P _part/17/_geo_xyz/13,7,0 26.591459274
 P _part/17/_geo_xyz/13,7,1 7.600727081
-P _part/17/_geo_xyz/13,7,2 226.747070312
+P _part/17/_geo_xyz/13,7,2 226.747070313
 P _part/17/_geo_xyz/13,8,0 26.608156204
 P _part/17/_geo_xyz/13,8,1 7.361938477
 P _part/17/_geo_xyz/13,8,2 223.164642334
@@ -14481,10 +14461,10 @@ P _part/17/_geo_xyz/14,5,1 7.747411728
 P _part/17/_geo_xyz/14,5,2 223.164642334
 P _part/17/_geo_xyz/14,6,0 26.591459274
 P _part/17/_geo_xyz/14,6,1 7.600727081
-P _part/17/_geo_xyz/14,6,2 226.747070312
+P _part/17/_geo_xyz/14,6,2 226.747070313
 P _part/17/_geo_xyz/14,7,0 26.591459274
 P _part/17/_geo_xyz/14,7,1 7.600727081
-P _part/17/_geo_xyz/14,7,2 226.747070312
+P _part/17/_geo_xyz/14,7,2 226.747070313
 P _part/17/_geo_xyz/14,8,0 26.608156204
 P _part/17/_geo_xyz/14,8,1 7.361938477
 P _part/17/_geo_xyz/14,8,2 223.164642334
@@ -14607,7 +14587,7 @@ P _part/17/_geo_xyz/17,1,1 8.183702469
 P _part/17/_geo_xyz/17,1,2 217.995681763
 P _part/17/_geo_xyz/17,10,0 33.161239624
 P _part/17/_geo_xyz/17,10,1 7.638196945
-P _part/17/_geo_xyz/17,10,2 221.348632812
+P _part/17/_geo_xyz/17,10,2 221.348632813
 P _part/17/_geo_xyz/17,11,0 33.152820587
 P _part/17/_geo_xyz/17,11,1 7.758583069
 P _part/17/_geo_xyz/17,11,2 219.186370850
@@ -14661,7 +14641,7 @@ P _part/17/_geo_xyz/18,1,1 8.183702469
 P _part/17/_geo_xyz/18,1,2 217.995681763
 P _part/17/_geo_xyz/18,10,0 33.161239624
 P _part/17/_geo_xyz/18,10,1 7.638196945
-P _part/17/_geo_xyz/18,10,2 221.348632812
+P _part/17/_geo_xyz/18,10,2 221.348632813
 P _part/17/_geo_xyz/18,11,0 33.152820587
 P _part/17/_geo_xyz/18,11,1 7.758583069
 P _part/17/_geo_xyz/18,11,2 219.186370850
@@ -15558,7 +15538,6 @@ P _part/17/_locked/9,8 0
 P _part/17/_locked/9,9 0
 P _part/17/_locked/i_count 20
 P _part/17/_locked/j_count 18
-P _part/17/_part_area_rule 0.0
 P _part/17/_part_cd 0.059999999
 P _part/17/_part_phi 0.0
 P _part/17/_part_psi 0.0
@@ -17028,7 +17007,6 @@ P _part/18/_locked/9,8 0
 P _part/18/_locked/9,9 0
 P _part/18/_locked/i_count 20
 P _part/18/_locked/j_count 18
-P _part/18/_part_area_rule 0.0
 P _part/18/_part_cd 0.059999999
 P _part/18/_part_phi 0.0
 P _part/18/_part_psi 0.0
@@ -18498,7 +18476,6 @@ P _part/19/_locked/9,8 0
 P _part/19/_locked/9,9 0
 P _part/19/_locked/i_count 20
 P _part/19/_locked/j_count 18
-P _part/19/_part_area_rule 0.0
 P _part/19/_part_cd 0.059999999
 P _part/19/_part_phi 0.0
 P _part/19/_part_psi 0.0
@@ -18522,7 +18499,7 @@ P _part/19/_top_t2 0.509000003
 P _part/2/_bot_s1 0.0
 P _part/2/_bot_s2 0.015625000
 P _part/2/_bot_t1 0.255859375
-P _part/2/_bot_t2 0.379882812
+P _part/2/_bot_t2 0.379882813
 P _part/2/_geo_xyz/0,0,0 0.0
 P _part/2/_geo_xyz/0,0,1 0.274120092
 P _part/2/_geo_xyz/0,0,2 -1.100000858
@@ -19968,7 +19945,6 @@ P _part/2/_locked/9,8 0
 P _part/2/_locked/9,9 0
 P _part/2/_locked/i_count 20
 P _part/2/_locked/j_count 18
-P _part/2/_part_area_rule 0.0
 P _part/2/_part_cd 0.059999999
 P _part/2/_part_phi 0.0
 P _part/2/_part_psi 0.0
@@ -19988,7 +19964,7 @@ P _part/2/_s_dim 20
 P _part/2/_top_s1 0.0
 P _part/2/_top_s2 0.015625000
 P _part/2/_top_t1 0.255859375
-P _part/2/_top_t2 0.379882812
+P _part/2/_top_t2 0.379882813
 P _part/20/_bot_s1 0.0
 P _part/20/_bot_s2 0.125000000
 P _part/20/_bot_t1 0.126000002
@@ -21438,7 +21414,6 @@ P _part/20/_locked/9,8 0
 P _part/20/_locked/9,9 0
 P _part/20/_locked/i_count 20
 P _part/20/_locked/j_count 18
-P _part/20/_part_area_rule 0.0
 P _part/20/_part_cd 0.059999999
 P _part/20/_part_phi 0.0
 P _part/20/_part_psi 0.0
@@ -22908,7 +22883,6 @@ P _part/21/_locked/9,8 0
 P _part/21/_locked/9,9 0
 P _part/21/_locked/i_count 20
 P _part/21/_locked/j_count 18
-P _part/21/_part_area_rule 0.0
 P _part/21/_part_cd 0.059999999
 P _part/21/_part_phi 0.0
 P _part/21/_part_psi 0.0
@@ -24378,7 +24352,6 @@ P _part/22/_locked/9,8 0
 P _part/22/_locked/9,9 0
 P _part/22/_locked/i_count 20
 P _part/22/_locked/j_count 18
-P _part/22/_part_area_rule 0.0
 P _part/22/_part_cd 0.059999999
 P _part/22/_part_phi 0.0
 P _part/22/_part_psi 0.0
@@ -25848,7 +25821,6 @@ P _part/23/_locked/9,8 0
 P _part/23/_locked/9,9 0
 P _part/23/_locked/i_count 20
 P _part/23/_locked/j_count 18
-P _part/23/_part_area_rule 0.0
 P _part/23/_part_cd 0.0
 P _part/23/_part_phi 0.0
 P _part/23/_part_psi 0.0
@@ -27318,7 +27290,6 @@ P _part/24/_locked/9,8 0
 P _part/24/_locked/9,9 0
 P _part/24/_locked/i_count 20
 P _part/24/_locked/j_count 18
-P _part/24/_part_area_rule 0.0
 P _part/24/_part_cd 0.059999999
 P _part/24/_part_phi 0.0
 P _part/24/_part_psi 0.0
@@ -28788,7 +28759,6 @@ P _part/26/_locked/9,8 0
 P _part/26/_locked/9,9 0
 P _part/26/_locked/i_count 20
 P _part/26/_locked/j_count 18
-P _part/26/_part_area_rule 0.0
 P _part/26/_part_cd 0.059999999
 P _part/26/_part_phi 0.0
 P _part/26/_part_psi 0.0
@@ -30258,7 +30228,6 @@ P _part/27/_locked/9,8 0
 P _part/27/_locked/9,9 0
 P _part/27/_locked/i_count 20
 P _part/27/_locked/j_count 18
-P _part/27/_part_area_rule 0.0
 P _part/27/_part_cd 0.059999999
 P _part/27/_part_phi 0.0
 P _part/27/_part_psi 0.0
@@ -30282,7 +30251,7 @@ P _part/27/_top_t2 0.384000003
 P _part/3/_bot_s1 0.0
 P _part/3/_bot_s2 0.015625000
 P _part/3/_bot_t1 0.255859375
-P _part/3/_bot_t2 0.379882812
+P _part/3/_bot_t2 0.379882813
 P _part/3/_geo_xyz/0,0,0 0.0
 P _part/3/_geo_xyz/0,0,1 0.274120092
 P _part/3/_geo_xyz/0,0,2 -1.100000858
@@ -31728,7 +31697,6 @@ P _part/3/_locked/9,8 0
 P _part/3/_locked/9,9 0
 P _part/3/_locked/i_count 20
 P _part/3/_locked/j_count 18
-P _part/3/_part_area_rule 0.0
 P _part/3/_part_cd 0.059999999
 P _part/3/_part_phi 0.0
 P _part/3/_part_psi 0.0
@@ -31748,7 +31716,7 @@ P _part/3/_s_dim 20
 P _part/3/_top_s1 0.0
 P _part/3/_top_s2 0.015625000
 P _part/3/_top_t1 0.255859375
-P _part/3/_top_t2 0.379882812
+P _part/3/_top_t2 0.379882813
 P _part/40/_bot_s1 0.755999982
 P _part/40/_bot_s2 1.0
 P _part/40/_bot_t1 0.446999997
@@ -33198,7 +33166,6 @@ P _part/40/_locked/9,8 0
 P _part/40/_locked/9,9 0
 P _part/40/_locked/i_count 20
 P _part/40/_locked/j_count 18
-P _part/40/_part_area_rule 0.0
 P _part/40/_part_cd 0.059999999
 P _part/40/_part_phi 0.0
 P _part/40/_part_psi 0.0
@@ -34668,7 +34635,6 @@ P _part/41/_locked/9,8 0
 P _part/41/_locked/9,9 0
 P _part/41/_locked/i_count 20
 P _part/41/_locked/j_count 18
-P _part/41/_part_area_rule 0.0
 P _part/41/_part_cd 0.059999999
 P _part/41/_part_phi 0.0
 P _part/41/_part_psi 0.0
@@ -36138,7 +36104,6 @@ P _part/42/_locked/9,8 0
 P _part/42/_locked/9,9 0
 P _part/42/_locked/i_count 20
 P _part/42/_locked/j_count 18
-P _part/42/_part_area_rule 0.0
 P _part/42/_part_cd 0.059999999
 P _part/42/_part_phi 0.0
 P _part/42/_part_psi 0.0
@@ -37608,7 +37573,6 @@ P _part/43/_locked/9,8 0
 P _part/43/_locked/9,9 0
 P _part/43/_locked/i_count 20
 P _part/43/_locked/j_count 18
-P _part/43/_part_area_rule 0.0
 P _part/43/_part_cd 0.059999999
 P _part/43/_part_phi 0.0
 P _part/43/_part_psi 0.0
@@ -39078,7 +39042,6 @@ P _part/56/_locked/9,8 0
 P _part/56/_locked/9,9 0
 P _part/56/_locked/i_count 20
 P _part/56/_locked/j_count 18
-P _part/56/_part_area_rule 1.0
 P _part/56/_part_cd 0.039999999
 P _part/56/_part_phi 0.0
 P _part/56/_part_psi 0.0
@@ -40548,7 +40511,6 @@ P _part/57/_locked/9,8 0
 P _part/57/_locked/9,9 0
 P _part/57/_locked/i_count 20
 P _part/57/_locked/j_count 18
-P _part/57/_part_area_rule 1.0
 P _part/57/_part_cd 0.059999999
 P _part/57/_part_phi 0.0
 P _part/57/_part_psi 0.0
@@ -42018,7 +41980,6 @@ P _part/58/_locked/9,8 0
 P _part/58/_locked/9,9 0
 P _part/58/_locked/i_count 20
 P _part/58/_locked/j_count 18
-P _part/58/_part_area_rule 1.0
 P _part/58/_part_cd 0.039999999
 P _part/58/_part_phi 0.0
 P _part/58/_part_psi 0.0
@@ -43488,7 +43449,6 @@ P _part/59/_locked/9,8 0
 P _part/59/_locked/9,9 0
 P _part/59/_locked/i_count 20
 P _part/59/_locked/j_count 18
-P _part/59/_part_area_rule 1.0
 P _part/59/_part_cd 0.039999999
 P _part/59/_part_phi 0.0
 P _part/59/_part_psi 0.0
@@ -44958,7 +44918,6 @@ P _part/60/_locked/9,8 0
 P _part/60/_locked/9,9 0
 P _part/60/_locked/i_count 20
 P _part/60/_locked/j_count 18
-P _part/60/_part_area_rule 1.0
 P _part/60/_part_cd 0.059999999
 P _part/60/_part_phi 0.0
 P _part/60/_part_psi 0.0
@@ -46428,7 +46387,6 @@ P _part/61/_locked/9,8 0
 P _part/61/_locked/9,9 0
 P _part/61/_locked/i_count 20
 P _part/61/_locked/j_count 18
-P _part/61/_part_area_rule 1.0
 P _part/61/_part_cd 0.059999999
 P _part/61/_part_phi 0.0
 P _part/61/_part_psi 0.0
@@ -47898,7 +47856,6 @@ P _part/62/_locked/9,8 0
 P _part/62/_locked/9,9 0
 P _part/62/_locked/i_count 20
 P _part/62/_locked/j_count 18
-P _part/62/_part_area_rule 1.0
 P _part/62/_part_cd 0.039999999
 P _part/62/_part_phi 0.0
 P _part/62/_part_psi 0.0
@@ -49368,7 +49325,6 @@ P _part/63/_locked/9,8 0
 P _part/63/_locked/9,9 0
 P _part/63/_locked/i_count 20
 P _part/63/_locked/j_count 18
-P _part/63/_part_area_rule 1.0
 P _part/63/_part_cd 0.039999999
 P _part/63/_part_phi 0.0
 P _part/63/_part_psi 0.0
@@ -50838,7 +50794,6 @@ P _part/64/_locked/9,8 0
 P _part/64/_locked/9,9 0
 P _part/64/_locked/i_count 20
 P _part/64/_locked/j_count 18
-P _part/64/_part_area_rule 1.0
 P _part/64/_part_cd 0.001000000
 P _part/64/_part_phi 0.0
 P _part/64/_part_psi 0.0
@@ -52308,7 +52263,6 @@ P _part/65/_locked/9,8 0
 P _part/65/_locked/9,9 0
 P _part/65/_locked/i_count 20
 P _part/65/_locked/j_count 18
-P _part/65/_part_area_rule 1.0
 P _part/65/_part_cd 0.001000000
 P _part/65/_part_phi 0.0
 P _part/65/_part_psi 0.0
@@ -53778,7 +53732,6 @@ P _part/66/_locked/9,8 0
 P _part/66/_locked/9,9 0
 P _part/66/_locked/i_count 20
 P _part/66/_locked/j_count 18
-P _part/66/_part_area_rule 1.0
 P _part/66/_part_cd 0.001000000
 P _part/66/_part_phi 0.0
 P _part/66/_part_psi 0.0
@@ -55248,7 +55201,6 @@ P _part/67/_locked/9,8 0
 P _part/67/_locked/9,9 0
 P _part/67/_locked/i_count 20
 P _part/67/_locked/j_count 18
-P _part/67/_part_area_rule 1.0
 P _part/67/_part_cd 0.059999999
 P _part/67/_part_phi 24.0
 P _part/67/_part_psi 0.0
@@ -56718,7 +56670,6 @@ P _part/68/_locked/9,8 0
 P _part/68/_locked/9,9 0
 P _part/68/_locked/i_count 20
 P _part/68/_locked/j_count 18
-P _part/68/_part_area_rule 1.0
 P _part/68/_part_cd 0.059999999
 P _part/68/_part_phi -24.0
 P _part/68/_part_psi 0.0
@@ -58188,7 +58139,6 @@ P _part/69/_locked/9,8 0
 P _part/69/_locked/9,9 0
 P _part/69/_locked/i_count 20
 P _part/69/_locked/j_count 18
-P _part/69/_part_area_rule 1.0
 P _part/69/_part_cd 0.059999999
 P _part/69/_part_phi 0.0
 P _part/69/_part_psi 0.0
@@ -59658,7 +59608,6 @@ P _part/73/_locked/9,8 0
 P _part/73/_locked/9,9 0
 P _part/73/_locked/i_count 20
 P _part/73/_locked/j_count 18
-P _part/73/_part_area_rule 1.0
 P _part/73/_part_cd 0.039999999
 P _part/73/_part_phi 0.0
 P _part/73/_part_psi 0.0
@@ -61128,7 +61077,6 @@ P _part/74/_locked/9,8 0
 P _part/74/_locked/9,9 0
 P _part/74/_locked/i_count 20
 P _part/74/_locked/j_count 18
-P _part/74/_part_area_rule 1.0
 P _part/74/_part_cd 0.039999999
 P _part/74/_part_phi 0.0
 P _part/74/_part_psi 0.0
@@ -62598,7 +62546,6 @@ P _part/75/_locked/9,8 0
 P _part/75/_locked/9,9 0
 P _part/75/_locked/i_count 20
 P _part/75/_locked/j_count 18
-P _part/75/_part_area_rule 1.0
 P _part/75/_part_cd 0.039999999
 P _part/75/_part_phi 0.0
 P _part/75/_part_psi 0.0
@@ -64068,7 +64015,6 @@ P _part/77/_locked/9,8 0
 P _part/77/_locked/9,9 0
 P _part/77/_locked/i_count 20
 P _part/77/_locked/j_count 18
-P _part/77/_part_area_rule 1.0
 P _part/77/_part_cd 0.0
 P _part/77/_part_phi 0.0
 P _part/77/_part_psi 0.0
@@ -65538,7 +65484,6 @@ P _part/78/_locked/9,8 0
 P _part/78/_locked/9,9 0
 P _part/78/_locked/i_count 20
 P _part/78/_locked/j_count 18
-P _part/78/_part_area_rule 1.0
 P _part/78/_part_cd 0.0
 P _part/78/_part_phi 0.0
 P _part/78/_part_psi 0.0
@@ -67008,7 +66953,6 @@ P _part/79/_locked/9,8 0
 P _part/79/_locked/9,9 0
 P _part/79/_locked/i_count 20
 P _part/79/_locked/j_count 18
-P _part/79/_part_area_rule 1.0
 P _part/79/_part_cd 0.0
 P _part/79/_part_phi 0.0
 P _part/79/_part_psi 0.0
@@ -68478,7 +68422,6 @@ P _part/8/_locked/9,8 0
 P _part/8/_locked/9,9 0
 P _part/8/_locked/i_count 20
 P _part/8/_locked/j_count 18
-P _part/8/_part_area_rule 0.0
 P _part/8/_part_cd 0.059999999
 P _part/8/_part_phi 0.0
 P _part/8/_part_psi 0.0
@@ -69948,7 +69891,6 @@ P _part/80/_locked/9,8 0
 P _part/80/_locked/9,9 0
 P _part/80/_locked/i_count 20
 P _part/80/_locked/j_count 18
-P _part/80/_part_area_rule 1.0
 P _part/80/_part_cd 0.0
 P _part/80/_part_phi 0.0
 P _part/80/_part_psi 0.0
@@ -71418,7 +71360,6 @@ P _part/85/_locked/9,8 0
 P _part/85/_locked/9,9 0
 P _part/85/_locked/i_count 20
 P _part/85/_locked/j_count 18
-P _part/85/_part_area_rule 0.0
 P _part/85/_part_cd 0.059999999
 P _part/85/_part_phi 0.0
 P _part/85/_part_psi 0.0
@@ -72888,7 +72829,6 @@ P _part/86/_locked/9,8 0
 P _part/86/_locked/9,9 0
 P _part/86/_locked/i_count 20
 P _part/86/_locked/j_count 18
-P _part/86/_part_area_rule 0.0
 P _part/86/_part_cd 0.059999999
 P _part/86/_part_phi 0.0
 P _part/86/_part_psi 0.0
@@ -74358,7 +74298,6 @@ P _part/87/_locked/9,8 0
 P _part/87/_locked/9,9 0
 P _part/87/_locked/i_count 20
 P _part/87/_locked/j_count 18
-P _part/87/_part_area_rule 0.0
 P _part/87/_part_cd 0.059999999
 P _part/87/_part_phi 0.0
 P _part/87/_part_psi 0.0
@@ -75828,7 +75767,6 @@ P _part/88/_locked/9,8 0
 P _part/88/_locked/9,9 0
 P _part/88/_locked/i_count 20
 P _part/88/_locked/j_count 18
-P _part/88/_part_area_rule 0.0
 P _part/88/_part_cd 0.059999999
 P _part/88/_part_phi 0.0
 P _part/88/_part_psi 0.0
@@ -77298,7 +77236,6 @@ P _part/89/_locked/9,8 0
 P _part/89/_locked/9,9 0
 P _part/89/_locked/i_count 20
 P _part/89/_locked/j_count 18
-P _part/89/_part_area_rule 0.0
 P _part/89/_part_cd 0.059999999
 P _part/89/_part_phi 0.0
 P _part/89/_part_psi 0.0
@@ -78768,7 +78705,6 @@ P _part/9/_locked/9,8 0
 P _part/9/_locked/9,9 0
 P _part/9/_locked/i_count 20
 P _part/9/_locked/j_count 18
-P _part/9/_part_area_rule 0.0
 P _part/9/_part_cd 0.059999999
 P _part/9/_part_phi 0.0
 P _part/9/_part_psi 0.0
@@ -80238,7 +80174,6 @@ P _part/90/_locked/9,8 0
 P _part/90/_locked/9,9 0
 P _part/90/_locked/i_count 20
 P _part/90/_locked/j_count 18
-P _part/90/_part_area_rule 0.0
 P _part/90/_part_cd 0.0
 P _part/90/_part_phi 0.0
 P _part/90/_part_psi 0.0
@@ -81708,7 +81643,6 @@ P _part/91/_locked/9,8 0
 P _part/91/_locked/9,9 0
 P _part/91/_locked/i_count 20
 P _part/91/_locked/j_count 18
-P _part/91/_part_area_rule 0.0
 P _part/91/_part_cd 0.0
 P _part/91/_part_phi 0.0
 P _part/91/_part_psi 0.0
@@ -83178,7 +83112,6 @@ P _part/92/_locked/9,8 0
 P _part/92/_locked/9,9 0
 P _part/92/_locked/i_count 20
 P _part/92/_locked/j_count 18
-P _part/92/_part_area_rule 0.0
 P _part/92/_part_cd 0.0
 P _part/92/_part_phi 0.0
 P _part/92/_part_psi 0.0
@@ -84648,7 +84581,6 @@ P _part/93/_locked/9,8 0
 P _part/93/_locked/9,9 0
 P _part/93/_locked/i_count 20
 P _part/93/_locked/j_count 18
-P _part/93/_part_area_rule 0.0
 P _part/93/_part_cd 0.0
 P _part/93/_part_phi 0.0
 P _part/93/_part_psi 0.0
@@ -86118,7 +86050,6 @@ P _part/94/_locked/9,8 0
 P _part/94/_locked/9,9 0
 P _part/94/_locked/i_count 20
 P _part/94/_locked/j_count 18
-P _part/94/_part_area_rule 0.0
 P _part/94/_part_cd 0.0
 P _part/94/_part_phi 0.0
 P _part/94/_part_psi 0.0
@@ -96110,7 +96041,6 @@ P acf/_Vne_kts 399.0
 P acf/_Vno_kts 347.0
 P acf/_Vs_kts 216.0
 P acf/_Vso_kts 110.0
-P acf/_Vy_kts 0.0
 P acf/_Vyse_kts 0.0
 P acf/_add_def_exceeds_base_def 0
 P acf/_additonal_gear_flatplate 0.0
@@ -97804,7 +97734,6 @@ P acf/_dump_press_wow 0
 P acf/_elec_drive_eta 1.0
 P acf/_elec_fuelP 30.0
 P acf/_elec_regen_eta 0.0
-P acf/_elec_regen_rat 0.0
 P acf/_elev1_cratR 0.330000013
 P acf/_elev1_cratT 0.209999993
 P acf/_elev1_dn 17.0
@@ -98188,7 +98117,6 @@ P acf/_esys_bus_bit_add/rel_startr6 0
 P acf/_esys_bus_bit_add/rel_startr7 0
 P acf/_esys_bus_bit_add/rel_xpndr 5
 P acf/_esys_bus_bit_add/rel_yaw_damp 1
-P acf/_exhaust_hp_to_lb 0.0
 P acf/_exhaust_rat 0.500000000
 P acf/_face_jet 28.0
 P acf/_face_rocket 47.700000763
@@ -98205,7 +98133,7 @@ P acf/_feather_prop_with_oilp 0
 P acf/_feathered_pitch 0.0
 P acf/_ff_rat_idle_JET 0.010000000
 P acf/_ff_rat_idle_PRP 0.250000000
-P acf/_file_writer_version 115029
+P acf/_file_writer_version 113601
 P acf/_flap1_cd 0.109999999
 P acf/_flap1_cl 1.200000048
 P acf/_flap1_cm -0.370999992
@@ -98213,8 +98141,6 @@ P acf/_flap1_cratR 0.259999990
 P acf/_flap1_cratT 0.259999990
 P acf/_flap1_dn/0 0.0
 P acf/_flap1_dn/1 1.0
-P acf/_flap1_dn/10 0.0
-P acf/_flap1_dn/11 0.0
 P acf/_flap1_dn/2 5.0
 P acf/_flap1_dn/3 10.0
 P acf/_flap1_dn/4 20.0
@@ -98223,7 +98149,7 @@ P acf/_flap1_dn/6 30.0
 P acf/_flap1_dn/7 0.0
 P acf/_flap1_dn/8 0.0
 P acf/_flap1_dn/9 0.0
-P acf/_flap1_dn/count 12
+P acf/_flap1_dn/count 10
 P acf/_flap1_max_sweep_rat 1.0
 P acf/_flap1_ptch 0.0
 P acf/_flap1_ptch_above_50 0
@@ -98237,8 +98163,6 @@ P acf/_flap2_cratR 0.259999990
 P acf/_flap2_cratT 0.259999990
 P acf/_flap2_dn/0 0.0
 P acf/_flap2_dn/1 1.0
-P acf/_flap2_dn/10 0.0
-P acf/_flap2_dn/11 0.0
 P acf/_flap2_dn/2 5.0
 P acf/_flap2_dn/3 10.0
 P acf/_flap2_dn/4 20.0
@@ -98247,7 +98171,7 @@ P acf/_flap2_dn/6 30.0
 P acf/_flap2_dn/7 0.0
 P acf/_flap2_dn/8 0.0
 P acf/_flap2_dn/9 0.0
-P acf/_flap2_dn/count 12
+P acf/_flap2_dn/count 10
 P acf/_flap2_max_sweep_rat 1.0
 P acf/_flap2_ptch 0.0
 P acf/_flap2_ptch_above_50 0
@@ -98415,6 +98339,8 @@ P acf/_has_get_tow_new 0
 P acf/_has_give_tow 0
 P acf/_has_ground_pwr 1
 P acf/_has_hsi 0
+P acf/_has_litemap_tex_1 0
+P acf/_has_litemap_tex_2 0
 P acf/_has_pre_rotate 0
 P acf/_has_push_back 1
 P acf/_has_radio_alt_callout 1
@@ -98833,8 +98759,6 @@ P acf/_single_axis_ap 0
 P acf/_skid_EQ 0
 P acf/_slat1_dn/0 0.0
 P acf/_slat1_dn/1 1.0
-P acf/_slat1_dn/10 0.0
-P acf/_slat1_dn/11 0.0
 P acf/_slat1_dn/2 1.0
 P acf/_slat1_dn/3 1.0
 P acf/_slat1_dn/4 1.0
@@ -98843,13 +98767,11 @@ P acf/_slat1_dn/6 1.0
 P acf/_slat1_dn/7 0.0
 P acf/_slat1_dn/8 0.0
 P acf/_slat1_dn/9 0.0
-P acf/_slat1_dn/count 12
+P acf/_slat1_dn/count 10
 P acf/_slat1_inc 8.0
 P acf/_slat1_type 0
 P acf/_slat2_dn/0 0.0
 P acf/_slat2_dn/1 0.0
-P acf/_slat2_dn/10 0.0
-P acf/_slat2_dn/11 0.0
 P acf/_slat2_dn/2 0.0
 P acf/_slat2_dn/3 0.0
 P acf/_slat2_dn/4 0.0
@@ -98858,7 +98780,7 @@ P acf/_slat2_dn/6 0.0
 P acf/_slat2_dn/7 0.0
 P acf/_slat2_dn/8 0.0
 P acf/_slat2_dn/9 0.0
-P acf/_slat2_dn/count 12
+P acf/_slat2_dn/count 10
 P acf/_slat2_inc 0.0
 P acf/_slat2_type 0
 P acf/_slat_EQ 1
@@ -98980,8 +98902,6 @@ P acf/_tail_hook_z 0.0
 P acf/_tail_rot_with_v1_kts 0.0
 P acf/_tail_rot_with_v2_deg 0.0
 P acf/_tail_rot_with_v2_kts 0.0
-P acf/_tail_rotor_lf_trim_rat 0.0
-P acf/_tail_rotor_rt_trim_rat 0.0
 P acf/_tail_with_coll 0.0
 P acf/_tailrotor_EQ 0
 P acf/_takeoff_trim_11 0.0
@@ -99104,7 +99024,6 @@ P acf/_truck_lon_sep 3.0
 P acf/_tvec_hdng 0.0
 P acf/_tvec_ptch 0.0
 P acf/_tvec_roll 0.0
-P acf/_use_1140_fm 0
 P acf/_use_cus_gear_damping 1
 P acf/_use_cus_gear_defs 1
 P acf/_use_manual_prop_inc 0
@@ -99570,7 +99489,7 @@ GROUP Captain PFD
       gen_rotary Scale
         POS 465.500000 767.500000
         IMAGE CRT Displays/PFD/Artificial Horizon/HrznGSscale
-        DATAREF 
+        DATAREF
         SHOW_GREATER 0.100000 laminar/B747/pfd/capt/irs
         LOCKED
         LIGHT_MODE GLASS_AUTO
@@ -99591,9 +99510,10 @@ GROUP Captain PFD
 
     END_GROUP
     GROUP Localizer
-      SHOW_GREATER 0.100000 laminar/B747/pfd/capt/irs
+       SHOW_GREATER 0.100000 laminar/B747/pfd/capt/irs
       LOCKED
       GROUP Localizer Mask
+     
         LOCKED
         gen_rotary Mask
           POS 315.000000 614.000000
@@ -105221,74 +105141,68 @@ GROUP Captain ND
   END_GROUP
   GROUP CAPT IRS INFO
     GROUP CAPT IRS ON
-      SHOW_GREATER 0.100000 laminar/B747/pfd/capt/irs
-      EFIS_TAS_GS_wind el_TAS_GS_wind.png
-        POS 95.000000 370.000000
-        DATAREF 
-        SIZE 3.200000
-        LOCKED
-        LIGHT_MODE MECHANICAL
-        LIGHT_RHEOSTAT 0
-        BUS_SRC 5
-        KEY_FRAME 0.000000 0.000000 1.000000
-        KEY_FRAME 1.000000 1.000000
-
-    END_GROUP
-    GROUP CAPT IRS OFF
-      SHOW_LESS 0.100000 laminar/B747/pfd/capt/irs
-      gen_text irs line1
-        POS 95.000000 370.000000
-        IMAGE CRT Displays/TEXT/TXT.2.28.white
-        DATAREF laminar/B747/irs/line1
-        LOCKED
-        LIGHT_MODE GLASS_AUTO
-        LIGHT_RHEOSTAT 2
-        BUS_SRC 5
-        KEY_FRAME 0.000000 0.000000 1.000000
-        KEY_FRAME 1.000000 1.000000
-        OFFSET_X -50
-        OFFSET_Y -8.000000
-
-      gen_text irs line2
-        POS 95.000000 345.000000
-        IMAGE CRT Displays/TEXT/TXT.2.28.white
-        DATAREF laminar/B747/irs/line2
-        LOCKED
-        LIGHT_MODE GLASS_AUTO
-        LIGHT_RHEOSTAT 2
-        BUS_SRC 5
-        KEY_FRAME 0.000000 0.000000 1.000000
-        KEY_FRAME 1.000000 1.000000
-        OFFSET_X -50
-        OFFSET_Y -8.000000
-
-      gen_text irs line3
-        POS 95.000000 320.000000
-        IMAGE CRT Displays/TEXT/TXT.2.28.white
-        DATAREF laminar/B747/irs/line3
-        LOCKED
-        LIGHT_MODE GLASS_AUTO
-        LIGHT_RHEOSTAT 2
-        BUS_SRC 5
-        KEY_FRAME 0.000000 0.000000 1.000000
-        KEY_FRAME 1.000000 1.000000
-        OFFSET_X -50
-        OFFSET_Y -8.000000
-
-      gen_text irs line4
-        POS 95.000000 295.000000
-        IMAGE CRT Displays/TEXT/TXT.2.28.white
-        DATAREF laminar/B747/irs/line4
-        LOCKED
-        LIGHT_MODE GLASS_AUTO
-        LIGHT_RHEOSTAT 2
-        BUS_SRC 5
-        KEY_FRAME 0.000000 0.000000 1.000000
-        KEY_FRAME 1.000000 1.000000
-        OFFSET_X -50
-        OFFSET_Y -8.000000
-
-    END_GROUP
+     SHOW_GREATER 0.100000 laminar/B747/pfd/capt/irs
+	EFIS_TAS_GS_wind el_TAS_GS_wind.png
+	POS 95.000000 370.000000
+	SIZE 3.200000
+	LOCKED
+	LIGHT_MODE MECHANICAL
+	LIGHT_RHEOSTAT 0
+	BUS_SRC 5
+	KEY_FRAME 0.000000 0.000000 1.000000
+	KEY_FRAME 1.000000 1.000000
+      END_GROUP
+      GROUP CAPT IRS OFF
+	SHOW_LESS 0.100000 laminar/B747/pfd/capt/irs
+	gen_text irs line1
+	  POS 95.000000 370.000000
+	  IMAGE CRT Displays/TEXT/TXT.2.28.white
+	  DATAREF laminar/B747/irs/line1
+	  LOCKED
+	  LIGHT_MODE GLASS_AUTO
+	  LIGHT_RHEOSTAT 2
+	  BUS_SRC 5
+	  KEY_FRAME 0.000000 0.000000 1.000000
+	  KEY_FRAME 1.000000 1.000000
+	  OFFSET_X -50
+	  OFFSET_Y -8.000000
+	gen_text irs line2
+	  POS 95.000000 345.000000
+	  IMAGE CRT Displays/TEXT/TXT.2.28.white
+	  DATAREF laminar/B747/irs/line2
+	  LOCKED
+	  LIGHT_MODE GLASS_AUTO
+	  LIGHT_RHEOSTAT 2
+	  BUS_SRC 5
+	  KEY_FRAME 0.000000 0.000000 1.000000
+	  KEY_FRAME 1.000000 1.000000
+	  OFFSET_X -50
+	  OFFSET_Y -8.000000
+	gen_text irs line3
+	  POS 95.000000 320.000000
+	  IMAGE CRT Displays/TEXT/TXT.2.28.white
+	  DATAREF laminar/B747/irs/line3
+	  LOCKED
+	  LIGHT_MODE GLASS_AUTO
+	  LIGHT_RHEOSTAT 2
+	  BUS_SRC 5
+	  KEY_FRAME 0.000000 0.000000 1.000000
+	  KEY_FRAME 1.000000 1.000000
+	  OFFSET_X -50
+	  OFFSET_Y -8.000000 
+	gen_text irs line4
+	  POS 95.000000 295.000000
+	  IMAGE CRT Displays/TEXT/TXT.2.28.white
+	  DATAREF laminar/B747/irs/line4
+	  LOCKED
+	  LIGHT_MODE GLASS_AUTO
+	  LIGHT_RHEOSTAT 2
+	  BUS_SRC 5
+	  KEY_FRAME 0.000000 0.000000 1.000000
+	  KEY_FRAME 1.000000 1.000000
+	  OFFSET_X -50
+	  OFFSET_Y -8.000000   
+      END_GROUP
   END_GROUP
 END_GROUP
 GROUP First Officer PFD
@@ -105607,7 +105521,7 @@ GROUP First Officer PFD
       gen_rotary Scale 2
         POS 1144.500000 767.500000
         IMAGE CRT Displays/PFD/Artificial Horizon/HrznGSscale
-        DATAREF 
+        DATAREF
         SHOW_GREATER 0.100000 laminar/B747/pfd/fo/irs
         LOCKED
         LIGHT_MODE GLASS_AUTO
@@ -105630,6 +105544,7 @@ GROUP First Officer PFD
     GROUP Localizer 2
       SHOW_GREATER 0.100000 laminar/B747/pfd/fo/irs
       LOCKED
+      
       GROUP Localizer Mask 2
         LOCKED
         gen_rotary Mask 2
@@ -108375,8 +108290,8 @@ GROUP First Officer PFD
     END_GROUP
   END_GROUP
   GROUP Hdg/Track Display 2
-    SHOW_GREATER 0.100000 laminar/B747/pfd/fo/irs
     LOCKED
+    SHOW_GREATER 0.100000 laminar/B747/pfd/fo/irs
     gen_rotary Background 2
       POS 994.000000 507.000000
       IMAGE CRT Displays/PFD/Heading Track/HdgTrackBgnd
@@ -108670,7 +108585,7 @@ GROUP First Officer ND
       END_GROUP
     END_GROUP
     GROUP Digital HDG/TRK
-      SHOW_GREATER 0.100000 laminar/B747/pfd/fo/irs
+    SHOW_GREATER 0.100000 laminar/B747/pfd/fo/irs
       LOCKED
       GROUP APP/VOR/MAP
         SHOW_LESS 2.000000 laminar/B747/nd/mode/fo/sel_dial_pos
@@ -109460,7 +109375,7 @@ GROUP First Officer ND
 
     END_GROUP
     GROUP Digital HDG/TRK
-      SHOW_GREATER 0.100000 laminar/B747/pfd/fo/irs
+     SHOW_GREATER 0.100000 laminar/B747/pfd/fo/irs
       LOCKED
       gen_rotary Heading Box
         POS 1022.000000 398.500000
@@ -111203,73 +111118,68 @@ GROUP First Officer ND
   END_GROUP
   GROUP FO IRS INFO
     GROUP FO IRS ON
-      SHOW_GREATER 0.100000 laminar/B747/pfd/fo/irs
+     SHOW_GREATER 0.100000 laminar/B747/pfd/fo/irs
       EFIS_TAS_GS_wind el_TAS_GS_wind.png
-        POS 772.000000 370.000000
-        DATAREF [0]
-        SIZE 3.200000
-        LOCKED
-        LIGHT_MODE MECHANICAL
-        LIGHT_RHEOSTAT 3
-        BUS_SRC 5
-        KEY_FRAME 0.000000 0.000000 1.000000
-        KEY_FRAME 1.000000 1.000000
-
-    END_GROUP
-    GROUP FO IRS OFF
-      SHOW_LESS 0.100000 laminar/B747/pfd/fo/irs
-      gen_text irs line1
-        POS 772.000000 370.000000
-        IMAGE CRT Displays/TEXT/TXT.2.28.white
-        DATAREF laminar/B747/irs/line1
-        LOCKED
-        LIGHT_MODE GLASS_AUTO
-        LIGHT_RHEOSTAT 2
-        BUS_SRC 5
-        KEY_FRAME 0.000000 0.000000 1.000000
-        KEY_FRAME 1.000000 1.000000
-        OFFSET_X -50
-        OFFSET_Y -8.000000
-
-      gen_text irs line2
-        POS 772.000000 345.000000
-        IMAGE CRT Displays/TEXT/TXT.2.28.white
-        DATAREF laminar/B747/irs/line2
-        LOCKED
-        LIGHT_MODE GLASS_AUTO
-        LIGHT_RHEOSTAT 2
-        BUS_SRC 5
-        KEY_FRAME 0.000000 0.000000 1.000000
-        KEY_FRAME 1.000000 1.000000
-        OFFSET_X -50
-        OFFSET_Y -8.000000
-
-      gen_text irs line3
-        POS 772.000000 320.000000
-        IMAGE CRT Displays/TEXT/TXT.2.28.white
-        DATAREF laminar/B747/irs/line3
-        LOCKED
-        LIGHT_MODE GLASS_AUTO
-        LIGHT_RHEOSTAT 2
-        BUS_SRC 5
-        KEY_FRAME 0.000000 0.000000 1.000000
-        KEY_FRAME 1.000000 1.000000
-        OFFSET_X -50
-        OFFSET_Y -8.000000
-
-      gen_text irs line4
-        POS 772.000000 295.000000
-        IMAGE CRT Displays/TEXT/TXT.2.28.white
-        DATAREF laminar/B747/irs/line4
-        LOCKED
-        LIGHT_MODE GLASS_AUTO
-        LIGHT_RHEOSTAT 2
-        BUS_SRC 5
-        KEY_FRAME 0.000000 0.000000 1.000000
-        KEY_FRAME 1.000000 1.000000
-        OFFSET_X -50
-        OFFSET_Y -8.000000
-
+	POS 772.000000 370.000000
+	DATAREF [0]
+	SIZE 3.200000
+	LOCKED
+	LIGHT_MODE MECHANICAL
+	LIGHT_RHEOSTAT 3
+	BUS_SRC 5
+	KEY_FRAME 0.000000 0.000000 1.000000
+	KEY_FRAME 1.000000 1.000000
+      END_GROUP
+      GROUP FO IRS OFF
+	SHOW_LESS 0.100000 laminar/B747/pfd/fo/irs
+	gen_text irs line1
+	  POS 772.000000 370.000000
+	  IMAGE CRT Displays/TEXT/TXT.2.28.white
+	  DATAREF laminar/B747/irs/line1
+	  LOCKED
+	  LIGHT_MODE GLASS_AUTO
+	  LIGHT_RHEOSTAT 2
+	  BUS_SRC 5
+	  KEY_FRAME 0.000000 0.000000 1.000000
+	  KEY_FRAME 1.000000 1.000000
+	  OFFSET_X -50
+	  OFFSET_Y -8.000000
+	gen_text irs line2
+	  POS 772.000000 345.000000
+	  IMAGE CRT Displays/TEXT/TXT.2.28.white
+	  DATAREF laminar/B747/irs/line2
+	  LOCKED
+	  LIGHT_MODE GLASS_AUTO
+	  LIGHT_RHEOSTAT 2
+	  BUS_SRC 5
+	  KEY_FRAME 0.000000 0.000000 1.000000
+	  KEY_FRAME 1.000000 1.000000
+	  OFFSET_X -50
+	  OFFSET_Y -8.000000
+	gen_text irs line3
+	  POS 772.000000 320.000000
+	  IMAGE CRT Displays/TEXT/TXT.2.28.white
+	  DATAREF laminar/B747/irs/line3
+	  LOCKED
+	  LIGHT_MODE GLASS_AUTO
+	  LIGHT_RHEOSTAT 2
+	  BUS_SRC 5
+	  KEY_FRAME 0.000000 0.000000 1.000000
+	  KEY_FRAME 1.000000 1.000000
+	  OFFSET_X -50
+	  OFFSET_Y -8.000000 
+	gen_text irs line4
+	  POS 772.000000 295.000000
+	  IMAGE CRT Displays/TEXT/TXT.2.28.white
+	  DATAREF laminar/B747/irs/line4
+	  LOCKED
+	  LIGHT_MODE GLASS_AUTO
+	  LIGHT_RHEOSTAT 2
+	  BUS_SRC 5
+	  KEY_FRAME 0.000000 0.000000 1.000000
+	  KEY_FRAME 1.000000 1.000000
+	  OFFSET_X -50
+	  OFFSET_Y -8.000000 
     END_GROUP
   END_GROUP
 END_GROUP
@@ -124545,7 +124455,7 @@ GROUP Lower EICAS
           POS 1498.000000 136.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[0]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[0]
+	  SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[0]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -124561,7 +124471,7 @@ GROUP Lower EICAS
           POS 1541.000000 136.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[1]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[1]
+	  SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[1]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -124577,7 +124487,7 @@ GROUP Lower EICAS
           POS 1498.000000 136.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[0]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[0]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[0]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -124593,7 +124503,7 @@ GROUP Lower EICAS
           POS 1541.000000 136.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[1]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[1]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[1]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -124612,7 +124522,7 @@ GROUP Lower EICAS
           POS 1498.000000 73.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[2]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[2]
+	  SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[2]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -124628,7 +124538,7 @@ GROUP Lower EICAS
           POS 1541.000000 73.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[3]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[3]
+	  SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[3]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -124644,7 +124554,7 @@ GROUP Lower EICAS
           POS 1498.000000 73.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[2]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[2]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[2]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -124660,7 +124570,7 @@ GROUP Lower EICAS
           POS 1541.000000 73.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[3]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[3]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[3]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -124928,7 +124838,7 @@ GROUP Lower EICAS
           POS 1553.000000 -68.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[4]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[4]
+	  SHOW_LESS 484.00000 laminar/B747/gear/brake_temp[4]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -124944,7 +124854,7 @@ GROUP Lower EICAS
           POS 1596.000000 -68.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[5]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[5]
+	  SHOW_LESS 484.00000 laminar/B747/gear/brake_temp[5]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -124960,7 +124870,7 @@ GROUP Lower EICAS
           POS 1553.000000 -68.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[4]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[4]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[4] 
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -124976,7 +124886,7 @@ GROUP Lower EICAS
           POS 1596.000000 -68.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[5]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[5]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[5]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -124995,7 +124905,7 @@ GROUP Lower EICAS
           POS 1553.000000 -131.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[6]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[6]
+	  SHOW_LESS 484.00000 laminar/B747/gear/brake_temp[6] 
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125011,7 +124921,7 @@ GROUP Lower EICAS
           POS 1596.000000 -131.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[7]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[7]
+	  SHOW_LESS 484.00000 laminar/B747/gear/brake_temp[7]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125027,7 +124937,7 @@ GROUP Lower EICAS
           POS 1553.000000 -131.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[6]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[6]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[6] 
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125043,7 +124953,7 @@ GROUP Lower EICAS
           POS 1596.000000 -131.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[7]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[7]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[7] 
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125309,7 +125219,7 @@ GROUP Lower EICAS
           POS 1869.000000 136.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[12]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[12]
+	  SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[12] 
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125325,7 +125235,7 @@ GROUP Lower EICAS
           POS 1912.000000 136.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[13]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[13]
+	  SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[13]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125341,7 +125251,7 @@ GROUP Lower EICAS
           POS 1869.000000 136.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[12]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[12]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[12] 
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125357,7 +125267,7 @@ GROUP Lower EICAS
           POS 1912.000000 136.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[13]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[13]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[13]  
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125376,7 +125286,7 @@ GROUP Lower EICAS
           POS 1869.000000 73.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[14]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[14]
+	  SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[14] 
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125392,7 +125302,7 @@ GROUP Lower EICAS
           POS 1912.000000 73.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[15]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[15]
+	  SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[15]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125408,7 +125318,7 @@ GROUP Lower EICAS
           POS 1869.000000 73.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[14]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[14]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[14]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125424,7 +125334,7 @@ GROUP Lower EICAS
           POS 1912.000000 73.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[15]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[15]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[15]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125690,7 +125600,7 @@ GROUP Lower EICAS
           POS 1814.000000 -68.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[8]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[8]
+	  SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[8] 
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125706,7 +125616,7 @@ GROUP Lower EICAS
           POS 1857.000000 -68.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[9]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[9]
+	  SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[9] 
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125722,7 +125632,7 @@ GROUP Lower EICAS
           POS 1814.000000 -68.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[8]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[8]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[8]  
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125738,7 +125648,7 @@ GROUP Lower EICAS
           POS 1857.000000 -68.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[9]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[9]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[9]
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125757,7 +125667,7 @@ GROUP Lower EICAS
           POS 1814.000000 -131.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[10]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[10]
+	  SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[10]  
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125773,7 +125683,7 @@ GROUP Lower EICAS
           POS 1857.000000 -131.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
           DATAREF laminar/B747/gear/brake_temp_ind[11]
-          SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[11]
+	  SHOW_LESS 484.000000 laminar/B747/gear/brake_temp[11]  
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125789,7 +125699,7 @@ GROUP Lower EICAS
           POS 1814.000000 -131.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[10]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[10]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[10] 
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -125805,7 +125715,7 @@ GROUP Lower EICAS
           POS 1857.000000 -131.000000
           IMAGE CRT Displays/LED/LED_3.26B.xx###0.amber
           DATAREF laminar/B747/gear/brake_temp_ind[11]
-          SHOW_GREATER 484.100006 laminar/B747/gear/brake_temp[11]
+	  SHOW_GREATER 484.100000 laminar/B747/gear/brake_temp[11] 
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 9
@@ -126950,10 +126860,12 @@ GROUP FMS C
     CURSOR DEFAULT
     CLICK_DX 0
     CLICK_DY 0
+GROUP NAV RAD
 
-  GROUP NAV RAD
     LOCKED
     CHAINED
+
+
     GROUP Lines-Large Font
       LOCKED
       gen_text XXXXXXXXXXXXXXXXXXX

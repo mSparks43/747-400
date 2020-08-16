@@ -1,0 +1,13 @@
+A
+800
+OBJ
+
+TEXTURE particle_747-400.png
+
+PARTICLE_SYSTEM particle_747-400.pss
+
+POINT_COUNTS	0 0 0 0
+
+EMITTER 		apu_effects		0.000525	2.223124	67.259872			0	0	0
+
+#add aditional emitters below by copying line 11 and changing emitter_name and xyz.
