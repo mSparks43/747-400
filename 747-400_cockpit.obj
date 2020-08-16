@@ -22275,11 +22275,11 @@ ATTR_manip_command	button	laminar/B747/fms1/func_key/navrad	NAV RAD 2
 TRIS	15990 30
 ATTR_manip_command	button	laminar/B747/fms2/func_key/navrad	NAV RAD 3
 TRIS	16020 30
-ATTR_manip_command	button	sim/autopilot/FMS	Autopiot VNAV Mode
+ATTR_manip_command	button	laminar/B747/autopilot/button_switch/VNAV	Autopiot VNAV Mode
 TRIS	16050 30
 ATTR_manip_command	button	sim/autopilot/approach	Autopilot APP Mode
 TRIS	16080 30
-ATTR_manip_command	button	sim/autopilot/gpss	Autopilot LNAV Mode
+ATTR_manip_command	button	laminar/B747/autopilot/button_switch/LNAV	Autopilot LNAV Mode
 TRIS	16110 30
 ATTR_manip_command	button	sim/autopilot/heading	Autopilot Heading Select Mode
 TRIS	16140 72
@@ -22433,6 +22433,16 @@ ATTR_manip_command_knob	rotate_medium	laminar/B747/nd/range/fo/sel_dial_up	lamin
 TRIS	18426 30
 ATTR_manip_command_knob	rotate_medium	sim/autopilot/airspeed_up	sim/autopilot/airspeed_down	IAS/MACH Speed Selector Dial
 TRIS	18456 30
+ATTR_manip_command	button	laminar/B747/button_switch/press_airspeed	airspeed intervention
+ANIM_begin
+	ANIM_trans	   -0.0713    -0.014    0.0	   -0.0713    -0.014    0.0	0 0	no_ref
+	TRIS	16140 72
+ANIM_end
+ATTR_manip_command	button	laminar/B747/button_switch/press_altitude	altitude intervention
+ANIM_begin
+	ANIM_trans	   0.1283    0.002    0.0	   0.1283    0.002    0.0	0 0	no_ref
+	TRIS	16140 72
+ANIM_end
 ATTR_manip_command_knob	rotate_medium	sim/autopilot/altitude_up	sim/autopilot/altitude_down	Autopilot Selected Altitude
 TRIS	18486 30
 ATTR_manip_command_knob	rotate_medium	sim/instruments/barometer_up	sim/instruments/barometer_down	Altimeter Baro Adjustment

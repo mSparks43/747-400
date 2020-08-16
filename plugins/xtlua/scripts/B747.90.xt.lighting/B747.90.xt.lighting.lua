@@ -146,6 +146,7 @@ simDR_cabin_altitude                = find_dataref("sim/cockpit2/pressurization/
 
 simDR_autopilot_servos_on           	= find_dataref("sim/cockpit2/autopilot/servos_on")
 simDR_autopilot_autothrottle_enabled	= find_dataref("sim/cockpit2/autopilot/autothrottle_enabled")
+
 simDR_autopilot_gpss_status				= find_dataref("sim/cockpit2/autopilot/gpss_status")
 simDR_autopilot_fms_vnav_status			= find_dataref("sim/cockpit2/autopilot/fms_vnav")
 simDR_autopilot_flch_status         	= find_dataref("sim/cockpit2/autopilot/speed_status")
@@ -176,7 +177,8 @@ simDR_flap_ratio_control        	= find_dataref("sim/cockpit2/controls/flap_rati
 --*************************************************************************************--
 --** 				              FIND CUSTOM DATAREFS             			    	 **--
 --*************************************************************************************--
-
+B747DR_ap_lnav_state                = find_dataref("laminar/B747/autopilot/lnav_state")
+B747DR_ap_vnav_state                = find_dataref("laminar/B747/autopilot/vnav_state")
 B747DR_button_switch_position       = find_dataref("laminar/B747/button_switch/position")
 B747DR_toggle_switch_position       = find_dataref("laminar/B747/toggle_switch/position")
 B747DR_engine_TOGA_mode             = find_dataref("laminar/B747/engines/TOGA_mode")
@@ -1463,8 +1465,8 @@ function B747_annunciators()
     -- MCP AUTOPILOT BUTTON SWITCHES ---------------------------------------------
 	annun.b.ap_thrust 	= B747_ternary(B747DR_engine_TOGA_mode >0 , 1, 0)
     annun.b.ap_speed 	= B747_ternary(simDR_autopilot_autothrottle_enabled == 1, 1, 0)
-    annun.b.ap_lnav 	= B747_ternary(simDR_autopilot_gpss_status > 0, 1, 0)
-    annun.b.ap_vnav 	= B747_ternary(simDR_autopilot_fms_vnav_status > 0, 1, 0)
+    annun.b.ap_lnav 	= B747_ternary(simDR_autopilot_gpss_status > 0 or B747DR_ap_lnav_state>0, 1, 0)
+    annun.b.ap_vnav 	= B747_ternary(simDR_autopilot_fms_vnav_status > 0 or B747DR_ap_vnav_state>0, 1, 0)
     annun.b.ap_fl_ch 	= B747_ternary(simDR_autopilot_flch_status == 2 and simDR_autopilot_fms_vnav_status < 1, 1, 0)
     annun.b.ap_hdg_hold	= B747_ternary(simDR_autopilot_heading_hold_status == 2, 1, 0)
     annun.b.ap_vs 		= B747_ternary(simDR_autopilot_vs_status == 2 and simDR_autopilot_fms_vnav_status < 1, 1, 0)

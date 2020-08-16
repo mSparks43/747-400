@@ -24585,7 +24585,7 @@ ANIM_begin
 	TRIS	25374 1026
 ANIM_end
 ANIM_begin
-	ANIM_trans	  -0.1861    2.9751    5.0483	  -0.1861    2.9751    5.0483	0 0	no_ref
+	ANIM_trans	  -0.1861    2.9751    5.0483	  -0.1861    2.9731    5.0435	0 1	laminar/B747/autopilot/button_switch/position[15]
 	ANIM_rotate	   0.0000   -0.3746   -0.9272	  0.00   1.00	0 1	laminar/B747/autopilot/ias_mach/rheostat
 	TRIS	26400 1080
 ANIM_end
@@ -24607,7 +24607,7 @@ ANIM_begin
 	TRIS	29043 324
 ANIM_end
 ANIM_begin
-	ANIM_trans	   0.0131    2.9887    5.0429	   0.0131    2.9887    5.0429	0 0	no_ref
+	ANIM_trans	   0.0131    2.9887    5.0429	   0.0131    2.9867    5.0381	0 1	laminar/B747/autopilot/button_switch/position[16]
 	ANIM_rotate	   0.0000   -0.3746   -0.9272	  0.00   1.00	0 1	laminar/B747/autopilot/heading/altitude_dial_ft
 	TRIS	29367 504
 ANIM_end

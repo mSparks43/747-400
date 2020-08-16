@@ -6,16 +6,17 @@
 simDRTime=find_dataref("sim/time/total_running_time_sec")
 simDR_onGround=find_dataref("sim/flightmodel/failures/onground_all")
 B747DR_CAS_advisory_status       = find_dataref("laminar/B747/CAS/advisory_status")
-simDR_nav1Freq=find_dataref("sim/cockpit/radios/nav1_freq_hz")
-simDR_nav2Freq=find_dataref("sim/cockpit/radios/nav2_freq_hz")
+B747DR_ap_vnav_system            = find_dataref("laminar/B747/autopilot/vnav_system")
+simDR_nav1Freq			 =find_dataref("sim/cockpit/radios/nav1_freq_hz")
+simDR_nav2Freq			 =find_dataref("sim/cockpit/radios/nav2_freq_hz")
 B747DR_iru_status         	= find_dataref("laminar/B747/flt_mgmt/iru/status")
 B747DR_iru_mode_sel_pos         = find_dataref("laminar/B747/flt_mgmt/iru/mode_sel_dial_pos")
 
-B747DR_rtp_C_off 		= find_dataref("laminar/B747/comm/rtp_C/off_status")
-B747DR_pfd_mode_capt		                = find_dataref("laminar/B747/pfd/capt/irs")
-B747DR_pfd_mode_fo		                = find_dataref("laminar/B747/pfd/fo/irs")
-B747DR_irs_src_fo		                = find_dataref("laminar/B747/flt_inst/irs_src/fo/sel_dial_pos")
-B747DR_irs_src_capt		                = find_dataref("laminar/B747/flt_inst/irs_src/capt/sel_dial_pos")
+B747DR_rtp_C_off 		 = find_dataref("laminar/B747/comm/rtp_C/off_status")
+B747DR_pfd_mode_capt		 = find_dataref("laminar/B747/pfd/capt/irs")
+B747DR_pfd_mode_fo		 = find_dataref("laminar/B747/pfd/fo/irs")
+B747DR_irs_src_fo		 = find_dataref("laminar/B747/flt_inst/irs_src/fo/sel_dial_pos")
+B747DR_irs_src_capt		 = find_dataref("laminar/B747/flt_inst/irs_src/capt/sel_dial_pos")
 --Workaround for stack overflow in init.lua namespace_read
 
 function replace_char(pos, str, r)
@@ -123,6 +124,7 @@ acars=deferred_dataref("laminar/B747/comm/acars","number")
 toderate=deferred_dataref("laminar/B747/engine/derate/TO","number") 
 clbderate=deferred_dataref("laminar/B747/engine/derate/CLB","number")
 B747DR_radioModes=deferred_dataref("laminar/B747/radio/tuningmodes", "string")
+B747DR_FMSdata=deferred_dataref("laminar/B747/fms/data", "string")
 --*************************************************************************************--
 --** 				        CREATE READ-WRITE CUSTOM DATAREFS                        **--
 --*************************************************************************************--
@@ -147,6 +149,21 @@ fmsModules["data"]={
   atc="****",
   grwt="***.*",
   crzalt="*****",
+  clbspd="250",
+  transpd="272",
+  spdtransalt="10000",
+  transalt="18000",
+  clbrestspd="180",
+  clbrestalt="5000 ",
+  stepalt="FL360",
+  crzspd="810",
+  destranspd="240",
+  desspdtransalt="10000",
+  desrestspd="180",
+  desrestalt="5000 ",
+  fpa="*.*",
+  vb="*.*",
+  vs="****",
   fuel="***.*",
   zfw="***.*",
   reserves="***.*",
@@ -172,21 +189,23 @@ fmsModules["data"]={
   airportgate="*****",
   preselectLeft="******",
   preselectRight="******",
-setData=function(self,id,value)
-  --always retain the same length
-  if value=="" then value="***********" end
-  len=string.len(self[id])
-  if len < string.len(value) then 
-    value=string.sub(value,1,len)
-  end
-  --newVal=string.sub(value,1,len)
-  self[id]=string.format("%s%"..(len-string.len(value)).."s",value,"")
-end
+
 }
+B747DR_FMSdata=json.encode(fmsModules["data"]["values"])--make the fms data available to other modules
+fmsModules["setData"]=function(self,id,value)
+    --always retain the same length
+    if value=="" then value="***********" end
+    len=string.len(self["data"][id])
+    if len < string.len(value) then 
+      value=string.sub(value,1,len)
+    end
+    --newVal=string.sub(value,1,len)
+    self["data"][id]=string.format("%s%"..(len-string.len(value)).."s",value,"")
+end
 function setFMSData(id,value)
     --print("setting " .. id .. " to "..value.." curently "..fmsModules["data"][id])
   
-   fmsModules["data"]:setData(id,value)
+   fmsModules:setData(id,value)
 end  
 function getFMSData(id)
   if hasChild(fmsModules["data"],id) then
@@ -304,6 +323,9 @@ end
 debug_fms     = deferred_dataref("laminar/B747/debug/fms", "number")
 function after_physics()
   if debug_fms>0 then return end
+  
+    B747DR_FMSdata=json.encode(fmsModules["data"]["values"])--make the fms data available to other modules
+    --print(B747DR_FMSdata)
     fmsL:B747_fms_display()
     fmsC:B747_fms_display()
     fmsR:B747_fms_display()

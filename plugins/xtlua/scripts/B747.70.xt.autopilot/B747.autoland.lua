@@ -47,7 +47,7 @@ function start_flare()
     maxThrottle=simDR_allThrottle
     lastAlt=0
     pinThrottle=0;
-    zeroRatePitch=(neutralPitch/pitchMeasurements)+2.5
+    zeroRatePitch=(neutralPitch/pitchMeasurements)+0.5
 end
 local targetPitch
 function doPitch()
@@ -55,7 +55,7 @@ function doPitch()
   local doRollout=((4.5+simDR_AHARS_pitch_heading_deg_pilot))
   
   if simDR_radarAlt1 >flareAt then 
-    targetPitch=4
+    targetPitch=zeroRatePitch
 
   end
   
@@ -228,7 +228,7 @@ function preLand_measure()
       neutralPitch=neutralPitch+simDR_AHARS_pitch_heading_deg_pilot
       pitchMeasurements=pitchMeasurements+1;
       targetPitch=(neutralPitch/pitchMeasurements)
-      print("Lift="..(totalLift/liftMeasurements).. "Pitch="..targetPitch)
+      print("Lift="..(totalLift/liftMeasurements).. " Pitch="..targetPitch)
 end
 function preFlare_elevator()
       if simDR_AHARS_pitch_heading_deg_pilot>targetPitch+0.1 then

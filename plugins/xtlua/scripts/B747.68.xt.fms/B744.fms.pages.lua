@@ -105,6 +105,7 @@ dofile("B744.fms.pages.atcindex.lua")
 dofile("B744.fms.pages.atclogonstatus.lua")
 dofile("B744.fms.pages.atcreport.lua")
 dofile("B744.fms.pages.fmccomm.lua")
+dofile("B744.fms.pages.vnav.lua")
 --[[
 dofile("B744.fms.pages.actclb.lua")
 dofile("B744.fms.pages.actcrz.lua")
@@ -139,32 +140,44 @@ dofile("B744.fms.pages.waypointwinds.lua")
 
 
 fmsPages["INITREF"]=createPage("INITREF")
-fmsPages["INITREF"]["template"]={
+fmsPages["INITREF"].getPage=function(self,pgNo,fmsID)
+  local lineA="                        "
+  local LineB="<APPROACH               "
+  if simDR_onGround ==1 then
+    fmsFunctionsDefs["INITREF"]["L5"]={"setpage","TAKEOFF"}
+    fmsFunctionsDefs["INITREF"]["R6"]={"setpage","MAINT"}
+    lineA="<TAKEOFF                "
+    LineB="<APPROACH         MAINT>"
+  else
+    fmsFunctionsDefs["INITREF"]["L5"]=nil
+    fmsFunctionsDefs["INITREF"]["R6"]=nil
+  end
+  return {
 
-"     INIT/REF INDEX 1/1 ",
-"                        ",
-"<IDENT         NAV DATA>",
-"                        ",
-"<POS                    ",
-"                        ",
-"<PERF                   ",
-"                        ",
-"<THRUST LIM             ",
-"                        ",
-"<TAKEOFF                ", 
-"                        ",
-"<APPROACH         MAINT>"
-}
-
+  "     INIT/REF INDEX 1/1 ",
+  "                        ",
+  "<IDENT         NAV DATA>",
+  "                        ",
+  "<POS                    ",
+  "                        ",
+  "<PERF                   ",
+  "                        ",
+  "<THRUST LIM             ",
+  "                        ",
+  lineA, 
+  "                        ",
+  LineB
+  }
+end
 
 fmsFunctionsDefs["INITREF"]={}
 fmsFunctionsDefs["INITREF"]["L1"]={"setpage","IDENT"}
 fmsFunctionsDefs["INITREF"]["L2"]={"setpage","POSINIT"}
 fmsFunctionsDefs["INITREF"]["L3"]={"setpage","PERFINIT"}
 fmsFunctionsDefs["INITREF"]["L4"]={"setpage","THRUSTLIM"}
-fmsFunctionsDefs["INITREF"]["L5"]={"setpage","TAKEOFF"}
+
 fmsFunctionsDefs["INITREF"]["L6"]={"setpage","APPROACH"}
-fmsFunctionsDefs["INITREF"]["R6"]={"setpage","MAINT"}
+
 fmsFunctionsDefs["INITREF"]["R1"]={"setpage","DATABASE"}
 local navAids
 function findILS(value)
@@ -362,7 +375,7 @@ function updateCRZ()
   local setVal=string.sub(B747DR_srcfms[updateFrom][3],20,24)
   print("from line".. updateFrom.." "..B747DR_srcfms[updateFrom][3])
   print("to:"..setVal)
-  fmsModules["data"]:setData("crzalt",setVal)
+  fmsModules:setData("crzalt",setVal)
 end
 function fmsFunctions.getdata(fmsO,value) 
   local data=""
@@ -469,7 +482,8 @@ end
 
 function fmsFunctions.setDref(fmsO,value)
    local val=tonumber(fmsO["scratchpad"])
-   
+  if value=="VNAVS1" and B747DR_ap_vnav_system ~=1.0 then B747DR_ap_vnav_system=1 return elseif value=="VNAVS1" then B747DR_ap_vnav_system=0 return end 
+  if value=="VNAVS2" and B747DR_ap_vnav_system ~=2.0 then B747DR_ap_vnav_system=2 return elseif value=="VNAVS2" then B747DR_ap_vnav_system=0 return end   
   if value=="TO" then toderate=0 clbderate=0 return  end
   if value=="TO1" then toderate=1 clbderate=1 return  end
   if value=="TO2" then toderate=2 clbderate=2 return  end

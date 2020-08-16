@@ -1249,7 +1249,7 @@ function B747_secondary_EICAS2_engine_vibration()
     phaseNow=(timeNow*thrust)-(B747_engine_lastClock[i]*thrust)
     B747_engine_lastPos[i]=B747_engine_lastPos[i]+phaseNow
   
-    B747DR_engine_vibration_position[i] =B747DR_EICAS2_engine_disturbance*(B747DR_EICAS2_engine_vibration[i]*math.sin(B747_engine_lastPos[i]+ B747_engine_vibPhase[i]))/6
+    B747DR_engine_vibration_position[i] =(B747DR_EICAS2_engine_disturbance*math.sin(B747_engine_lastPos[i]+ B747_engine_vibPhase[i]))/20
 
     B747_engine_lastClock[i] = os.clock()
     end

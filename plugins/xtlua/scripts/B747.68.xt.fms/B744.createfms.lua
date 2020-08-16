@@ -45,8 +45,8 @@ function keyDown(fmsModule,key)
       fmsModules[fmsModule].targetpgNo=1
       return
   elseif key=="des" then
-      fmsModules[fmsModule].targetCustomFMC=false
-      simCMD_FMS_key[fmsModule]["clb"]:once()
+      fmsModules[fmsModule].targetCustomFMC=true
+      --simCMD_FMS_key[fmsModule]["clb"]:once()
       fmsModules[fmsModule].targetPage="VNAV"
       fmsModules[fmsModule].targetpgNo=1
       return
@@ -478,7 +478,9 @@ function fms:B747_fms_display()
     if self.inCustomFMC~=self.targetCustomFMC or self.currentPage~=self.targetPage then 
       B747DR_fms[thisID][self.swipeOut]="                        "
       B747DR_fms_s[thisID][self.swipeOut]="                        "
-      if self.swipeOut<14 then self.swipeOut=self.swipeOut+1 end
+      B747DR_fms[thisID][self.swipeOut+1]="                        "
+      B747DR_fms_s[thisID][self.swipeOut+1]="                        "
+      if self.swipeOut<13 then self.swipeOut=self.swipeOut+2 end
       return 
     end
     

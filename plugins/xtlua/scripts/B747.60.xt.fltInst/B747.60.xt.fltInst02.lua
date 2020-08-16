@@ -2281,20 +2281,22 @@ end
 function B747_baro_init()
 
     -- CAPT BARO
-    if simDR_altimeter_baro_inHg > 29.91
+    --[[if simDR_altimeter_baro_inHg > 29.91
         and simDR_altimeter_baro_inHg < 29.93
     then
         if B747DR_efis_baro_std_capt_switch_pos == 0 then B747CMD_efis_baro_std_capt_switch:once() end
-    end
+    end]]
+    B747DR_efis_baro_std_capt_switch_pos = 0
     B747DR_efis_baro_capt_preselect = 29.92
     simDR_altimeter_baro_inHg =29.92
 
     -- F/O BARO
-    if simDR_altimeter_baro_inHg_fo > 29.91
+    --[[if simDR_altimeter_baro_inHg_fo > 29.91
         and simDR_altimeter_baro_inHg_fo < 29.93
     then
         if B747DR_efis_baro_std_fo_switch_pos == 0 then B747CMD_efis_baro_std_fo_switch:once() end
-    end
+    end]]
+    B747DR_efis_baro_std_fo_switch_pos = 0
     B747DR_efis_baro_fo_preselect = 29.92
     simDR_altimeter_baro_inHg_fo = 29.92
 

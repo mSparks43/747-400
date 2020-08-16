@@ -16,7 +16,8 @@ toderate=deferred_dataref("laminar/B747/engine/derate/TO","number")
 clbderate=deferred_dataref("laminar/B747/engine/derate/CLB","number")
 radioModes=deferred_dataref("laminar/B747/radio/tuningmodes", "string")
 radioModes="AAAMM" --ils,vor l/r,adf l/r (ADF is manual only
-  
+B747DR_FMSdata=deferred_dataref("laminar/B747/fms/data", "string")
+B747DR_FMSdata="{}"
 irs_line1=deferred_dataref("laminar/B747/irs/line1", "string")
 irs_line2=deferred_dataref("laminar/B747/irs/line2", "string") 
 irs_line3=deferred_dataref("laminar/B747/irs/line3", "string") 

@@ -37,7 +37,7 @@ irs={
    else return 0 end
   end,
   getGS=function(self)
-   if self["aligned"] then return string.format("%02d",simDR_groundspeed)
+   if self["aligned"] then return string.format("%02d",simDR_groundspeed/0.514444)
    else return "**" end
   end,
   align=function(self)

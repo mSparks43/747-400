@@ -1,21 +1,22 @@
 fmsPages["MAINTIRSMONITOR"]=createPage("MAINTIRSMONITOR")
-fmsPages["MAINTIRSMONITOR"]["template"]={
+fmsPages["MAINTIRSMONITOR"].getPage=function(self,pgNo,fmsID)
+  return {
 
-"      IRS MONITOR   1/1 ",
-"                        ",
-"                        ",
-" IRS L                  ",
-"*.* MN/HR               ",
-" IRS C                  ",
-"*.* NM/HR               ",
-" IRS R                  ",
-"*.* NM/HR               ",
-"                        ",
-"                        ", 
-"                        ",
-"<INDEX                  "
-    }
-
+  "      IRS MONITOR   1/1 ",
+  "                        ",
+  "                        ",
+  " IRS L                  ",
+  irsSystem.getStatus("irsL"),
+  " IRS C                  ",
+  irsSystem.getStatus("irsC"),
+  " IRS R                  ",
+  irsSystem.getStatus("irsR"),
+  "                        ",
+  "                        ", 
+  "                        ",
+  "<INDEX                  "
+      }
+end
 
 fmsFunctionsDefs["MAINTIRSMONITOR"]={}
 fmsFunctionsDefs["MAINTIRSMONITOR"]["L6"]={"setpage","INITREF"}

@@ -127,6 +127,9 @@ end]]
 
 
 fmsFunctionsDefs["PROGRESS"]={}
+fmsFunctionsDefs["PROGRESS"]["next"]={"custom2fmc","next"}
+fmsFunctionsDefs["PROGRESS"]["prev"]={"custom2fmc","prev"}
+fmsFunctionsDefs["PROGRESS"]["exec"]={"custom2fmc","exec"}
 --[[
 fmsFunctionsDefs["PROGRESS"]["L1"]={"setdata",""}
 fmsFunctionsDefs["PROGRESS"]["L2"]={"setdata",""}
