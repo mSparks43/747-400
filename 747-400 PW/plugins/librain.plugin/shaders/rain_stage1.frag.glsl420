@@ -1,0 +1,261 @@
+#version 420
+
+uniform vec2 wiper_pivot[4];
+uniform float wiper_radius_outer[4];
+uniform float wiper_radius_inner[4];
+uniform float wiper_pos_prev[4];
+uniform float wiper_pos_cur[4];
+uniform float wind_temp;
+uniform float precip_intens;
+uniform float thrust;
+uniform float wind;
+uniform float rand_seed;
+uniform sampler2D tex;
+uniform sampler2D temp_tex;
+uniform vec2 gp;
+uniform vec2 tp;
+uniform vec2 wp;
+uniform float gravity;
+uniform float d_t;
+uniform int num_wipers;
+
+layout(location = 0) out vec4 color_out;
+
+float _108;
+
+float fx_lin(float x, float x1, float y1, float x2, float y2)
+{
+    return (((x - x1) / (x2 - x1)) * (y2 - y1)) + y1;
+}
+
+float gold_noise(vec2 coordinate, float seed)
+{
+    return fract(sin(dot(coordinate * (seed + 0.1618033945560455322265625), vec2(0.1618033945560455322265625, 0.31415927410125732421875))) * 14142.1357421875);
+}
+
+bool droplet_gen_check(vec2 pos)
+{
+    float param = wind_temp;
+    float param_1 = 253.149993896484375;
+    float param_2 = 0.0;
+    float param_3 = 273.149993896484375;
+    float param_4 = 1.0;
+    float temp_fact = clamp(fx_lin(param, param_1, param_2, param_3, param_4), 0.0, 1.0);
+    float prob = (((0.100000001490116119384765625 * precip_intens) * 0.011699999682605266571044921875) * temp_fact) * max(pow(min(1.0 - thrust, 1.0 - wind), 1.0), 0.3499999940395355224609375);
+    vec2 param_5 = pos;
+    float param_6 = rand_seed;
+    return gold_noise(param_5, param_6) > (1.0 - prob);
+}
+
+float read_depth(vec2 pos)
+{
+    return texture(tex, pos / vec2(textureSize2D(tex, 0))).x;
+}
+
+float dir2hdg(vec2 v)
+{
+    if (v.y >= 0.0)
+    {
+        return asin(v.x / length(v));
+    }
+    else
+    {
+        if (v.x >= 0.0)
+        {
+            return 3.1415927410125732421875 - asin(v.x / length(v));
+        }
+        else
+        {
+            return (-3.1415927410125732421875) - asin(v.x / length(v));
+        }
+    }
+}
+
+float gentle_random(float factor)
+{
+    return sin((gl_FragCoord.x + gl_FragCoord.y) / factor) * cos((gl_FragCoord.x + gl_FragCoord.y) / (factor * 0.3141500055789947509765625));
+}
+
+float iter_fract(float x, float start, float end)
+{
+    return (x - start) / (end - start);
+}
+
+float wiper_coeff(vec2 coord, int i)
+{
+    vec2 wiper2pos = coord - wiper_pivot[i];
+    float dist = length(wiper2pos);
+    float _171 = dist;
+    bool _181 = _171 > (wiper_radius_outer[i] * 1.019999980926513671875);
+    bool _191;
+    if (!_181)
+    {
+        _191 = dist < wiper_radius_inner[i];
+    }
+    else
+    {
+        _191 = _181;
+    }
+    bool _204;
+    if (!_191)
+    {
+        _204 = wiper_pos_prev[i] == wiper_pos_cur[i];
+    }
+    else
+    {
+        _204 = _191;
+    }
+    if (_204)
+    {
+        return 0.0;
+    }
+    vec2 param = wiper2pos;
+    float wiper2pos_angle = dir2hdg(param);
+    float param_1 = 25.0;
+    if (degrees(abs(wiper2pos_angle - wiper_pos_cur[i])) < (0.800000011920928955078125 + (0.300000011920928955078125 * gentle_random(param_1))))
+    {
+        return 2.0;
+    }
+    float param_2 = wiper2pos_angle;
+    float param_3 = wiper_pos_prev[i];
+    float param_4 = wiper_pos_cur[i];
+    float f = iter_fract(param_2, param_3, param_4);
+    if ((f < 0.0) || (f > 1.0))
+    {
+        return 0.0;
+    }
+    return f;
+}
+
+void main()
+{
+    vec2 tex_sz = vec2(textureSize2D(tex, 0));
+    float r = 0.0;
+    float g = 0.0;
+    float b = 0.0;
+    float a = 0.0;
+    vec2 tex_coord = gl_FragCoord.xy / tex_sz;
+    float temp = texture(temp_tex, tex_coord).x * 400.0;
+    float wiper_coeff_total = 0.0;
+    float temp_flow_coeff;
+    if (temp > 274.649993896484375)
+    {
+        temp_flow_coeff = 1.0;
+    }
+    else
+    {
+        if (temp < 272.649993896484375)
+        {
+            temp_flow_coeff = 0.0074999998323619365692138671875;
+        }
+        else
+        {
+            temp_flow_coeff = max((temp - 272.649993896484375) / 2.0, 0.0074999998323619365692138671875);
+        }
+    }
+    vec2 param = gl_FragCoord.xy;
+    float new_depth;
+    bool water_added;
+    if (droplet_gen_check(param))
+    {
+        new_depth = 3.0;
+        water_added = true;
+    }
+    else
+    {
+        vec2 param_1 = gl_FragCoord.xy + vec2(1.0, 0.0);
+        bool _373 = droplet_gen_check(param_1);
+        bool _384;
+        if (!_373)
+        {
+            vec2 param_2 = gl_FragCoord.xy + vec2(-1.0, 0.0);
+            _384 = droplet_gen_check(param_2);
+        }
+        else
+        {
+            _384 = _373;
+        }
+        bool _394;
+        if (!_384)
+        {
+            vec2 param_3 = gl_FragCoord.xy + vec2(0.0, 1.0);
+            _394 = droplet_gen_check(param_3);
+        }
+        else
+        {
+            _394 = _384;
+        }
+        bool _404;
+        if (!_394)
+        {
+            vec2 param_4 = gl_FragCoord.xy + vec2(0.0, -1.0);
+            _404 = droplet_gen_check(param_4);
+        }
+        else
+        {
+            _404 = _394;
+        }
+        if (_404)
+        {
+            new_depth = 1.0;
+            water_added = true;
+        }
+        else
+        {
+            new_depth = 0.0;
+            water_added = false;
+        }
+    }
+    float depth;
+    depth += new_depth;
+    vec2 param_5 = gl_FragCoord.xy;
+    float old_depth = read_depth(param_5) * (0.38999998569488525390625 + ((0.0500000007450580596923828125 * (1.0 - temp_flow_coeff)) * mix(0.00999999977648258209228515625, 1.0, max(thrust, wind))));
+    depth += old_depth;
+    vec2 gp_dir = gl_FragCoord.xy - gp;
+    gp_dir /= vec2(length(gp_dir));
+    vec2 tp_dir = gl_FragCoord.xy - tp;
+    tp_dir /= vec2(length(tp_dir));
+    vec2 wp_dir = gl_FragCoord.xy - wp;
+    wp_dir /= vec2(length(wp_dir));
+    float wind_dist_factor = pow(thrust, 2.5);
+    float thrust_dist_factor = pow(wind, 1.85000002384185791015625);
+    vec2 prev_pos = gl_FragCoord.xy - ((((((gp_dir * ((0.25 * gravity) * pow(precip_intens, 2.0))) + (tp_dir * thrust_dist_factor)) + (wp_dir * wind_dist_factor)) * tex_sz) * d_t) * temp_flow_coeff);
+    float old_pos_temp = texture(temp_tex, prev_pos).x * 400.0;
+    float prev_depth;
+    if ((temp < 274.649993896484375) || (old_pos_temp > 272.649993896484375))
+    {
+        vec2 param_6 = prev_pos;
+        prev_depth = read_depth(param_6);
+    }
+    else
+    {
+        prev_depth = 0.0;
+    }
+    float blowaway_fact = mix(0.569999992847442626953125, 0.601000010967254638671875, temp_flow_coeff);
+    depth += (prev_depth * blowaway_fact);
+    if (!water_added)
+    {
+        float old_water = min(old_depth + prev_depth, 3.0);
+        depth = clamp(depth, 0.0, old_water - (3.0 * mix(0.004999999888241291046142578125, 0.00999999977648258209228515625, temp_flow_coeff)));
+    }
+    if (depth < 0.00999999977648258209228515625)
+    {
+        depth = 0.0;
+    }
+    for (int i = 0; i < num_wipers; i++)
+    {
+        vec2 param_7 = tex_coord;
+        int param_8 = i;
+        float f = wiper_coeff(param_7, param_8);
+        if (f > 1.0)
+        {
+            depth *= 10.0;
+            wiper_coeff_total = 0.0;
+            break;
+        }
+        wiper_coeff_total = max(wiper_coeff_total, f);
+    }
+    depth *= (1.0 - clamp(1.10000002384185791015625 * sqrt(wiper_coeff_total), 0.0, 1.0));
+    color_out = vec4(clamp(depth, 0.0, 3.0), 0.0, 0.0, 1.0);
+}
+

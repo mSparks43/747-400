@@ -1,0 +1,123 @@
+**************************	
+*     ACT ECON DES   3/3 *
+* E/D AT         AT RUBEL*		               
+*  2600 PELLY    250/6000*
+* ECON SPD               *
+*.805/270                *
+* SPD TRANS              *
+*240/10000               *
+* SPD REST               *
+*---/-----               *
+*------------------------*
+*               FORECAST>*
+*                        *
+*<OFFPATH DES    DES DIR>* 
+**************************
+
+
+
+**************************	
+*     ACT 230KT DES  3/3 *
+* E/D AT         AT RUBEL*		               
+*  2600 PELLY    250/6000*
+* ECON SPD               *
+*.805/270                *
+* SPD TRANS              *
+*240/10000               *
+* SPD REST               *
+*---/-----               *
+*------------------------*
+*               FORECAST>*
+*                        *
+*<OFFPATH DES    DES DIR>* 
+**************************
+
+
+
+**************************	
+*     OFFPATH DES    3/3 *
+* E/D AT         AT RUBEL*		               
+*  2600 PELLY    250/6000*
+* ECON SPD               *
+*.805/270                *
+* SPD TRANS              *
+*240/10000               *
+* SPD REST               *
+*---/-----               *
+*------------------------*
+*               FORECAST>*
+*                        *
+*<OFFPATH DES    DES DIR>* 
+**************************
+
+
+
+**************************	
+*  DESCENT FORECASTS 3/3 *
+* E/D AT         AT RUBEL*		               
+*  2600 PELLY    250/6000*
+* ECON SPD               *
+*.805/270                *
+* SPD TRANS              *
+*240/10000               *
+* SPD REST               *
+*---/-----               *
+*------------------------*
+*               FORECAST>*
+*                        *
+*<OFFPATH DES    DES DIR>* 
+**************************
+
+
+
+**************************	
+*    ACT END OF DES  3/3 *
+* E/D AT         AT RUBEL*		               
+*  2600 PELLY    250/6000*
+* ECON SPD               *
+*.805/270                *
+* SPD TRANS              *
+*240/10000               *
+* SPD REST               *
+*---/-----               *
+*------------------------*
+*               FORECAST>*
+*                        *
+*<OFFPATH DES    DES DIR>* 
+**************************
+
+
+
+**************************	
+*   ACT MCP SPD DES  3/3 *
+* E/D AT         AT RUBEL*		               
+*  2600 PELLY    250/6000*
+* ECON SPD               *
+*.805/270                *
+* SPD TRANS              *
+*240/10000               *
+* SPD REST               *
+*---/-----               *
+*------------------------*
+*               FORECAST>*
+*                        *
+*<OFFPATH DES    DES DIR>* 
+**************************
+
+
+
+**************************	
+*   ACT LIM SPD DES  3/3 *
+* E/D AT         AT RUBEL*		               
+*  2600 PELLY    250/6000*
+* ECON SPD               *
+*.805/270                *
+* SPD TRANS              *
+*240/10000               *
+* SPD REST               *
+*---/-----               *
+*------------------------*
+*               FORECAST>*
+*                        *
+*<OFFPATH DES    DES DIR>* 
+**************************
