@@ -18,8 +18,8 @@ Pack3_Sw = find_dataref("laminar/B747/air/pack_ctrl/sel_dial_pos[2]")
 --** 				        CREATE READ-ONLY CUSTOM DATAREFS               	         **--
 --*************************************************************************************--
 
-Packs_EXT = find_dataref("sim/cockpit2/Cooling/Packs_EXT")
-Avionics_Power_on	= find_dataref("sim/cockpit2/electrical/Avionics_Power_on")
+Packs_EXT = create_dataref("sim/cockpit2/Cooling/Packs_EXT", "number")
+Avionics_Power_on	= create_dataref("sim/cockpit2/electrical/Avionics_Power_on", "number")
 
 -- Exterior Packs--------------------------------------------------
 
@@ -59,11 +59,11 @@ end
 end
 
 function Avionics_Power(phase, duration)
-  if Eng_Gen_on == 1 or Ext_Power_Av == 1  then
+   if Eng_Gen_on == 1 or Ext_Power_Av == 1  then
 	Avionics_Power_on = 1 
 	elseif Eng_Gen_on == 0 and Ext_Power_Av == 0  then
 	Avionics_Power_on = 0 
-  end
+end
 end
 
 function after_physics() 
@@ -71,5 +71,4 @@ function after_physics()
     Ext_Power_Available()
 	Packs_EXT_On()
 	Avionics_Power() 
-
 end
