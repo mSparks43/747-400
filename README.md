@@ -29,7 +29,9 @@ This project continues by the good graces of the X-Plane community and the great
 
 The latest addition merges the LCF model variant by Lee_Hyeon_Seo (with permission) with the existing improvements, check out the working his [A340 developements](https://forums.x-plane.org/index.php?/forums/topic/203381-3d-cockpit-for-a340/&)
 
-Custom sounds from [FTSim+](https://k-akai.blogspot.com/) (with permission)
+Custom sounds (both GE and PW) from [FTSim+](https://k-akai.blogspot.com/) (with permission)
+
+Default liveries were made by rpc777 (https://forums.x-plane.org/index.php?/profile/316726-rpc777/) and squawk3232 (https://forums.x-plane.org/index.php?/profile/689751-squawk3232/) and used with permission
 
 Changelog:
 22/07/2020
