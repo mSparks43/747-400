@@ -1,0 +1,72 @@
+**************************	
+*  1428z ATC UPLINK  1/2 *
+*                  STATUS*		               
+*<REQUEST            OPEN*
+* PROCEED DIRECT TO      *
+*SEA                     *
+*/AT                     *
+*DUVAL                   *
+* CLIMB TO AND MAINTAIN  *
+*FL310                   *
+*/MAINTAIN               *
+*.80                     *
+*--------CONTINUED-------*
+*                    LOG>* 
+**************************
+
+
+
+**************************	
+*  1428z ATC UPLINK  2/2 *
+*/AT                     *		               
+*1605z                   *
+* EXPECT CRUISE CLIMB TO *
+*FL350                   *
+*                        *
+*                        *
+*                        *
+*<STANDBY           LOAD>*
+*                        *
+*<REJECT          ACCEPT>*
+*------------------------*
+*<PRINT              LOG>* 
+**************************
+
+
+
+**************************	
+*   VERIFY RESPONSE  1/1 *
+*                        *		               
+*WILCO                   *
+*                        *
+*                        *
+*                        *
+*                        *
+*                        *
+*                        *
+*                RESPONSE*
+*                   SEND>*
+*------------------------*
+*                        * 
+**************************
+
+
+
+**************************	
+*      REJECT DUE TO     *
+* DUE TO           DUE TO*		               
+*<PERFORMANCE    WEATHER>*
+* FREE TEXT              *
+*<                       *
+*                        *
+*<                       *
+*                        *
+*                        *
+*                        *
+*                        *
+*------------------------*
+*<UPLINK          VERIFY>* 
+**************************
+
+
+
