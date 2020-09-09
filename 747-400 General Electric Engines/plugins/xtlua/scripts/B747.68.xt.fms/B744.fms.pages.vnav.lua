@@ -2,6 +2,12 @@ fmsPages["VNAV"]=createPage("VNAV")
 fmsPages["VNAV"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be this way
     if pgNo==1 then 
       --ref pg 1519 fcomm
+      fmsFunctionsDefs["VNAV"]["L1"]={"setdata","crzalt"}
+      fmsFunctionsDefs["VNAV"]["L2"]={"setdata","clbspd"}
+      fmsFunctionsDefs["VNAV"]["L3"]={"setdata","clbtrans"}
+      fmsFunctionsDefs["VNAV"]["L4"]={"setdata","clbrest"}
+      fmsFunctionsDefs["VNAV"]["R1"]=nil
+      fmsFunctionsDefs["VNAV"]["R3"]={"setdata","transalt"}
       return{
       "     ACT ECON CLB       ",
       "                        ",
@@ -19,6 +25,12 @@ fmsPages["VNAV"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be thi
       }
     elseif pgNo==2 then 
       --ref pg 1543 fcomm
+      fmsFunctionsDefs["VNAV"]["L1"]={"setdata","crzalt"}
+      fmsFunctionsDefs["VNAV"]["L2"]={"setdata","crzspd"}
+      fmsFunctionsDefs["VNAV"]["L3"]=nil
+      fmsFunctionsDefs["VNAV"]["L4"]=nil
+      fmsFunctionsDefs["VNAV"]["R1"]={"setdata","stepalt"}
+      fmsFunctionsDefs["VNAV"]["R3"]=nil
       return{
       "     ACT ECON CRZ       ",
       "                        ",
@@ -36,12 +48,27 @@ fmsPages["VNAV"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be thi
       }  
     elseif pgNo==3 then 
       --ref pg 1583 fcomm
+      fmsFunctionsDefs["VNAV"]["L1"]=nil
+      fmsFunctionsDefs["VNAV"]["L2"]={"setdata","desspds"}
+      fmsFunctionsDefs["VNAV"]["L3"]={"setdata","destrans"}
+      fmsFunctionsDefs["VNAV"]["L4"]={"setdata","desrest"}
+      fmsFunctionsDefs["VNAV"]["R1"]=nil
+      fmsFunctionsDefs["VNAV"]["R3"]=nil
+      if B747DR_ap_vnav_state>0 and simDR_autopilot_vs_status==2 then
+	fmsModules["data"]["fpa"]=string.format("%1.1f",B747DR_ap_fpa)
+	fmsModules["data"]["vb"]=string.format("%1.1f", B747DR_ap_vb)
+	fmsModules["data"]["vs"]=string.format("%4d",simDR_autopilot_vs_fpm*-1) 
+      else
+	 fmsModules["data"]["fpa"]="*.*"
+	fmsModules["data"]["vb"]="*.*"
+	fmsModules["data"]["vs"]="****"
+      end
       return{
       "     ACT ECON DES       ",
       "                        ",
       "  **** *****    ***/****",
       "                        ",
-      ".***/***                ",
+      ".".. fmsModules["data"]["desspdmach"].."/"..fmsModules["data"]["desspd"].."                ",
       "                        ",
       fmsModules["data"]["destranspd"].."/"..fmsModules["data"]["desspdtransalt"].."               ",
       "                        ",

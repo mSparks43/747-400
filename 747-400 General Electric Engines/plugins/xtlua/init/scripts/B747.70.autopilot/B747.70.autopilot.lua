@@ -59,6 +59,8 @@ B747DR_ap_ias_dial_value            	= deferred_dataref("laminar/B747/autopilot/
 B747DR_ap_vnav_system            	= deferred_dataref("laminar/B747/autopilot/vnav_system", "number")
 B747DR_ap_vnav_state            	= deferred_dataref("laminar/B747/autopilot/vnav_state", "number")
 B747DR_ap_lnav_state            	= deferred_dataref("laminar/B747/autopilot/lnav_state", "number")
+B747DR_ap_inVNAVdescent 		= deferred_dataref("laminar/B747/autopilot/lnav_descent", "number")
+B747DR_autopilot_vs_fpm         			= deferred_dataref("laminar/B747/cockpit2/autopilot/vvi_dial_fpm", "number")
 B747DR_ap_vvi_fpm						= deferred_dataref("laminar/B747/autopilot/vvi_fpm", "number")
 B747DR_ap_alt_show_thousands      		= deferred_dataref("laminar/B747/autopilot/altitude/show_thousands", "number")
 B747DR_ap_alt_show_tenThousands			= deferred_dataref("laminar/B747/autopilot/altitude/show_tenThousands", "number")
@@ -67,7 +69,8 @@ B747DR_ap_cmd_C_mode         			= deferred_dataref("laminar/B747/autopilot/cmd_C
 B747DR_ap_cmd_R_mode         			= deferred_dataref("laminar/B747/autopilot/cmd_R_mode/status", "number")
 B747DR_ap_autothrottle_armed        	= deferred_dataref("laminar/B747/autothrottle/armed", "number")
 B747DR_ap_mach_decimal_visibiilty	    = deferred_dataref("laminar/B747/autopilot/mach_dec_vis", "number")
-
+B747DR_ap_fpa	    = deferred_dataref("laminar/B747/autopilot/navadata/fpa", "number")
+B747DR_ap_vb	    = deferred_dataref("laminar/B747/autopilot/navadata/vb", "number")
 
 
 
@@ -163,6 +166,7 @@ B747CMD_ap_switch_vs_mode				= deferred_command("laminar/B747/autopilot/button_s
 B747CMD_ap_switch_alt_hold_mode			= deferred_command("laminar/B747/autopilot/button_switch/alt_hold_mode", "A/P Altitude Hold Mode Switch", B747_ap_alt_hold_mode_CMDhandler)
 B747CMD_autopilot_VNAV_mode				= deferred_command("laminar/B747/autopilot/button_switch/VNAV","A/P VNAV Mode Switch",B747_ap_VNAV_mode_CMDhandler)
 B747CMD_autopilot_LNAV_mode				= deferred_command("laminar/B747/autopilot/button_switch/LNAV", "A/P LNAV Mode Switch",B747_ap_LANV_mode_afterCMDhandler)
+
 --B747CMD_ap_switch_hdg_sel_mode			= deferred_command("laminar/B747/autopilot/button_switch/hdg_sel_mode", "A/P Heading Select Mode Switch", B747_ap_switch_hdg_sel_mode_CMDhandler)
 --B747CMD_ap_switch_hdg_hold_mode			= deferred_command("laminar/B747/autopilot/button_switch/hdg_hold_mode", "A/P Heading Hold Mode Switch", B747_ap_switch_hdg_hold_mode_CMDhandler)
 B747CMD_ap_switch_loc_mode				= deferred_command("laminar/B747/autopilot/button_switch/loc_mode", "A/P Localizer Mode Switch", B747_ap_switch_loc_mode_CMDhandler)
