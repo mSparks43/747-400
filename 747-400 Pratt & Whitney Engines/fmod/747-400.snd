@@ -971,15 +971,15 @@ END_SOUND_ATTACHMENT
 BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Controls/T1
 	VEH_XYZ 0 4.3 -26.5
-    EVENT_START_COND ABS_DELTA=sim/cockpit2/autopilot/vvi_dial_fpm > 10
-	EVENT_END_COND ABS_DELTA=sim/cockpit2/autopilot/vvi_dial_fpm < 5
+    EVENT_START_COND ABS_DELTA=laminar/B747/cockpit2/autopilot/vvi_dial_fpm > 10
+	EVENT_END_COND ABS_DELTA=laminar/B747/cockpit2/autopilot/vvi_dial_fpm < 5
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Controls/T2
 	VEH_XYZ 0 4.3 -26.5
-    EVENT_START_COND ABS_DELTA=sim/cockpit2/autopilot/altitude_dial_ft > 10
-	EVENT_END_COND ABS_DELTA=sim/cockpit2/autopilot/altitude_dial_ft < 5
+    EVENT_START_COND ABS_DELTA=laminar/B747/autopilot/heading/altitude_dial_ft > 10
+	EVENT_END_COND ABS_DELTA=laminar/B747/autopilot/heading/altitude_dial_ft < 5
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT

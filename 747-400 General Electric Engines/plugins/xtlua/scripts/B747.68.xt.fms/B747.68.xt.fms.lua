@@ -7,6 +7,7 @@ simDRTime=find_dataref("sim/time/total_running_time_sec")
 simDR_onGround=find_dataref("sim/flightmodel/failures/onground_all")
 B747DR_CAS_advisory_status       = find_dataref("laminar/B747/CAS/advisory_status")
 B747DR_ap_vnav_system            = find_dataref("laminar/B747/autopilot/vnav_system")
+B747DR_ap_vnav_pause            = find_dataref("laminar/B747/autopilot/vnav_pause")
 simDR_nav1Freq			 =find_dataref("sim/cockpit/radios/nav1_freq_hz")
 simDR_nav2Freq			 =find_dataref("sim/cockpit/radios/nav2_freq_hz")
 B747DR_iru_status         	= find_dataref("laminar/B747/flt_mgmt/iru/status")
@@ -17,6 +18,9 @@ B747DR_pfd_mode_capt		 = find_dataref("laminar/B747/pfd/capt/irs")
 B747DR_pfd_mode_fo		 = find_dataref("laminar/B747/pfd/fo/irs")
 B747DR_irs_src_fo		 = find_dataref("laminar/B747/flt_inst/irs_src/fo/sel_dial_pos")
 B747DR_irs_src_capt		 = find_dataref("laminar/B747/flt_inst/irs_src/capt/sel_dial_pos")
+B747DR_ap_fpa	    = find_dataref("laminar/B747/autopilot/navadata/fpa")
+B747DR_ap_vb	    = find_dataref("laminar/B747/autopilot/navadata/vb")
+simDR_autopilot_vs_fpm         			= find_dataref("sim/cockpit2/autopilot/vvi_dial_fpm")
 --Workaround for stack overflow in init.lua namespace_read
 
 function replace_char(pos, str, r)
@@ -125,6 +129,8 @@ toderate=deferred_dataref("laminar/B747/engine/derate/TO","number")
 clbderate=deferred_dataref("laminar/B747/engine/derate/CLB","number")
 B747DR_radioModes=deferred_dataref("laminar/B747/radio/tuningmodes", "string")
 B747DR_FMSdata=deferred_dataref("laminar/B747/fms/data", "string")
+B747DR_ap_vnav_state                = find_dataref("laminar/B747/autopilot/vnav_state")
+simDR_autopilot_vs_status          = find_dataref("sim/cockpit2/autopilot/vvi_status")
 --*************************************************************************************--
 --** 				        CREATE READ-WRITE CUSTOM DATAREFS                        **--
 --*************************************************************************************--
@@ -157,6 +163,8 @@ fmsModules["data"]={
   clbrestalt="5000 ",
   stepalt="FL360",
   crzspd="810",
+  desspdmach="805",
+  desspd="270",
   destranspd="240",
   desspdtransalt="10000",
   desrestspd="180",

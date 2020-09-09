@@ -27,7 +27,7 @@ local neutralPitch=0
 local pitchMeasurements=0;
 function start_flare()
   local numAPengaged = B747DR_ap_cmd_L_mode + B747DR_ap_cmd_C_mode + B747DR_ap_cmd_R_mode
-    print("autoland ".. simDR_radarAlt1 .. " "..B747DR_ap_FMA_active_roll_mode.. " "..B747DR_ap_FMA_active_pitch_mode.. " "..numAPengaged)
+    --print("autoland ".. simDR_radarAlt1 .. " "..B747DR_ap_FMA_active_roll_mode.. " "..B747DR_ap_FMA_active_pitch_mode.. " "..numAPengaged)
     --B747DR_ap_FMA_active_roll_mode = 4 --ROLLOUT
     B747DR_ap_FMA_armed_pitch_mode = 0
     B747DR_ap_FMA_active_pitch_mode = 3 --SHOW FLARE
@@ -190,18 +190,18 @@ function during_Flare()
   simDR_allThrottle=B747_set_ap_animation_position(simDR_allThrottle,pinThrottle,0,1,10)
   simDR_elevator=initElevator --B747_set_ap_animation_position(simDR_elevator,initElevator,-1,1,1)
   --simDR_rudder=B747_set_ap_animation_position(simDR_rudder,pinrudder,-1,1,2)
-  if inrollout==false then
-
-    print("autoland flare alt=".. simDR_radarAlt1 .. " rollout=false initElevator=" ..initElevator.. " targetspeed=".. targetAirspeed  .." fpm=".. B744_fpm .."/".. lastRod.." : ".." actualPitch=".. simDR_AHARS_pitch_heading_deg_pilot .." targetPitch=" ..targetPitch .." onGround="..simDR_onGround)
-  else
-    print("autoland flare alt=".. simDR_radarAlt1 .. " rollout=true initElevator=" .. initElevator.." targetspeed=".. targetAirspeed  .." fpm=".. B744_fpm  .."/".. lastRod.." : ".." actualPitch=".. simDR_AHARS_pitch_heading_deg_pilot .." targetPitch=" ..targetPitch .." onGround="..simDR_onGround)
-
-  end
+--   if inrollout==false then
+-- 
+--     print("autoland flare alt=".. simDR_radarAlt1 .. " rollout=false initElevator=" ..initElevator.. " targetspeed=".. targetAirspeed  .." fpm=".. B744_fpm .."/".. lastRod.." : ".." actualPitch=".. simDR_AHARS_pitch_heading_deg_pilot .." targetPitch=" ..targetPitch .." onGround="..simDR_onGround)
+--   else
+--     print("autoland flare alt=".. simDR_radarAlt1 .. " rollout=true initElevator=" .. initElevator.." targetspeed=".. targetAirspeed  .." fpm=".. B744_fpm  .."/".. lastRod.." : ".." actualPitch=".. simDR_AHARS_pitch_heading_deg_pilot .." targetPitch=" ..targetPitch .." onGround="..simDR_onGround)
+-- 
+--   end
 end
 function end_Flare()
 --print("autoland stop".. simDR_radarAlt1 .. " "..B747DR_ap_FMA_autothrottle_mode .." "..B747DR_ap_FMA_active_pitch_mode)
         --pinThrottle=simDR_allThrottle
-        print("autoland stop".. simDR_radarAlt1 .. " ".. pinThrottle .." "..B747DR_ap_FMA_active_pitch_mode)
+--         print("autoland stop".. simDR_radarAlt1 .. " ".. pinThrottle .." "..B747DR_ap_FMA_active_pitch_mode)
         --simCMD_autopilot_fdir_servos_down_one:once()
         B747DR_ap_FMA_active_pitch_mode = 0 --no pitch
        -- simDR_elevator=initElevator-0.05--B747_set_ap_animation_position(simDR_elevator,initElevator-0.05,0,1,5)
@@ -228,7 +228,7 @@ function preLand_measure()
       neutralPitch=neutralPitch+simDR_AHARS_pitch_heading_deg_pilot
       pitchMeasurements=pitchMeasurements+1;
       targetPitch=(neutralPitch/pitchMeasurements)
-      print("Lift="..(totalLift/liftMeasurements).. " Pitch="..targetPitch)
+--       print("Lift="..(totalLift/liftMeasurements).. " Pitch="..targetPitch)
 end
 function preFlare_elevator()
       if simDR_AHARS_pitch_heading_deg_pilot>targetPitch+0.1 then
@@ -257,7 +257,7 @@ function do_touchdown()
       elseif active_land and not zerodThrottle  then 
          zerodThrottle=true--allow thrust reversors
 	 --simDR_pitch2=-1
-         print("autoland zero ".. simDR_radarAlt1 .. " "..B747DR_ap_FMA_autothrottle_mode .." "..B747DR_ap_FMA_active_pitch_mode)
+--          print("autoland zero ".. simDR_radarAlt1 .. " "..B747DR_ap_FMA_autothrottle_mode .." "..B747DR_ap_FMA_active_pitch_mode)
       end
       if simDR_onGround==1 and simDR_rudder==0 then 
 	active_autoland=false 
@@ -302,7 +302,7 @@ function runAutoland()
     if simDR_radarAlt1 < 100 and numAPengaged>2 then 
       preFlare_elevator()
       B747DR_ap_FMA_armed_pitch_mode=3
-	print("autoland preflare ".. simDR_radarAlt1.. " " .. simDR_AHARS_pitch_heading_deg_pilot .." " ..targetPitch)
+-- 	print("autoland preflare ".. simDR_radarAlt1.. " " .. simDR_AHARS_pitch_heading_deg_pilot .." " ..targetPitch)
       return true
     elseif simDR_radarAlt1 < 500 and numAPengaged>2 then
       preLand_measure()
