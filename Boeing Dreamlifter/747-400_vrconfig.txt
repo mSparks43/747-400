@@ -1,0 +1,344 @@
+A
+1100
+VRCONFIG
+
+################################
+#TELEPORT HOTSPOTS
+################################
+
+BEGIN_TELEPORT_HOTSPOT SITTING Pilot's Seat
+	AABB -1.5 2.8 -27.5 0.0 5.0 -25.5
+	PRESET_XYZ -0.536212 4.08 -26.018652
+	PRESET_PSI 0.0
+	PRESET_THE 0.0
+	PRESET_PHI 0.0
+END_TELEPORT_HOTSPOT
+
+BEGIN_TELEPORT_HOTSPOT SITTING CoPilot's Seat
+	AABB 0.0 2.8 -27.5 1.5 5.0 -25.5
+	PRESET_XYZ 0.520 4.08 -26.018652
+	PRESET_PSI 0.0
+	PRESET_THE 0.0
+	PRESET_PHI 0.0
+END_TELEPORT_HOTSPOT
+
+BEGIN_TELEPORT_HOTSPOT SITTING Back Seat Left
+	AABB -1.5 2.8 -25.5 -0.55 5.0 -24.15
+	PRESET_XYZ -0.84 4.02 -24.7
+	PRESET_PSI 0.0
+	PRESET_THE 0.0
+	PRESET_PHI 0.0
+END_TELEPORT_HOTSPOT
+
+BEGIN_TELEPORT_HOTSPOT SITTING Back Seat Right
+	AABB -0.055 2.8 -25.5 1.50 5.0 -24.15
+	PRESET_XYZ 0.15 4.02 -24.7
+	PRESET_PSI 0.0
+	PRESET_THE 0.0
+	PRESET_PHI 0.0
+END_TELEPORT_HOTSPOT
+
+BEGIN_MANIP axis_knob laminar/B747/light/chart/rheostat/captain
+	DEG_PER_ACTION 2
+END_MANIP
+
+BEGIN_MANIP axis_knob laminar/B747/light/map/rheostat/captain
+	DEG_PER_ACTION 2
+END_MANIP
+
+BEGIN_MANIP axis_knob laminar/B747/light/flood/rheostat/captain_panel
+	DEG_PER_ACTION 2
+END_MANIP
+
+BEGIN_MANIP command_knob laminar/B747/flt_inst/flt_dir_src/capt/sel_dial_up laminar/B747/flt_inst/flt_dir_src/capt/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/nav_src/capt/sel_dial_up laminar/B747/flt_inst/nav_src/capt/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/eiu_src/capt/sel_dial_up laminar/B747/flt_inst/eiu_src/capt/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/irs_src/capt/sel_dial_up laminar/B747/flt_inst/irs_src/capt/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/air_data_src/capt/sel_dial_up laminar/B747/flt_inst/air_data_src/capt/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/fltInst/capt/clock_et_sel_up laminar/B747/fltInst/capt/clock_et_sel_down
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/fltInst/capt/clock_set_sel_up laminar/B747/fltInst/capt/clock_set_sel_down
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/capt_inbd_display/sel_dial_up laminar/B747/flt_inst/capt_inbd_display/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/capt_lwr_display/sel_dial_up laminar/B747/flt_inst/capt_lwr_display/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/capt_inbd_display/sel_dial_up laminar/B747/flt_inst/capt_inbd_display/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/capt_lwr_display/sel_dial_up laminar/B747/flt_inst/capt_lwr_display/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/eiu_src/ctr_pnl/sel_dial_up laminar/B747/flt_inst/eiu_src/ctr_pnl/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_ctrls/flaps/alt_flaps/sel_dial_up laminar/B747/flt_ctrls/flaps/alt_flaps/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/fo_lwr_display/sel_dial_up laminar/B747/flt_inst/fo_lwr_display/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/fo_inbd_display/sel_dial_up laminar/B747/flt_inst/fo_inbd_display/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/flt_dir_src/fo/sel_dial_up laminar/B747/flt_inst/flt_dir_src/fo/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/nav_src/fo/sel_dial_up laminar/B747/flt_inst/nav_src/fo/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/eiu_src/fo/sel_dial_up laminar/B747/flt_inst/eiu_src/fo/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/irs_src/fo/sel_dial_up laminar/B747/flt_inst/irs_src/fo/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_inst/air_data_src/fo/sel_dial_up laminar/B747/flt_inst/air_data_src/fo/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/fltInst/fo/clock_et_sel_up laminar/B747/fltInst/fo/clock_et_sel_down
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/fltInst/fo/clock_set_sel_up laminar/B747/fltInst/fo/clock_set_sel_down
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP axis_knob laminar/B747/light/map/rheostat/first_officer
+	DEG_PER_ACTION 2
+END_MANIP
+BEGIN_MANIP axis_knob laminar/B747/light/flood/rheostat/first_officer_panel
+	DEG_PER_ACTION 2
+END_MANIP
+BEGIN_MANIP axis_knob laminar/B747/light/chart/rheostat/first_officer
+	DEG_PER_ACTION 2
+END_MANIP
+
+BEGIN_MANIP command_knob laminar/B747/efis/ref_alt/capt/set_dial_up laminar/B747/efis/ref_alt/capt/set_dial_dn
+	DEG_PER_ACTION 2
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/efis/min_ref_alt/capt/sel_dial_up laminar/B747/efis/min_ref_alt/capt/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/nd/mode/capt/sel_dial_up laminar/B747/nd/mode/capt/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/nd/range/capt/sel_dial_up laminar/B747/nd/range/capt/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/efis/baro_set/capt/sel_dial_up laminar/B747/efis/baro_set/capt/sel_dial_dn
+	DEG_PER_ACTION 5
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/efis/baro_ref/capt/sel_dial_up laminar/B747/efis/baro_ref/capt/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+
+BEGIN_MANIP command_knob laminar/B747/efis/ref_alt/fo/set_dial_up laminar/B747/efis/ref_alt/fo/set_dial_dn
+	DEG_PER_ACTION 2
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/efis/min_ref_alt/fo/sel_dial_up laminar/B747/efis/min_ref_alt/fo/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/nd/mode/fo/sel_dial_up laminar/B747/nd/mode/fo/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/nd/range/fo/sel_dial_up laminar/B747/nd/range/fo/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/efis/baro_set/fo/sel_dial_up laminar/B747/efis/baro_set/fo/sel_dial_dn
+	DEG_PER_ACTION 5
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/efis/baro_ref/fo/sel_dial_up laminar/B747/efis/baro_ref/fo/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+
+##################
+# AUTOPILOT
+##################
+BEGIN_MANIP command_knob sim/autopilot/airspeed_up sim/autopilot/airspeed_down
+	DEG_PER_ACTION 5
+END_MANIP
+BEGIN_MANIP command_knob sim/autopilot/bank_limit_up sim/autopilot/bank_limit_down
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob sim/autopilot/heading_up sim/autopilot/heading_down
+	DEG_PER_ACTION 2
+END_MANIP
+BEGIN_MANIP command_knob sim/autopilot/altitude_up sim/autopilot/altitude_down
+	DEG_PER_ACTION 5
+END_MANIP
+
+##################
+# OVERHEAD
+##################
+BEGIN_MANIP command_knob laminar/B747/hydraulics/sel_dial/dmd_pump_04_up laminar/B747/hydraulics/sel_dial/dmd_pump_04_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/hydraulics/sel_dial/dmd_pump_03_up laminar/B747/hydraulics/sel_dial/dmd_pump_03_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/hydraulics/sel_dial/dmd_pump_02_up laminar/B747/hydraulics/sel_dial/dmd_pump_02_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/hydraulics/sel_dial/dmd_pump_01_up laminar/B747/hydraulics/sel_dial/dmd_pump_01_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/antiice/wndshlsd_wiper_L/sel_dial_up laminar/B747/antiice/wndshlsd_wiper_L/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/antiice/wndshlsd_wiper_R/sel_dial_up laminar/B747/antiice/wndshlsd_wiper_R/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/air/pack_ctrl_01/sel_dial_up laminar/B747/air/pack_ctrl_01/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/air/pack_ctrl_02/sel_dial_up laminar/B747/air/pack_ctrl_02/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/air/pack_ctrl_03/sel_dial_up laminar/B747/air/pack_ctrl_03/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/electrical/standby_power/sel_dial_up laminar/B747/electrical/standby_power/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/electrical/apu/sel_dial_up laminar/B747/electrical/apu/sel_dial_dn
+	DEG_PER_ACTION 30
+	HOLD_MANIP
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_mgmt/iru/mode_sel_dial_R_up laminar/B747/flt_mgmt/iru/mode_sel_dial_R_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_mgmt/iru/mode_sel_dial_C_up laminar/B747/flt_mgmt/iru/mode_sel_dial_C_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_mgmt/iru/mode_sel_dial_L_up laminar/B747/flt_mgmt/iru/mode_sel_dial_L_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/fire/engine01/ext_switch_B laminar/B747/fire/engine01/ext_switch_A
+	DEG_PER_ACTION 50
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/fire/engine02/ext_switch_A laminar/B747/fire/engine02/ext_switch_B
+	DEG_PER_ACTION 50
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/fire/engine03/ext_switch_B laminar/B747/fire/engine03/ext_switch_A
+	DEG_PER_ACTION 50
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/fire/engine04/ext_switch_A laminar/B747/fire/engine04/ext_switch_B
+	DEG_PER_ACTION 50
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/electrical/stby_ignit/sel_dial_up laminar/B747/electrical/stby_ignit/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/electrical/auto_ignit/sel_dial_up laminar/B747/electrical/auto_ignit/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/fuel/fuel_jett/el_dial_up laminar/B747/fuel/fuel_jett/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/air/equip_cooling/sel_dial_up laminar/B747/air/equip_cooling/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP axis_knob laminar/B747/air/pass_temp_ctrl/rheostat
+	DEG_PER_ACTION 3
+END_MANIP
+BEGIN_MANIP axis_knob laminar/B747/air/flt_deck_temp_ctrl/rheostat
+	DEG_PER_ACTION 3
+END_MANIP
+BEGIN_MANIP axis_knob laminar/B747/air/cargo_temp_ctrl/rheostat
+	DEG_PER_ACTION 3
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/air/cabin_alt_auto/sel_dial_up laminar/B747/air/cabin_alt_auto/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+
+###############
+# CENTER CONSOLE
+###############
+BEGIN_MANIP command_knob laminar/B747/safety/seat_belts/sel_dial_up laminar/B747/safety/seat_belts/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/safety/no_smoking/sel_dial_up laminar/B747/safety/no_smoking/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP axis_knob laminar/B747/comm/rtp_L/hf_sens_ctrl/rheostat
+	DEG_PER_ACTION 0.25
+END_MANIP
+BEGIN_MANIP axis_knob laminar/B747/comm/rtp_R/hf_sens_ctrl/rheostat
+	DEG_PER_ACTION 0.25
+END_MANIP
+BEGIN_MANIP axis_knob laminar/B747/comm/rtp_C/hf_sens_ctrl/rheostat
+	DEG_PER_ACTION 0.25
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/rtp_L/freq_khz/sel_dial_up laminar/B747/rtp_L/freq_khz/sel_dial_dn
+	DEG_PER_ACTION 5
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/rtp_L/freq_MHz/sel_dial_up laminar/B747/rtp_L/freq_MHz/sel_dial_dn
+	DEG_PER_ACTION 5
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/rtp_R/freq_khz/sel_dial_up laminar/B747/rtp_R/freq_khz/sel_dial_dn
+	DEG_PER_ACTION 5
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/rtp_R/freq_MHz/sel_dial_up laminar/B747/rtp_R/freq_MHz/sel_dial_dn
+	DEG_PER_ACTION 5
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/rtp_C/freq_khz/sel_dial_up laminar/B747/rtp_C/freq_khz/sel_dial_dn
+	DEG_PER_ACTION 5
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/rtp_C/freq_MHz/sel_dial_up laminar/B747/rtp_C/freq_MHz/sel_dial_dn
+	DEG_PER_ACTION 5
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/ap_L/app_rcvr/sel_dial_up laminar/B747/ap_L/app_rcvr/sel_dial_dn
+	DEG_PER_ACTION 20
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/ap_R/app_rcvr/sel_dial_up laminar/B747/ap_R/app_rcvr/sel_dial_dn
+	DEG_PER_ACTION 20
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/ap_C/app_rcvr/sel_dial_up laminar/B747/ap_C/app_rcvr/sel_dial_dn
+	DEG_PER_ACTION 20
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/ap_L/vor_adf_rcvr/sel_dial_up laminar/B747/ap_L/vor_adf_rcvr/sel_dial_dn
+	DEG_PER_ACTION 20
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/ap_R/vor_adf_rcvr/sel_dial_up laminar/B747/ap_R/vor_adf_rcvr/sel_dial_dn
+	DEG_PER_ACTION 20
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/ap_C/vor_adf_rcvr/sel_dial_up laminar/B747/ap_C/vor_adf_rcvr/sel_dial_dn
+	DEG_PER_ACTION 20
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/ap_L/nav_filter/sel_dial_up laminar/B747/ap_L/nav_filter/sel_dial_dn
+	DEG_PER_ACTION 20
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/ap_R/nav_filter/sel_dial_up laminar/B747/ap_R/nav_filter/sel_dial_dn
+	DEG_PER_ACTION 20
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/ap_C/nav_filter/sel_dial_up laminar/B747/ap_C/nav_filter/sel_dial_dn
+	DEG_PER_ACTION 20
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/gear/autobrakes/sel_dial_up laminar/B747/gear/autobrakes/sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+BEGIN_MANIP command_knob laminar/B747/flt_mgmt/transponder/mode_sel_dial_up laminar/B747/flt_mgmt/transponder/mode_sel_dial_dn
+	DEG_PER_ACTION 30
+END_MANIP
+
+#Pilot
+BEGIN_MANIP drag_xy sim/cockpit2/controls/yoke_roll_ratio	sim/cockpit2/controls/yoke_pitch_ratio
+	YOKE_MANIP_ROTATE -0.5457    1.9968    5.1883 -1 0 0 20 -4.5 -0.5459    2.7672    5.9893 0 0 1 80 -80
+END_MANIP
+
+#Copilot
+#BEGIN_MANIP drag_xy sim/cockpit2/controls/yoke_roll_ratio	sim/cockpit2/controls/yoke_pitch_ratio
+#	YOKE_MANIP_ROTATE 0.5208    1.9968    5.1883 -1 0 0 20 -4.50  0.5208    2.7672    5.9893 0 0 1 80 -80
+#END_MANIP

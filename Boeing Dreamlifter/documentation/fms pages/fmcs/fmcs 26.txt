@@ -1,0 +1,16 @@
+**************************	
+*           POS REPORT   *
+* LAST                ATA*		               
+*4730N110W          1436z*
+* ALT                 SPD*
+*FL250                .80*
+* TO                  ETA*
+*GRF                1555z*
+* NEXT            EST ETA*
+*46N120W            1730z*
+* TEMP     WIND      FUEL*
+*-52°C  055°/ 70KT  342.5*
+* COMPANY ----------- ATC*
+*<SEND              SEND>* 
+**************************
+

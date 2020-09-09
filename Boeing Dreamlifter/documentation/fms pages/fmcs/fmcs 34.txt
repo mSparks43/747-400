@@ -1,0 +1,82 @@
+**************************	
+*    GROUND TESTS    1/1 *
+*                        *		               
+*<FMC-L             PASS *
+*  INHIBITED             *
+*<FMC-R                  *
+*                        *
+*<FMC-L SERVO LOOP  FAIL>*
+*  INHIBITED             *
+*<FMC-R SEVO LOOP        *
+*                        *
+*                        *
+*------------------------*
+*<RETURN            HELP>* 
+**************************
+
+
+
+**************************	
+*   GROUND TEST MSG  1/1 *
+*  AUTOTHROTTLE SERVEO   *		               
+*  FAIL                  *
+*  (FMC-L)               *
+* MSG:34571     ATA:34-61*
+*                        *
+* EQUIP:M7444            *
+*  ADVISORY:34 61 01 00  *
+*<FMC-L            NOTES>*
+*----------------        *
+*                 REPORT>*
+*                        *
+*<RETURN            HELP>* 
+**************************
+
+
+
+**************************	
+*    TO ENABLE TEST  1/1 *
+*          FMC-R         *		               
+*                        *
+*-AIRPLANE ON GROUND.    *
+*                        *
+*-ENGINES OFF.           *
+*                        *
+*-SET THE FMC MASTER     *
+* SWITCH ON P2 TO R.     *
+*                        *
+*                        *
+*------------------------*
+*<RETURN                 * 
+**************************
+
+
+
+**************************	
+*    TO ENABLE TEST  1/1 *
+*    FMC-R SERVO LOOP    *		               
+*                        *
+*-AIRPLANE ON GROUND.    *
+*                        *
+*-ENGINES OFF.           *
+*                        *
+*-SET THE FMC MASTER     *
+* SWITCH ON P2 TO R.     *
+*                        *
+*                        *
+*------------------------*
+*<RETURN                 * 
+**************************
+
+
+
+
+
+
+
+
+
+
+
+
+

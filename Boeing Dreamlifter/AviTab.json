@@ -1,0 +1,11 @@
+{
+    "panel": {
+        "left":     1355,
+        "bottom":   165,
+        "width":    700,
+        "height":   406,
+        "enabled": true,
+	"hide_header": true
+
+    }
+}
