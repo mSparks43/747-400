@@ -1830,7 +1830,7 @@ function B747_ap_altitude()
 	    simCMD_autopilot_autothrottle_on:once()
 	  end
 	  local diff2 = simDR_autopilot_altitude_ft - simDR_pressureAlt1
-	  local diff3 = B747DR_autopilot_altitude_ft- simDR_autopilot_altitude_ft
+	  local diff3 = B747DR_autopilot_altitude_ft- simDR_pressureAlt1
 	  if B747DR_ap_inVNAVdescent ==0 and diff2<-200 and diff3<-200 
 	    and simDR_autopilot_tod_index>0 and simDR_autopilot_tod_distance<=0
 	    and simDR_autopilot_vs_status == 0 and simDR_radarAlt1>1000 then
@@ -1900,6 +1900,13 @@ function B747_ap_altitude()
 		simDR_autopilot_altitude_ft=targetAlt
 		fmstargetIndex=targetIndex
 		fmscurrentIndex=currentIndex
+		if simDR_autopilot_autothrottle_enabled == 0 and B747DR_engine_TOGA_mode == 0 and B747DR_ap_inVNAVdescent > 0 then							-- AUTOTHROTTLE IS "OFF"
+			simCMD_autopilot_autothrottle_on:once()									-- ACTIVATE THE AUTOTHROTTLE
+		end
+		if simDR_autopilot_flch_status==0 and B747DR_engine_TOGA_mode == 0 and B747DR_ap_inVNAVdescent > 0 then
+		  simCMD_autopilot_flch_mode:once()
+		end
+		B747DR_ap_inVNAVdescent =0
 	      elseif targetAlt<simDR_pressureAlt1 then
 		--print("FMS use descend i=" .. targetIndex.. "@" .. currentIndex .. ":" ..fms[targetIndex][1] .. ":" .. fms[targetIndex][2] .. ":" .. fms[targetIndex][3] .. ":" .. fms[targetIndex][4] .. ":" .. fms[targetIndex][5] .. ":" .. fms[targetIndex][6] .. ":" .. fms[targetIndex][7] .. ":" .. fms[targetIndex][8].. ":" .. fms[targetIndex][9])
 		if simDR_autopilot_altitude_ft> simDR_pressureAlt1+500 and simDR_autopilot_alt_hold_status < 2 then
