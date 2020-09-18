@@ -134,7 +134,7 @@ fmsPages["POSINIT"].getSmallPage=function(self,pgNo,fmsID)
     }
   elseif pgNo==3 then 
     return {
-    "       POS REF     3/3  ",
+    "                        ",
     " IRS L                GS",
     "                        ",
     " IRS C                  ",
