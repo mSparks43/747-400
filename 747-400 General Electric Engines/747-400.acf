@@ -122,7 +122,7 @@ P _gear/0/_lonE 1.0
 P _gear/0/_lonN 1.0
 P _gear/0/_lonR 117.0
 P _gear/0/_scon 358467.468750000
-P _gear/0/_stat_def 0.165289491
+P _gear/0/_stat_def 0.165289521
 P _gear/0/_steerdeg_hispeed 15.0
 P _gear/0/_steerdeg_lospeed 75.0
 P _gear/0/_strut_comp 0.0
@@ -156,7 +156,7 @@ P _gear/1/_lonE 1.0
 P _gear/1/_lonN 1.0
 P _gear/1/_lonR 140.0
 P _gear/1/_scon 358467.468750000
-P _gear/1/_stat_def 0.627037406
+P _gear/1/_stat_def 0.627037227
 P _gear/1/_steerdeg_hispeed 0.0
 P _gear/1/_steerdeg_lospeed 0.0
 P _gear/1/_strut_comp 0.0
@@ -190,7 +190,7 @@ P _gear/2/_lonE 1.0
 P _gear/2/_lonN 1.0
 P _gear/2/_lonR 140.0
 P _gear/2/_scon 358467.468750000
-P _gear/2/_stat_def 0.627037406
+P _gear/2/_stat_def 0.627037227
 P _gear/2/_steerdeg_hispeed 0.0
 P _gear/2/_steerdeg_lospeed 0.0
 P _gear/2/_strut_comp 0.0
@@ -224,7 +224,7 @@ P _gear/3/_lonE 1.0
 P _gear/3/_lonN 1.0
 P _gear/3/_lonR 10.0
 P _gear/3/_scon 358467.468750000
-P _gear/3/_stat_def 0.559550941
+P _gear/3/_stat_def 0.559550822
 P _gear/3/_steerdeg_hispeed 0.0
 P _gear/3/_steerdeg_lospeed 0.0
 P _gear/3/_strut_comp 0.0
@@ -800,17 +800,6 @@ P _obja/31/_v10_att_y_acf_prt_ref 0.600000024
 P _obja/31/_v10_att_z_acf_prt_ref 0.0
 P _obja/31/_v10_is_internal -1055271720
 P _obja/31/_v10_steers_with_gear 0
-P _obja/32/_obj_flags 0
-P _obja/32/_v10_att_file_stl 747_exterior/particles/particle_747-400.obj
-P _obja/32/_v10_att_part -1
-P _obja/32/_v10_att_phi_ref 0.0
-P _obja/32/_v10_att_psi_ref 0.0
-P _obja/32/_v10_att_the_ref 0.0
-P _obja/32/_v10_att_x_acf_prt_ref 0.0
-P _obja/32/_v10_att_y_acf_prt_ref 0.0
-P _obja/32/_v10_att_z_acf_prt_ref 0.0
-P _obja/32/_v10_is_internal -482764496
-P _obja/32/_v10_steers_with_gear 0
 P _obja/4/_obj_flags 9
 P _obja/4/_v10_att_file_stl 747_cockpit/Cockpit_GS.obj
 P _obja/4/_v10_att_part -1
@@ -877,7 +866,7 @@ P _obja/9/_v10_att_y_acf_prt_ref 0.600000024
 P _obja/9/_v10_att_z_acf_prt_ref 0.0
 P _obja/9/_v10_is_internal 11
 P _obja/9/_v10_steers_with_gear 0
-P _obja/count 33
+P _obja/count 32
 P _panel_inst_3d 0
 P _part/0/_bot_s1 0.0
 P _part/0/_bot_s2 0.015625000
@@ -99870,7 +99859,7 @@ GROUP Captain PFD
 
         gen_rotary IDLE
           POS 199.000000 1086.500000
-          IMAGE CRT Displays/PFD/Flight Mode Annun/at_HOLD
+          IMAGE CRT Displays/PFD/Flight Mode Annun/at_IDLE
           DATAREF 
           SHOW_EQUAL 2.000000 laminar/B747/autopilot/FMA/autothrottle_mode
           LOCKED
@@ -101599,7 +101588,7 @@ GROUP Captain PFD
         gen_LED Digits
           POS 539.000000 1067.500000
           IMAGE CRT Displays/LED/LED_2.30R.x####0.magenta
-          DATAREF sim/cockpit2/autopilot/altitude_dial_ft
+          DATAREF laminar/B747/autopilot/heading/altitude_dial_ft
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 2
@@ -101617,7 +101606,7 @@ GROUP Captain PFD
         gen_LED Thousands
           POS 524.000000 1038.500000
           IMAGE CRT Displays/LED/LED_2.36R.xxx###.magenta
-          DATAREF sim/cockpit2/autopilot/altitude_dial_ft
+          DATAREF laminar/B747/autopilot/heading/altitude_dial_ft
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 2
@@ -101633,7 +101622,7 @@ GROUP Captain PFD
         gen_LED Hundreds
           POS 568.000000 1036.500000
           IMAGE CRT Displays/LED/LED_2.30R.x####0.magenta
-          DATAREF sim/cockpit2/autopilot/altitude_dial_ft
+          DATAREF laminar/B747/autopilot/heading/altitude_dial_ft
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 2
@@ -101939,7 +101928,7 @@ GROUP Captain PFD
       gen_pointer Alt Set Bug
         POS 522.500000 767.000000
         IMAGE CRT Displays/PFD/Altimeter/SelAltPtr
-        DATAREF sim/cockpit2/autopilot/altitude_dial_ft
+        DATAREF laminar/B747/autopilot/heading/altitude_dial_ft
         LOCKED
         LIGHT_MODE GLASS_AUTO
         LIGHT_RHEOSTAT 2
@@ -105907,7 +105896,7 @@ GROUP First Officer PFD
 
         gen_rotary IDLE 2
           POS 878.000000 1086.500000
-          IMAGE CRT Displays/PFD/Flight Mode Annun/at_HOLD
+          IMAGE CRT Displays/PFD/Flight Mode Annun/at_IDLE
           DATAREF 
           SHOW_EQUAL 2.000000 laminar/B747/autopilot/FMA/autothrottle_mode
           LOCKED
@@ -107652,7 +107641,7 @@ GROUP First Officer PFD
         gen_LED Digits 2
           POS 1218.000000 1067.500000
           IMAGE CRT Displays/LED/LED_2.30R.x####0.magenta
-          DATAREF sim/cockpit2/autopilot/altitude_dial_ft
+          DATAREF laminar/B747/autopilot/heading/altitude_dial_ft
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 5
@@ -107670,7 +107659,7 @@ GROUP First Officer PFD
         gen_LED Thousands 2
           POS 1203.000000 1038.500000
           IMAGE CRT Displays/LED/LED_2.36R.xxx###.magenta
-          DATAREF sim/cockpit2/autopilot/altitude_dial_ft
+          DATAREF laminar/B747/autopilot/heading/altitude_dial_ft
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 5
@@ -107686,7 +107675,7 @@ GROUP First Officer PFD
         gen_LED Hundreds 2
           POS 1247.000000 1036.500000
           IMAGE CRT Displays/LED/LED_2.30R.x####0.magenta
-          DATAREF sim/cockpit2/autopilot/altitude_dial_ft
+          DATAREF laminar/B747/autopilot/heading/altitude_dial_ft
           LOCKED
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 5
@@ -107992,7 +107981,7 @@ GROUP First Officer PFD
       gen_pointer Alt Set Bug 2
         POS 1201.500000 767.000000
         IMAGE CRT Displays/PFD/Altimeter/SelAltPtr
-        DATAREF sim/cockpit2/autopilot/altitude_dial_ft
+        DATAREF laminar/B747/autopilot/heading/altitude_dial_ft
         LOCKED
         LIGHT_MODE GLASS_AUTO
         LIGHT_RHEOSTAT 5
@@ -118942,6 +118931,360 @@ GROUP Lower EICAS
   GROUP ELEC Synoptic
     SHOW_EQUAL 3.000000 laminar/B747/dsp/synoptic_display
     LOCKED
+    
+    
+    
+    gen_rotary background
+      POS 1704.000000 95.000000
+      IMAGE CRT Displays/EICAS Lower/ELEC/background
+      DATAREF 
+      LOCKED
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0
+      
+   gen_rotary isln1
+      POS 1437.200000 211.500000
+      IMAGE CRT Displays/EICAS Lower/ELEC/isln
+      DATAREF 
+      SHOW_LESS 0.95 laminar/B747/button_switch/position[18]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0
+      
+    gen_rotary isln2
+      POS 1593.500000 211.500000
+      IMAGE CRT Displays/EICAS Lower/ELEC/isln
+      DATAREF 
+      SHOW_LESS 0.95 laminar/B747/button_switch/position[19]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0
+      
+    gen_rotary isln3
+      POS 1827.400000 211.500000
+      IMAGE CRT Displays/EICAS Lower/ELEC/isln
+      DATAREF 
+      SHOW_LESS 0.95 laminar/B747/button_switch/position[20]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0  
+      
+    gen_rotary isln4
+      POS 1982.400000 211.500000
+      IMAGE CRT Displays/EICAS Lower/ELEC/isln
+      DATAREF 
+      SHOW_LESS 0.95 laminar/B747/button_switch/position[21]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0
+    gen_rotary bus1_off
+      POS 1471.900000 96.500000
+      IMAGE CRT Displays/EICAS Lower/ELEC/busamber
+      DATAREF 
+      SHOW_EQUAL 1 sim/cockpit2/annunciators/generator_off[0]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0 
+    gen_rotary bus1_on
+      POS 1471.900000 96.500000
+      IMAGE CRT Displays/EICAS Lower/ELEC/busgreen
+      DATAREF 
+      SHOW_EQUAL 0 sim/cockpit2/annunciators/generator_off[0]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0 
+      
+    gen_rotary bus2_off
+      POS 1626.900000 96.500000
+      IMAGE CRT Displays/EICAS Lower/ELEC/busamber
+      DATAREF 
+      SHOW_EQUAL 1 sim/cockpit2/annunciators/generator_off[1]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0 
+    gen_rotary bus2_on
+      POS 1626.900000 96.500000
+      IMAGE CRT Displays/EICAS Lower/ELEC/busgreen
+      DATAREF 
+      SHOW_EQUAL 0 sim/cockpit2/annunciators/generator_off[1]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0 
+      
+      gen_rotary bus3_off
+      POS 1793.900000 96.500000
+      IMAGE CRT Displays/EICAS Lower/ELEC/busamberr
+      DATAREF 
+      SHOW_EQUAL 1 sim/cockpit2/annunciators/generator_off[2]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0 
+    gen_rotary bus3_on
+      POS 1793.900000 96.500000
+      IMAGE CRT Displays/EICAS Lower/ELEC/busgreenr
+      DATAREF 
+      SHOW_EQUAL 0 sim/cockpit2/annunciators/generator_off[2]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0 
+      
+      gen_rotary bus4_off
+      POS 1949.000000 96.500000
+      IMAGE CRT Displays/EICAS Lower/ELEC/busamberr
+      DATAREF 
+      SHOW_EQUAL 1 sim/cockpit2/annunciators/generator_off[3]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0 
+    gen_rotary bus4_on
+      POS 1949.000000 96.500000
+      IMAGE CRT Displays/EICAS Lower/ELEC/busgreenr
+      DATAREF 
+      SHOW_EQUAL 0 sim/cockpit2/annunciators/generator_off[3]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0 
+      
+      gen_rotary gen1_off
+      POS 1437.000000 -39.200000
+      IMAGE CRT Displays/EICAS Lower/ELEC/off
+      DATAREF 
+      SHOW_EQUAL 1 sim/cockpit2/annunciators/generator_off[0]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0
+      
+      gen_rotary gen2_off
+      POS 1593.000000 -39.200000
+      IMAGE CRT Displays/EICAS Lower/ELEC/off
+      DATAREF 
+      SHOW_EQUAL 1 sim/cockpit2/annunciators/generator_off[1]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0
+      
+      gen_rotary gen3_off
+      POS 1827.000000 -39.200000
+      IMAGE CRT Displays/EICAS Lower/ELEC/off
+      DATAREF 
+      SHOW_EQUAL 1 sim/cockpit2/annunciators/generator_off[2]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0
+      
+      gen_rotary gen4_off
+      POS 1982.000000 -39.200000
+      IMAGE CRT Displays/EICAS Lower/ELEC/off
+      DATAREF 
+      SHOW_EQUAL 1 sim/cockpit2/annunciators/generator_off[3]
+      LIGHT_MODE GLASS_AUTO
+      LIGHT_RHEOSTAT 10
+      BUS_SRC 3
+      KEY_FRAME 0.000000 0.000000 1.000000
+      KEY_FRAME 1.000000 6.000000
+      DIGITS 1
+      ROTARY_TYPE NO_CLICK
+      CLICK_RADIUS 0.000000
+      CLICK_RADIUS_DY 0.000000
+      OFFSET 0.000000
+      STEP1 1.000000
+      STEP2 1.000000
+      CURSOR DEFAULT
+      CLICK_DX 0
+      CLICK_DY 0
   END_GROUP
   GROUP FUEL Synoptic
     SHOW_EQUAL 4.000000 laminar/B747/dsp/synoptic_display

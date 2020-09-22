@@ -388,10 +388,48 @@ function fmsFunctions.getdata(fmsO,value)
   end
   fmsO["scratchpad"]=data
 end
+function validateSpeed(value)
+  local val=tonumber(value)
+  if val==nil then return false end
+  if val<130 or val>300 then return false end
+
+  return true
+end
+function validAlt(value)
+  local val=tonumber(value)
+  if string.len(value)>2 and string.sub(value,1,2)=="FL" then val=tonumber(string.sub(value,3)) end
+  
+  if val==nil then return nil end
+  if val<1000 then val=val*100 end
+  if val<2000 or val>40000 then return nil end
+
+  return ""..val
+end
+function validFL(value)
+  local val=tonumber(value)
+  if string.len(value)>2 and string.sub(value,1,2)=="FL" then val=tonumber(string.sub(value,3)) end
+  
+  if val==nil then return nil end
+  if val<1000 then val=val*100 end
+  if val<10000 or val>40000 then return nil end
+
+  return "FL".. (val/100)
+end
+function validateMachSpeed(value)
+  local val=tonumber(value)
+  
+  
+  if val==nil then return nil end
+  if val<1 then val=val*1000 end
+  if val<100 then val=val*10 end
+  if val<400 or val>870 then return nil end
+
+  return ""..val
+end
 function fmsFunctions.setdata(fmsO,value)
   local del=false
   if fmsO["scratchpad"]=="DELETE" then fmsO["scratchpad"]="" del=true end
-  
+
   if value=="depdst" and string.len(fmsO["scratchpad"])>3  then
     dep=string.sub(fmsO["scratchpad"],1,4)
     dst=string.sub(fmsO["scratchpad"],-4)
@@ -399,6 +437,91 @@ function fmsFunctions.setdata(fmsO,value)
     --fmsModules["data"]["fltdst"]=dst
     setFMSData("fltdep",dep)
     setFMSData("fltdst",dst)
+  elseif value=="clbspd" then
+    if validateSpeed(fmsO["scratchpad"]) ==false then 
+      fmsO["notify"]="INVALID ENTRY"
+    else
+      setFMSData("clbspd",fmsO["scratchpad"])
+    end
+  elseif value=="clbtrans" then
+    spd=string.sub(fmsO["scratchpad"],1,3)
+    alt=string.sub(fmsO["scratchpad"],5)
+    if validateSpeed(spd) ==false then 
+      fmsO["notify"]="INVALID ENTRY"
+    else
+      setFMSData("transpd",spd)
+      if validAlt(alt) ~=nil then 
+	setFMSData("spdtransalt",validAlt(alt))
+      end
+    end
+  elseif value=="transalt" then
+    if validAlt(fmsO["scratchpad"]) ~=nil then 
+	setFMSData("transalt",validAlt(fmsO["scratchpad"]))
+    else
+      fmsO["notify"]="INVALID ENTRY"
+    end
+  elseif value=="clbrest" then
+    spd=string.sub(fmsO["scratchpad"],1,3)
+    alt=string.sub(fmsO["scratchpad"],5)
+    if validateSpeed(spd) ==false then 
+      fmsO["notify"]="INVALID ENTRY"
+    else
+      setFMSData("clbrestspd",spd)
+      if validAlt(alt) ~=nil then 
+	setFMSData("clbrestalt",validAlt(alt))
+      end
+    end
+  elseif value=="crzspd" then
+    if validateMachSpeed(fmsO["scratchpad"]) ==nil then 
+      fmsO["notify"]="INVALID ENTRY"
+    else
+      setFMSData("crzspd",validateMachSpeed(fmsO["scratchpad"]))
+    end
+  elseif value=="stepalt" then
+    if validFL(fmsO["scratchpad"]) ~=nil then 
+	setFMSData("stepalt",validFL(fmsO["scratchpad"]))
+    else
+      fmsO["notify"]="INVALID ENTRY"
+    end
+  elseif value=="desspds" then
+    div = string.find(fmsO["scratchpad"], "%/")
+    spd=getFMSData("desspd")
+    print(spd)
+    if div==nil then 
+      div=string.len(fmsO["scratchpad"])+1 
+    else
+      spd=string.sub(fmsO["scratchpad"],div+1)
+    end
+    print(spd)
+    machspd=string.sub(fmsO["scratchpad"],1,div-1)
+    if validateMachSpeed(machspd) ==nil or validateSpeed(spd) ==false then 
+      fmsO["notify"]="INVALID ENTRY"
+    else
+      setFMSData("desspd",spd)
+      setFMSData("desspdmach",validateMachSpeed(machspd))
+    end
+  elseif value=="destrans" then
+    spd=string.sub(fmsO["scratchpad"],1,3)
+    alt=string.sub(fmsO["scratchpad"],5)
+    if validateSpeed(spd) ==false then 
+      fmsO["notify"]="INVALID ENTRY"
+    else
+      setFMSData("destranspd",spd)
+      if validAlt(alt) ~=nil then 
+	setFMSData("desspdtransalt",validAlt(alt))
+      end
+    end 
+   elseif value=="desrest" then
+    spd=string.sub(fmsO["scratchpad"],1,3)
+    alt=string.sub(fmsO["scratchpad"],5)
+    if validateSpeed(spd) ==false then 
+      fmsO["notify"]="INVALID ENTRY"
+    else
+      setFMSData("desrestspd",spd)
+      if validAlt(alt) ~=nil then 
+	setFMSData("desrestalt",validAlt(alt))
+      end
+    end
   elseif value=="airportpos" and string.len(fmsO["scratchpad"])>3 then
     
     local navAids=json.decode(navAidsJSON)
@@ -483,7 +606,8 @@ end
 function fmsFunctions.setDref(fmsO,value)
    local val=tonumber(fmsO["scratchpad"])
   if value=="VNAVS1" and B747DR_ap_vnav_system ~=1.0 then B747DR_ap_vnav_system=1 return elseif value=="VNAVS1" then B747DR_ap_vnav_system=0 return end 
-  if value=="VNAVS2" and B747DR_ap_vnav_system ~=2.0 then B747DR_ap_vnav_system=2 return elseif value=="VNAVS2" then B747DR_ap_vnav_system=0 return end   
+  if value=="VNAVS2" and B747DR_ap_vnav_system ~=2.0 then B747DR_ap_vnav_system=2 return elseif value=="VNAVS2" then B747DR_ap_vnav_system=0 return end 
+  if value=="VNAVSPAUSE" then B747DR_ap_vnav_pause=1-B747DR_ap_vnav_pause return end  
   if value=="TO" then toderate=0 clbderate=0 return  end
   if value=="TO1" then toderate=1 clbderate=1 return  end
   if value=="TO2" then toderate=2 clbderate=2 return  end

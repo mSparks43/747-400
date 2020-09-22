@@ -139,7 +139,7 @@ simDR_engine_fire		= find_dataref("sim/flightmodel2/engines/is_on_fire")
 simDR_flap_deploy_ratio         = find_dataref("sim/flightmodel2/controls/flap_handle_deploy_ratio")
 simDR_allThrottle           	= find_dataref("sim/cockpit2/engine/actuators/throttle_ratio_all")
 simDR_engine_running            = find_dataref("sim/flightmodel/engine/ENGN_running")
-
+simDR_apu_running            	= find_dataref("sim/cockpit/engine/APU_running")
 simDR_thrust_rev_fail_01        = find_dataref("sim/operation/failures/rel_revers0")
 simDR_thrust_rev_fail_02        = find_dataref("sim/operation/failures/rel_revers1")
 simDR_thrust_rev_fail_03        = find_dataref("sim/operation/failures/rel_revers2")
@@ -147,7 +147,7 @@ simDR_thrust_rev_fail_04        = find_dataref("sim/operation/failures/rel_rever
 
 simDR_autopilot_TOGA_vert_status = find_dataref("sim/cockpit2/autopilot/TOGA_status")
 
-
+    simDR_ind_airspeed_kts_pilot        	= find_dataref("sim/cockpit2/gauges/indicators/airspeed_kts_pilot")
 
 
 
@@ -223,7 +223,7 @@ B747CMD_engine_start_switch2_off    = find_command("laminar/B747/toggle_switch/e
 B747CMD_engine_start_switch3_off    = find_command("laminar/B747/toggle_switch/engine_start3_off")
 B747CMD_engine_start_switch4_off    = find_command("laminar/B747/toggle_switch/engine_start4_off")
 
-
+simCMD_ThrottleUp=find_command("sim/engines/throttle_up")
 
 
 
@@ -739,9 +739,10 @@ function B747_prop_mode()
     --simDR_prop_mode[0] = B747_ternary(((B747DR_thrust_rev_lever_pos[0] > 0.45) and (simDR_hydraulic_sys_press_01 > 1000.0)), 3, 1)
     --simDR_prop_mode[1] = B747_ternary(((B747DR_thrust_rev_lever_pos[1] > 0.45) and (simDR_hydraulic_sys_press_02 > 1000.0)), 3, 1)
     --simDR_prop_mode[2] = B747_ternary(((B747DR_thrust_rev_lever_pos[2] > 0.45) and (simDR_hydraulic_sys_press_02 > 1000.0)), 3, 1)
-    --simDR_prop_mode[3] = B747_ternary(((B747DR_thrust_rev_lever_pos[3] > 0.45) and (simDR_hydraulic_sys_press_01 > 1000.0)), 3, 1)
+    --simDR_prop_mode[3] = B747_ternary(((B747DR_thrust_rev_lever_pos[3] > 0.45) and (simDR_hydraulic_sys_press_01 > 1000.0)), 3, 1)simCMD_ThrottleUp
+   
     if B747DR_engine_TOGA_mode >0 and B747DR_engine_TOGA_mode < 1 and simDR_allThrottle<0.94 then
-	    simDR_allThrottle = B747_set_animation_position(simDR_allThrottle,0.95,0,1,1)
+	    simCMD_ThrottleUp:once()--simDR_allThrottle = B747_set_animation_position(simDR_allThrottle,0.95,0,1,1)
     elseif B747DR_engine_TOGA_mode >0 and B747DR_engine_TOGA_mode < 1 then
       B747DR_engine_TOGA_mode = 1
       if toderate==0 then throttlederate=1.0
@@ -1236,20 +1237,20 @@ function B747_secondary_EICAS2_engine_vibration()
     local timeNow=0
     local phaseNow=0
     local thrust=0
-    local disturbance=math.sqrt((B747DR_EICAS2_wingFlex[0]-lastWingFlex)*(B747DR_EICAS2_wingFlex[0]-lastWingFlex))+4
+    local disturbance=math.sqrt((B747DR_EICAS2_wingFlex[0]-lastWingFlex)*(B747DR_EICAS2_wingFlex[0]-lastWingFlex))
     
     B747DR_EICAS2_engine_disturbance=B747_animate_value(B747DR_EICAS2_engine_disturbance,1,1,5,10)+disturbance
     B747DR_EICAS2_engine_disturbance=math.min(B747DR_EICAS2_engine_disturbance,4)
     lastWingFlex=B747_animate_value(lastWingFlex,B747DR_EICAS2_wingFlex[0],-30,30,20)
-    
+    local airspeedReduction=(400-simDR_ind_airspeed_kts_pilot)/400
     for i = 0, 3 do
     B747DR_EICAS2_engine_vibration[i] = B747_rescale(0.0, 0.0, 100.0, B747_engine_maxVib[i], simDR_engine_N2_pct[i])
     timeNow=B747_engine_lastClock[i]+(os.clock()-B747_engine_lastClock[i])
     thrust=math.max((simDR_engine_N2_pct[i]-60)/10,0)
     phaseNow=(timeNow*thrust)-(B747_engine_lastClock[i]*thrust)
     B747_engine_lastPos[i]=B747_engine_lastPos[i]+phaseNow
-  
-    B747DR_engine_vibration_position[i] =(B747DR_EICAS2_engine_disturbance*math.sin(B747_engine_lastPos[i]+ B747_engine_vibPhase[i]))/20
+    
+    B747DR_engine_vibration_position[i] =airspeedReduction*B747DR_EICAS2_engine_vibration[i]*(B747DR_EICAS2_engine_disturbance*math.sin(B747_engine_lastPos[i]+ B747_engine_vibPhase[i]))/5
 
     B747_engine_lastClock[i] = os.clock()
     end
@@ -1343,123 +1344,143 @@ function B747_engines_EICAS_msg()
 
 
     -- ENG 1 SHUTDOWN
-    B747DR_CAS_caution_status[23] = 0
+    
     if B747DR_engine01_fire_ext_switch_pos_disch > 0.95
         or B747DR_fuel_control_toggle_switch_pos[0] < 0.05
     then
         B747DR_CAS_caution_status[23] = 1
+    else
+      B747DR_CAS_caution_status[23] = 0
     end
 
     -- ENG 2 SHUTDOWN
-    B747DR_CAS_caution_status[24] = 0
+    
     if B747DR_engine02_fire_ext_switch_pos_disch > 0.95
         or B747DR_fuel_control_toggle_switch_pos[1] < 0.05
     then
         B747DR_CAS_caution_status[24] = 1
+    else
+      B747DR_CAS_caution_status[24] = 0
     end
 
     -- ENG 3 SHUTDOWN
-    B747DR_CAS_caution_status[25] = 0
+    
     if B747DR_engine03_fire_ext_switch_pos_disch > 0.95
         or B747DR_fuel_control_toggle_switch_pos[2] < 0.05
     then
         B747DR_CAS_caution_status[25] = 1
+    else
+      B747DR_CAS_caution_status[25] = 0
     end
 
     -- ENG 4 SHUTDOWN
-    B747DR_CAS_caution_status[26] = 0
+    
     if B747DR_engine04_fire_ext_switch_pos_disch > 0.95
         or B747DR_fuel_control_toggle_switch_pos[3] < 0.05
     then
         B747DR_CAS_caution_status[26] = 1
+    else
+      B747DR_CAS_caution_status[26] = 0
     end
 
     -- STARTER CUTOUT 1
-    B747DR_CAS_caution_status[61] = 0
+    
     if B747DR_bleedAir_engine1_start_valve_pos > 0.05
         and simDR_engine_N2_pct[0] > 50.0
     then
         B747DR_CAS_caution_status[61] = 1
+    else
+      B747DR_CAS_caution_status[61] = 0
     end
 
     -- STARTER CUTOUT 2
-    B747DR_CAS_caution_status[62] = 0
+    
     if B747DR_bleedAir_engine2_start_valve_pos > 0.05
         and simDR_engine_N2_pct[1] > 50.0
     then
         B747DR_CAS_caution_status[62] = 1
+    else
+      B747DR_CAS_caution_status[62] = 0
     end
 
     -- STARTER CUTOUT 3
-    B747DR_CAS_caution_status[63] = 0
+    
     if B747DR_bleedAir_engine3_start_valve_pos > 0.05
         and simDR_engine_N2_pct[2] > 50.0
     then
         B747DR_CAS_caution_status[63] = 1
+    else
+      B747DR_CAS_caution_status[63] = 0
     end
 
     -- STARTER CUTOUT 4
-    B747DR_CAS_caution_status[64] = 0
+    
     if B747DR_bleedAir_engine4_start_valve_pos > 0.05
         and simDR_engine_N2_pct[3] > 50.0
     then
         B747DR_CAS_caution_status[64] = 1
+    else
+      B747DR_CAS_caution_status[64] = 0
     end
 
     -- ENG 1 OIL TEMP
-    B747DR_CAS_advisory_status[118] = 0
-    if B747DR_engine_oil_temp_degC[0] > 160.0 then B747DR_CAS_advisory_status[118] = 1 end
+    
+    if B747DR_engine_oil_temp_degC[0] > 160.0 then B747DR_CAS_advisory_status[118] = 1 else B747DR_CAS_advisory_status[118] = 0 end
 
     -- ENG 2 OIL TEMP
-    B747DR_CAS_advisory_status[119] = 0
-    if B747DR_engine_oil_temp_degC[1] > 160.0 then B747DR_CAS_advisory_status[119] = 1 end
+    
+    if B747DR_engine_oil_temp_degC[1] > 160.0 then B747DR_CAS_advisory_status[119] = 1 else B747DR_CAS_advisory_status[119] = 0 end
 
     -- ENG 3 OIL TEMP
-    B747DR_CAS_advisory_status[120] = 0
-    if B747DR_engine_oil_temp_degC[2] > 160.0 then B747DR_CAS_advisory_status[120] = 1 end
+    
+    if B747DR_engine_oil_temp_degC[2] > 160.0 then B747DR_CAS_advisory_status[120] = 1 else B747DR_CAS_advisory_status[120] = 0 end
 
     -- ENG 4 OIL TEMP
-    B747DR_CAS_advisory_status[121] = 0
-    if B747DR_engine_oil_temp_degC[3] > 160.0 then B747DR_CAS_advisory_status[121] = 1 end
+    
+    if B747DR_engine_oil_temp_degC[3] > 160.0 then B747DR_CAS_advisory_status[121] = 1 else B747DR_CAS_advisory_status[121] = 0 end
 
     -- ENG 1 REVERSER
-    B747DR_CAS_advisory_status[126] = 0
-    if simDR_thrust_rev_fail_01 == 6 then B747DR_CAS_advisory_status[126] = 1 end
+    
+    if simDR_thrust_rev_fail_01 == 6 then B747DR_CAS_advisory_status[126] = 1 else B747DR_CAS_advisory_status[126] = 0 end
 
     -- ENG 2 REVERSER
-    B747DR_CAS_advisory_status[127] = 0
-    if simDR_thrust_rev_fail_02 == 6 then B747DR_CAS_advisory_status[127] = 1 end
+   
+    if simDR_thrust_rev_fail_02 == 6 then B747DR_CAS_advisory_status[127] = 1 else B747DR_CAS_advisory_status[127] = 0 end
 
     -- ENG 3 REVERSER
-    B747DR_CAS_advisory_status[128] = 0
-    if simDR_thrust_rev_fail_03 == 6 then B747DR_CAS_advisory_status[128] = 1 end
+    
+    if simDR_thrust_rev_fail_03 == 6 then B747DR_CAS_advisory_status[128] = 1 else B747DR_CAS_advisory_status[128] = 0 end
 
     -- ENG 4 REVERSER
-    B747DR_CAS_advisory_status[129] = 0
-    if simDR_thrust_rev_fail_04 == 6 then B747DR_CAS_advisory_status[129] = 1 end
+    
+    if simDR_thrust_rev_fail_04 == 6 then B747DR_CAS_advisory_status[129] = 1 else B747DR_CAS_advisory_status[129] = 0 end
 
     -- >ENG 1 RPM LIM
-    B747DR_CAS_advisory_status[134] = 0
-    if simDR_engine_N1_pct[0] >= 111.41 then B747DR_CAS_advisory_status[134] = 1 end
+   
+    if simDR_engine_N1_pct[0] >= 111.41 then B747DR_CAS_advisory_status[134] = 1 else B747DR_CAS_advisory_status[134] = 0 end
 
     -- >ENG 2 RPM LIM
-    B747DR_CAS_advisory_status[135] = 0
-    if simDR_engine_N1_pct[1] >= 111.41 then B747DR_CAS_advisory_status[135] = 1 end
+    
+    if simDR_engine_N1_pct[1] >= 111.41 then B747DR_CAS_advisory_status[135] = 1 else B747DR_CAS_advisory_status[135] = 0 end
 
     -- >ENG 3 RPM LIM
-    B747DR_CAS_advisory_status[136] = 0
-    if simDR_engine_N1_pct[2] >= 111.41 then B747DR_CAS_advisory_status[136] = 1 end
+    
+    if simDR_engine_N1_pct[2] >= 111.41 then B747DR_CAS_advisory_status[136] = 1 else B747DR_CAS_advisory_status[136] = 0 end
 
     -- >ENG 4 RPM LIM
-    B747DR_CAS_advisory_status[137] = 0
-    if simDR_engine_N1_pct[3] >= 111.41 then B747DR_CAS_advisory_status[137] = 1 end
+    
+    if simDR_engine_N1_pct[3] >= 111.41 then B747DR_CAS_advisory_status[137] = 1 else B747DR_CAS_advisory_status[137] = 0 end
 
     -- CON IGNITION ON
-    B747DR_CAS_memo_status[8] = 0
+    
     if B747DR_CAS_advisory_status[109] == 0 then
-        if B747DR_button_switch_position[44] > 0.95 then B747DR_CAS_memo_status[8] = 1 end
+        if B747DR_button_switch_position[44] > 0.95 then B747DR_CAS_memo_status[8] = 1 else B747DR_CAS_memo_status[8] = 0 end
+    else
+      B747DR_CAS_memo_status[8] = 0
     end
 
+    --APU RUNNING
+    if simDR_apu_running==1 then B747DR_CAS_memo_status[1]=1 else B747DR_CAS_memo_status[1] = 0 end
 end
 
 
