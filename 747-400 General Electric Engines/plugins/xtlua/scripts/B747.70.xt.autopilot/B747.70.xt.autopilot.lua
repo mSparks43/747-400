@@ -91,6 +91,7 @@ simDR_autopilot_autothrottle_on      	= find_dataref("sim/cockpit2/autopilot/aut
 simCMD_ThrottleDown=find_command("sim/engines/throttle_down")
 B747DR_ap_vnav_pause            = find_dataref("laminar/B747/autopilot/vnav_pause")
 simCMD_pause=find_command("sim/operation/pause_toggle")
+simDRTime=find_dataref("sim/time/total_running_time_sec")
 simDR_autopilot_bank_limit          	= find_dataref("sim/cockpit2/autopilot/bank_angle_mode")
 simDR_autopilot_airspeed_is_mach	= find_dataref("sim/cockpit2/autopilot/airspeed_is_mach")
 simDR_autopilot_altitude_ft    		= find_dataref("sim/cockpit2/autopilot/altitude_dial_ft")
@@ -1270,6 +1271,7 @@ function getDistance(lat1,lon1,lat2,lon2)
   retVal=math.acos(av) * 3440
   return retVal
 end
+local lastILSUpdate=0
 function B747_fltmgmt_setILS()
   local modes=B747DR_radioModes
   if modes:sub(1, 1)==" " then
@@ -1278,6 +1280,9 @@ function B747_fltmgmt_setILS()
   elseif  modes:sub(1, 1)=="M" then
     return
   end
+  local diff=simDRTime-lastILSUpdate
+  if diff<10 then return end
+  lastILSUpdate=simDRTime
   local n1=simDR_nav1Freq
   local n2=simDR_nav2Freq
   local d1=simDR_radio_nav_obs_deg[0]
@@ -1354,7 +1359,17 @@ function B747_fltmgmt_setILS()
 	  
 	  --print("cleared targetILS")
 	end
+    
     end
+  elseif string.len(targetILSS)>0 then
+	    --print("Tuning ILS".. targetILSS)
+	    local ilsNav=json.decode(targetILSS)
+	    simDR_nav1Freq=ilsNav[3]
+	    simDR_nav2Freq=ilsNav[3]
+	    local course=(ilsNav[4]+simDR_variation)
+	    simDR_radio_nav_obs_deg[0]=course
+	    simDR_radio_nav_obs_deg[1]=course
+	    --print("Tuned ILS "..course)
   end
   
   --print("target="..targetILS.."= "..targetILSS.."= "..targetFix.. " "..nSize.. " "..table.getn(navAids))
@@ -2092,7 +2107,7 @@ function B747_ap_fma()
   --B747DR_ap_FMA_active_roll_mode = 0
     
     -- (TOGA) --
-    
+    local navcrz=simDR_nav1_radio_course_deg
   
     if simDR_autopilot_TOGA_lat_status == 2 then
         B747DR_ap_FMA_active_roll_mode = 1
@@ -2104,7 +2119,7 @@ function B747_ap_fma()
     -- (LOC) --
     elseif simDR_autopilot_nav_status == 2 then
         B747DR_ap_FMA_active_roll_mode = 3
-        B747DR_ap_heading_deg = roundToIncrement(simDR_nav1_radio_course_deg, 1)            -- SET THE SELECTED HEADING VALUE TO THE LOC COURSE
+        simDR_autopilot_heading_deg = roundToIncrement(simDR_nav1_radio_course_deg, 1)            -- SET THE SELECTED HEADING VALUE TO THE LOC COURSE
 	B747DR_ap_lnav_state=0
 
       -- (ROLLOUT) --
