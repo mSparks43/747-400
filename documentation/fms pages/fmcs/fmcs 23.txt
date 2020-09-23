@@ -1,0 +1,51 @@
+**************************	
+*       ATC INDEX        *
+*                        *		               
+*<EMERGENCY   POS REPORT>*
+*                        *
+*<REQUEST    WHEN CAN WE>*
+*                        *
+*<REPORT                 *
+*                        *
+*<LOG          CLEARANCE>*
+*                        *
+*<LOGON/STATUS     VOICE>*
+*------------------------*
+*<PRINT LOG              * 
+**************************
+
+
+
+**************************	
+*      ATC REPORT    1/1 *
+* ATC                    *		               
+*<RTE REPORT   FREE TEXT>*
+*                        *
+*<CONFIRM ALTITUDE       *
+*                        *
+*<REPORT PASSING GGW     *
+*                        *
+*<WHEN CAN YOU ACCEPT F..*
+* ARMED                  *
+*<REPORT REACHING FL350  *
+*------------------------*
+*<INDEX                  * 
+**************************
+
+
+
+**************************	
+*      VERIFY REPORT     *
+* WE CAN ACCEPT          *		               
+*FL390                   *
+*  AT                    *
+*****z                   *
+*                        *
+*<CANNOT ACCEPT          *
+* FREE TEXT              *
+*<                       *
+*                  REPORT*
+*                   SEND>*
+*------------------------*
+*<REPORT                 * 
+**************************
