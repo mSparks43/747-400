@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.08.00">
+    <object class="MixerGroup" id="{a5a85a81-afd5-4425-9dc2-6e50f7776e6a}">
+        <property name="name">
+            <value>Exterior Processed</value>
+        </property>
+        <relationship name="effectChain">
+            <destination>{512f586b-f41e-4ec3-b11a-99def64fe1ab}</destination>
+        </relationship>
+        <relationship name="panner">
+            <destination>{bf36c278-bc36-4977-910f-4db8574f4b2e}</destination>
+        </relationship>
+        <relationship name="output">
+            <destination>{7f7c05a4-e05a-4d44-94fe-d4691147a9b7}</destination>
+        </relationship>
+    </object>
+    <object class="MixerBusEffectChain" id="{512f586b-f41e-4ec3-b11a-99def64fe1ab}">
+        <relationship name="effects">
+            <destination>{5bf17a92-153c-43c2-9392-512aa2fd85f1}</destination>
+            <destination>{0243ff16-146f-4b0b-a2d3-831dd6bd6bb0}</destination>
+        </relationship>
+    </object>
+    <object class="MixerBusPanner" id="{bf36c278-bc36-4977-910f-4db8574f4b2e}"/>
+    <object class="PluginEffect" id="{5bf17a92-153c-43c2-9392-512aa2fd85f1}">
+        <relationship name="plugin">
+            <destination>{b727ce2e-b111-4663-8ae0-06f95b45a126}</destination>
+        </relationship>
+    </object>
+    <object class="MixerBusFader" id="{0243ff16-146f-4b0b-a2d3-831dd6bd6bb0}"/>
+    <object class="Plugin" id="{b727ce2e-b111-4663-8ae0-06f95b45a126}">
+        <property name="identifier">
+            <value>FMOD Lowpass Simple</value>
+        </property>
+        <relationship name="pluginParameters">
+            <destination>{c214d566-e9e6-457d-a3e5-3446a8ebf3ce}</destination>
+        </relationship>
+    </object>
+    <object class="FloatPluginParameter" id="{c214d566-e9e6-457d-a3e5-3446a8ebf3ce}">
+        <property name="name">
+            <value>Cutoff freq</value>
+        </property>
+        <property name="curve">
+            <value>LinearPiecewiseCurveStrategy{(0.000000,10.000000)(1.000000,100.000000)(2.000000,400.000000)(3.000000,750.000000)(4.000000,1250.000000)(5.000000,2000.000000)(6.000000,3200.000000)(7.000000,5500.000000)(8.000000,10000.000000)(9.000000,18000.000000)(10.000000,22000.000000)}</value>
+        </property>
+        <property name="value">
+            <value>1250</value>
+        </property>
+    </object>
+</objects>

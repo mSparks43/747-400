@@ -996,8 +996,8 @@ END_SOUND_ATTACHMENT
 BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Controls/T3
 	VEH_XYZ 0 4.3 -26.5
-    EVENT_START_COND ABS_DELTA=sim/cockpit2/autopilot/airspeed_dial_kts_mach > 10
-	EVENT_END_COND ABS_DELTA=sim/cockpit2/autopilot/airspeed_dial_kts_mach < 5
+    EVENT_START_COND ABS_DELTA=laminar/B747/autopilot/ias_dial_value > 10
+	EVENT_END_COND ABS_DELTA=laminar/B747/autopilot/ias_dial_value < 5
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT

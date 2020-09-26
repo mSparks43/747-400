@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.07.00">
+    <object class="MixerMaster" id="{9f08114d-36ec-44cc-b8bf-b2babda09f9e}">
+        <property name="name">
+            <value>Master Bus</value>
+        </property>
+        <relationship name="effectChain">
+            <destination>{e73afab1-f24d-4147-948e-181a6631817e}</destination>
+        </relationship>
+        <relationship name="panner">
+            <destination>{ad026d21-ac9a-4824-a3df-f7b47c6aee93}</destination>
+        </relationship>
+        <relationship name="mixer">
+            <destination>{31fa9b39-148d-45d3-a260-462e08c08e52}</destination>
+        </relationship>
+    </object>
+    <object class="MixerBusEffectChain" id="{e73afab1-f24d-4147-948e-181a6631817e}">
+        <relationship name="effects">
+            <destination>{cd637dd6-ae5e-4b7c-a6e0-4d1c6a1de92a}</destination>
+            <destination>{ffbfe841-48a5-4230-a68c-44a388630791}</destination>
+            <destination>{8a4aa2eb-f21a-426e-931f-6fa5038409e1}</destination>
+        </relationship>
+    </object>
+    <object class="MixerBusPanner" id="{ad026d21-ac9a-4824-a3df-f7b47c6aee93}"/>
+    <object class="PluginEffect" id="{cd637dd6-ae5e-4b7c-a6e0-4d1c6a1de92a}">
+        <relationship name="plugin">
+            <destination>{b582e0cd-7af5-4e1e-8a0c-ad56fa444290}</destination>
+        </relationship>
+    </object>
+    <object class="LimiterEffect" id="{ffbfe841-48a5-4230-a68c-44a388630791}">
+        <property name="ceiling">
+            <value>-0.099999994</value>
+        </property>
+        <property name="release">
+            <value>1</value>
+        </property>
+    </object>
+    <object class="MixerBusFader" id="{8a4aa2eb-f21a-426e-931f-6fa5038409e1}"/>
+    <object class="Plugin" id="{b582e0cd-7af5-4e1e-8a0c-ad56fa444290}">
+        <property name="identifier">
+            <value>FMOD Highpass Simple</value>
+        </property>
+        <property name="uiName">
+            <value>Highpass Simple</value>
+        </property>
+        <relationship name="pluginParameters">
+            <destination>{d8552b20-6f74-449a-8ce3-29a94a58b2aa}</destination>
+        </relationship>
+    </object>
+    <object class="FloatPluginParameter" id="{d8552b20-6f74-449a-8ce3-29a94a58b2aa}">
+        <property name="name">
+            <value>Cutoff freq</value>
+        </property>
+        <property name="units">
+            <value>hz</value>
+        </property>
+        <property name="curve">
+            <value>LinearPiecewiseCurveStrategy{(0.000000,10.000000)(1.000000,100.000000)(2.000000,400.000000)(3.000000,750.000000)(4.000000,1250.000000)(5.000000,2000.000000)(6.000000,3200.000000)(7.000000,5500.000000)(8.000000,10000.000000)(9.000000,18000.000000)(10.000000,22000.000000)}</value>
+        </property>
+        <property name="defaultValue">
+            <value>1000</value>
+        </property>
+        <property name="value">
+            <value>45</value>
+        </property>
+    </object>
+</objects>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.07.00">
+    <object class="MasterTagFolder" id="{bf71089b-2bef-47dd-a25a-a00c4049b8bb}">
+        <property name="name">
+            <value>Master</value>
+        </property>
+        <relationship name="items">
+            <destination>{d61091e2-daae-42d9-9e87-8b81382c5ac0}</destination>
+            <destination>{a1537d10-ff05-486d-acd2-51abc490cf87}</destination>
+            <destination>{9d87fbf7-eda2-404c-a609-a681fd6dce1b}</destination>
+            <destination>{877d3ba8-4e48-4ca9-af0a-f1301c7aa7dd}</destination>
+            <destination>{cece6328-e3e8-4db0-bcf5-eb7f9d2f0964}</destination>
+            <destination>{f1e6d40e-c649-4b27-ae33-319926079d9d}</destination>
+            <destination>{a7d2cdf5-b9a5-4ad2-9ee7-d9aa73ad77d8}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{d61091e2-daae-42d9-9e87-8b81382c5ac0}">
+        <property name="name">
+            <value>cessna_172</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bf71089b-2bef-47dd-a25a-a00c4049b8bb}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{a1537d10-ff05-486d-acd2-51abc490cf87}">
+        <property name="name">
+            <value>cockpit</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bf71089b-2bef-47dd-a25a-a00c4049b8bb}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{9d87fbf7-eda2-404c-a609-a681fd6dce1b}">
+        <property name="name">
+            <value>engine</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bf71089b-2bef-47dd-a25a-a00c4049b8bb}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{877d3ba8-4e48-4ca9-af0a-f1301c7aa7dd}">
+        <property name="name">
+            <value>fixme</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bf71089b-2bef-47dd-a25a-a00c4049b8bb}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{cece6328-e3e8-4db0-bcf5-eb7f9d2f0964}">
+        <property name="name">
+            <value>hascue</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bf71089b-2bef-47dd-a25a-a00c4049b8bb}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{f1e6d40e-c649-4b27-ae33-319926079d9d}">
+        <property name="name">
+            <value>unused</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bf71089b-2bef-47dd-a25a-a00c4049b8bb}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{a7d2cdf5-b9a5-4ad2-9ee7-d9aa73ad77d8}">
+        <property name="name">
+            <value>hull</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bf71089b-2bef-47dd-a25a-a00c4049b8bb}</destination>
+        </relationship>
+    </object>
+</objects>
