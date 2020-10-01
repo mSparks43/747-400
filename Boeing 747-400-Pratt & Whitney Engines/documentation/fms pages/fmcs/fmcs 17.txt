@@ -1,0 +1,33 @@
+**************************	
+*  ACT RTE 1 LEGS    1/1 *
+* 130°TRK  3NM           *		               
+*SEAL 01       250/ 5000A*
+* 101°     6NM           *
+*BOB 01        250/ 6289 *
+* 130°    12NM           *
+*SCOTT         250/ 7398 *
+* 149°    18NM           *
+*DONN          250/ 8721 *
+*         20NM           *
+*JERRY         250/ 9763 *
+*--------HOLD AT---------*
+******              PPOS>* 
+**************************
+
+
+
+**************************	
+*    ACT RTE 1 HOLD  1/1 *
+* FIX         SPD/TGT ALT*		               
+*BLACKO        210/FL230 *
+* QUAD/RADIAL     FIX ETA*
+*NE/030°          1143.5z*
+* ENBD CRS/DIR   EFC TIME*
+*210°/L TURN        ----z*
+* LEG TIME     HOLD AVAIL*
+*1.5MIN              0+48*
+* LEG DIST     DEST SPEED*
+*--.-NM             220KT*
+*------------------------*
+*<ERASE        EXIT HOLD>* 
+**************************

@@ -1,0 +1,33 @@
+**************************	
+*   KJFK DEPARTURES  1/2 *
+* SIDS    RTE 1   RUNWAYS*		               
+*BELLE 1              04L*
+*                        *
+*CYN9                 04R*
+*                        *
+*FREH8                13L*
+*                        *
+*OKWD7                13R*
+*                        *
+*PLUME3               22L*
+*------------------------*
+*<INDEX            ROUTE>* 
+**************************
+
+
+
+**************************	
+*    KATL ARRIVALS   1/X *
+* STARS  RTE 1 APPROACHES*		               
+*LGC2               ILS08*
+*                        *
+*MACEY1             ILS09*
+*                        *
+*RMG8               ILS26*
+*                        *
+*SINCA1            ILS27R*
+*                        *
+*CANUK             ILS27L*
+*------------------------*
+*<INDEX            ROUTE>* 
+**************************

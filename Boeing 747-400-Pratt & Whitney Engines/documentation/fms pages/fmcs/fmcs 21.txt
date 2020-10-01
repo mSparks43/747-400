@@ -1,0 +1,33 @@
+**************************	
+*       ATC INDEX        *
+*                        *		               
+*<EMERGENCY   POS REPORT>*
+*                        *
+*<REQUEST    WHEN CAN WE>*
+*                        *
+*<REPORT                 *
+*                        *
+*<LOG          CLEARANCE>*
+*                        *
+*<LOGON/STATUS     VOICE>*
+*------------------------*
+*<PRINT LOG              * 
+**************************
+
+
+
+**************************	
+*    ATC LOGON/STATUS    *
+* LOGON TO          LOGON*		               
+*KZAK            ACCEPTED*
+* FLT NO                 *
+*QAN1454                 *
+* ATC COMM        ACT CTR*
+*<SELECT OFF         KZAK*
+*                NEXT CTR*
+*                    PANC*
+* ADS (ACT)     ADS ENERG*
+*<SELECT OFF   SELECT ON>*
+*----------------DATALINK*
+*<INDEX             READY* 
+**************************

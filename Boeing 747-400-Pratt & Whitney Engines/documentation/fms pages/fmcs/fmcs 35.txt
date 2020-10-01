@@ -1,0 +1,82 @@
+**************************	
+*    GROUND TESTS    1/1 *
+*                        *		               
+*<FMC-L             PASS *
+*  INHIBITED             *
+*<FMC-R                  *
+*                        *
+*<FMC-L SERVO LOOP  FAIL>*
+*  INHIBITED             *
+*<FMC-R SEVO LOOP        *
+*                        *
+*                        *
+*------------------------*
+*<RETURN            HELP>* 
+**************************
+
+
+
+**************************	
+*    GROUND TESTS    1/1 *
+* 34 FLIGHT MANAGEMENT   *		               
+*    FMC-L SERVO LOOP    *
+*                        *
+*                        *
+*                        *
+*    IN PROGRESS         *
+*                        *
+*                        *
+*                        *
+*                        *
+*                        *
+*                        * 
+**************************
+
+
+
+**************************	
+*    GROUND TESTS    1/1 *
+* 34 FLIGHT MANAGEMENT   *		               
+*        FMC-L           *
+* WARNING:               *
+*   THROTTLE LEVERS WILL *
+*   MOVE DURING TEST     *
+*1.SET A/T ARM SW TO ON  *
+*2.SET ALL EEC MAINT ENG *
+*  POWER SWITCHES TO TEST*
+*3.ALL IRS IN NAV MODE   *
+*<CONFIRM                *
+*                        *
+*<ABORT                  * 
+**************************
+
+
+
+**************************	
+*    GROUND TESTS    1/1 *
+* 34 FLIGHT MANAGEMENT   *		               
+*    FMC-L SERVO LOOP    *
+* WARNING:               *
+*   THROTTLE LEVERS WILL *
+*   MOVE DURING TEST     *
+*                        *
+* SET A/T SW TO ARM      *
+*    THEN CONFIRM        *
+*                        *
+*<CONFIRM                *
+*                        *
+*<ABORT                  * 
+**************************
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,5 @@
+A
+750 version
+x   y  
+0   0	// comment: rose offsets in expanded mode
+0   0	// comment: rose offsets in centered mode

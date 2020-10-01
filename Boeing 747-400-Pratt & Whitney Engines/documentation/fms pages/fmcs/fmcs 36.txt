@@ -1,0 +1,67 @@
+**************************	
+*    GROUND TESTS    2/8 *
+*                        *		               
+*<21 ZONE TEMP CONTROL   *
+*                        *
+*<22 AUTOPILOT FLR DIR   *
+*                        *
+*<22 YAW DAMPER          *
+*                        *
+*<23 COMMUNICATIONS      *
+*                        *
+*<23 AUDIO               *
+*                        *
+*<RETURN                 * 
+**************************
+
+
+
+**************************	
+*  AUTOPILOT FLT DIR 1/4 *
+*                        *		               
+*<FCC-L                  *
+*                        *
+*<FCC-C                  *
+*                        *
+*<FCC-R                  *
+*                        *
+*<MODE CONTL PANEL DONE  *
+*                        *
+*<SERVO - AILERION       *
+*                        *
+*<RETURN                 * 
+**************************
+
+
+
+**************************	
+*TEST PRECONDITIONS  1/1 *
+*         MCP            *		               
+*                        *
+*                        *
+*NOTE:VISUAL             *
+*VERIFICATION IS         *
+*REQUIRED AS DESCRIBED   *
+*IN THE SUBSEQUENT TEST  *
+*PAGES.                  *
+*                        *
+*                        *
+*------------------------*
+*<RETURN      START TEST>*
+**************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

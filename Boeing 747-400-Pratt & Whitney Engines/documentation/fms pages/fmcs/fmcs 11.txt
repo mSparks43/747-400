@@ -1,0 +1,197 @@
+**************************	
+*     ACT ECON CRZ   2/3 *
+* CRZ ALT         STEP TO*		               
+*FL350              FL370*
+* ECON SPD             AT*
+*.810       1004z /1200NM*
+* N1        KATL ETA/FUEL*
+*91.3         2003 /100.6*
+* STEP SITE OPT       MAX*
+*ICAO      FL358    FL376*
+*------------------------*
+*                ENG OUT>*
+*                        *
+*<RTA PROGRESS       LRC>* 
+**************************
+
+
+
+**************************	
+*     ACT M.801 CRZ  2/3 *
+* CRZ ALT         STEP TO*		               
+*FL350              FL370*
+* ECON SPD             AT*
+*.810       1004z /1200NM*
+* N1        KATL ETA/FUEL*
+*91.3         2003 /100.6*
+* STEP SITE OPT       MAX*
+*ICAO      FL358    FL376*
+*------------------------*
+*                ENG OUT>*
+*                        *
+*<RTA PROGRESS       LRC>* 
+**************************
+
+
+
+**************************	
+*  ACT ECON CRZ CLB  2/3 *
+* CRZ ALT         STEP TO*		               
+*FL350              FL370*
+* ECON SPD             AT*
+*.810       1004z /1200NM*
+* N1        KATL ETA/FUEL*
+*91.3         2003 /100.6*
+* STEP SITE OPT       MAX*
+*ICAO      FL358    FL376*
+*------------------------*
+*                ENG OUT>*
+*                        *
+*<RTA PROGRESS       LRC>* 
+**************************
+
+
+
+**************************	
+*  ACT ECON CRZ DES  2/3 *
+* CRZ ALT         STEP TO*		               
+*FL350              FL370*
+* ECON SPD             AT*
+*.810       1004z /1200NM*
+* N1        KATL ETA/FUEL*
+*91.3         2003 /100.6*
+* STEP SITE OPT       MAX*
+*ICAO      FL358    FL376*
+*------------------------*
+*                ENG OUT>*
+*                        *
+*<RTA PROGRESS       LRC>* 
+**************************
+
+
+
+**************************	
+*     ACT LRC CRZ    2/3 *
+* CRZ ALT         STEP TO*		               
+*FL350              FL370*
+* ECON SPD             AT*
+*.810       1004z /1200NM*
+* N1        KATL ETA/FUEL*
+*91.3         2003 /100.6*
+* STEP SITE OPT       MAX*
+*ICAO      FL358    FL376*
+*------------------------*
+*                ENG OUT>*
+*                        *
+*<RTA PROGRESS       LRC>* 
+**************************
+
+
+
+**************************	
+*     ACT E/O CRZ    2/3 *
+* CRZ ALT         STEP TO*		               
+*FL350              FL370*
+* ECON SPD             AT*
+*.810       1004z /1200NM*
+* N1        KATL ETA/FUEL*
+*91.3         2003 /100.6*
+* STEP SITE OPT       MAX*
+*ICAO      FL358    FL376*
+*------------------------*
+*                ENG OUT>*
+*                        *
+*<RTA PROGRESS       LRC>* 
+**************************
+
+
+
+**************************	
+*  ACT E/O M.755 CRZ 2/3 *
+* CRZ ALT         STEP TO*		               
+*FL350              FL370*
+* ECON SPD             AT*
+*.810       1004z /1200NM*
+* N1        KATL ETA/FUEL*
+*91.3         2003 /100.6*
+* STEP SITE OPT       MAX*
+*ICAO      FL358    FL376*
+*------------------------*
+*                ENG OUT>*
+*                        *
+*<RTA PROGRESS       LRC>* 
+**************************
+
+
+
+**************************	
+*   ACT E/O LRC  CRZ 2/3 *
+* CRZ ALT         STEP TO*		               
+*FL350              FL370*
+* ECON SPD             AT*
+*.810       1004z /1200NM*
+* N1        KATL ETA/FUEL*
+*91.3         2003 /100.6*
+* STEP SITE OPT       MAX*
+*ICAO      FL358    FL376*
+*------------------------*
+*                ENG OUT>*
+*                        *
+*<RTA PROGRESS       LRC>* 
+**************************
+
+
+
+**************************	
+*     ACT RTA CRZ    2/3 *
+* CRZ ALT         STEP TO*		               
+*FL350              FL370*
+* ECON SPD             AT*
+*.810       1004z /1200NM*
+* N1        KATL ETA/FUEL*
+*91.3         2003 /100.6*
+* STEP SITE OPT       MAX*
+*ICAO      FL358    FL376*
+*------------------------*
+*                ENG OUT>*
+*                        *
+*<RTA PROGRESS       LRC>* 
+**************************
+
+
+
+
+**************************	
+*   ACT MCP SPD CRZ  2/3 *
+* CRZ ALT         STEP TO*		               
+*FL350              FL370*
+* ECON SPD             AT*
+*.810       1004z /1200NM*
+* N1        KATL ETA/FUEL*
+*91.3         2003 /100.6*
+* STEP SITE OPT       MAX*
+*ICAO      FL358    FL376*
+*------------------------*
+*                ENG OUT>*
+*                        *
+*<RTA PROGRESS       LRC>* 
+**************************
+
+
+
+
+**************************	
+*   ACT LIM SPD CRZ  2/3 *
+* CRZ ALT         STEP TO*		               
+*FL350              FL370*
+* ECON SPD             AT*
+*.810       1004z /1200NM*
+* N1        KATL ETA/FUEL*
+*91.3         2003 /100.6*
+* STEP SITE OPT       MAX*
+*ICAO      FL358    FL376*
+*------------------------*
+*                ENG OUT>*
+*                        *
+*<RTA PROGRESS       LRC>* 
+**************************

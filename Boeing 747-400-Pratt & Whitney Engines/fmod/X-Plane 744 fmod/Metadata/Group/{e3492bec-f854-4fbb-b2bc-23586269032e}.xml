@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.08.00">
+    <object class="MixerGroup" id="{e3492bec-f854-4fbb-b2bc-23586269032e}">
+        <property name="name">
+            <value>Copilot</value>
+        </property>
+        <relationship name="effectChain">
+            <destination>{4af6ecdc-469d-4c46-a2e7-51556ea6f6ae}</destination>
+        </relationship>
+        <relationship name="panner">
+            <destination>{8b299f72-7b87-47aa-a2e6-e233d1e7856d}</destination>
+        </relationship>
+        <relationship name="output">
+            <destination>{7f7c05a4-e05a-4d44-94fe-d4691147a9b7}</destination>
+        </relationship>
+    </object>
+    <object class="MixerBusEffectChain" id="{4af6ecdc-469d-4c46-a2e7-51556ea6f6ae}">
+        <relationship name="effects">
+            <destination>{04bf7af0-e151-45f9-bd13-dced741e3b14}</destination>
+        </relationship>
+    </object>
+    <object class="MixerBusPanner" id="{8b299f72-7b87-47aa-a2e6-e233d1e7856d}"/>
+    <object class="MixerBusFader" id="{04bf7af0-e151-45f9-bd13-dced741e3b14}"/>
+</objects>
