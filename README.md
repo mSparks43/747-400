@@ -31,19 +31,6 @@ Yes Aviation have now officially abandoned and deleted their github, and begun w
 
 This project continues by the good graces of the X-Plane community and the great work they do.
 
-The latest addition merges the LCF model variant by Lee_Hyeon_Seo (with permission) with the existing improvements, check out the working his [A340 developements](https://forums.x-plane.org/index.php?/forums/topic/203381-3d-cockpit-for-a340/&)
+The LCF variant by Lee_Hyeon_Seo (with permission) with the existing improvements, check out the working his [A340 developements](https://forums.x-plane.org/index.php?/forums/topic/203381-3d-cockpit-for-a340/&)
 
 Custom sounds from [FTSim+](https://k-akai.blogspot.com/) (with permission)
-
-Changelog:
-22/07/2020
-* Initial [LCF model varient](https://forums.x-plane.org/index.php?/files/file/59248-xplane-boeing-747lcf-dream-lifter/) by Lee_Hyeon_Seo (Lee7) (with permission)
-
-06/10/2020
-* merge navigationsystems branch
-
-10/18/2019
-* Memory Leak- Fixed
-
-1/20/2020
-* Parking Brake Animation - Fixed
