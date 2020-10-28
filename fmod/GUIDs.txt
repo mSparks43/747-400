@@ -171,12 +171,6 @@
 {e41c1c9b-f1a0-4a5b-bf37-825fd2820932} event:/Weather/WindC
 {d26f3690-2c81-423a-9b4d-684f7154cef2} event:/Weather/WindG
 {b7b5022a-c984-4ccb-bd27-fb3d4e4a9d6a} event:/Weather/WindGX
-{b9081ca1-39cb-4dc0-8fdf-6fc8b61ba06d} event:/master_caution
-{9e9caaeb-8478-4f71-be8c-027db9566f61} event:/master_warning
-{62b43ad5-be60-492c-8cdb-3fb3e67d92ee} event:/aircraft/engine/GE/GE_1
-{c737baef-cf36-4aab-94f9-ef7e0ba41267} event:/aircraft/engine/GE/GE_2
-{20ea04f0-63fe-43fe-9119-64783f23b5a0} event:/aircraft/engine/GE/GE_3
-{683bb503-d566-41c9-9d94-79bfa0df4e78} event:/aircraft/engine/GE/GE_4
 {9f08114d-36ec-44cc-b8bf-b2babda09f9e} bus:/
 {7f7c05a4-e05a-4d44-94fe-d4691147a9b7} bus:/Master
 {e3492bec-f854-4fbb-b2bc-23586269032e} bus:/Master/Copilot
@@ -201,4 +195,3 @@
 {6908b099-9bb1-4f12-b8f5-fa2f58b1d624} bank:/Warning
 {13620679-b305-450f-a9aa-44223e84e7fa} bank:/Weather
 {52a97eaf-b4a7-4f42-aeb7-b40cd7fd207f} bank:/Master Bank
-{af441362-efce-4653-8ca3-12cfc73cd220} bank:/744BYNC4
