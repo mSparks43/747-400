@@ -47,6 +47,13 @@ B747DR_flt_inst_fmc_master_src_ctr_pnl_sel_pos  = deferred_dataref("laminar/B747
 B747DR_flt_inst_inbd_disp_capt_sel_dial_pos     = deferred_dataref("laminar/B747/flt_inst/capt_inbd_display/sel_dial_pos", "number")
 B747DR_flt_inst_lwr_disp_capt_sel_dial_pos      = deferred_dataref("laminar/B747/flt_inst/capt_lwr_display/sel_dial_pos", "number")
 
+B747DR_flt_inst_capt_pfd_pos      		= deferred_dataref("laminar/B747/flt_inst/display/capt/pfd_pos", "number")
+B747DR_flt_inst_fo_pfd_pos      		= deferred_dataref("laminar/B747/flt_inst/display/fo/pfd_pos", "number")
+B747DR_flt_inst_capt_nd_pos      		= deferred_dataref("laminar/B747/flt_inst/display/capt/nd_pos", "number")
+B747DR_flt_inst_fo_nd_pos      			= deferred_dataref("laminar/B747/flt_inst/display/fo/nd_pos", "number")
+B747DR_flt_inst_eicas_pos      			= deferred_dataref("laminar/B747/flt_inst/display/eicas_pos", "number")
+B747DR_flt_inst_pri_eicas_pos      		= deferred_dataref("laminar/B747/flt_inst/display/pri_eicas_pos", "number")
+
 B747DR_flt_inst_inbd_disp_fo_sel_dial_pos       = deferred_dataref("laminar/B747/flt_inst/fo_inbd_display/sel_dial_pos", "number")
 B747DR_flt_inst_lwr_disp_fo_sel_dial_pos        = deferred_dataref("laminar/B747/flt_inst/fo_lwr_display/sel_dial_pos", "number")
 

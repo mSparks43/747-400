@@ -28,6 +28,10 @@ B747DR_hyd_sys_pressure_1      = deferred_dataref("laminar/B747/hydraulics/press
 B747DR_hyd_sys_pressure_2      = deferred_dataref("laminar/B747/hydraulics/pressure_2", "number")
 B747DR_hyd_sys_pressure_3      = deferred_dataref("laminar/B747/hydraulics/pressure_3", "number")
 B747DR_hyd_sys_pressure_4      = deferred_dataref("laminar/B747/hydraulics/pressure_4", "number")
+B747DR_hyd_sys_pressure_12      = deferred_dataref("laminar/B747/hydraulics/pressure_12", "number")
+B747DR_hyd_sys_pressure_23      = deferred_dataref("laminar/B747/hydraulics/pressure_23", "number")
+B747DR_hyd_sys_pressure_24      = deferred_dataref("laminar/B747/hydraulics/pressure_24", "number")
+B747DR_hyd_sys_pressure_234      = deferred_dataref("laminar/B747/hydraulics/pressure_234", "number")
 
 B747DR_hyd_sys_pressure_use_1  = deferred_dataref("laminar/B747/hydraulics/pressure_use_1", "number")
 B747DR_hyd_sys_pressure_use_2  = deferred_dataref("laminar/B747/hydraulics/pressure_use_2", "number")

@@ -27,7 +27,10 @@ B747DR_hyd_sys_pressure_1      = deferred_dataref("laminar/B747/hydraulics/press
 B747DR_hyd_sys_pressure_2      = deferred_dataref("laminar/B747/hydraulics/pressure_2", "number")
 B747DR_hyd_sys_pressure_3      = deferred_dataref("laminar/B747/hydraulics/pressure_3", "number")
 B747DR_hyd_sys_pressure_4      = deferred_dataref("laminar/B747/hydraulics/pressure_4", "number")
-
+B747DR_hyd_sys_pressure_12      = deferred_dataref("laminar/B747/hydraulics/pressure_12", "number")
+B747DR_hyd_sys_pressure_23      = deferred_dataref("laminar/B747/hydraulics/pressure_23", "number")
+B747DR_hyd_sys_pressure_24      = deferred_dataref("laminar/B747/hydraulics/pressure_24", "number")
+B747DR_hyd_sys_pressure_234      = deferred_dataref("laminar/B747/hydraulics/pressure_234", "number")
 B747DR_hyd_sys_pressure_use_1      = deferred_dataref("laminar/B747/hydraulics/pressure_use_1", "number")
 B747DR_hyd_sys_pressure_use_2      = deferred_dataref("laminar/B747/hydraulics/pressure_use_2", "number")
 B747DR_hyd_sys_pressure_use_3      = deferred_dataref("laminar/B747/hydraulics/pressure_use_3", "number")
@@ -220,7 +223,10 @@ function B747_system_pressures()
   B747DR_hyd_sys_pressure_2=B747_animate_value(B747DR_hyd_sys_pressure_2,B747DR_hyd_sys_pressure_2+B747DR_hyd_sys_pressure_use_2,0,3000-math.random()*50,1)
   B747DR_hyd_sys_pressure_3=B747_animate_value(B747DR_hyd_sys_pressure_3,B747DR_hyd_sys_pressure_3+B747DR_hyd_sys_pressure_use_3,0,3000-math.random()*50,1)
   B747DR_hyd_sys_pressure_4=B747_animate_value(B747DR_hyd_sys_pressure_4,B747DR_hyd_sys_pressure_4+B747DR_hyd_sys_pressure_use_4,0,3000-math.random()*50,1)
-
+  B747DR_hyd_sys_pressure_12=math.max(B747DR_hyd_sys_pressure_1,B747DR_hyd_sys_pressure_2)
+  B747DR_hyd_sys_pressure_23=math.max(B747DR_hyd_sys_pressure_2,B747DR_hyd_sys_pressure_3)
+  B747DR_hyd_sys_pressure_24=math.max(B747DR_hyd_sys_pressure_2,B747DR_hyd_sys_pressure_4)
+  B747DR_hyd_sys_pressure_234=math.max(B747DR_hyd_sys_pressure_2,B747DR_hyd_sys_pressure_3,B747DR_hyd_sys_pressure_4)
   B747DR_hyd_sys_res_1=B747DR_hyd_sys_restotal_1-(B747DR_hyd_sys_pressure_1/3000)*0.1
   B747DR_hyd_sys_res_2=B747DR_hyd_sys_restotal_2-(B747DR_hyd_sys_pressure_2/3000)*0.1
   B747DR_hyd_sys_res_3=B747DR_hyd_sys_restotal_3-(B747DR_hyd_sys_pressure_3/3000)*0.1

@@ -198,6 +198,13 @@ B747DR_flt_inst_lwr_disp_capt_sel_dial_pos      = deferred_dataref("laminar/B747
 B747DR_flt_inst_inbd_disp_fo_sel_dial_pos       = deferred_dataref("laminar/B747/flt_inst/fo_inbd_display/sel_dial_pos", "number")
 B747DR_flt_inst_lwr_disp_fo_sel_dial_pos        = deferred_dataref("laminar/B747/flt_inst/fo_lwr_display/sel_dial_pos", "number")
 
+B747DR_flt_inst_capt_pfd_pos      		= deferred_dataref("laminar/B747/flt_inst/display/capt/pfd_pos", "number")
+B747DR_flt_inst_fo_pfd_pos      		= deferred_dataref("laminar/B747/flt_inst/display/fo/pfd_pos", "number")
+B747DR_flt_inst_capt_nd_pos      		= deferred_dataref("laminar/B747/flt_inst/display/capt/nd_pos", "number")
+B747DR_flt_inst_fo_nd_pos      			= deferred_dataref("laminar/B747/flt_inst/display/fo/nd_pos", "number")
+B747DR_flt_inst_eicas_pos      			= deferred_dataref("laminar/B747/flt_inst/display/eicas_pos", "number")
+B747DR_flt_inst_pri_eicas_pos      		= deferred_dataref("laminar/B747/flt_inst/display/pri_eicas_pos", "number")
+
 B747DR_efis_min_ref_alt_capt_sel_dial_pos       = deferred_dataref("laminar/B747/efis/min_ref_alt/capt/sel_dial_pos", "number")
 B747DR_efis_ref_alt_capt_set_dial_pos           = deferred_dataref("laminar/B747/efis/ref_alt/capt/set_dial_pos", "number")
 B747DR_efis_dh_reset_capt_switch_pos            = deferred_dataref("laminar/B747/efis/dh_reset/capt/switch_pos", "number")
@@ -2323,7 +2330,7 @@ end
 ----- ND MODES --------------------------------------------------------------------------
 function B747_nd_EFIS_map_modes()
 
-    simDR_EFIS_map_is_center = 0
+    local mapCenter=simDR_EFIS_map_is_center--force read state
     if simDR_EFIS_map_mode <= 2 then
         simDR_EFIS_map_is_center = 0
     else
@@ -2803,6 +2810,93 @@ function B747_fltInst_EICAS_msg()
 end
 
 
+function fltInstsetCRTs()
+  
+  
+    local crtState=B747DR_flt_inst_inbd_disp_capt_sel_dial_pos
+    + 3*B747DR_flt_inst_lwr_disp_capt_sel_dial_pos
+    + 9*B747DR_flt_inst_inbd_disp_fo_sel_dial_pos
+    + 27*B747DR_flt_inst_lwr_disp_fo_sel_dial_pos
+    --print(crtState)
+    if crtState==40 then -- all normal
+     B747DR_flt_inst_capt_pfd_pos      	= 0
+     B747DR_flt_inst_fo_pfd_pos      	= 0
+     B747DR_flt_inst_capt_nd_pos      	= 0
+     B747DR_flt_inst_fo_nd_pos      	= 0
+     B747DR_flt_inst_eicas_pos      	= 0
+     B747DR_flt_inst_pri_eicas_pos      = 0
+    elseif crtState==39 then --capt inbd to eicas
+     B747DR_flt_inst_capt_pfd_pos      	= 0
+     B747DR_flt_inst_fo_pfd_pos      	= 0
+     B747DR_flt_inst_capt_nd_pos      	= 1 --ND to Lower EICAS
+     B747DR_flt_inst_fo_nd_pos      	= 0
+     B747DR_flt_inst_eicas_pos      	= 2 --EICAS to ND
+     B747DR_flt_inst_pri_eicas_pos      = 0
+    elseif crtState==41 then --capt inbd to PFD
+     B747DR_flt_inst_capt_pfd_pos      	= 1 --PFD to ND
+     B747DR_flt_inst_fo_pfd_pos      	= 0 
+     B747DR_flt_inst_capt_nd_pos      	= 1 --ND to Lower EICAS
+     B747DR_flt_inst_fo_nd_pos      	= 0
+     B747DR_flt_inst_eicas_pos      	= 3 --EICAS to PFD
+     B747DR_flt_inst_pri_eicas_pos      = 0
+    elseif crtState==37 then --capt lwr to eicas pri
+     B747DR_flt_inst_capt_pfd_pos      	= 0
+     B747DR_flt_inst_fo_pfd_pos      	= 0 
+     B747DR_flt_inst_capt_nd_pos      	= 0 
+     B747DR_flt_inst_fo_nd_pos      	= 0
+     B747DR_flt_inst_eicas_pos      	= 5 --EICAS to Upper
+     B747DR_flt_inst_pri_eicas_pos      = 1 --PRI EIACS to lower
+    elseif crtState==43 then --capt lwr to ND
+     B747DR_flt_inst_capt_pfd_pos      	= 0
+     B747DR_flt_inst_fo_pfd_pos      	= 0 
+     B747DR_flt_inst_capt_nd_pos      	= 1 --ND to Lower EICAS
+     B747DR_flt_inst_fo_nd_pos      	= 0
+     B747DR_flt_inst_eicas_pos      	= 5 --EICAS to Upper
+     B747DR_flt_inst_pri_eicas_pos      = 2 --PRI EIACS to ND
+    elseif crtState==49 then --fo inbd to eicas
+     B747DR_flt_inst_capt_pfd_pos      	= 0
+     B747DR_flt_inst_fo_pfd_pos      	= 0
+     B747DR_flt_inst_capt_nd_pos      	= 0 
+     B747DR_flt_inst_fo_nd_pos      	= 1 --ND to Lower EICAS
+     B747DR_flt_inst_eicas_pos      	= 1 --EICAS to FO ND
+     B747DR_flt_inst_pri_eicas_pos      = 0
+    elseif crtState==31 then --fo inbd to PFD
+     B747DR_flt_inst_capt_pfd_pos      	= 0 --PFD to ND
+     B747DR_flt_inst_fo_pfd_pos      	= 1 
+     B747DR_flt_inst_capt_nd_pos      	= 0 --ND to Lower EICAS
+     B747DR_flt_inst_fo_nd_pos      	= 1 --ND to Lower EICAS
+     B747DR_flt_inst_eicas_pos      	= 4 --EICAS to PFD
+     B747DR_flt_inst_pri_eicas_pos      = 0
+    elseif crtState==67 then --fo lwr to eicas pri
+     B747DR_flt_inst_capt_pfd_pos      	= 0
+     B747DR_flt_inst_fo_pfd_pos      	= 0 
+     B747DR_flt_inst_capt_nd_pos      	= 0 
+     B747DR_flt_inst_fo_nd_pos      	= 0
+     B747DR_flt_inst_eicas_pos      	= 5 --EICAS to Upper
+     B747DR_flt_inst_pri_eicas_pos      = 1 --PRI EIACS to lower
+    elseif crtState==13 then --fo lwr to ND
+     B747DR_flt_inst_capt_pfd_pos      	= 0
+     B747DR_flt_inst_fo_pfd_pos      	= 0 
+     B747DR_flt_inst_capt_nd_pos      	= 0 
+     B747DR_flt_inst_fo_nd_pos      	= 1 --ND to Lower EICAS
+     B747DR_flt_inst_eicas_pos      	= 5 --EICAS to Upper
+     B747DR_flt_inst_pri_eicas_pos      = 3 --PRI EIACS to ND
+    elseif crtState==12 then --capt inbd to eicas - fo lwr to ND
+     B747DR_flt_inst_capt_pfd_pos      	= 0
+     B747DR_flt_inst_fo_pfd_pos      	= 0 
+     B747DR_flt_inst_capt_nd_pos      	= -1 -- No capt ND
+     B747DR_flt_inst_fo_nd_pos      	= 1 --ND to Lower EICAS
+     B747DR_flt_inst_eicas_pos      	= 2 --EICAS to capt ND
+     B747DR_flt_inst_pri_eicas_pos      = 3 --PRI EIACS to ND  
+     elseif crtState==52 then --capt inbd to eicas - fo lwr to ND
+     B747DR_flt_inst_capt_pfd_pos      	= 0
+     B747DR_flt_inst_fo_pfd_pos      	= 0 
+     B747DR_flt_inst_capt_nd_pos      	= 1 --ND to Lower EICAS
+     B747DR_flt_inst_fo_nd_pos      	= -1 -- No FO ND
+     B747DR_flt_inst_eicas_pos      	= 1 --EICAS to fo ND
+     B747DR_flt_inst_pri_eicas_pos      = 2 --PRI EIACS to capt ND 
+    end
+end
 
 
 
@@ -2989,7 +3083,7 @@ function after_physics()
 
     B747_loc_gs_vis_flags()
 
-    simDR_EFIS_map_is_center = 0                                                        -- FORCE TO (PERSISTENT) EXPANDED MODE
+    --simDR_EFIS_map_is_center = 0                                                        -- FORCE TO (PERSISTENT) EXPANDED MODE
     B747_nd_EFIS_map_modes()
     B747_nd_track_line()
 
@@ -3004,7 +3098,7 @@ function after_physics()
     B747_fltInst_EICAS_msg()
 
     B747_inst_monitor_AI()
-
+    fltInstsetCRTs()
 end
 
 
