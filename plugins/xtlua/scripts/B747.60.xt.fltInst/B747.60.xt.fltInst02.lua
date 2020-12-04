@@ -999,9 +999,7 @@ function B747_nd_traffic_capt_switch_CMDhandler(phase, duration)
         --simCMD_EFIS_tcas:once()
 	B747DR_nd_capt_tfc=1-B747DR_nd_capt_tfc
 	if B747DR_xpdr_sel_pos>2 then
-	  simDR_EFIS_tcas_on=B747DR_nd_capt_tfc
-	else
-	  simDR_EFIS_tcas_on=0
+	  simDR_EFIS_tcas_on=1
 	end
     elseif phase == 2 then
         B747DR_nd_traffic_capt_switch_pos = 0
@@ -1154,9 +1152,7 @@ function B747_nd_traffic_fo_switch_CMDhandler(phase, duration)
 	B747DR_nd_capt_tfc=1-B747DR_nd_capt_tfc
 	
 	if B747DR_xpdr_sel_pos>2 then
-	  simDR_EFIS_tcas_on=B747DR_nd_capt_tfc
-	else
-	  simDR_EFIS_tcas_on=0
+	  simDR_EFIS_tcas_on=1
 	end
     elseif phase == 2 then
         B747DR_nd_traffic_fo_switch_pos = 0
