@@ -2525,8 +2525,11 @@ function B747_setV1VrV2()
         B747DR_airspeed_V2 = B747_rescale(weight_min, B747_V2[flaps][tempAltRegion][weight_min], weight_max, B747_V2[flaps][tempAltRegion][weight_max], simDR_acf_weight_total_kg)
 
     else
-
-        B747DR_airspeed_V1 = 999.0
+	if simDR_all_wheels_on_ground==1 then
+	  B747DR_airspeed_V1 = 999.0
+	else
+	  B747DR_airspeed_V1 = 998.0 --only show no vspd on the ground
+	end
         B747DR_airspeed_Vr = 999.0
         B747DR_airspeed_V2 = 999.0
 

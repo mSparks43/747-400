@@ -54,6 +54,10 @@ function deferred_dataref(name,type,notifier)
 end
 -- B747CMD_openAllDoors 				= deferred_command("laminar/B747/button_switch/open_all_doors", "Open All doors", B747_open_door_CMDhandler)
 -- B747CMD_closeAllDoors 				= deferred_command("laminar/B747/button_switch/close_all_doors", "Open All doors", B747_close_door_CMDhandler)
+B747DR_acfType               = deferred_dataref("laminar/B747/acfType", "number")
+simDR_livery  			=find_dataref("sim/aircraft/view/acf_livery_path")
+-- 0 = Default (GE CF6)
+-- 1 = Global Supertanker
 B747DR_init_manip_CD                = deferred_dataref("laminar/B747/manip/init_CD", "number")
 B747DR_button_switch_cover_position = deferred_dataref("laminar/B747/button_switch_cover/position", "array[" .. tostring(NUM_BTN_SW_COVERS) .. "]")
 B747DR_button_switch_position       = deferred_dataref("laminar/B747/button_switch/position", "array[" .. tostring(NUM_BTN_SW) .. "]")
@@ -371,6 +375,7 @@ B747CMD_ai_manip_quick_start			= deferred_command("laminar/B747/ai/manip_quick_s
 function flight_start()
     print("Lua Flight Start")
 
+    
 end
 
 --*************************************************************************************--

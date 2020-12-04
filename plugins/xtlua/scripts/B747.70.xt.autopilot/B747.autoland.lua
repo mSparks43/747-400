@@ -25,6 +25,8 @@ local totalLift=0
 local liftMeasurements=0;
 local neutralPitch=0
 local pitchMeasurements=0;
+
+
 function start_flare()
   local numAPengaged = B747DR_ap_cmd_L_mode + B747DR_ap_cmd_C_mode + B747DR_ap_cmd_R_mode
     --print("autoland ".. simDR_radarAlt1 .. " "..B747DR_ap_FMA_active_roll_mode.. " "..B747DR_ap_FMA_active_pitch_mode.. " "..numAPengaged)
@@ -35,7 +37,7 @@ function start_flare()
     simCMD_autopilot_autothrottle_off:once() 
     windCorrectAngle=simDR_reqHeading-simDR_AHARS_heading_deg_pilot
     --simCMD_autopilot_fdir_servos_down_one:once()
-    active_autoland=true
+    B747DR_ap_autoland=1
     active_land=false
     zerodThrottle=false
     touchedGround=false
@@ -261,7 +263,7 @@ function do_touchdown()
 --          print("autoland zero ".. simDR_radarAlt1 .. " "..B747DR_ap_FMA_autothrottle_mode .." "..B747DR_ap_FMA_active_pitch_mode)
       end
       if simDR_onGround==1 and simDR_rudder==0 then 
-	active_autoland=false 
+	B747DR_ap_autoland=0 
 	seenApproach=false
 	simDR_overRideStab=0
 	B747DR_ap_FMA_active_roll_mode=0
@@ -276,12 +278,14 @@ function runAutoland()
    if seenApproach==false then return false end
    if numAPengaged<1 then 
    --if (simDR_autopilot_approach_status==0 and active_autoland==false) or numAPengaged<1 then
-      active_autoland=false 
+      B747DR_ap_autoland=0 
       simDR_overRideStab=0
       return false
     end
-    
-    if active_autoland then
+    if B747DR_ap_autoland<0 then
+      simDR_overRideStab=0
+      return false --Go Around active
+    elseif B747DR_ap_autoland==1 then
       if active_land  then
         do_touchdown()
 	return true

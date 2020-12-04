@@ -104,7 +104,9 @@ simDR_autopilot_autothrottle_enabled	= find_dataref("sim/cockpit2/autopilot/auto
 --*************************************************************************************--
 --** 				              FIND CUSTOM DATAREFS             			    	 **--
 --*************************************************************************************--
-
+B747DR_acfType               		= find_dataref("laminar/B747/acfType")
+simDR_livery  				=find_dataref("sim/aircraft/view/acf_livery_path")
+simDR_acf_m_jettison  				=find_dataref("sim/aircraft/weight/acf_m_jettison")
 --B747DR_autothrottle_armed           = find_dataref("laminar/B747/autothrottle/armed")
 
 B747DR_autopilot_cmd_L_mode         = find_dataref("laminar/B747/autopilot/cmd_L_mode/status")
@@ -2150,11 +2152,19 @@ end
 --function aircraft_load() end
 
 --function aircraft_unload() end
-
+function setACFType()
+  print("XTLua Typing "..simDR_livery)
+  if string.match(simDR_livery, "Global Supertanker") then
+      B747DR_acfType=1
+      simDR_acf_m_jettison=80902
+  else
+      simDR_acf_m_jettison=0
+  end
+end
 function flight_start()
-    print("XTLua Flight Start")
+    print("XTLua Flight Start "..simDR_livery)
     B747_flight_start_manip()
-
+    run_after_time(setACFType,3)
 end
 
 --function flight_crash() end

@@ -235,10 +235,10 @@ function sim_landing_gear_up_CMDhandler(phase, duration)
 end
 
 function sim_landing_gear_down_CMDhandler(phase, duration)
-    if phase == 0 then
-        B747DR_parking_brake_ratio = 0.0
-	    simDR_gear_handle_down = 1
-    end
+     if phase == 0 then
+            B747DR_parking_brake_ratio = 0.0
+ 	    simDR_gear_handle_down = 1
+     end
 end
 
 function sim_landing_gear_toggle_CMDhandler(phase, duration)
@@ -727,7 +727,7 @@ end
 
 ----- MONITOR AI FOR AUTO-BOARD CALL ----------------------------------------------------
 function B747_gear_monitor_AI()
-     if simDR_gear_handle_down==0 then B747DR_parking_brake_ratio =0 end
+     --if simDR_gear_handle_down==0 then B747DR_parking_brake_ratio =0 end
     if B747DR_init_gear_CD == 1 then
         B747_set_gear_all_modes()
         B747_set_gear_CD()

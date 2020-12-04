@@ -2,7 +2,9 @@ fmsPages["FMCCOMM"]=createPage("FMCCOMM")
 fmsPages["FMCCOMM"].getPage=function(self,pgNo,fmsID)
   local data= "OFFLINE"
   if acarsSystem.provider.online() then data="  READY" end
-  if pgNo==1 then return {
+  if pgNo==1 then 
+    fmsFunctionsDefs["FMCCOMM"]["R1"]={"setpage","POSREPORT"}
+    return {
 "        FMC COMM        ",
 "                        ",		               
 "<RTE 1       POS REPORT>",
@@ -17,7 +19,9 @@ fmsPages["FMCCOMM"].getPage=function(self,pgNo,fmsID)
 "                        ",
 "                 "..data
     }
-  elseif pgNo==2 then return {
+  elseif pgNo==2 then 
+    fmsFunctionsDefs["FMCCOMM"]["R1"]=nil
+    return {
 "        FMC COMM        ",
 "                        ",	               
 "<SEND         ----------",
@@ -36,7 +40,8 @@ end
 end
 
 fmsPages["FMCCOMM"].getSmallPage=function(self,pgNo,fmsID)
-  if pgNo==1 then return {
+  if pgNo==1 then 
+    return {
 "                    1/2 ",
 "                        ",		               
 "                        ",
@@ -51,7 +56,9 @@ fmsPages["FMCCOMM"].getSmallPage=function(self,pgNo,fmsID)
 "               DATA LINK",
 "                        " 
 }
-elseif pgNo==2 then return {
+elseif pgNo==2 then 
+  
+  return {
 "                    2/2 ",
 " RTE REQUEST    CO ROUTE",		               
 "                        ",

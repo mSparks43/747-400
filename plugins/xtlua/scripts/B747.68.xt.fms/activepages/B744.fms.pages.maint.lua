@@ -1,9 +1,9 @@
 fmsPages["MAINT"]=createPage("MAINT")
 fmsPages["MAINT"]["template"]={
 
-"  MAINTENANCE INDEX 1/1 ",
+"   MAINTENANCE INDEX 1/1",
 "                        ",
-"<CROSSLOAD         BITE>",
+"<CROS LOAD         BITE>",
 "                        ",
 "<PERF FACTOR            ",
 "                        ",

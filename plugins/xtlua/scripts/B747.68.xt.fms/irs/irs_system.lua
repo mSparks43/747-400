@@ -9,6 +9,11 @@ irs_R_status=find_dataref("laminar/B747/irs/line4")
 startLat=0
 startLon=0
 
+--IRS ND DISPLAY
+B747DR_ND_GPS_Line	= deferred_dataref("laminar/B747/irs/gps_display_line", "string")
+B747DR_ND_IRS_Line	= deferred_dataref("laminar/B747/irs/irs_display_line", "string")
+
+
 irs={
   index=0,
   failed=false,
@@ -86,6 +91,7 @@ irsSystem["irsLat"]=fmsModules["data"]["irsLat"]
 irsSystem["irsLon"]=fmsModules["data"]["irsLon"]
 irsSystem["gpsL"]=gpsL
 irsSystem["gpsR"]=gpsR
+
 function irsFromNum(num)
   if num==0 then return "irsL" end
   if num==1 then return "irsC" end
@@ -93,9 +99,10 @@ function irsFromNum(num)
 end
 
 function irs_notify()
-  fmsModules["fmsL"].notify="ENTER IRS POSITION"
-  fmsModules["fmsC"].notify="ENTER IRS POSITION"
-  fmsModules["fmsR"].notify="ENTER IRS POSITION"
+--   fmsModules["fmsL"].notify="ENTER IRS POSITION"
+--   fmsModules["fmsC"].notify="ENTER IRS POSITION"
+--   fmsModules["fmsR"].notify="ENTER IRS POSITION"
+  B747DR_fmc_notifications[12]=1
 end
 doIRSAlign={}
 doIRSAlign["irsL"]=function()
@@ -122,6 +129,20 @@ function cancelAlign(func)
   end
 end
 irsSystem.update=function()
+  --GPS/IRS DISPLAY
+  B747DR_ND_GPS_Line = "GPS"
+  
+  if irsSystem["irsL"]["aligned"] == true then
+	B747DR_ND_IRS_Line = "IRS (L)"
+  elseif irsSystem["irsC"]["aligned"] == true then
+	B747DR_ND_IRS_Line = "IRS (C)"
+  elseif irsSystem["irsR"]["aligned"] == true then
+	B747DR_ND_IRS_Line = "IRS (R)"
+  end
+  if irsSystem["irsL"]["aligned"] == true and irsSystem["irsC"]["aligned"] == true and irsSystem["irsR"]["aligned"] == true then
+	B747DR_ND_IRS_Line = "IRS (3)"
+  end
+
     if irsSystem["setPos"]==true and irsSystem[irsFromNum(B747DR_irs_src_capt)]["aligned"]==true then B747DR_pfd_mode_capt=1 else B747DR_pfd_mode_capt=0 end
     if irsSystem["setPos"]==true and irsSystem[irsFromNum(B747DR_irs_src_fo)]["aligned"]==true then B747DR_pfd_mode_fo=1 else B747DR_pfd_mode_fo=0 end
     
@@ -158,8 +179,7 @@ irsSystem.update=function()
   else
     B747DR_CAS_advisory_status[233] = 0
   end
-  
-  
+    
   
   difLat=simDR_latitude-startLat
   difLon=simDR_longitude-startLon

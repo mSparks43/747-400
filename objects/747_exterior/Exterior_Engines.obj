@@ -4,6 +4,7 @@ OBJ
 
 TEXTURE		../../objects/747_exterior/Exterior_Wings.png
 TEXTURE_NORMAL ../../objects/747_exterior/Exterior_Wings_NML.png
+PARTICLE_SYSTEM ../../objects/aircraft_system.pss
 GLOBAL_specular 1.0
 NORMAL_METALNESS
 TEXTURE_LIT ../../objects/747_exterior/Exterior_Wings_LIT.png
@@ -8021,3 +8022,4 @@ ANIM_begin
 		TRIS	20244 936
 	ANIM_end
 ANIM_end
+EMITTER 		apu_effects		0.000525	2.223124	67.259872			0	0	0

@@ -21,8 +21,11 @@ end
 
  
 fmsFunctionsDefs["ATCINDEX"]={}
+fmsFunctionsDefs["ATCINDEX"]["L2"]={"setpage","ATCREQUEST"}
 fmsFunctionsDefs["ATCINDEX"]["L3"]={"setpage","ATCREPORT"}
-fmsFunctionsDefs["ATCINDEX"]["L5"]={"setpage","ATCLOGONSTATUS"}
+fmsFunctionsDefs["ATCINDEX"]["L5"]={"setpage","ATCLOGONSTATUS"} 
+fmsFunctionsDefs["ATCINDEX"]["R1"]={"setpage","POSREPORT"}
+fmsFunctionsDefs["ATCINDEX"]["R2"]={"setpage","WHENCANWE"}
 --[[
 fmsFunctionsDefs["ATCINDEX"]["L1"]={"setpage",""}
 fmsFunctionsDefs["ATCINDEX"]["L2"]={"setpage",""}

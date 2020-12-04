@@ -10,6 +10,7 @@ function deferred_dataref(name,type,notifier)
 	return wrap_dref_any(dref,type) 
 end
 B747DR_ap_vnav_pause            = deferred_dataref("laminar/B747/autopilot/vnav_pause","number")
+B747DR_fmc_notifications            = deferred_dataref("laminar/B747/fms/notification","array[53]")
 ilsData=deferred_dataref("laminar/B747/radio/ilsData", "string")
 acars=create_dataref("laminar/B747/comm/acars","number")  
 toderate=deferred_dataref("laminar/B747/engine/derate/TO","number") 
@@ -66,8 +67,31 @@ createFMSDatarefs("fms3")
 -- CRT BRIGHTNESS DIAL ------------------------------------------------------------------
 B747DR_fms1_display_brightness      = create_dataref("laminar/B747/fms1/display_brightness", "number", B747_fms1_display_brightness_DRhandler)
 
--- FUEL DISPLAY TOGGLE (EICAS)
-B747DR_fuel_display_units_eicas			= deferred_dataref("laminar/B747/fuel/fuel_display_units_eicas", "number")
+--pos data
+B747DR_waypoint_ata					= deferred_dataref("laminar/B747/nd/waypoint_ata", "string")
+B747DR_last_waypoint				= deferred_dataref("laminar/B747/nd/last_waypoint", "string")
+B747DR_next_waypoint_eta					= deferred_dataref("laminar/B747/nd/next_waypoint_eta", "string")
+B747DR_next_waypoint				= deferred_dataref("laminar/B747/nd/next_waypoint", "string")
+
+--Waypoint info for ND DISPLAY
+B747DR_ND_waypoint_eta					= deferred_dataref("laminar/B747/nd/waypoint_eta", "string")
+B747DR_ND_current_waypoint				= deferred_dataref("laminar/B747/nd/current_waypoint", "string")
+B747DR_ND_waypoint_distance				= deferred_dataref("laminar/B747/nd/waypoint_distance", "string")
+
+--ND Range DISPLAY
+B747DR_ND_range_display_capt			= deferred_dataref("laminar/B747/nd/range_display_capt", "number")
+B747DR_ND_range_display_fo				= deferred_dataref("laminar/B747/nd/range_display_fo", "number")
+
+--IRS ND DISPLAY
+B747DR_ND_GPS_Line						= deferred_dataref("laminar/B747/irs/gps_display_line", "string")
+B747DR_ND_IRS_Line						= deferred_dataref("laminar/B747/irs/irs_display_line", "string")
+
+--SPEED ND DISPLAY
+B747DR_ND_GS_TAS_Line					= deferred_dataref("laminar/B747/nd/gs_tas_line", "string")
+B747DR_ND_GS_TAS_Line_Pilot				= deferred_dataref("laminar/B747/nd/gs_tas_line_pilot", "string")
+B747DR_ND_GS_TAS_Line_CoPilot			= deferred_dataref("laminar/B747/nd/gs_tas_line_copilot", "string")
+B747DR_ND_Wind_Line						= deferred_dataref("laminar/B747/nd/wind_line", "string")
+B747DR_ND_Wind_Bearing					= deferred_dataref("laminar/B747/nd/wind_bearing", "number")
 
 function createFMSCommands(fmsO,cduid,fmsid,keyid,fmskeyid)
 B747CMD_fms1_ls_key_L1              = XLuaCreateCommand("laminar/B747/".. fmskeyid .. "/ls_key/L1", fmsO.." Line Select Key 1-Left")

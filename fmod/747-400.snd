@@ -1239,13 +1239,13 @@ END_SOUND_ATTACHMENT
 BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Controls/ParkLv
 	VEH_XYZ -0.18 4.2 -26.2
-    EVENT_START_COND sim/flightmodel/controls/parkbrake > 0.9
+    EVENT_START_COND laminar/B747/flt_ctrls/parking_brake_ratio > 0.9
 END_SOUND_ATTACHMENT	
 
 BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Controls/ParkLv
 	VEH_XYZ -0.18 4.2 -26.2
-    EVENT_START_COND sim/flightmodel/controls/parkbrake < 0.1
+    EVENT_START_COND laminar/B747/flt_ctrls/parking_brake_ratio < 0.1
 END_SOUND_ATTACHMENT	
 
 BEGIN_SOUND_ATTACHMENT

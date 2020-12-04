@@ -17,7 +17,20 @@ fms={
 
 
 simCMD_FMS_key={}
-
+function fmsClearNotify(notification)
+  
+  for i =1,53,1 do
+    print("do FMS notify".." ".. i .." " ..B747DR_fmc_notifications[i])
+    if B747_FMCAlertMsg[i].name==notification then
+      fmsModules["fmsL"]["notify"]=""
+      fmsModules["fmsC"]["notify"]=""
+      fmsModules["fmsR"]["notify"]=""
+      B747DR_fmc_notifications[i]=0
+      print("do clear FMS notify"..B747_FMCAlertMsg[i].name)
+      break
+    end
+  end
+end
 function keyDown(fmsModule,key)
   run_after_time(switchCustomMode, 0.10)
   print(fmsModule.. " do " .. key)
@@ -103,7 +116,8 @@ function keyDown(fmsModule,key)
       print(fmsModule.. " did " .. key)
     end
      if key=="clear" then
-       if string.len(fmsModules[fmsModule].notify)>0 then 
+       if string.len(fmsModules[fmsModule].notify)>0 then
+	 fmsClearNotify(fmsModules[fmsModule].notify)
 	 fmsModules[fmsModule].notify=""
 	 
 	else 
@@ -118,8 +132,8 @@ function keyDown(fmsModule,key)
      if key=="clear" then
        simCMD_FMS_key[fmsModule]["clear"]:once()
        if string.len(fmsModules[fmsModule].notify)>0 then 
+	 fmsClearNotify(fmsModules[fmsModule].notify)
 	 fmsModules[fmsModule].notify=""
-	 
 	else 
 	  fmsModules[fmsModule].scratchpad="" 
 	end

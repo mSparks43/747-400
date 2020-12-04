@@ -22277,7 +22277,7 @@ ATTR_manip_command	button	laminar/B747/fms2/func_key/navrad	NAV RAD 3
 TRIS	16020 30
 ATTR_manip_command	button	laminar/B747/autopilot/button_switch/VNAV	Autopiot VNAV Mode
 TRIS	16050 30
-ATTR_manip_command	button	sim/autopilot/approach	Autopilot APP Mode
+ATTR_manip_command	button	laminar/B747/autopilot/approach	Autopilot APP Mode
 TRIS	16080 30
 ATTR_manip_command	button	laminar/B747/autopilot/button_switch/LNAV	Autopilot LNAV Mode
 TRIS	16110 30
