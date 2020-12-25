@@ -142,6 +142,7 @@ dofile("activepages/atc/B744.fms.pages.whencanwe.lua")
 dofile("activepages/B744.fms.pages.cmc.lua")
 dofile("activepages/B744.fms.pages.acms.lua")
 dofile("activepages/B744.fms.pages.pax-cargo.lua")
+dofile("activepages/B744.fms.pages.options.lua")
 --[[
 dofile("B744.fms.pages.actclb.lua")
 dofile("B744.fms.pages.actcrz.lua")
