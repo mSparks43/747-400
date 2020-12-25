@@ -3,6 +3,14 @@
 *        COPYRIGHT � 2020 Mark Parker/mSparks CC-BY-NC4
 *****************************************************************************************
 ]]
+--Marauder28
+--V Speeds
+B747DR_airspeed_V1			= deferred_dataref("laminar/B747/airspeed/V1", "number")
+B747DR_airspeed_Vr			= deferred_dataref("laminar/B747/airspeed/Vr", "number")
+B747DR_airspeed_V2			= deferred_dataref("laminar/B747/airspeed/V2", "number")
+B747DR_airspeed_flapsRef	= deferred_dataref("laminar/B747/airspeed/flapsRef", "number")
+--Marauder28
+
 fmsFunctions={}
 dofile("acars/acars.lua")
 
@@ -89,8 +97,8 @@ fmsPages["RTE1"].getPage=function(self,pgNo,fmsID)
   }
   return page 
 end
---fmsFunctionsDefs["RTE1"]["L1"]={"custom2fmc","L1"}
-fmsFunctionsDefs["RTE1"]["L1"]={"setdata","origin"}
+fmsFunctionsDefs["RTE1"]["L1"]={"custom2fmc","L1"}
+--fmsFunctionsDefs["RTE1"]["L1"]={"setdata","origin"}
 fmsFunctionsDefs["RTE1"]["L2"]={"custom2fmc","L2"}
 fmsFunctionsDefs["RTE1"]["L3"]={"custom2fmc","L3"}
 fmsFunctionsDefs["RTE1"]["L4"]={"custom2fmc","L4"}
@@ -132,6 +140,7 @@ dofile("activepages/atc/B744.fms.pages.request.lua")
 dofile("activepages/atc/B744.fms.pages.whencanwe.lua")
 dofile("activepages/B744.fms.pages.cmc.lua")
 dofile("activepages/B744.fms.pages.acms.lua")
+dofile("activepages/B744.fms.pages.pax-cargo.lua")
 --[[
 dofile("B744.fms.pages.actclb.lua")
 dofile("B744.fms.pages.actcrz.lua")
@@ -241,7 +250,7 @@ function findILS(value)
 	 if (value==navAids[n][8] or (val~=nil and val==navAids[n][3])) and (direction==nil or getHeadingDifferenceM(direction,navAids[n][4])<bestDist) then
 	    found=true
 	    ilsData=json.encode(navAids[n])
-	    print("Tuning ILS".. ilsData)
+	    print("68 - Tuning ILS".. ilsData)
 	    if direction ~=nil then
 	      bestDist=getHeadingDifferenceM(direction,navAids[n][4])
 	    end
@@ -250,8 +259,8 @@ function findILS(value)
 	    local course=(navAids[n][4]+simDR_variation)
 	    simDR_radio_nav_obs_deg[0]=course
 	    simDR_radio_nav_obs_deg[1]=course
-	    print("Tuned ILS "..course)
-	    print("useThis"..bestDist)
+	    print("68 - Tuned ILS "..course)
+	    print("68 - useThis"..bestDist)
 	  end
       end
    end
@@ -262,14 +271,36 @@ end
 simDR_variation=find_dataref("sim/flightmodel/position/magnetic_variation")
 fmsPages["NAVRAD"]=createPage("NAVRAD")
 
+ils_line1 = ""
+ils_line2 = ""
+park = "PARK"
+original_distance = -1
+
 fmsPages["NAVRAD"].getPage=function(self,pgNo,fmsID)
   local ils1="                        "
   local ils2="                        "
   local modes=B747DR_radioModes
+  local dist_to_TOD = B747BR_totalDistance - B747BR_tod
   if string.len(ilsData)>1 then
     local ilsNav=json.decode(ilsData)
-    ils1= ilsNav[7]
-    ils2= string.format("%6.2f/%03d%s             ", ilsNav[3]*0.01,(ilsNav[4]+simDR_variation), "˚")
+    ils2= ilsNav[7]
+	ils_line2 = "   "..ils2
+    if original_distance == -1 then
+		original_distance = B747BR_totalDistance  --capture original flightplan distance
+	end
+	--print("Dist to TOD = "..dist_to_tod)	
+    if (dist_to_TOD >= 50 and dist_to_TOD < 200) then
+		--ils2= string.format("%6.2f/%03d%s %4s          .", ilsNav[3]*0.01,(ilsNav[4]+simDR_variation), "˚", park)
+		ils1 = "            "..park
+		ils_line1 = string.format("<%6.2f/%03d%s           ", ilsNav[3]*0.01,(round((ilsNav[4]+round(simDR_variation)))), "˚")
+	elseif (dist_to_TOD < 50) then
+		ils1= string.format("%6.2f/%03d%s          ", ilsNav[3]*0.01,(round((ilsNav[4]+round(simDR_variation)))), "`"..modes:sub(1, 1))
+		ils_line1 = ""
+	end
+  else
+    ils1 = park
+	ils_line1 = ""
+	ils_line2 = ""
   end
   local modes=B747DR_radioModes
   local vorL_radial="---"
@@ -287,12 +318,14 @@ fmsPages["NAVRAD"].getPage=function(self,pgNo,fmsID)
     string.format("                        ", ""),
     string.format("%3s      %3s  %3s    %3s", vorL_obs, vorL_radial,vorR_radial, vorR_obs),
     "                        ",
-    string.format("%06.1f         %06.1f   ", simDR_radio_adf1_freq_hz, simDR_radio_adf2_freq_hz),
+    string.format("%06.1f           %06.1f ", simDR_radio_adf1_freq_hz, simDR_radio_adf2_freq_hz),
     "                        ",
     ils1,
-    ils2,
+--    ils2,
+    "                        ",	
     "                        ", 
-    "--------         -------",
+--    "--------         -------",
+    "                        ", 
     fmsModules["data"]["preselectLeft"].."            "..fmsModules["data"]["preselectRight"],
     }
   return page
@@ -306,12 +339,16 @@ fmsPages["NAVRAD"].getSmallPage=function(self,pgNo,fmsID)
   " CRS      RADIAL     CRS",
   "                        ",
   " ADF L             ADF R",
-  "      M              M  ",
-  " ILS ".. modes:sub(1, 1) .."                  ",
-  "                        ",
+  "      M                M",
+--  " ILS ".. modes:sub(1, 1) .."                  ",
+  " ILS - MLS              ",  
+--  "                        ",
+  ils_line1,
+  ils_line2,
+--  ,
+--  "                        ",
   "                        ",
   "        PRESELECT       ",
-  "                        ",
   "                        ",
   }
 end
@@ -478,9 +515,19 @@ end
 
 -- VALIDATE ENTRY OF WEIGHT UNITS
 function validate_weight_units(value)
-	local val=tostring(value)
+	--local val=tostring(value)
 	print(value)
-	if val == "KGS" or value == "LBS" then
+	if value == "KGS" or value == "LBS" then
+		return true
+	else
+		return false
+	end
+end
+
+-- VALIDATE ENTRY OF SETHDG
+function validate_sethdg(value)
+	print(value)
+	if tonumber(value) >= 0 and tonumber(value) <= 360 then
 		return true
 	else
 		return false
@@ -503,6 +550,79 @@ function preselect_fuel()
 	B747DR_fuel_add=0
 	simDR_m_jettison=simDR_acf_m_jettison
 end
+
+--Marauder28
+function calc_pax_cargo()
+	local pax_total			= 0
+	local pax_weightA		= 0
+	local pax_weightB		= 0
+	local pax_weightC		= 0
+	local pax_weightD		= 0
+	local pax_weightE		= 0
+	local pax_weight_Tot	= 0
+	local cargo_weight_fwd	= 0
+	local cargo_weight_aft	= 0
+	local cargo_weight_bulk	= 0
+	local cargo_weight_tot	= 0
+
+	pax_total		= 	tonumber(fmsModules["data"].paxFirstClassA) + tonumber(fmsModules["data"].paxBusClassB)
+						+ tonumber(fmsModules["data"].paxEconClassC) + tonumber(fmsModules["data"].paxEconClassD)
+						+ tonumber(fmsModules["data"].paxEconClassE)
+	pax_weightA		=	tonumber(fmsModules["data"].paxFirstClassA) * simConfigData["data"].stdPaxWeight
+	pax_weightB		= 	tonumber(fmsModules["data"].paxBusClassB) * simConfigData["data"].stdPaxWeight
+	pax_weightC		=	tonumber(fmsModules["data"].paxEconClassC) * simConfigData["data"].stdPaxWeight
+	pax_weightD		=	tonumber(fmsModules["data"].paxEconClassD) * simConfigData["data"].stdPaxWeight
+	pax_weightE		=	tonumber(fmsModules["data"].paxEconClassE) * simConfigData["data"].stdPaxWeight
+	pax_weight_Tot	=	pax_weightA + pax_weightB + pax_weightC + pax_weightD + pax_weightE
+
+	cargo_weight_fwd	= tonumber(fmsModules["data"].cargoFwd)
+	cargo_weight_aft	= tonumber(fmsModules["data"].cargoAft)
+	cargo_weight_bulk	= tonumber(fmsModules["data"].cargoBulk)
+	cargo_weight_tot	= cargo_weight_fwd + cargo_weight_aft + cargo_weight_bulk
+	
+	--Assign values to FMC
+	fmsModules["data"].paxTotal 		= pax_total
+	fmsModules["data"].paxWeightA		= pax_weightA
+	fmsModules["data"].paxWeightB		= pax_weightB
+	fmsModules["data"].paxWeightC		= pax_weightC
+	fmsModules["data"].paxWeightD		= pax_weightD
+	fmsModules["data"].paxWeightE		= pax_weightE
+	fmsModules["data"].paxWeightTotal	= pax_weight_Tot
+	fmsModules["data"].cargoTotal		= cargo_weight_tot
+	
+	--Assign values to WB
+	wb.passenger_zoneA_weight		= pax_weightA	
+	wb.passenger_zoneB_weight		= pax_weightB
+	wb.passenger_zoneC_weight		= pax_weightC
+	wb.passenger_zoneD_weight		= pax_weightD
+	wb.passenger_zoneE_weight		= pax_weightE
+	wb.fwd_cargo_weight				= cargo_weight_fwd
+	wb.aft_cargo_weight				= cargo_weight_aft
+	wb.bulk_cargo_weight			= cargo_weight_bulk
+	
+	--Update Sim Payload weight with PAX & Cargo entries
+	simDR_payload_weight = pax_weight_Tot + cargo_weight_tot
+	
+	--print("PAX A Wgt = "..pax_weightA)
+	--print("PAX A = "..tonumber(fmsModules["data"].paxFirstClassA))
+	--print("PAX B Wgt = "..pax_weightB)
+	--print("PAX B = "..tonumber(fmsModules["data"].paxBusClassB))
+	--print("PAX C Wgt = "..pax_weightC)
+	--print("PAX C = "..tonumber(fmsModules["data"].paxEconClassC))
+	--print("PAX D Wgt = "..pax_weightD)
+	--print("PAX D = "..tonumber(fmsModules["data"].paxEconClassD))
+	--print("PAX E Wgt = "..pax_weightE)
+	--print("PAX E = "..tonumber(fmsModules["data"].paxEconClassE))
+	--print("PAX Tot = "..pax_weight_Tot)
+	--print("Cargo Fwd = "..cargo_weight_fwd)
+	--print("Cargo Aft = "..cargo_weight_aft)
+	--print("Cargo Bulk = "..cargo_weight_bulk)
+end
+--Marauder28
+
+--Marauder28
+timer_start = 0
+--Marauder28
 
 function fmsFunctions.setdata(fmsO,value)
   local del=false  
@@ -600,26 +720,33 @@ function fmsFunctions.setdata(fmsO,value)
 	setFMSData("desrestalt",validAlt(alt))
       end
     end
-  elseif value=="airportpos" and string.len(fmsO["scratchpad"])>3 then
+  elseif value=="airportpos" then --and string.len(fmsO["scratchpad"])>3 then
     
-    local navAids=json.decode(navAidsJSON)
-    print(table.getn(navAids).." navaids")
-    --print(navAidsJSON)
-    for n=table.getn(navAids),1,-1 do
-      if navAids[n][2] == 1 and navAids[n][8]==fmsO["scratchpad"] then
-	print("navaid "..n.."->".. navAids[n][1].." ".. navAids[n][2].." ".. navAids[n][3].." ".. navAids[n][4].." ".. navAids[n][5].." ".. navAids[n][6].." ".. navAids[n][7].." ".. navAids[n][8])
-	local lat=toDMS(navAids[n][5],true)
-	local lon=toDMS(navAids[n][6],false)
-	
-	setFMSData("irsLat",lat)
-	setFMSData("irsLon",lon)
-	--irsSystem["irsLat"]=lat
-	--irsSystem["irsLon"]=lon
-      end
-      
-      setFMSData("airportpos",fmsO["scratchpad"])
-      setFMSData("airportgate","*****")
-    end
+	if string.len(navAidsJSON) > 1 and string.len(fmsO["scratchpad"])>3 then
+		local navAids=json.decode(navAidsJSON)
+		print(table.getn(navAids).." navaids")
+		--print(navAidsJSON)
+		for n=table.getn(navAids),1,-1 do
+		  if navAids[n][2] == 1 and navAids[n][8]==fmsO["scratchpad"] then
+			print("navaid "..n.."->".. navAids[n][1].." ".. navAids[n][2].." ".. navAids[n][3].." ".. navAids[n][4].." ".. navAids[n][5].." ".. navAids[n][6].." ".. navAids[n][7].." ".. navAids[n][8])
+			local lat=toDMS(navAids[n][5],true)
+			local lon=toDMS(navAids[n][6],false)
+		
+			setFMSData("irsLat",lat)
+			setFMSData("irsLon",lon)
+			--irsSystem["irsLat"]=lat
+			--irsSystem["irsLon"]=lon
+		  end
+		end
+		setFMSData("airportpos",fmsO["scratchpad"])
+		setFMSData("airportgate","----")
+	elseif del == true then
+		setFMSData("airportpos",defaultFMSData().airportpos)
+		setFMSData("airportpos",defaultFMSData().airportgate)
+		setFMSData("irsLat",defaultFMSData().irsLat)
+		setFMSData("irsLon",defaultFMSData().irsLon)		
+	end
+
   elseif value=="flttime" then 
     hhV=string.sub(fmsO["scratchpad"],1,2)
     mmV=string.sub(fmsO["scratchpad"],-2)
@@ -669,6 +796,7 @@ function fmsFunctions.setdata(fmsO,value)
      B747DR_payload_weight=numPassengers*120
    elseif value=="services" then
      if simDR_acf_m_jettison==0 then
+        fmsModules["cmds"]["laminar/B747/electrical/connect_power"]:once() 
 	fmsModules["cmds"]["sim/ground_ops/service_plane"]:once() 
      end
      fmsModules["lastcmd"]=fmsModules["cmdstrings"]["sim/ground_ops/service_plane"]
@@ -681,7 +809,7 @@ function fmsFunctions.setdata(fmsO,value)
      end
    elseif value=="origin" and string.len(fmsO["scratchpad"])>0 then
      fmsFunctions["custom2fmc"](fmsO,"L1")
-     fmsModules:setData("crzalt","*****") -- clear cruise alt /crzalt when entering a new source airport
+     fmsModules:setData("crzalt","*****") -- clear cruise alt /crzalt when entering a new source airport (this is broken and currently disabled)
    elseif value=="airportgate" and string.len(fmsO["scratchpad"])>0 then
     local lat=toDMS(simDR_latitude,true)
     local lon=toDMS(simDR_longitude,false)
@@ -709,6 +837,353 @@ function fmsFunctions.setdata(fmsO,value)
 		simConfigData["data"].weight_display_units = fmsO.scratchpad
 		B747DR_simconfig_data=json.encode(simConfigData["data"]["values"])
 	end
+
+  elseif value == "codata" and string.len(fmsO["scratchpad"]) > 0 then
+		setFMSData(value, fmsO["scratchpad"])
+  
+  elseif value == "sethdg" then
+	if validate_sethdg(fmsO["scratchpad"]) == false then
+		fmsO["notify"]="INVALID ENTRY"
+	else
+		if fmsModules["data"] ~= "---`" then
+			if (fmsO["scratchpad"] == "0" or fmsO["scratchpad"] == "00" or fmsO["scratchpad"] == "000") then
+				fmsO["scratchpad"] = "360`"
+			end
+			setFMSData(value, fmsO["scratchpad"].."`")
+			timer_start = simDRTime
+		end
+	end
+
+  elseif value == "grwt" then
+	if string.len(fmsO["scratchpad"]) > 5 then
+		fmsO["notify"]="INVALID ENTRY"
+		return
+	end
+	local grwt
+	if string.len(fmsO["scratchpad"]) > 0 then
+		if simConfigData["data"].weight_display_units == "LBS" then
+			grwt = fmsO["scratchpad"] / simConfigData["data"].kgs_to_lbs  --store LBS in KGS
+		else
+			grwt = fmsO["scratchpad"]
+		end
+	else
+		grwt = (simDR_GRWT / 1000)
+	end
+	setFMSData(value, grwt)
+	setFMSData("zfw", tonumber(grwt) - (simDR_fuel/1000))
+	calc_CGMAC()  --Recalc CG %MAC and TRIM units
+	if (B747DR_airspeed_V1 < 999 or B747DR_airspeed_Vr < 999 or B747DR_airspeed_V2 < 999) and simDR_onground == 1 then
+		B747DR_airspeed_flapsRef = 0
+		--B747DR_airspeed_V1 = 999
+		--B747DR_airspeed_Vr = 999
+		--B747DR_airspeed_V2 = 999
+		fmsO["notify"] = "TAKEOFF SPEEDS DELETED"
+	end
+
+  elseif value == "zfw" then
+	if string.len(fmsO["scratchpad"]) > 5 then
+		fmsO["notify"]="INVALID ENTRY"
+		return
+	end
+	local zfw
+	if string.len(fmsO["scratchpad"]) > 0 then
+		if simConfigData["data"].weight_display_units == "LBS" then
+			zfw = fmsO["scratchpad"] / simConfigData["data"].kgs_to_lbs  --store LBS in KGS
+		else
+			zfw = fmsO["scratchpad"]
+		end
+	else
+		zfw = (simDR_GRWT-simDR_fuel) / 1000
+	end
+	setFMSData(value, zfw)
+	setFMSData("grwt", tonumber(zfw) + simDR_fuel / 1000)
+	calc_CGMAC()  --Recalc CG %MAC and TRIM units
+	if (B747DR_airspeed_V1 < 999 or B747DR_airspeed_Vr < 999 or B747DR_airspeed_V2 < 999) and simDR_onground == 1 then
+		B747DR_airspeed_flapsRef = 0
+		--B747DR_airspeed_V1 = 999
+		--B747DR_airspeed_Vr = 999
+		--B747DR_airspeed_V2 = 999
+		fmsO["notify"] = "TAKEOFF SPEEDS DELETED"
+	end
+  elseif value == "crzcg" then
+	if string.len(fmsO["scratchpad"]) > 0 and not string.find(fmsO["scratchpad"], " ") then
+		setFMSData(value, fmsO["scratchpad"])
+	end
+	if string.len(fmsModules["data"].crzcg) > 0 then
+		crzcg_lineLg = string.format("%4.1f%%", tonumber(fmsModules["data"].crzcg))
+	end
+  elseif value == "stepsize" then
+	if fmsO["scratchpad"] == "ICAO" then
+		setFMSData(value, fmsO["scratchpad"])
+	elseif tonumber(fmsO["scratchpad"]) == nil then
+		fmsO["notify"] = "INVALID ENTRY"
+	elseif tonumber(fmsO["scratchpad"]) < 0 or tonumber(fmsO["scratchpad"]) > 9000 or math.fmod(tonumber(fmsO["scratchpad"]), 1000) > 0 then  --ensure increments of 1000
+		fmsO["notify"] = "INVALID ENTRY"
+	else
+		setFMSData(value, fmsO["scratchpad"])
+	end
+  elseif value == "cg_mac" then
+	if string.match(fmsO["scratchpad"], "%a") or string.match(fmsO["scratchpad"], "%s") or fmsModules["data"].cg_mac == "--" then
+		fmsO["notify"] = "INVALID ENTRY"
+		return
+	elseif string.len(fmsO["scratchpad"]) > 0 then 
+		calc_stab_trim(fmsModules["data"].grwt, fmsO["scratchpad"])
+		setFMSData(value, fmsO["scratchpad"])
+	else
+		calc_stab_trim(fmsModules["data"].grwt, fmsModules["data"].cg_mac)
+	end
+	
+	cg_lineLg = string.format("%2.0f%%", tonumber(fmsModules["data"].cg_mac))
+--Marauder28
+--PAX / CARGO page
+  elseif value == "paxFirstClassA" then
+	if string.match(fmsO["scratchpad"], "%d") and math.abs(tonumber(fmsO["scratchpad"])) <= 23 then
+		setFMSData(value, math.abs(string.format("%2d", fmsO["scratchpad"])))
+		calc_pax_cargo()
+	elseif fmsO["scratchpad"] == "F" then  --Add FULL PAX
+		setFMSData("paxFirstClassA", "23")
+		setFMSData("paxBusClassB", "80")
+		setFMSData("paxEconClassC", "77")
+		setFMSData("paxEconClassD", "104")
+		setFMSData("paxEconClassE", "132")
+		calc_pax_cargo()
+	elseif fmsO["scratchpad"] == "C" then  --Clear PAX / CARGO entries
+		setFMSData("paxFirstClassA", "")
+		setFMSData("paxBusClassB", "")
+		setFMSData("paxEconClassC", "")
+		setFMSData("paxEconClassD", "")
+		setFMSData("paxEconClassE", "")
+		setFMSData("cargoFwd", "")
+		setFMSData("cargoAft", "")
+		setFMSData("cargoBulk", "")
+		calc_pax_cargo()
+	elseif string.len(fmsO["scratchpad"]) < 1 then
+		setFMSData(value, "23")
+		calc_pax_cargo()
+	elseif string.match(fmsO["scratchpad"], "%d") and tonumber(fmsO["scratchpad"]) > 23 then  --Add set number of PAX by round-robin through all zones
+		setFMSData("paxFirstClassA", "")
+		setFMSData("paxBusClassB", "")
+		setFMSData("paxEconClassC", "")
+		setFMSData("paxEconClassD", "")
+		setFMSData("paxEconClassE", "")
+
+		local x = tonumber(fmsO["scratchpad"])
+		local paxA = 0
+		local paxB = 0
+		local paxC = 0
+		local paxD = 0
+		local paxE = 0
+		
+		if x > 416 then
+			x = 416
+		end
+		repeat
+			if x > 0 and paxA < 23 then
+				paxA = paxA + 1
+				x = x - 1
+			end
+			if x > 0 and paxB < 80 then
+				paxB = paxB + 1
+				x = x - 1
+			end
+			if x > 0 and paxC < 77 then
+				paxC = paxC + 1
+				x = x - 1
+			end
+			if x > 0 and paxD < 104 then
+				paxD = paxD + 1
+				x = x - 1
+			end
+			if x > 0 and paxE < 132 then
+				paxE = paxE + 1
+				x = x - 1
+			end
+		until (x == 0)
+		
+		fmsModules["data"].paxFirstClassA = string.format("%2d", paxA)
+		fmsModules["data"].paxBusClassB = string.format("%2d", paxB)
+		fmsModules["data"].paxEconClassC = string.format("%2d", paxC)
+		fmsModules["data"].paxEconClassD = string.format("%3d", paxD)
+		fmsModules["data"].paxEconClassE = string.format("%3d", paxE)
+		
+		calc_pax_cargo()
+	else
+		fmsO["notify"] = "INVALID ENTRY"
+	end
+  elseif value == "paxBusClassB" then
+	if string.match(fmsO["scratchpad"], "%d") then
+		local pax = math.abs(tonumber(fmsO["scratchpad"]))
+		if pax > 80 then
+			pax = 80
+		end
+		setFMSData(value, string.format("%2d", pax))
+		calc_pax_cargo()
+	elseif string.len(fmsO["scratchpad"]) < 1 then
+		setFMSData(value, "80")
+		calc_pax_cargo()
+	else
+		fmsO["notify"] = "INVALID ENTRY"
+	end
+  elseif value == "paxEconClassC" then
+	if string.match(fmsO["scratchpad"], "%d") then
+		local pax = math.abs(tonumber(fmsO["scratchpad"]))
+		if pax > 77 then
+			pax = 77
+		end
+		setFMSData(value, string.format("%2d", pax))
+		calc_pax_cargo()
+	elseif string.len(fmsO["scratchpad"]) < 1 then
+		setFMSData(value, "77")
+		calc_pax_cargo()
+	else
+		fmsO["notify"] = "INVALID ENTRY"
+	end
+  elseif value == "paxEconClassD" then
+	if string.match(fmsO["scratchpad"], "%d") then
+		local pax = math.abs(tonumber(fmsO["scratchpad"]))
+		if pax > 104 then
+			pax = 104
+		end
+		setFMSData(value, string.format("%3d", pax))
+		calc_pax_cargo()
+	elseif string.len(fmsO["scratchpad"]) < 1 then
+		setFMSData(value, "104")
+		calc_pax_cargo()
+	else
+		fmsO["notify"] = "INVALID ENTRY"
+	end
+  elseif value == "paxEconClassE" then
+	if string.match(fmsO["scratchpad"], "%d") then
+		local pax = math.abs(tonumber(fmsO["scratchpad"]))
+		if pax > 132 then
+			pax = 132
+		end
+		setFMSData(value, string.format("%3d", pax))
+		calc_pax_cargo()
+	elseif string.len(fmsO["scratchpad"]) < 1 then
+		setFMSData(value, "132")
+		calc_pax_cargo()
+	else
+		fmsO["notify"] = "INVALID ENTRY"
+	end
+  elseif value == "cargoFwd" then
+	local weight_factor = 1
+
+	if simConfigData["data"].weight_display_units == "LBS" then
+		weight_factor = simConfigData["data"].kgs_to_lbs
+	else
+		weight_factor = 1
+	end
+
+	if string.match(fmsO["scratchpad"], "%d") and (string.match(fmsO["scratchpad"], "P") or string.match(fmsO["scratchpad"], "C")) then
+		local digits = math.abs(tonumber(string.match(fmsO["scratchpad"], "%d+")))
+		local chars = string.match(fmsO["scratchpad"], "%u")
+		local weight_per_unit = 0
+
+		if chars == "P" then
+			weight_per_unit = 5035 * weight_factor
+			if digits > 5 then
+				digits = 5
+			end
+		else
+			weight_per_unit = 1588 * weight_factor
+			if digits > 16 then
+				digits = 16
+			end
+		end
+		
+		fmsO["scratchpad"] = string.format("%6d", digits * weight_per_unit)
+	end
+	if string.match(fmsO["scratchpad"], "%d") and not string.match(fmsO["scratchpad"], "%u") then
+		local cwt = 0
+
+		cwt = math.abs(tonumber(fmsO["scratchpad"])) / weight_factor  --store LBS in KGS
+		
+		if cwt > 26490 then
+			cwt = 26490
+		end
+		
+		setFMSData(value, string.format("%6d", cwt))
+		calc_pax_cargo()
+	else
+		fmsO["notify"] = "INVALID ENTRY"
+	end
+  elseif value == "cargoAft" then
+	local weight_factor = 1
+
+	if simConfigData["data"].weight_display_units == "LBS" then
+		weight_factor = simConfigData["data"].kgs_to_lbs
+	else
+		weight_factor = 1
+	end
+
+	if string.match(fmsO["scratchpad"], "%d") and (string.match(fmsO["scratchpad"], "P") or string.match(fmsO["scratchpad"], "C")) then
+		local digits = math.abs(tonumber(string.match(fmsO["scratchpad"], "%d+")))
+		local chars = string.match(fmsO["scratchpad"], "%u")
+		local weight_per_unit = 0
+		
+		if chars == "P" then
+			weight_per_unit = 5035 * weight_factor
+			if digits > 4 then
+				digits = 4
+			end
+		else
+			weight_per_unit = 1588 * weight_factor
+			if digits > 14 then
+				digits = 14
+			end
+		end
+		
+		fmsO["scratchpad"] = string.format("%6d", digits * weight_per_unit)
+	end
+	if string.match(fmsO["scratchpad"], "%d") and not string.match(fmsO["scratchpad"], "%u") then
+		local cwt = 0
+
+		cwt = math.abs(tonumber(fmsO["scratchpad"])) / weight_factor  --store LBS in KGS
+
+		if cwt > 22938 then
+			cwt = 22938
+		end
+
+		setFMSData(value, string.format("%6d", cwt))
+		calc_pax_cargo()
+	else
+		fmsO["notify"] = "INVALID ENTRY"
+	end
+  elseif value == "cargoBulk" then
+	local weight_factor = 1
+
+	if simConfigData["data"].weight_display_units == "LBS" then
+		weight_factor = simConfigData["data"].kgs_to_lbs
+	else
+		weight_factor = 1
+	end
+
+	if string.match(fmsO["scratchpad"], "%d") and not string.match(fmsO["scratchpad"], "%u") then
+		local cwt = 0
+
+		cwt = math.abs(tonumber(fmsO["scratchpad"])) / weight_factor  --store LBS in KGS
+
+		if cwt > 6749 then
+			cwt = 6749
+		end
+
+		setFMSData(value, string.format("%5d", cwt))
+		calc_pax_cargo()
+	else
+		fmsO["notify"] = "INVALID ENTRY"
+	end
+--Marauder28
+
+  --[[elseif value == "irsAlignTime" and string.len(fmsO["scratchpad"]) > 0 then
+	if not string.match(fmsO["scratchpad"], "%d") then
+		fmsO["notify"] = "INVALID ENTRY"
+	else
+		setFMSData(value, tonumber(fmsO["scratchpad"]) * 60)
+		simConfigData["data"].irs_align_time = tonumber(fmsO["scratchpad"]) * 60
+		print("FMC IRS = "..fmsO["scratchpad"] * 60)
+	end]]
+
   elseif fmsO["scratchpad"]=="" and del==false then
       cVal=getFMSData(value)
     

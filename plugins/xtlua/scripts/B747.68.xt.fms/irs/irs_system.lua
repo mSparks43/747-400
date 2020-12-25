@@ -2,7 +2,7 @@ simDR_latitude=find_dataref("sim/flightmodel/position/latitude")
 simDR_longitude=find_dataref("sim/flightmodel/position/longitude")
 simDR_groundspeed=find_dataref("sim/flightmodel/position/groundspeed")
 B747DR_iru_mode_sel_pos         = find_dataref("laminar/B747/flt_mgmt/iru/mode_sel_dial_pos")
-local timeToAlign=600
+local timeToAlign=600  --simConfigData["data"].irs_align_time
 irs_L_status=find_dataref("laminar/B747/irs/line2") 
 irs_C_status=find_dataref("laminar/B747/irs/line3") 
 irs_R_status=find_dataref("laminar/B747/irs/line4") 
@@ -10,7 +10,6 @@ startLat=0
 startLon=0
 
 --IRS ND DISPLAY
-B747DR_ND_GPS_Line	= deferred_dataref("laminar/B747/irs/gps_display_line", "string")
 B747DR_ND_IRS_Line	= deferred_dataref("laminar/B747/irs/irs_display_line", "string")
 
 
@@ -128,10 +127,22 @@ function cancelAlign(func)
     stop_timer(func)
   end
 end
+irsSystem.off=function()
+    irs_L_status=irsSystem.getStatus("irsL")
+    irs_C_status=irsSystem.getStatus("irsC")
+    irs_R_status=irsSystem.getStatus("irsR")
+    irsSystem["irsL"]["aligned"] = false
+    irsSystem["irsC"]["aligned"] = false
+    irsSystem["irsR"]["aligned"] = false
+end
+
 irsSystem.update=function()
+  --Marauder28
   --GPS/IRS DISPLAY
   B747DR_ND_GPS_Line = "GPS"
-  
+  if B747DR_iru_status[0]==0 then irsSystem["irsL"]["aligned"] = false end
+  if B747DR_iru_status[1]==0 then irsSystem["irsC"]["aligned"] = false end
+  if B747DR_iru_status[2]==0 then irsSystem["irsR"]["aligned"] = false end
   if irsSystem["irsL"]["aligned"] == true then
 	B747DR_ND_IRS_Line = "IRS (L)"
   elseif irsSystem["irsC"]["aligned"] == true then
@@ -139,10 +150,26 @@ irsSystem.update=function()
   elseif irsSystem["irsR"]["aligned"] == true then
 	B747DR_ND_IRS_Line = "IRS (R)"
   end
+
+  --Update Set Hdg on FMC
+  if (B747DR_iru_mode_sel_pos[0] == 3 or B747DR_iru_mode_sel_pos[1] == 3 or B747DR_iru_mode_sel_pos[2] == 3) then
+	if tonumber(string.sub(fmsModules["data"].sethdg,1,3)) ~= nil then
+		local diff = simDRTime - timer_start
+		if diff < 2 then  --Display for 2 seconds
+			return
+		end	
+		timer_start = simDRTime
+	end
+	fmsModules["data"].sethdg = "---`"
+  else
+	fmsModules["data"].sethdg = defaultFMSData().sethdg
+  end
+  --Marauder28
+  
   if irsSystem["irsL"]["aligned"] == true and irsSystem["irsC"]["aligned"] == true and irsSystem["irsR"]["aligned"] == true then
 	B747DR_ND_IRS_Line = "IRS (3)"
   end
-
+    
     if irsSystem["setPos"]==true and irsSystem[irsFromNum(B747DR_irs_src_capt)]["aligned"]==true then B747DR_pfd_mode_capt=1 else B747DR_pfd_mode_capt=0 end
     if irsSystem["setPos"]==true and irsSystem[irsFromNum(B747DR_irs_src_fo)]["aligned"]==true then B747DR_pfd_mode_fo=1 else B747DR_pfd_mode_fo=0 end
     

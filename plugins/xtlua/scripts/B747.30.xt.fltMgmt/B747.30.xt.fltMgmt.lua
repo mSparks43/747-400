@@ -66,8 +66,6 @@ simDR_startup_running   = find_dataref("sim/operation/prefs/startup_running")
 simDR_xpdr_mode         = find_dataref("sim/cockpit2/radios/actuators/transponder_mode")    -- 0=OFF, 1=STANDBY, 2=ON, 3=ALT, 4=TEST, 5=GROUND
 --simDR_xpdr_code         = find_dataref("sim/cockpit2/radios/actuators/transponder_code")
 
-
-
 --*************************************************************************************--
 --** 				              FIND CUSTOM DATAREFS             			    	 **--
 --*************************************************************************************--
@@ -87,8 +85,8 @@ B747DR_xpdr_code_12_dial_pos    = deferred_dataref("laminar/B747/flt_mgmt/transp
 B747DR_xpdr_code_34_dial_pos    = deferred_dataref("laminar/B747/flt_mgmt/transponder_code/digts_34_dial_pos", "number")
 
 B747DR_init_fltmgmt_CD          = deferred_dataref("laminar/B747/fltmgmt/init_CD", "number")
-
-
+B747DR_CAS_advisory_status          = find_dataref("laminar/B747/CAS/advisory_status")
+B747DR_radio_altitude                           = deferred_dataref("laminar/B747/efis/radio_altitude", "number")
 
 --*************************************************************************************--
 --** 				       READ-WRITE CUSTOM DATAREF HANDLERS     	        	     **--
@@ -168,6 +166,7 @@ function B747_flt_mgmgt_iru_mode_sel_L_dn_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_iru_mode_sel_pos[0] = math.max(B747DR_iru_mode_sel_pos[0]-1, 0)
 	if B747DR_iru_mode_sel_pos[0]==1 then B747DR_iru_status[0]=1 end
+	if B747DR_iru_mode_sel_pos[0]==0 then B747DR_iru_status[0]=0 end
     end
 end
 
@@ -181,6 +180,7 @@ function B747_flt_mgmgt_iru_mode_sel_C_dn_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_iru_mode_sel_pos[1] = math.max(B747DR_iru_mode_sel_pos[1]-1, 0)
 	if B747DR_iru_mode_sel_pos[1]==1 then B747DR_iru_status[1]=1 end
+	if B747DR_iru_mode_sel_pos[1]==0 then B747DR_iru_status[1]=0 end
     end
 end
 
@@ -194,6 +194,7 @@ function B747_flt_mgmgt_iru_mode_sel_R_dn_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_iru_mode_sel_pos[2] = math.max(B747DR_iru_mode_sel_pos[2]-1, 0)
 	if B747DR_iru_mode_sel_pos[2]==1 then B747DR_iru_status[2]=1 end
+	if B747DR_iru_mode_sel_pos[2]==0 then B747DR_iru_status[2]=0 end
     end
 end
 
@@ -205,14 +206,16 @@ end
 -- TRANSPONDER (0=OFF, 1=STANDBY, 2=ON, 3=ALT, 4=TEST, 5=GROUND)
 function B747_flt_xpdr_mode_sel_dial_up_CMDhandler(phase, duration)
     if phase == 0 then
-        B747DR_xpdrMode_sel_pos = math.min(B747DR_xpdrMode_sel_pos+1, 2)
-        simDR_xpdr_mode = B747DR_xpdrMode_sel_pos+1
+        B747DR_xpdrMode_sel_pos = math.min(B747DR_xpdrMode_sel_pos+1, 4)
+	--if B747DR_xpdrMode_sel_pos<=2 then simDR_EFIS_tcas_on =0 B747DR_nd_capt_tfc = 0 end
+        simDR_xpdr_mode = math.min(B747DR_xpdrMode_sel_pos+1,2)
     end
 end
 function B747_flt_xpdr_mode_sel_dial_dn_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_xpdrMode_sel_pos = math.max(B747DR_xpdrMode_sel_pos-1, 0)
-        simDR_xpdr_mode = B747DR_xpdrMode_sel_pos+1
+	--if B747DR_xpdrMode_sel_pos<=2 then simDR_EFIS_tcas_on =0 B747DR_nd_capt_tfc = 0 end
+        simDR_xpdr_mode = math.min(B747DR_xpdrMode_sel_pos+1,2)
     end
 end
 
@@ -402,12 +405,26 @@ end
 --function flight_crash() end
 
 --function before_physics() end
-
+function B747_fltmgmt_EICAS_msg()
+  if B747DR_radio_altitude>400 and B747DR_xpdrMode_sel_pos<=2 then
+    B747DR_CAS_advisory_status[279] = 1
+  else
+    B747DR_CAS_advisory_status[279] = 0
+  end
+  if B747DR_radio_altitude>400 and B747DR_xpdrMode_sel_pos==3 then
+    B747DR_CAS_advisory_status[280] = 1
+    B747DR_CAS_advisory_status[281] = 1
+  else
+    B747DR_CAS_advisory_status[280] = 0
+    B747DR_CAS_advisory_status[281] = 0
+  end
+end
 debug_fltmgmt     = deferred_dataref("laminar/B747/debug/fltmgmt", "number")
 function after_physics()
   if debug_fltmgmt>0 then return end
     --print("navaids="..navAids)
     --print("fms="..fms)
+    B747_fltmgmt_EICAS_msg()
     B747_fltmgmt_monitor_AI()
     --B747_fltmgmt_setILS() 
 end

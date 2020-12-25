@@ -1,11 +1,11 @@
 fmsPages["ACMS"]=createPage("ACMS")
-fmsPages ["ACMS"].getPage=function(self,pgNo,fmsID)
+fmsPages["ACMS"].getPage=function(self,pgNo,fmsID)
 
   return {
             
 "       ACMS INDEX       ",
 "                        ",
-"<REPORTS          MANIT>",
+"<REPORTS          MAINT>",
 "                        ",
 "<DOC DATA        STATUS>",
 "                        ",
@@ -17,15 +17,15 @@ fmsPages ["ACMS"].getPage=function(self,pgNo,fmsID)
 "------------------------",
 "                  PRINT>"
     }
-    
-      fmsFunctionsDefs["ACMS"]["L1"]={"setpage","REPORTS"}
-      fmsFunctionsDefs["ACMS"]["L2"]={"setpage","DOCDATA"}
-      fmsFunctionsDefs["ACMS"]["L3"]={"setpage","DATDISP"}
+end    
+fmsFunctionsDefs["ACMS"]["L1"]={"setpage","REPORTS"}
+fmsFunctionsDefs["ACMS"]["L2"]={"setpage","DOCDATA"}
+fmsFunctionsDefs["ACMS"]["L3"]={"setpage","DATDISP"}
       
-      fmsFunctionsDefs["ACMS"]["R1"]={"setpage","MANIT"}
+fmsFunctionsDefs["ACMS"]["R1"]={"setpage","MAINT"}
       
 fmsPages["REPORTS"]=createPage("REPORTS")
-fmsPages ["REPORTS"].getPage=function(self,pgNo,fmsID)
+fmsPages["REPORTS"].getPage=function(self,pgNo,fmsID)
   if pgNo==1 then
       fmsFunctionsDefs["REPORTS"]["L6"]={"setpage","ACMS"}
   return {
@@ -66,7 +66,7 @@ end
 end
   
 fmsPages["DOCDATA"]=createPage("DOCDATA")
-fmsPages [“DOCDATA”].getPage=function(self,pgNo,fmsID)
+fmsPages["DOCDATA"].getPage=function(self,pgNo,fmsID)
   if pgNo==1 then
       fmsFunctionsDefs["DOCDATA"]["L6"]={"setpage","ACMS"}
   return {
@@ -107,7 +107,7 @@ end
 end
   
 fmsPages["DATDISP"]=createPage("DATDISP")
-fmsPages ["DATDISP"].getPage=function(self,pgNo,fmsID)
+fmsPages["DATDISP"].getPage=function(self,pgNo,fmsID)
 
   return {
             
@@ -125,13 +125,14 @@ fmsPages ["DATDISP"].getPage=function(self,pgNo,fmsID)
 "------------------------",
 "<RETURN           PRINT>"
     }
+end
       fmsFunctionsDefs["DATDISP"]["L1"]={"setpage","ALPHACALL"}
       fmsFunctionsDefs["DATDISP"]["L2"]={"setpage","DISCINP"}
       fmsFunctionsDefs["DATDISP"]["L3"]={"setpage","DITS"}
       fmsFunctionsDefs["DATDISP"]["L6"]={"setpage","ACMS"}
     
 fmsPages["ALPHACALL"]=createPage("ALPHACALL")
-fmsPages ["ALPHACALL"].getPage=function(self,pgNo,fmsID)
+fmsPages["ALPHACALL"].getPage=function(self,pgNo,fmsID)
 
   return {
             
@@ -149,10 +150,11 @@ fmsPages ["ALPHACALL"].getPage=function(self,pgNo,fmsID)
 " RETURN TO              ",
 "<DATA DISPLAY     PRINT>"
     }
-      fmsFunctionsDefs["ALPHACALL"]["L6"]={"setpage","ACMS"}
+end
+fmsFunctionsDefs["ALPHACALL"]["L6"]={"setpage","ACMS"}
 
 fmsPages["DISCINP"]=createPage("DISCINP")
-fmsPages ["DISCINP"].getPage=function(self,pgNo,fmsID)
+fmsPages["DISCINP"].getPage=function(self,pgNo,fmsID)
 
   return {
             
@@ -170,10 +172,11 @@ fmsPages ["DISCINP"].getPage=function(self,pgNo,fmsID)
 " RETURN TO              ",
 "<DATA DISPLAY     PRINT>"
     }
-      fmsFunctionsDefs["DISCINP"]["L6"]={"setpage","ACMS"}
+end    
+fmsFunctionsDefs["DISCINP"]["L6"]={"setpage","ACMS"}
         
 fmsPages["DITS"]=createPage("DITS")
-fmsPages ["DITS"].getPage=function(self,pgNo,fmsID)
+fmsPages["DITS"].getPage=function(self,pgNo,fmsID)
         
   return {
         
@@ -191,4 +194,5 @@ fmsPages ["DITS"].getPage=function(self,pgNo,fmsID)
 " RETURN TO              ",
 "<DATA DISPLAY     PRINT>"
     }
-      fmsFunctionsDefs["DITS"]["L6"]={"setpage","ACMS"}
+end
+fmsFunctionsDefs["DITS"]["L6"]={"setpage","ACMS"}

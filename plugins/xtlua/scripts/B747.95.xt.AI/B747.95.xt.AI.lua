@@ -2679,7 +2679,7 @@ end
 --function flight_crash() end
 
 --function before_physics() end
-debug_ai     = deferred_dataref("laminar/B747/debug/ai", "number")
+debug_ai     = find_dataref("laminar/B747/debug/ai", "number")
 function after_physics()
 if debug_ai>0 then return end
     B747_auto_board()

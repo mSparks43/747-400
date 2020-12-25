@@ -178,7 +178,7 @@ B747DR_outflow_valve_pos_R          = deferred_dataref("laminar/B747/air/outflow
 B747DR_landing_altitude             = deferred_dataref("laminar/B747/air/landing_altitude", "number")
 
 B747_duct_pressure_L                = find_dataref("laminar/B747/air/duct_pressure_L")
-B747_duct_pressure_C                = deferred_dataref("laminar/B747/air/duct_pressure_C", "number")
+B747_duct_pressure_C                = find_dataref("laminar/B747/air/duct_pressure_C")
 B747_duct_pressure_R                = find_dataref("laminar/B747/air/duct_pressure_R")
 
 B747DR_pressure_EICAS1_display_status = deferred_dataref("laminar/B747/air/pressurization/EICAS1_display_status", "number")
@@ -438,16 +438,16 @@ function B747_bleed_air_supply()
     B747bleedAir.apu.psi = B747_rescale(0, 0, 80.0, rndm_max_apu_bleed_psi, simDR_apu_N1_pct)
 
     -- ENGINE 1
-    B747bleedAir.engine1.psi = B747_rescale(0, 0, 60.0, rndm_max_eng1_bleed_psi, simDR_engine_N1_pct[0])
+    B747bleedAir.engine1.psi = B747_rescale(0, 0, 50.0, rndm_max_eng1_bleed_psi, simDR_engine_N1_pct[0])
 
     -- ENGINE 1
-    B747bleedAir.engine2.psi = B747_rescale(0, 0, 60.0, rndm_max_eng2_bleed_psi, simDR_engine_N1_pct[1])
+    B747bleedAir.engine2.psi = B747_rescale(0, 0, 50.0, rndm_max_eng2_bleed_psi, simDR_engine_N1_pct[1])
 
     -- ENGINE 1
-    B747bleedAir.engine3.psi = B747_rescale(0, 0, 60.0, rndm_max_eng3_bleed_psi, simDR_engine_N1_pct[2])
+    B747bleedAir.engine3.psi = B747_rescale(0, 0, 50.0, rndm_max_eng3_bleed_psi, simDR_engine_N1_pct[2])
 
     -- ENGINE 1
-    B747bleedAir.engine4.psi = B747_rescale(0, 0, 60.0, rndm_max_eng4_bleed_psi, simDR_engine_N1_pct[3])
+    B747bleedAir.engine4.psi = B747_rescale(0, 0, 50.0, rndm_max_eng4_bleed_psi, simDR_engine_N1_pct[3])
 
 end
 
@@ -465,28 +465,34 @@ function B747_bleed_air_valves()
     local bleed_valve_min_act_press = 12.0
 
     ----- ISOLATION VALVES --------------------------------------------------------------
-    B747bleedAir.isolation_valve_L.target_pos = 0.0                                     -- NORMALLY CLOSED
+    
     if B747DR_button_switch_position[75] > 0.95 then
         B747bleedAir.isolation_valve_L.target_pos = 1.0 * power
+    else
+        B747bleedAir.isolation_valve_L.target_pos = 0.0                                     -- NORMALLY CLOSED
     end
 
-    B747bleedAir.isolation_valve_R.target_pos = 0.0
+    
     if B747DR_button_switch_position[76] > 0.95 then
         B747bleedAir.isolation_valve_R.target_pos = 1.0 * power
+    else
+        B747bleedAir.isolation_valve_R.target_pos = 0.0
     end
 
 
     ----- APU VALVE ---------------------------------------------------------------------
-    B747bleedAir.apu.bleed_air_valve.target_pos = 0.0                                   -- NORMALLY CLOSED
+    
     if B747DR_button_switch_position[81] > 0.95                                         -- APU BLEED AIR BUTTON SWITCH
         and B747bleedAir.apu.psi > bleed_valve_min_act_press                            -- BLEED AIR REQUIRED TO OPEN THE VALVE
     then
         B747bleedAir.apu.bleed_air_valve.target_pos = 1.0                               -- OPERATED BY BLEED AIR PRESSURE (NO ELECTRIC REQUIREMENT)
+    else
+        B747bleedAir.apu.bleed_air_valve.target_pos = 0.0                                   -- NORMALLY CLOSED
     end
 
 
     ----- ENGINE #1 BLEED AIR VALVE -----------------------------------------------------
-    B747bleedAir.engine1.bleed_air_valve.target_pos = 0.0                               -- NORMALLY CLOSED
+    
     if B747DR_button_switch_position[77] > 0.95 then                                    -- ENGINE #1 BLEED AIR BUTTON SWITCH
         if B747bleedAir.engine1.psi >= bleed_valve_min_act_press                        -- BLEED AIR REQUIRED TO OPEN THE VALVE
             or
@@ -496,11 +502,15 @@ function B747_bleed_air_valves()
             B747_duct_pressure_L > bleed_valve_min_act_press)                           -- WE HAVE ENOUGH PRESS TO OPEN THE VALVE
         then
             B747bleedAir.engine1.bleed_air_valve.target_pos = 1.0                       -- OPERATED BY BLEED AIR PRESSURE (NO ELECTRIC REQUIREMENT)
+        else
+            B747bleedAir.engine1.bleed_air_valve.target_pos = 0.0                               -- NORMALLY CLOSED
         end
+    else
+        B747bleedAir.engine1.bleed_air_valve.target_pos = 0.0                               -- NORMALLY CLOSED
     end
 
     ----- ENGINE #1 BLEED AIR START VALVE -----------------------------------------------
-    B747bleedAir.engine1.bleed_air_start_valve.target_pos = 0.0                         -- NORMALLY CLOSED
+    
     if B747bleedAir.engine1.bleed_air_valve.pos > 0.95 then                             -- ENGINE BLEED VALVE OPEN FOR REVERSE FLOW
         -- MANUAL START
         if B747DR_button_switch_position[45] < 0.05                                     -- AUTOSTART BUTTON NOT DEPRESSED
@@ -513,13 +523,17 @@ function B747_bleed_air_valves()
             and B747DR_fuel_control_toggle_switch_pos[0] > 0.95                         -- FUEL CUTOFF SWITCH IS IN THE "RUN" POSITION
         then
             B747bleedAir.engine1.bleed_air_start_valve.target_pos = 1.0                 -- OPERATED BY BLEED AIR PRESSURE (NO ELECTRIC REQUIREMENT)
+        else
+            B747bleedAir.engine1.bleed_air_start_valve.target_pos = 0.0                         -- NORMALLY CLOSED
         end
+    else
+        B747bleedAir.engine1.bleed_air_start_valve.target_pos = 0.0                         -- NORMALLY CLOSED
     end
 
 
 
     ----- ENGINE #2 BLEED AIR VALVE -----------------------------------------------------
-    B747bleedAir.engine2.bleed_air_valve.target_pos = 0.0                               -- NORMALLY CLOSED
+    
     if B747DR_button_switch_position[78] > 0.95 then                                    -- ENGINE #2 BLEED AIR BUTTON SWITCH
         if B747bleedAir.engine2.psi >= bleed_valve_min_act_press                        -- BLEED AIR REQUIRED TO OPEN THE VALVE
             or
@@ -529,11 +543,15 @@ function B747_bleed_air_valves()
             B747_duct_pressure_L > bleed_valve_min_act_press)                           -- WE HAVE ENOUGH PRESS TO OPEN THE VALVE
         then
             B747bleedAir.engine2.bleed_air_valve.target_pos = 1.0                       -- OPERATED BY BLEED AIR PRESSURE (NO ELECTRIC REQUIREMENT)
+        else
+            B747bleedAir.engine2.bleed_air_valve.target_pos = 0.0                               -- NORMALLY CLOSED
         end
+    else
+        B747bleedAir.engine2.bleed_air_valve.target_pos = 0.0                               -- NORMALLY CLOSED
     end
 
     ----- ENGINE #2 BLEED AIR START VALVE -----------------------------------------------
-    B747bleedAir.engine2.bleed_air_start_valve.target_pos = 0.0                         -- NORMALLY CLOSED
+    
     if B747bleedAir.engine2.bleed_air_valve.pos > 0.95 then                             -- ENGINE BLEED VALVE OPEN FOR REVERSE FLOW
         -- MANUAL START
         if B747DR_button_switch_position[45] < 0.05                                     -- AUTOSTART BUTTON NOT DEPRESSED
@@ -546,13 +564,17 @@ function B747_bleed_air_valves()
             and B747DR_fuel_control_toggle_switch_pos[1] > 0.95                         -- FUEL CUTOFF SWITCH IS IN THE "RUN" POSITION
         then
             B747bleedAir.engine2.bleed_air_start_valve.target_pos = 1.0                 -- OPERATED BY BLEED AIR PRESSURE (NO ELECTRIC REQUIREMENT)
+        else
+            B747bleedAir.engine2.bleed_air_start_valve.target_pos = 0.0                         -- NORMALLY CLOSED    
         end
+    else
+        B747bleedAir.engine2.bleed_air_start_valve.target_pos = 0.0                         -- NORMALLY CLOSED
     end
 
 
 
     ----- ENGINE #3 BLEED AIR VALVE -----------------------------------------------------
-    B747bleedAir.engine3.bleed_air_valve.target_pos = 0.0                               -- NORMALLY CLOSED
+    
     if B747DR_button_switch_position[79] > 0.95 then                                    -- ENGINE #3 BLEED AIR BUTTON SWITCH
         if B747bleedAir.engine3.psi >= bleed_valve_min_act_press                        -- BLEED AIR REQUIRED TO OPEN THE VALVE
             or
@@ -562,11 +584,15 @@ function B747_bleed_air_valves()
             B747_duct_pressure_R > bleed_valve_min_act_press)                           -- WE HAVE ENOUGH PRESS TO OPEN THE VALVE
         then
             B747bleedAir.engine3.bleed_air_valve.target_pos = 1.0                       -- OPERATED BY BLEED AIR PRESSURE (NO ELECTRIC REQUIREMENT)
+        else
+            B747bleedAir.engine3.bleed_air_valve.target_pos = 0.0                               -- NORMALLY CLOSED
         end
+    else
+        B747bleedAir.engine3.bleed_air_valve.target_pos = 0.0                               -- NORMALLY CLOSED
     end
 
     ----- ENGINE #3 BLEED AIR START VALVE -----------------------------------------------
-    B747bleedAir.engine3.bleed_air_start_valve.target_pos = 0.0                         -- NORMALLY CLOSED
+    
     if B747bleedAir.engine3.bleed_air_valve.pos > 0.95 then                             -- ENGINE BLEED VALVE OPEN FOR REVERSE FLOW
         -- MANUAL START
         if B747DR_button_switch_position[45] < 0.05                                     -- AUTOSTART BUTTON NOT DEPRESSED
@@ -579,13 +605,17 @@ function B747_bleed_air_valves()
             and B747DR_fuel_control_toggle_switch_pos[2] > 0.95                         -- FUEL CUTOFF SWITCH IS IN THE "RUN" POSITION
         then
             B747bleedAir.engine3.bleed_air_start_valve.target_pos = 1.0                 -- OPERATED BY BLEED AIR PRESSURE (NO ELECTRIC REQUIREMENT)
+        else
+            B747bleedAir.engine3.bleed_air_start_valve.target_pos = 0.0                         -- NORMALLY CLOSED
         end
+    else
+        B747bleedAir.engine3.bleed_air_start_valve.target_pos = 0.0                         -- NORMALLY CLOSED
     end
 
 
 
     ----- ENGINE #4 BLEED AIR VALVE -----------------------------------------------------
-    B747bleedAir.engine4.bleed_air_valve.target_pos = 0.0                               -- NORMALLY CLOSED
+    
     if B747DR_button_switch_position[80] > 0.95 then                                    -- ENGINE #4 BLEED AIR BUTTON SWITCH
         if B747bleedAir.engine4.psi >= bleed_valve_min_act_press                        -- BLEED AIR REQUIRED TO OPEN THE VALVE
             or
@@ -595,11 +625,15 @@ function B747_bleed_air_valves()
             B747_duct_pressure_R > bleed_valve_min_act_press)                           -- WE HAVE ENOUGH PRESS TO OPEN THE VALVE
         then
             B747bleedAir.engine4.bleed_air_valve.target_pos = 1.0                       -- OPERATED BY BLEED AIR PRESSURE (NO ELECTRIC REQUIREMENT)
+        else
+            B747bleedAir.engine4.bleed_air_valve.target_pos = 0.0                               -- NORMALLY CLOSED
         end
+    else
+        B747bleedAir.engine4.bleed_air_valve.target_pos = 0.0                               -- NORMALLY CLOSED
     end
 
     ----- ENGINE #4 BLEED AIR START VALVE -----------------------------------------------
-    B747bleedAir.engine4.bleed_air_start_valve.target_pos = 0.0                         -- NORMALLY CLOSED
+    
     if B747bleedAir.engine4.bleed_air_valve.pos > 0.95 then                             -- ENGINE BLEED VALVE OPEN FOR REVERSE FLOW
         -- MANUAL START
         if B747DR_button_switch_position[45] < 0.05                                     -- AUTOSTART BUTTON NOT DEPRESSED
@@ -612,7 +646,11 @@ function B747_bleed_air_valves()
             and B747DR_fuel_control_toggle_switch_pos[3] > 0.95                         -- FUEL CUTOFF SWITCH IS IN THE "RUN" POSITION
         then
             B747bleedAir.engine4.bleed_air_start_valve.target_pos = 1.0                 -- OPERATED BY BLEED AIR PRESSURE (NO ELECTRIC REQUIREMENT)
+        else
+            B747bleedAir.engine4.bleed_air_start_valve.target_pos = 0.0                         -- NORMALLY CLOSED
         end
+    else
+        B747bleedAir.engine4.bleed_air_start_valve.target_pos = 0.0                         -- NORMALLY CLOSED
     end
 
  end
@@ -658,11 +696,12 @@ end
 function B747_bleed_air_duct_pressure()
 
     -- CENTER DUCT
-    B747_duct_pressure_C = math.max((B747bleedAir.apu.psi * B747bleedAir.apu.bleed_air_valve.pos), B747bleedAir.grnd_cart.psi)
+    B747_duct_pressure_C = math.max((B747bleedAir.apu.psi * B747bleedAir.apu.bleed_air_valve.pos), B747bleedAir.grnd_cart.psi,
+    B747_duct_pressure_L*B747bleedAir.isolation_valve_L.pos,B747_duct_pressure_R*B747bleedAir.isolation_valve_R.pos)
 
 
     -- LEFT DUCT
-    B747_duct_pressure_L = 0
+    --B747_duct_pressure_L = 0
     if B747bleedAir.isolation_valve_L.pos < 0.01 then                                   -- LEFT ISOLATION VALVE IS CLOSED
         B747_duct_pressure_L = math.max(
             (B747bleedAir.engine1.psi * B747bleedAir.engine1.bleed_air_valve.pos),
@@ -687,7 +726,7 @@ function B747_bleed_air_duct_pressure()
 
 
     -- RIGHT DUCT
-    B747_duct_pressure_R = 0
+    --B747_duct_pressure_R = 0
     if B747bleedAir.isolation_valve_R.pos < 0.01 then                                   -- RIGHT ISOLATION VALVE IS CLOSED
         B747_duct_pressure_R = math.max(
             (B747bleedAir.engine3.psi * B747bleedAir.engine3.bleed_air_valve.pos),
@@ -729,7 +768,7 @@ function B747_bleed_air_mode()
         (B747bleedAir.engine1.psi * B747bleedAir.engine1.bleed_air_valve.pos),
         (B747bleedAir.engine2.psi * B747bleedAir.engine2.bleed_air_valve.pos),
         (B747bleedAir.engine3.psi * B747bleedAir.engine3.bleed_air_valve.pos),
-        (B747bleedAir.engine4.psi * B747bleedAir.engine4.bleed_air_valve.pos))
+        (B747bleedAir.engine4.psi * B747bleedAir.engine4.bleed_air_valve.pos)) and B747bleedAir.apu.psi * B747bleedAir.apu.bleed_air_valve.pos > 5
         --and B747bleedAir.isolation_valve_L.pos > 0.95
         --and B747bleedAir.isolation_valve_R.pos > 0.95
     then
@@ -881,88 +920,133 @@ end
 function B747_air_EICAS_msg()
 
     -- CABIN ALTITUDE
-    B747DR_CAS_warning_status[1] = 0
-    if simDR_press_cabin_alt_ft > 10000.0 then B747DR_CAS_warning_status[1] = 1 end
+    
+    if simDR_press_cabin_alt_ft > 10000.0 then B747DR_CAS_warning_status[1] = 1 else B747DR_CAS_warning_status[1] = 0 end
 
     -- CABIN ALT AUTO
-    B747DR_CAS_caution_status[10] = 0
+    
     if B747DR_button_switch_position[34] > 0.95
         or B747DR_button_switch_position[35] > 0.95
     then
         B747DR_CAS_caution_status[10] = 1
+    else
+        B747DR_CAS_caution_status[10] = 0
     end
 
     -- >BLEED 1 OFF
-    B747DR_CAS_advisory_status[39] = 0
+    
     if B747DR_button_switch_position[77] < 0.05
         and simDR_engine_running[0] == 1
         and B747bleedAir.engine1.bleed_air_valve.pos < 0.05
     then
         B747DR_CAS_advisory_status[39] = 1
+    else
+        B747DR_CAS_advisory_status[39] = 0
     end
 
     -- >BLEED 2 OFF
-    B747DR_CAS_advisory_status[40] = 0
+    
     if B747DR_button_switch_position[78] < 0.05
         and simDR_engine_running[1] == 1
         and B747bleedAir.engine2.bleed_air_valve.pos < 0.05
     then
         B747DR_CAS_advisory_status[40] = 1
+    else
+        B747DR_CAS_advisory_status[40] = 0
     end
 
     -- >BLEED 3 OFF
-    B747DR_CAS_advisory_status[41] = 0
+    
     if B747DR_button_switch_position[79] < 0.05
         and simDR_engine_running[2] == 1
         and B747bleedAir.engine3.bleed_air_valve.pos < 0.05
     then
         B747DR_CAS_advisory_status[41] = 1
+    else
+        B747DR_CAS_advisory_status[41] = 0
     end
 
     -- >BLEED 4 OFF
-    B747DR_CAS_advisory_status[42] = 0
+    
     if B747DR_button_switch_position[80] < 0.05
         and simDR_engine_running[3] == 1
         and B747bleedAir.engine4.bleed_air_valve.pos < 0.05
     then
         B747DR_CAS_advisory_status[42] = 1
+    else
+        B747DR_CAS_advisory_status[42] = 0
     end
 
     -- OUTFLOW VLV L
-    B747DR_CAS_advisory_status[249] = 0
-    if B747DR_button_switch_position[34] > 0.95 then B747DR_CAS_advisory_status[249] = 1 end
+    
+    if B747DR_button_switch_position[34] > 0.95 then B747DR_CAS_advisory_status[249] = 1 else B747DR_CAS_advisory_status[249] = 0 end
 
     -- OUTFLOW VLV R
-    B747DR_CAS_advisory_status[250] = 0
-    if B747DR_button_switch_position[35] > 0.95 then B747DR_CAS_advisory_status[250] = 1 end
-
-    -- PACK 1 OFF
-    B747DR_CAS_memo_status[18] = 0
-    if B747DR_pack_ctrl_sel_pos[0] == 0 then B747DR_CAS_memo_status[18] = 1 end
-
-    -- PACK 2 OFF
-    B747DR_CAS_memo_status[19] = 0
-    if B747DR_pack_ctrl_sel_pos[1] == 0 then B747DR_CAS_memo_status[19] = 1 end
-
-    -- PACK 3 OFF
-    B747DR_CAS_memo_status[20] = 0
-    if B747DR_pack_ctrl_sel_pos[2] == 0 then B747DR_CAS_memo_status[20] = 1 end
-
-    -- PACKS 1 + 2 OFF
-    B747DR_CAS_memo_status[21] = 0
-    if B747DR_pack_ctrl_sel_pos[0] == 0 and B747DR_pack_ctrl_sel_pos[1] == 0 then B747DR_CAS_memo_status[21] = 1 end
-
-    -- PACKS 1 + 3 OFF
-    B747DR_CAS_memo_status[22] = 0
-    if B747DR_pack_ctrl_sel_pos[0] == 0 and B747DR_pack_ctrl_sel_pos[2] == 0 then B747DR_CAS_memo_status[22] = 1 end
-
-    -- PACKS 2 + 3 OFF
-    B747DR_CAS_memo_status[23] = 0
-    if B747DR_pack_ctrl_sel_pos[1] == 0 and B747DR_pack_ctrl_sel_pos[2] == 0 then B747DR_CAS_memo_status[23] = 1 end
+    
+    if B747DR_button_switch_position[35] > 0.95 then B747DR_CAS_advisory_status[250] = 1 else B747DR_CAS_advisory_status[250] = 0 end
 
     -- PACKS OFF
-    B747DR_CAS_memo_status[25] = 0
-    if B747DR_pack_ctrl_sel_pos[0] == 0 and B747DR_pack_ctrl_sel_pos[1] == 0 and B747DR_pack_ctrl_sel_pos[2] == 0 then B747DR_CAS_memo_status[25] = 1 end
+    
+    if B747DR_pack_ctrl_sel_pos[0] == 0 and B747DR_pack_ctrl_sel_pos[1] == 0 and B747DR_pack_ctrl_sel_pos[2] == 0 then 
+        B747DR_CAS_memo_status[25] = 1 
+    else 
+        B747DR_CAS_memo_status[25] = 0
+        
+    end
+
+    -- PACKS 1 + 2 OFF
+    
+    if B747DR_CAS_memo_status[25] == 0 and B747DR_pack_ctrl_sel_pos[0] == 0 and B747DR_pack_ctrl_sel_pos[1] == 0 then
+        B747DR_CAS_memo_status[21] = 1
+    else 
+        B747DR_CAS_memo_status[21] = 0 
+    end
+
+    -- PACKS 1 + 3 OFF
+    
+    if B747DR_CAS_memo_status[25] == 0 and B747DR_pack_ctrl_sel_pos[0] == 0 and B747DR_pack_ctrl_sel_pos[2] == 0 then 
+        B747DR_CAS_memo_status[22] = 1 
+    else 
+        B747DR_CAS_memo_status[22] = 0 
+    end
+
+    -- PACKS 2 + 3 OFF
+    
+    if B747DR_CAS_memo_status[25] == 0 and B747DR_pack_ctrl_sel_pos[1] == 0 and B747DR_pack_ctrl_sel_pos[2] == 0 then 
+        B747DR_CAS_memo_status[23] = 1 
+    else 
+        B747DR_CAS_memo_status[23] = 0 
+    end
+
+    -- PACK 1 OFF
+    
+    if B747DR_pack_ctrl_sel_pos[0] == 0 and B747DR_CAS_memo_status[25] == 0 and B747DR_CAS_memo_status[21] == 0 and B747DR_CAS_memo_status[22] == 0 and B747DR_CAS_memo_status[23] == 0 then 
+        B747DR_CAS_memo_status[18] = 1 
+    else 
+        B747DR_CAS_memo_status[18] = 0 
+    end
+
+    -- PACK 2 OFF
+    
+    if B747DR_pack_ctrl_sel_pos[1] == 0 and B747DR_CAS_memo_status[25] == 0 and B747DR_CAS_memo_status[21] == 0 and B747DR_CAS_memo_status[22] == 0 and B747DR_CAS_memo_status[23] == 0 then 
+        B747DR_CAS_memo_status[19] = 1 
+    else 
+        B747DR_CAS_memo_status[19] = 0 
+    end
+
+    -- PACK 3 OFF
+    
+    if B747DR_pack_ctrl_sel_pos[2] == 0 and B747DR_CAS_memo_status[25] == 0 and B747DR_CAS_memo_status[21] == 0 and B747DR_CAS_memo_status[22] == 0 and B747DR_CAS_memo_status[23] == 0 then 
+        B747DR_CAS_memo_status[20] = 1 
+    else 
+        B747DR_CAS_memo_status[20] = 0 
+    end
+
+    
+
+    
+
+    
 
 end
 

@@ -43,7 +43,7 @@ fmsPages["ATCLOGONSTATUS"].getSmallPage=function(self,pgNo,fmsID)--dynamic pages
 "                        ",
 "                NEXT CTR",
 "                        ",
-" ADS (ACT)     ADS ENERG",
+" ADS (ACT)     ADS EMERG",
 "                        ",
 "----------------DATALINK",
 "                        "

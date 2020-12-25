@@ -54,9 +54,9 @@ function split(s, delimiter)
     end
     return result;
 end
-function round(value_in)
-	return value_in % 1 >= 0.5 and math.ceil(value_in) or math.floor(value_in)
-end
+function round(x)
+	return x>=0 and math.floor(x+0.5) or math.ceil(x-0.5)
+  end
 function cleanFMSLine(line)
     local retval=line:gsub("☐","*")
     retval=retval:gsub("°","`")
@@ -106,6 +106,7 @@ function toDMS(value,isLat)
   retVal=string.format(p .. "%03d`%02d.%1d",degrees,minutes,seconds*10)
   return retVal
 end
+
 function deferred_command(name,desc,realFunc)
 	return replace_command(name,realFunc)
 end
@@ -168,6 +169,7 @@ B747DR_fuel_preselect		= find_dataref("laminar/B747/fuel/preselect")
 B747DR_refuel				= find_dataref("laminar/B747/fuel/refuel")
 B747DR_fuel_add				= find_dataref("laminar/B747/fuel/add_fuel")
 
+--Marauder28
 --Used in ND DISPLAY
 simDR_latitude				= find_dataref("sim/flightmodel/position/latitude")
 simDR_longitude				= find_dataref("sim/flightmodel/position/longitude")
@@ -184,6 +186,17 @@ simDR_total_air_temp		= find_dataref("sim/cockpit2/temperature/outside_air_LE_te
 simDR_air_temp		= find_dataref("sim/cockpit2/temperature/outside_air_temp_degc")
 simDR_aircraft_hdg		 	= find_dataref("sim/cockpit2/gauges/indicators/heading_AHARS_deg_mag_pilot")
 
+--WB CG Info
+simDR_cgZ_ref_point			= find_dataref("sim/aircraft/weight/acf_cgZ_original")
+simDR_cgz_ref_to_default	= find_dataref("sim/flightmodel/misc/cgz_ref_to_default")
+simDR_empty_weight			= find_dataref("sim/aircraft/weight/acf_m_empty")
+simDR_fuel_qty				= find_dataref("sim/flightmodel/weight/m_fuel")
+simDR_cg_adjust				= find_dataref("sim/flightmodel/misc/cgz_ref_to_default")
+simDR_livery_path			= find_dataref("sim/aircraft/view/acf_livery_path")
+simDR_onground				= find_dataref("sim/flightmodel/failures/onground_any")
+simDR_payload_weight		= find_dataref("sim/flightmodel/weight/m_fixed")
+--Marauder28
+
 --*************************************************************************************--
 --** 				        CREATE READ-WRITE CUSTOM DATAREFS                        **--
 --*************************************************************************************--
@@ -191,6 +204,7 @@ simDR_aircraft_hdg		 	= find_dataref("sim/cockpit2/gauges/indicators/heading_AHA
 -- CRT BRIGHTNESS DIAL ------------------------------------------------------------------
 B747DR_fms1_display_brightness      = deferred_dataref("laminar/B747/fms1/display_brightness", "number", B747_fms1_display_brightness_DRhandler)
 
+--Marauder28
 -- Holds all SimConfig options
 B747DR_simconfig_data					= deferred_dataref("laminar/B747/simconfig", "string")
 
@@ -230,6 +244,179 @@ if string.len(B747DR_simconfig_data) > 1 then
 else
 	simConfigData["data"] = json.decode("[]")
 end
+--Marauder28
+
+--Marauder28
+--Weight & Balance data
+wb = {
+		--Weights
+		OEW_weight				= 0,
+		fuel_CTR_0_weight		= 0,
+		fuel_L_main1_weight		= 0,
+		fuel_L_main2_weight		= 0,
+		fuel_R_main3_weight		= 0,
+		fuel_R_main4_weight		= 0,
+		fuel_L_rsv5_weight		= 0,
+		fuel_R_rsv6_weight		= 0,
+		fuel_stab7_weight		= 0,
+
+		-- Passenger Zones are defined A - E, A=First, B=Business, C-D-E=Economy split in 3 zones
+		passenger_zoneA_weight	= 0,  --defined via FMC passenger loading function
+		passenger_zoneB_weight	= 0,  --defined via FMC passenger loading function
+		passenger_zoneC_weight	= 0,  --defined via FMC passenger loading function
+		passenger_zoneD_weight	= 0,  --defined via FMC passenger loading function
+		passenger_zoneE_weight	= 0,  --defined via FMC passenger loading function
+		
+		--Payload/Cargo Zones
+		fwd_cargo_weight		= 0,  --defined via FMC cargo loading function
+		aft_cargo_weight		= 0,  --defined via FMC cargo loading function
+		bulk_cargo_weight		= 0,  --defined via FMC cargo loading function
+		
+		--Moment Arm Distances (inches from reference point [aircraft nose] stored in feet in aircraft .acf file)
+		OEW_distance				= 1243.32, --103.61 feet
+		fuel_CTR_0_distance			= 1008.00, --84.00 feet
+		fuel_L_main1_distance		= 1383.60, --115.30 feet
+		fuel_L_main2_distance		= 1140.00, --95.00 feet
+		fuel_R_main3_distance		= 1140.00, --95.00 feet
+		fuel_R_main4_distance		= 1383.60, --115.30 feet
+		fuel_L_rsv5_distance		= 1596.00, --133.00 feet
+		fuel_R_rsv6_distance		= 1596.00, --133.00 feet
+		fuel_stab7_distance			= 2412.00, --201.00 feet
+		-- Passenger Zone moment arm distances are an approximation using the middle of the Zone as a reference
+		passenger_zoneA_distance	= 260.00, --21.67 feet (23 First Class seats in the nose)
+		passenger_zoneB_distance	= 640.00, --53.33 feet (80 Business Class seats behind First Class, including the Upper Deck Business Class seats)
+		passenger_zoneC_distance	= 920.00, --76.67 feet (77 Economy Class seats)
+		passenger_zoneD_distance	= 1200.00, --100.00 feet (104 Economy Class seats)
+		passenger_zoneE_distance	= 1700.00, --141.67 feet (132 Economy Class seats)
+		
+		--Payload/Cargo Zone moment arm distances are an approximation using the middle of the Zone as a reference
+		fwd_cargo_distance			= 450,  --37.50 feet (5 pallets [5035 KGS] or 16 LD1/LD3 [1588 KGS] containers or combination totalling 26,490 KGS).  Approximation of Pax A + Pax B / 2.
+		aft_cargo_distance			= 1450.00,  --120.93 feet (4 pallets or 14 LD1/LD3 containers or combination totalling 22,938 KGS).  Approximation of Pax D + Pax E / 2.
+		bulk_cargo_distance			= 1900.00,  --158.33 feet (6,749 KGS).  In the tail of the aircraft beneath the rear galley.
+
+		--Calculated Results
+		stab_trim = 0,
+		cg_mac = 0,
+}
+
+--Calculate CG %MAC & Trim
+function calc_stab_trim(GW, CG_MAC)
+	local stab_trim = 0
+	
+	GW = GW * simConfigData["data"].kgs_to_lbs  --Formula uses LBS to calculate Stab TRIM.  GW passed in should always be in KGS.
+	--print("GWin = "..GW.." MACin = "..CG_MAC)
+
+	if GW > 1000 then
+		GW = GW / 1000  --GW must be in 1000s of LBS
+	end
+
+	stab_trim = (0.000000717 * GW^2 - 0.001217 * GW + 0.24) * CG_MAC + (-0.0000309 * GW^2 + 0.05558 * GW - 12.24)  --GW must be in 1000s of LBS
+	
+	--Stab Trim can never be less than zero
+	if stab_trim < 0 then
+		stab_trim = 0
+	end
+	
+	wb.stab_trim	= stab_trim
+	fmsModules["data"].stab_trim 	= string.format("%4.1f", wb.stab_trim)
+	--print("Trim = "..fmsModules["data"].stab_trim)
+end
+
+function calc_CGMAC()
+
+	local inch_to_meters	= 39.3700787
+	
+	--Setup initial weights
+	wb.OEW_weight				= simDR_empty_weight
+	wb.fuel_CTR_0_weight		= simDR_fuel_qty[0]
+	wb.fuel_L_main1_weight		= simDR_fuel_qty[1]
+	wb.fuel_L_main2_weight		= simDR_fuel_qty[2]
+	wb.fuel_R_main3_weight		= simDR_fuel_qty[3]
+	wb.fuel_R_main4_weight		= simDR_fuel_qty[4]
+	wb.fuel_L_rsv5_weight		= simDR_fuel_qty[5]
+	wb.fuel_R_rsv6_weight		= simDR_fuel_qty[6]
+	wb.fuel_stab7_weight		= simDR_fuel_qty[7]
+
+	--CG variables (in inches from reference point)
+	local GW				= wb.OEW_weight + wb.fuel_CTR_0_weight + wb.fuel_L_main1_weight + wb.fuel_L_main2_weight + wb.fuel_R_main3_weight + wb.fuel_R_main4_weight
+								+ wb.fuel_L_rsv5_weight + wb.fuel_R_rsv6_weight + wb.fuel_stab7_weight + wb.passenger_zoneA_weight + wb.passenger_zoneB_weight
+								+ wb.passenger_zoneC_weight + wb.passenger_zoneD_weight + wb.passenger_zoneE_weight
+	local total_moment		= (wb.OEW_weight * wb.OEW_distance) + (wb.fuel_CTR_0_weight * wb.fuel_CTR_0_distance) + (wb.fuel_L_main1_weight * wb.fuel_L_main1_distance)
+								+ (wb.fuel_L_main2_weight * wb.fuel_L_main2_distance) + (wb.fuel_R_main3_weight * wb.fuel_R_main3_distance)
+								+ (wb.fuel_R_main4_weight * wb.fuel_R_main4_distance) + (wb.fuel_L_rsv5_weight * wb.fuel_L_rsv5_distance)
+								+ (wb.fuel_R_rsv6_weight * wb.fuel_R_rsv6_distance) + (wb.fuel_stab7_weight * wb.fuel_stab7_distance)
+								+ (wb.passenger_zoneA_weight * wb.passenger_zoneA_distance) + (wb.passenger_zoneB_weight * wb.passenger_zoneB_distance)
+								+ (wb.passenger_zoneC_weight * wb.passenger_zoneC_distance) + (wb.passenger_zoneD_weight * wb.passenger_zoneD_distance)
+								+ (wb.passenger_zoneE_weight * wb.passenger_zoneE_distance) + (wb.fwd_cargo_weight * wb.fwd_cargo_distance)
+								+ (wb.aft_cargo_weight * wb.aft_cargo_distance) + (wb.bulk_cargo_weight * wb.bulk_cargo_distance)
+	local CG				= total_moment / GW
+	local wing_root_chord	= 648.99996  --54.10 feet (from the aircraft .acf file)
+	local wing_tip_chord	= 159.99996  --13.40 feet (from the aircraft .acf file)
+	local wing_taper		= wing_tip_chord / wing_root_chord
+	local MAC				= (2/3) * wing_root_chord * ((1 + wing_taper + wing_taper^2) / (1 + wing_taper))
+	local LEMAC				= 1129.87932  --Approximately 94.18 feet as measured by where the default XP CG hits the 25% chord line at MAC and subtracting the 25% from the
+										  --default CG reference point of 1243.32 inches (103.61 feet)
+	local dist_default_CG	= 1243.32  --103.61 feet (from the aircraft .acf file)
+	local dist_aft_LEMAC	= CG - LEMAC
+	local CG_shift			= (dist_default_CG - CG) / inch_to_meters  --determine how far ahead or behind the OEW CG we are
+	local CG_MAC			= (dist_aft_LEMAC / MAC) * 100
+		
+	wb.cg_mac 				= CG_MAC
+	
+	fmsModules["data"].cg_mac 		= string.format("%2.0f", wb.cg_mac)
+	calc_stab_trim(GW, CG_MAC)
+
+	simDR_cg_adjust = CG_shift * -1  --Value is flipped from what is in the XP slider
+	
+	--print("Dist = "..dist_default_CG.." - "..CG)
+	--print("CG Shift = "..CG_shift)
+	--print("OEW weight = "..wb.OEW_weight)
+	--print("OEW distance = "..wb.OEW_distance)
+	--print("Fuel = "..simDR_fuel_qty[0])
+	--print("Fuel = "..wb.fuel_CTR_0_weight)
+	--print("CG %MAC = "..wb.cg_mac)
+	--print("Stab Trim = "..wb.stab_trim)
+	--print("GW = "..GW)
+end
+
+function inflight_update_CG()
+
+	local inch_to_meters	= 39.3700787
+	
+	--Setup initial weights
+	wb.OEW_weight				= simDR_empty_weight
+	wb.fuel_CTR_0_weight		= simDR_fuel_qty[0]
+	wb.fuel_L_main1_weight		= simDR_fuel_qty[1]
+	wb.fuel_L_main2_weight		= simDR_fuel_qty[2]
+	wb.fuel_R_main3_weight		= simDR_fuel_qty[3]
+	wb.fuel_R_main4_weight		= simDR_fuel_qty[4]
+	wb.fuel_L_rsv5_weight		= simDR_fuel_qty[5]
+	wb.fuel_R_rsv6_weight		= simDR_fuel_qty[6]
+	wb.fuel_stab7_weight		= simDR_fuel_qty[7]
+	wb.passenger_zoneD_weight	= B747DR_payload_weight  --Temporarily place all the passenger and payload weight close to the default XP CG until passenger & cargo loading is implemented
+
+	--CG variables (in inches from reference point)
+	local GW				= wb.OEW_weight + wb.fuel_CTR_0_weight + wb.fuel_L_main1_weight + wb.fuel_L_main2_weight + wb.fuel_R_main3_weight + wb.fuel_R_main4_weight
+								+ wb.fuel_L_rsv5_weight + wb.fuel_R_rsv6_weight + wb.fuel_stab7_weight + wb.passenger_zoneA_weight + wb.passenger_zoneB_weight
+								+ wb.passenger_zoneC_weight + wb.passenger_zoneD_weight + wb.passenger_zoneE_weight
+	local total_moment		= (wb.OEW_weight * wb.OEW_distance) + (wb.fuel_CTR_0_weight * wb.fuel_CTR_0_distance) + (wb.fuel_L_main1_weight * wb.fuel_L_main1_distance)
+								+ (wb.fuel_L_main2_weight * wb.fuel_L_main2_distance) + (wb.fuel_R_main3_weight * wb.fuel_R_main3_distance)
+								+ (wb.fuel_R_main4_weight * wb.fuel_R_main4_distance) + (wb.fuel_L_rsv5_weight * wb.fuel_L_rsv5_distance)
+								+ (wb.fuel_R_rsv6_weight * wb.fuel_R_rsv6_distance) + (wb.fuel_stab7_weight * wb.fuel_stab7_distance)
+								+ (wb.passenger_zoneA_weight * wb.passenger_zoneA_distance) + (wb.passenger_zoneB_weight * wb.passenger_zoneB_distance)
+								+ (wb.passenger_zoneC_weight * wb.passenger_zoneC_distance) + (wb.passenger_zoneD_weight * wb.passenger_zoneD_distance)
+								+ (wb.passenger_zoneE_weight * wb.passenger_zoneE_distance) + (wb.fwd_cargo_weight * wb.fwd_cargo_distance)
+								+ (wb.aft_cargo_weight * wb.aft_cargo_distance) + (wb.bulk_cargo_weight * wb.bulk_cargo_distance)
+	local CG				= total_moment / GW
+	local dist_default_CG	= 1243.32  --103.61 feet (from the aircraft .acf file)
+	local cg_shift			= (dist_default_CG - CG) / inch_to_meters  --determine how far ahead or behind the OEW CG we are
+
+	simDR_cg_adjust = cg_shift * -1  --Value is flipped from what is in the XP slider
+
+	--print("Dist = "..dist_default_CG.." - "..CG)
+	--print("CG Shift = "..cg_shift)
+end
+--Marauder28
 
 fmsPages={}
 --fmsPagesmall={}
@@ -239,7 +426,7 @@ fmsModules={} --set later
 function defaultFMSData()
   return {
   acarsInitString="{}",
-  fltno="*******",
+  fltno=string.rep("-", 8),
   fltdate="********",
   fltdep="****",
   fltdst="****",
@@ -249,8 +436,8 @@ function defaultFMSData()
   rpttimemm="**",
   acarsAddress="*******",
   atc="****",
-  grwt="***.*",
-  crzalt="*****",
+  grwt="***.*   ",
+  crzalt=string.rep("*", 5),
   clbspd="250",
   transpd="272",
   spdtransalt="10000",
@@ -261,7 +448,7 @@ function defaultFMSData()
   crzspd="810",
   desspdmach="805",
   desspd="270",
-  destranspd="240",
+  destranspd="250",
   desspdtransalt="10000",
   desrestspd="180",
   desrestalt="5000 ",
@@ -269,30 +456,52 @@ function defaultFMSData()
   vb="*.*",
   vs="****",
   fuel="***.*",
-  zfw="***.*",
+  zfw="***.*   ",
   reserves="***.*",
   costindex="****",
-  crzcg="**.*",
+  crzcg="20.0",
   thrustsel="26",
   thrustn1="**.*",
   toflap="**",
   v1="***",
   vr="***",
   v2="***",
-  runway="*****",
-  coroute="*****",
+  runway=string.rep("-", 5),
+  coroute=string.rep("-", 10),
   grosswt="***.*",
   vref1="***",
   vref2="***",
-  irsLat="****`**.*",
-  irsLon="****`**.*",
+  irsLat=string.rep(" ", 9),
+  irsLon=string.rep(" ", 9),
   initIRSLat="****`**.*",
   initIRSLon="****`**.*",
   flapspeed="**/***",
-  airportpos="*****",
-  airportgate="*****",
-  preselectLeft="******",
-  preselectRight="******",
+  airportpos=string.rep("-", 4),
+  airportgate=string.rep(" ", 5),
+  preselectLeft=string.rep("-", 6),
+  preselectRight=string.rep("-", 6),
+  codata = string.rep("-", 6),
+  lastpos = string.rep(" ", 18),
+  sethdg = string.rep(" ", 4),
+  stepsize = "ICAO",
+  cg_mac = string.rep("-", 2),
+  stab_trim = string.rep(" ", 4),
+  paxFirstClassA = string.rep("0", 2),
+  paxBusClassB = string.rep("0", 2),
+  paxEconClassC = string.rep("0", 2),
+  paxEconClassD = string.rep("0", 3),
+  paxEconClassE = string.rep("0", 3),
+  paxTotal = string.rep("0", 3),
+  paxWeightA = string.rep("0", 4),
+  paxWeightB = string.rep("0", 5),
+  paxWeightC = string.rep("0", 5),
+  paxWeightD = string.rep("0", 5),
+  paxWeightE = string.rep("0", 5),
+  paxWeightTotal = string.rep("0", 6),
+  cargoFwd = string.rep("0", 6),
+  cargoAft = string.rep("0", 6),
+  cargoBulk = string.rep("0", 5),
+  cargoTotal = string.rep("0", 6),
 }
 end
 
@@ -603,6 +812,29 @@ function nd_speed_wind_display()
 	end
 end
 
+function aircraft_las_pos(phase)
+	file_location = simDR_livery_path.."B747-400_lastpos.dat"
+	--print("File = "..file_location)
+
+	if phase == "LOAD" then
+		--Load FMC last position
+		local file = io.open(file_location, "r")
+		if file ~= nil then
+			io.input(file)
+			fmsModules["data"].lastpos = io.read()
+			io.close(file)
+		end
+	else  --UNLOAD
+		local file = io.open(file_location, "w+")
+		if file ~= nil then
+			io.output(file)
+			io.write(irsSystem.getLat("gpsL") .." " .. irsSystem.getLon("gpsL"))
+			io.close(file)
+		end
+	end
+end
+--Marauder28
+
 function flight_start()
   if simDR_startup_running == 0 then
     irsSystem["irsL"]["aligned"]=false
@@ -617,7 +849,10 @@ function flight_start()
   
       irsSystem.align("irsR",true)
       
-    end 
+    end
+
+	--Ensure that CG location gets updated periodically so that the CG slider repositions automatically as fuel is burned during flight
+	run_at_interval(inflight_update_CG, 120)
 end
 
 debug_fms     = deferred_dataref("laminar/B747/debug/fms", "number")
@@ -649,9 +884,6 @@ function after_physics()
 --     for i =1,24,1 do
 --       print(string.byte(fms_style,i))
 --     end
-
-	--Get Current WEIGHT UNITS stored in FMC
-	--B747DR_weight_display_units = getFMSData("weightUnits")
 
     setNotifications()
     B747DR_FMSdata=json.encode(fmsModules["data"]["values"])--make the fms data available to other modules
@@ -695,5 +927,19 @@ function after_physics()
 
 	--Make simConfig data available to other modules
 	simConfigData["data"] = json.decode(B747DR_simconfig_data)
+	
+	--Ensure DR's are updated in time for use in calc_CGMAC()
+	local payload_weight = B747DR_payload_weight
+	local fuel_qty = simDR_fuel_qty
+	local simconfig = B747DR_simconfig_data
+		
+end
 
+function aircraft_load()
+	simDR_cg_adjust = 0 --reset CG slider to begin current flight
+end
+
+function aircraft_unload()
+	aircraft_las_pos("UNLOAD")
+	simDR_cg_adjust = 0 --reset CG slider to neutral for future flights
 end

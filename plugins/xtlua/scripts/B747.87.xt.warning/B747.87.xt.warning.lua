@@ -524,6 +524,7 @@ B747_CASmemoMsg   = {
     {DRindex = 42, name = "PRINTER MESSAGE", status = 0},
     {DRindex = 43, name = "ACARS ALERT", status = 0},
     {DRindex = 44, name = "ACARS VOICE BUSY", status = 0},
+    {DRindex = 45, name = "SPEEDBRAKE ARMED", status = 0},
 }
 
 

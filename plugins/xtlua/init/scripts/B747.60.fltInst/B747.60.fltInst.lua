@@ -93,14 +93,14 @@ B747DR_nd_center_capt_switch_pos                = deferred_dataref("laminar/B747
 B747DR_nd_traffic_capt_switch_pos               = deferred_dataref("laminar/B747/nd/traffic/capt/switch_pos", "number")
 
 B747_nd_map_center_capt                         = deferred_dataref("laminar/B747/nd/map_center/capt", "number")
-
+B747_nd_map_center_fo                           = deferred_dataref("laminar/B747/nd/map_center/fo", "number")
 B747DR_nd_mode_fo_sel_dial_pos                  = deferred_dataref("laminar/B747/nd/mode/fo/sel_dial_pos", "number")
 B747DR_nd_range_fo_sel_dial_pos                 = deferred_dataref("laminar/B747/nd/range/fo/sel_dial_pos", "number")
 
 B747DR_nd_center_fo_switch_pos                  = deferred_dataref("laminar/B747/nd/center/fo/switch_pos", "number")
 B747DR_nd_traffic_fo_switch_pos                 = deferred_dataref("laminar/B747/nd/traffic/fo/switch_pos", "number")
 
-B747_nd_map_center_fo                           = deferred_dataref("laminar/B747/nd/map_center/fo", "number")
+
 
 B747DR_nd_wxr_capt_switch_pos                   = deferred_dataref("laminar/B747/nd/wxr/capt/switch_pos", "number")
 B747DR_nd_sta_capt_switch_pos                   = deferred_dataref("laminar/B747/nd/sta/capt/switch_pos", "number")
@@ -110,7 +110,12 @@ B747DR_nd_data_capt_switch_pos                  = deferred_dataref("laminar/B747
 B747DR_nd_pos_capt_switch_pos                   = deferred_dataref("laminar/B747/nd/pos/capt/switch_pos", "number")
 B747DR_nd_terr_capt_switch_pos                  = deferred_dataref("laminar/B747/nd/terr/capt/switch_pos", "number")
 
-B747DR_nd_data_vor_ndb                          = deferred_dataref("laminar/B747/nd/data/capt/vor_ndb", "number")
+B747DR_nd_capt_vor_ndb                          = deferred_dataref("laminar/B747/nd/data/capt/vor_ndb", "number")
+B747DR_nd_fo_vor_ndb                          	= deferred_dataref("laminar/B747/nd/data/fo/vor_ndb", "number")
+B747DR_nd_capt_apt	                        = deferred_dataref("laminar/B747/nd/data/capt/apt", "number")
+B747DR_nd_fo_apt	                        = deferred_dataref("laminar/B747/nd/data/fo/apt", "number")
+B747DR_nd_capt_tfc	                        = deferred_dataref("laminar/B747/nd/capt/tfc", "number")
+B747DR_nd_fo_tfc	                        = deferred_dataref("laminar/B747/nd/fo/tfc", "number")
 
 B747_nd_vorL_ID_flag_capt                       = deferred_dataref("laminar/B747/nd/vorL_id_flag/capt", "number")
 B747_nd_vorR_ID_flag_capt                       = deferred_dataref("laminar/B747/nd/vorR_id_flag/capt", "number")

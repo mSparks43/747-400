@@ -53,6 +53,19 @@ function deferred_dataref(name,type,notifier)
 	return wrap_dref_any(dref,type) 
 end
 B747DR_elec_standby_power_sel_pos   = deferred_dataref("laminar/B747/electrical/standby_power/sel_dial_pos", "number")
+B747DR_elec_display_power   = deferred_dataref("laminar/B747/electrical/display_has_power", "array[9]")
+-- Captain PFD
+-- First Officer PFD
+-- First Officer ND
+-- Captain ND
+-- Upper EIACAS
+-- Lower EICAS
+-- FMS C    
+-- FMS R
+-- FMS L
+B747DR_simDR_captain_display              = deferred_dataref("laminar/B747/electrical/capt_display_power", "number")
+B747DR_simDR_fo_display             = deferred_dataref("laminar/B747/electrical/fo_display_power", "number")
+
 B747DR_elec_apu_sel_pos             = deferred_dataref("laminar/B747/electrical/apu/sel_dial_pos", "number")
 B747DR_elec_stby_ignit_sel_pos      = deferred_dataref("laminar/B747/electrical/stby_ignit/sel_dial_pos", "number")
 B747DR_elec_auto_ignit_sel_pos      = deferred_dataref("laminar/B747/electrical/auto_ignit/sel_dial_pos", "number")
@@ -86,6 +99,7 @@ B747DR_simDR_esys3              = deferred_dataref("laminar/B747/rel_esys4", "nu
 
 
 -- STANDBY POWER
+B747CMD_connect_power          = deferred_command("laminar/B747/electrical/connect_power", "Connect external power", B747_connect_power_CMDhandler)
 B747CMD_elec_standby_power_sel_up = deferred_command("laminar/B747/electrical/standby_power/sel_dial_up", "Electrical Standby Power Selector Up", B747_elec_standby_power_sel_up_CMDhandler)
 B747CMD_elec_standby_power_sel_dn = deferred_command("laminar/B747/electrical/standby_power/sel_dial_dn", "Electrical Standby Power Selector Down", B747_elec_standby_power_sel_dn_CMDhandler)
 

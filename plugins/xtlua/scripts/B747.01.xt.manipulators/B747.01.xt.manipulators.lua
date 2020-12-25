@@ -120,7 +120,7 @@ B747DR_master_caution               = find_dataref("laminar/B747/warning/master_
 --B747DR_ap_armed_pitch_mode          = find_dataref("laminar/B747/autopilot/armed_pitch_mode")
 
 B747DR_ap_ias_mach_window_open      = find_dataref("laminar/B747/autopilot/ias_mach/window_open")
-
+B747DR_ap_autothrottle_armed        	= deferred_dataref("laminar/B747/autothrottle/armed", "number")
 
 
 --*************************************************************************************--
@@ -1376,6 +1376,7 @@ end
 function B747_autothrottle_arm_switch_CMDhandler(phase, duration)
     if phase == 0 then
         B747_toggle_switch_position_target[29] = 1.0 - B747_toggle_switch_position_target[29]
+        B747DR_ap_autothrottle_armed = B747_toggle_switch_position_target[29]
         if B747_toggle_switch_position_target[29] == 0 then
 	     	if simDR_autopilot_autothrottle_enabled == 1 then
 	     		simCMD_autopilot_autothrottle_off:once() 
@@ -1387,12 +1388,14 @@ end
 function B747_autothrottle_arm_CMDhandler(phase, duration)
     if phase == 0 then
         B747_toggle_switch_position_target[29] = 1.0
+        B747DR_ap_autothrottle_armed = B747_toggle_switch_position_target[29]
     end
 end
 
 function B747_autothrottle_disarm_CMDhandler(phase, duration)
     if phase == 0 then
         B747_toggle_switch_position_target[29] = 0.0
+        B747DR_ap_autothrottle_armed = B747_toggle_switch_position_target[29]
     end
 end
 

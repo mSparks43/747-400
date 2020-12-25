@@ -529,8 +529,10 @@ function B747_thrust_rev_hold_max_all_CMDhandler(phase, duration)
 				simDR_engine_throttle_jet_all = -1.0
 				B747_hold_rev_on_all = 1
 			end
-			
-		end	
+		else
+		  simDR_engine_throttle_jet_all=0.0
+		end
+
 		
 	end		
 	
@@ -757,7 +759,7 @@ function B747_prop_mode()
     
     
     -- AIRCRAFT IS "ON THE GROUND" 
-	if simDR_all_wheels_on_ground == 0 then		
+	if simDR_all_wheels_on_ground == 0 and B747_hold_rev_on_all<1 then		
 	    
 	    -- FORCE PROP MODE TO NORMAL MODE TO PREVENT USER 
 	    -- ENGAGING "REVERSE MODE WHILE IN FLIGHT

@@ -1,6 +1,9 @@
 B747DR_airspeed_V1                              = deferred_dataref("laminar/B747/airspeed/V1", "number")
 B747DR_airspeed_Vr                              = deferred_dataref("laminar/B747/airspeed/Vr", "number")
 B747DR_airspeed_V2                              = deferred_dataref("laminar/B747/airspeed/V2", "number")
+cg_lineLg	= ""
+cg_lineSm	= ""
+
 function roundToIncrement(number, increment)
 
     local y = number / increment
@@ -18,6 +21,20 @@ fmsPages["TAKEOFF"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be 
   local v1="***"
   local vr="***"
   local v2="***"
+  
+	--Marauder28
+	if string.len(cg_lineLg) == 0 then
+		if fmsModules["data"].cg_mac == "--" then
+			cg_lineSm = string.format("%s%%", fmsModules["data"].cg_mac)
+		else
+			cg_lineSm = string.format("%2.0f%%>", fmsModules["data"].cg_mac)
+		end
+	else
+		cg_lineLg = string.format("%2.0f%%", tonumber(fmsModules["data"].cg_mac))
+		cg_lineSm = ""
+	end
+	--Marauder28
+
   if B747DR_airspeed_V1<999 then
     v1=B747DR_airspeed_V1
     vr=B747DR_airspeed_Vr
@@ -33,7 +50,7 @@ fmsPages["TAKEOFF"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be 
   "                        ",
   string.format("FLAPS *  CLB *    %3d", v2),
   "                        ",
-  "               **.*  **%",
+  "                     "..cg_lineLg,
   "                        ",
   "            RW***       ", 
   "-----------------       ",
@@ -50,7 +67,7 @@ fmsPages["TAKEOFF"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be 
   "                        ",
   string.format("FLAPS *  CLB *    ***"),
   "                        ",
-  "               **.*  **%",
+  "                     "..cg_lineLg,
   "                        ",
   "            RW***       ", 
   "-----------------       ",
@@ -60,6 +77,19 @@ fmsPages["TAKEOFF"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be 
 end
 
 fmsPages["TAKEOFF"].getSmallPage=function(self,pgNo,fmsID)
+
+  --Marauder28
+  local stab_trim = ""
+  
+  if string.len(cg_lineLg) > 0 then
+	  if fmsModules["data"].stab_trim ~= "    " then
+			stab_trim = string.format("%3.1f", tonumber(fmsModules["data"].stab_trim))
+	  else
+			stab_trim = fmsModules["data"].stab_trim
+	  end
+  end
+  --Marauder28
+  
     return{
 
 "                        ",
@@ -70,7 +100,8 @@ fmsPages["TAKEOFF"].getSmallPage=function(self,pgNo,fmsID)
 " THR REDUCTION    REF V2",
 "                     KT>",
 "               TRIM   CG",
-"                        ",
+--"                        ",
+"                "..stab_trim.."     "..cg_lineSm,
 "               POS SHIFT",
 "                   --00M", 
 "-----------------PRE-FLT",
@@ -85,4 +116,5 @@ fmsFunctionsDefs["TAKEOFF"]["R6"]={"setpage","POSINIT"}
 fmsFunctionsDefs["TAKEOFF"]["R1"]={"setdata","v1"}
 fmsFunctionsDefs["TAKEOFF"]["R2"]={"setdata","vr"}
 fmsFunctionsDefs["TAKEOFF"]["R3"]={"setdata","v2"}
+fmsFunctionsDefs["TAKEOFF"]["R4"]={"setdata","cg_mac"}
 fmsFunctionsDefs["TAKEOFF"]["L1"]={"setDref","flapsRef"}

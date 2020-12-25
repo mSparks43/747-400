@@ -130,7 +130,14 @@ simDR_vvi_fpm_pilot                 = find_dataref("sim/cockpit2/gauges/indicato
 
 simDR_EFIS_wxr_on                   = find_dataref("sim/cockpit2/EFIS/EFIS_weather_on")
 simDR_EFIS_tcas_on                  = find_dataref("sim/cockpit2/EFIS/EFIS_tcas_on")
+B747DR_nd_capt_tfc	            = find_dataref("laminar/B747/nd/capt/tfc")
+B747DR_nd_fo_tfc	            = find_dataref("laminar/B747/nd/fo/tfc")
+B747DR_nd_capt_tcas_off             = find_dataref("laminar/B747/nd/capt/tcas_off")
+B747DR_nd_fo_tcas_off         	    = find_dataref("laminar/B747/nd/fo/tcas_off")
+B747DR_pfd_mode_capt		    = find_dataref("laminar/B747/pfd/capt/irs")
+B747DR_pfd_mode_fo		    = find_dataref("laminar/B747/pfd/fo/irs")
 
+B747DR_xpdr_sel_pos                 = find_dataref("laminar/B747/flt_mgmt/txpdr/mode_sel_pos")
 --simDR_acf_weight_payload_kg         = find_dataref("sim/flightmodel/weight/m_fixed")
 simDR_acf_weight_total_kg           = find_dataref("sim/flightmodel/weight/m_total")
 simDR_wing_flap1_deg                = find_dataref("sim/flightmodel2/wing/flap1_deg")
@@ -255,7 +262,10 @@ B747DR_nd_data_capt_switch_pos                  = deferred_dataref("laminar/B747
 B747DR_nd_pos_capt_switch_pos                   = deferred_dataref("laminar/B747/nd/pos/capt/switch_pos", "number")
 B747DR_nd_terr_capt_switch_pos                  = deferred_dataref("laminar/B747/nd/terr/capt/switch_pos", "number")
 
-B747DR_nd_data_vor_ndb                          = deferred_dataref("laminar/B747/nd/data/capt/vor_ndb", "number")
+B747DR_nd_capt_vor_ndb                          = deferred_dataref("laminar/B747/nd/data/capt/vor_ndb", "number")
+B747DR_nd_fo_vor_ndb                          	= deferred_dataref("laminar/B747/nd/data/fo/vor_ndb", "number")
+B747DR_nd_capt_apt	                        = deferred_dataref("laminar/B747/nd/data/capt/apt", "number")
+B747DR_nd_fo_apt	                        = deferred_dataref("laminar/B747/nd/data/fo/apt", "number")
 
 B747_nd_vorL_ID_flag_capt                       = deferred_dataref("laminar/B747/nd/vorL_id_flag/capt", "number")
 B747_nd_vorR_ID_flag_capt                       = deferred_dataref("laminar/B747/nd/vorR_id_flag/capt", "number")
@@ -295,7 +305,9 @@ B747DR_dsp_synoptic_display                     = deferred_dataref("laminar/B747
 
 B747DR_STAT_msg_page                            = deferred_dataref("laminar/B747/STAT/msg_page", "number")
 B747DR_STAT_num_msg_pages                       = deferred_dataref("laminar/B747/STAT/num_msg_pages", "number")
-
+B747DR_simDR_captain_display              = find_dataref("laminar/B747/electrical/capt_display_power")
+B747DR_simDR_fo_display             = find_dataref("laminar/B747/electrical/fo_display_power")
+B747DR_elec_display_power   = find_dataref("laminar/B747/electrical/display_has_power")
 --[[
 B747DR_clock_captain_chrono_switch_pos          = deferred_dataref("laminar/B747/clock/captain/chrono_switch_pos", "number")
 B747DR_clock_captain_et_sel_switch_pos          = deferred_dataref("laminar/B747/clock/captain/et_sel_switch_pos", "number")
@@ -430,12 +442,16 @@ simCMD_clock_is_gmt             = find_command("sim/instruments/timer_is_GMT")
 
 simCMD_EFIS_wxr                 = find_command("sim/instruments/EFIS_wxr")
 simCMD_EFIS_tcas                = find_command("sim/instruments/EFIS_tcas")
-simCMD_EFIS_apt                 = find_command("sim/instruments/EFIS_apt")
+
+-- simCMD_EFIS_apt                 = find_command("sim/instruments/EFIS_apt")
+-- simCMD_EFIS_vor                 = find_command("sim/instruments/EFIS_vor")
+-- simCMD_EFIS_ndb                 = find_command("sim/instruments/EFIS_ndb")
 simCMD_EFIS_fix                 = find_command("sim/instruments/EFIS_fix")
-simCMD_EFIS_vor                 = find_command("sim/instruments/EFIS_vor")
-simCMD_EFIS_ndb                 = find_command("sim/instruments/EFIS_ndb")
 
-
+simDR_EFIS_apt			= find_dataref("sim/cockpit2/EFIS/EFIS_airport_on")
+simDR_EFIS_fix 			= find_dataref("sim/cockpit2/EFIS/EFIS_fix_on")
+simDR_EFIS_vor 			= find_dataref("sim/cockpit2/EFIS/EFIS_vor_on")
+simDR_EFIS_ndb 			= find_dataref("sim/cockpit2/EFIS/EFIS_ndb_on")
 
 
 --*************************************************************************************--
@@ -985,10 +1001,14 @@ function B747_nd_center_capt_switch_CMDhandler(phase, duration)
     end
 end
 
+
+local traffic_Selected=0
 function B747_nd_traffic_capt_switch_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_nd_traffic_capt_switch_pos = 1
-        simCMD_EFIS_tcas:once()
+        --simCMD_EFIS_tcas:once()
+	traffic_Selected=1-traffic_Selected
+	
     elseif phase == 2 then
         B747DR_nd_traffic_capt_switch_pos = 0
     end
@@ -1009,9 +1029,9 @@ end
 function B747_nd_sta_capt_switch_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_nd_sta_capt_switch_pos = 1
-        simCMD_EFIS_vor:once()
-        simCMD_EFIS_ndb:once()
-        B747DR_nd_data_vor_ndb = 1.0 - B747DR_nd_data_vor_ndb
+        --simCMD_EFIS_vor:once()
+        --simCMD_EFIS_ndb:once()
+        B747DR_nd_capt_vor_ndb = 1.0 - B747DR_nd_capt_vor_ndb
     elseif phase == 2 then
         B747DR_nd_sta_capt_switch_pos = 0
     end
@@ -1029,7 +1049,8 @@ end
 function B747_nd_arpt_capt_switch_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_nd_arpt_capt_switch_pos = 1
-        simCMD_EFIS_apt:once()
+        --simCMD_EFIS_apt:once()
+	B747DR_nd_capt_apt = 1.0 - B747DR_nd_capt_apt
     elseif phase == 2 then
         B747DR_nd_arpt_capt_switch_pos = 0
     end
@@ -1135,7 +1156,10 @@ end
 function B747_nd_traffic_fo_switch_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_nd_traffic_fo_switch_pos = 1
-        simCMD_EFIS_tcas:once()
+        --simCMD_EFIS_tcas:once()
+	
+	traffic_Selected=1-traffic_Selected
+	
     elseif phase == 2 then
         B747DR_nd_traffic_fo_switch_pos = 0
     end
@@ -1155,9 +1179,10 @@ end
 function B747_nd_sta_fo_switch_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_nd_sta_fo_switch_pos = 1
-        simCMD_EFIS_vor:once()
-        simCMD_EFIS_ndb:once()
-        B747DR_nd_data_vor_ndb = 1.0 - B747DR_nd_data_vor_ndb
+        --simCMD_EFIS_vor:once()
+        --simCMD_EFIS_ndb:once()
+        B747DR_nd_fo_vor_ndb = 1.0 - B747DR_nd_fo_vor_ndb
+	
     elseif phase == 2 then
         B747DR_nd_sta_fo_switch_pos = 0
     end
@@ -1175,7 +1200,8 @@ end
 function B747_nd_arpt_fo_switch_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_nd_arpt_fo_switch_pos = 1
-        simCMD_EFIS_apt:once()
+        --simCMD_EFIS_apt:once()
+	B747DR_nd_fo_apt = 1.0 - B747DR_nd_fo_apt
     elseif phase == 2 then
         B747DR_nd_arpt_fo_switch_pos = 0
     end
@@ -2328,6 +2354,7 @@ end
 
 
 ----- ND MODES --------------------------------------------------------------------------
+local seenRASet=0
 function B747_nd_EFIS_map_modes()
 
     local mapCenter=simDR_EFIS_map_is_center--force read state
@@ -2336,7 +2363,39 @@ function B747_nd_EFIS_map_modes()
     else
         simDR_EFIS_map_is_center = 1
     end
-
+    local capttfc=0
+    local fotfc=0
+    local capttcas_off=0
+    local fotcas_off=0
+    if seenRASet==0 and B747DR_xpdr_sel_pos==4 then
+      seenRASet=1
+    end
+    if seenRASet==0 and B747DR_pfd_mode_capt==1 then --TA/RA never selected, ND IRS aligned, TCAS OFF ND Messages
+      capttcas_off=1
+    elseif B747DR_xpdr_sel_pos<=2 and B747DR_pfd_mode_capt==1 and traffic_Selected==1 then
+      capttcas_off=1
+    elseif B747DR_xpdr_sel_pos>2 and B747DR_pfd_mode_capt==1 and traffic_Selected==1 then
+      capttfc=1
+    end
+    
+    if seenRASet==0 and B747DR_pfd_mode_fo==1 then --TA/RA never selected, ND IRS aligned, TCAS OFF ND Messages
+      fotcas_off=1
+    elseif B747DR_xpdr_sel_pos<=2 and B747DR_pfd_mode_fo==1 and traffic_Selected==1 then
+      fotcas_off=1
+    elseif B747DR_xpdr_sel_pos>2 and B747DR_pfd_mode_fo==1 and traffic_Selected==1 then
+      fotfc=1
+    end
+    
+    if capttfc==1 or fotfc==1 then
+      simDR_EFIS_tcas_on=1
+    else
+      simDR_EFIS_tcas_on=0
+    end
+    
+    B747DR_nd_capt_tfc=capttfc
+    B747DR_nd_fo_tfc=fotfc
+    B747DR_nd_capt_tcas_off=capttcas_off
+    B747DR_nd_fo_tcas_off=fotcas_off
 end
 
 
@@ -2346,13 +2405,15 @@ end
 ----- ND TRACK LINE ---------------------------------------------------------------------
 function B747_nd_track_line()
 
-    B747_exp_nd_track_line_on = 0
+    
 
     if (B747DR_nd_mode_capt_sel_dial_pos <= 1 and B747DR_nd_center_capt_switch_pos == 0 and (simDR_EFIS_wxr_on > 0.5 or simDR_EFIS_tcas_on > 0.5))
         or
         (B747DR_nd_mode_capt_sel_dial_pos == 2 and B747DR_nd_center_capt_switch_pos == 0)
     then
         B747_exp_nd_track_line_on = 1
+    else
+      B747_exp_nd_track_line_on = 0
     end
 
 end
@@ -2560,7 +2621,20 @@ end
 
 
 
+function setVmc(weight,flaps)
 
+    local weight_factor =  B747_rescale(179000.0, 0, 396000.0, 61.0, weight) 
+    local flap_Vmc      = 0
+    if flaps<1 then
+      flap_Vmc      =B747_rescale(0.0, (179), 1.0, 166, flaps) + weight_factor --13/1
+    elseif flaps<10 then
+      flap_Vmc      =B747_rescale(1.0, 166, 10.0, 137, flaps) + weight_factor --3/1
+    else
+      flap_Vmc      =B747_rescale(10.0, 137, 30.0, 118, flaps) + weight_factor --0.95/1
+    end
+    B747DR_airspeed_Vmc = flap_Vmc 
+    --print(" " ..weight/1000 .. "t, " .. flaps .. "=" .. math.floor(B747DR_airspeed_Vmc))
+end
 
 -- MISC V-SPEEDS
 function B747_Vspeeds()
@@ -2604,9 +2678,8 @@ function B747_Vspeeds()
 
 
     -- Vmc (MINIMIMUM OPERATING (CONTROL) MANEUVERING SPEED) (AMBER RANGE)
-    local weight_factor = B747_rescale(178381.0, 0.0, 395991.0, 10.0, simDR_acf_weight_total_kg)
-    local flap_Vmc      = B747_rescale(0.0, 210.0, 30.0, 130.0, simDR_wing_flap1_deg[0])
-    B747DR_airspeed_Vmc = flap_Vmc + weight_factor
+    setVmc(simDR_acf_weight_total_kg,simDR_wing_flap1_deg[0])
+    
     B747DR_airspeed_window_min = 0
     if simDR_airspeed < B747DR_airspeed_Vmc then B747DR_airspeed_window_min = 1 end
 
@@ -2821,6 +2894,19 @@ function fltInstsetCRTs()
     + 9*B747DR_flt_inst_inbd_disp_fo_sel_dial_pos
     + 27*B747DR_flt_inst_lwr_disp_fo_sel_dial_pos
     --print(crtState)
+    
+    local capt_power=6-B747DR_simDR_captain_display
+    local fo_power=6-B747DR_simDR_fo_display
+    
+    -- Captain PFD 0
+    -- First Officer PFD 1
+    -- First Officer ND 2
+    -- Captain ND 3
+    -- Upper EIACAS 4
+    -- Lower EICAS 5
+    -- FMS L -- in electrical
+    -- FMS R-- in electrical
+    -- FMS C-- in electrical
     if crtState==40 then -- all normal
      B747DR_flt_inst_capt_pfd_pos      	= 0
      B747DR_flt_inst_fo_pfd_pos      	= 0
@@ -2828,6 +2914,12 @@ function fltInstsetCRTs()
      B747DR_flt_inst_fo_nd_pos      	= 0
      B747DR_flt_inst_eicas_pos      	= 0
      B747DR_flt_inst_pri_eicas_pos      = 0
+     B747DR_elec_display_power[0]=capt_power
+     B747DR_elec_display_power[1]=fo_power
+     B747DR_elec_display_power[2]=fo_power
+     B747DR_elec_display_power[3]=capt_power
+     B747DR_elec_display_power[4]=capt_power
+     B747DR_elec_display_power[5]=fo_power
     elseif crtState==39 then --capt inbd to eicas
      B747DR_flt_inst_capt_pfd_pos      	= 0
      B747DR_flt_inst_fo_pfd_pos      	= 0
@@ -2835,6 +2927,12 @@ function fltInstsetCRTs()
      B747DR_flt_inst_fo_nd_pos      	= 0
      B747DR_flt_inst_eicas_pos      	= 2 --EICAS to ND
      B747DR_flt_inst_pri_eicas_pos      = 0
+     B747DR_elec_display_power[0]=capt_power
+     B747DR_elec_display_power[1]=fo_power
+     B747DR_elec_display_power[2]=fo_power
+     B747DR_elec_display_power[3]=fo_power
+     B747DR_elec_display_power[4]=capt_power
+     B747DR_elec_display_power[5]=capt_power
     elseif crtState==41 then --capt inbd to PFD
      B747DR_flt_inst_capt_pfd_pos      	= 1 --PFD to ND
      B747DR_flt_inst_fo_pfd_pos      	= 0 
@@ -2842,6 +2940,12 @@ function fltInstsetCRTs()
      B747DR_flt_inst_fo_nd_pos      	= 0
      B747DR_flt_inst_eicas_pos      	= 3 --EICAS to PFD
      B747DR_flt_inst_pri_eicas_pos      = 0
+     B747DR_elec_display_power[0]=capt_power
+     B747DR_elec_display_power[1]=fo_power
+     B747DR_elec_display_power[2]=fo_power
+     B747DR_elec_display_power[3]=fo_power
+     B747DR_elec_display_power[4]=capt_power
+     B747DR_elec_display_power[5]=capt_power
     elseif crtState==37 then --capt lwr to eicas pri
      B747DR_flt_inst_capt_pfd_pos      	= 0
      B747DR_flt_inst_fo_pfd_pos      	= 0 
@@ -2849,6 +2953,12 @@ function fltInstsetCRTs()
      B747DR_flt_inst_fo_nd_pos      	= 0
      B747DR_flt_inst_eicas_pos      	= 5 --EICAS to Upper
      B747DR_flt_inst_pri_eicas_pos      = 1 --PRI EIACS to lower
+     B747DR_elec_display_power[0]=capt_power
+     B747DR_elec_display_power[1]=fo_power
+     B747DR_elec_display_power[2]=fo_power
+     B747DR_elec_display_power[3]=capt_power
+     B747DR_elec_display_power[4]=fo_power
+     B747DR_elec_display_power[5]=capt_power
     elseif crtState==43 then --capt lwr to ND
      B747DR_flt_inst_capt_pfd_pos      	= 0
      B747DR_flt_inst_fo_pfd_pos      	= 0 
@@ -2856,6 +2966,12 @@ function fltInstsetCRTs()
      B747DR_flt_inst_fo_nd_pos      	= 0
      B747DR_flt_inst_eicas_pos      	= 5 --EICAS to Upper
      B747DR_flt_inst_pri_eicas_pos      = 2 --PRI EIACS to ND
+     B747DR_elec_display_power[0]=capt_power
+     B747DR_elec_display_power[1]=fo_power
+     B747DR_elec_display_power[2]=fo_power
+     B747DR_elec_display_power[3]=fo_power
+     B747DR_elec_display_power[4]=capt_power
+     B747DR_elec_display_power[5]=capt_power
     elseif crtState==49 then --fo inbd to eicas
      B747DR_flt_inst_capt_pfd_pos      	= 0
      B747DR_flt_inst_fo_pfd_pos      	= 0
@@ -2863,6 +2979,12 @@ function fltInstsetCRTs()
      B747DR_flt_inst_fo_nd_pos      	= 1 --ND to Lower EICAS
      B747DR_flt_inst_eicas_pos      	= 1 --EICAS to FO ND
      B747DR_flt_inst_pri_eicas_pos      = 0
+     B747DR_elec_display_power[0]=capt_power
+     B747DR_elec_display_power[1]=fo_power
+     B747DR_elec_display_power[2]=fo_power
+     B747DR_elec_display_power[3]=capt_power
+     B747DR_elec_display_power[4]=capt_power
+     B747DR_elec_display_power[5]=fo_power
     elseif crtState==31 then --fo inbd to PFD
      B747DR_flt_inst_capt_pfd_pos      	= 0 --PFD to ND
      B747DR_flt_inst_fo_pfd_pos      	= 1 
@@ -2870,6 +2992,12 @@ function fltInstsetCRTs()
      B747DR_flt_inst_fo_nd_pos      	= 1 --ND to Lower EICAS
      B747DR_flt_inst_eicas_pos      	= 4 --EICAS to PFD
      B747DR_flt_inst_pri_eicas_pos      = 0
+     B747DR_elec_display_power[0]=capt_power
+     B747DR_elec_display_power[1]=fo_power
+     B747DR_elec_display_power[2]=fo_power
+     B747DR_elec_display_power[3]=capt_power
+     B747DR_elec_display_power[4]=capt_power
+     B747DR_elec_display_power[5]=fo_power
     elseif crtState==67 then --fo lwr to eicas pri
      B747DR_flt_inst_capt_pfd_pos      	= 0
      B747DR_flt_inst_fo_pfd_pos      	= 0 
@@ -2877,6 +3005,12 @@ function fltInstsetCRTs()
      B747DR_flt_inst_fo_nd_pos      	= 0
      B747DR_flt_inst_eicas_pos      	= 5 --EICAS to Upper
      B747DR_flt_inst_pri_eicas_pos      = 1 --PRI EIACS to lower
+     B747DR_elec_display_power[0]=capt_power
+     B747DR_elec_display_power[1]=fo_power
+     B747DR_elec_display_power[2]=fo_power
+     B747DR_elec_display_power[3]=capt_power
+     B747DR_elec_display_power[4]=fo_power
+     B747DR_elec_display_power[5]=capt_power
     elseif crtState==13 then --fo lwr to ND
      B747DR_flt_inst_capt_pfd_pos      	= 0
      B747DR_flt_inst_fo_pfd_pos      	= 0 
@@ -2884,20 +3018,38 @@ function fltInstsetCRTs()
      B747DR_flt_inst_fo_nd_pos      	= 1 --ND to Lower EICAS
      B747DR_flt_inst_eicas_pos      	= 5 --EICAS to Upper
      B747DR_flt_inst_pri_eicas_pos      = 3 --PRI EIACS to ND
+     B747DR_elec_display_power[0]=capt_power
+     B747DR_elec_display_power[1]=fo_power
+     B747DR_elec_display_power[2]=fo_power
+     B747DR_elec_display_power[3]=capt_power
+     B747DR_elec_display_power[4]=capt_power
+     B747DR_elec_display_power[5]=capt_power
     elseif crtState==12 then --capt inbd to eicas - fo lwr to ND
      B747DR_flt_inst_capt_pfd_pos      	= 0
      B747DR_flt_inst_fo_pfd_pos      	= 0 
      B747DR_flt_inst_capt_nd_pos      	= -1 -- No capt ND
      B747DR_flt_inst_fo_nd_pos      	= 1 --ND to Lower EICAS
      B747DR_flt_inst_eicas_pos      	= 2 --EICAS to capt ND
-     B747DR_flt_inst_pri_eicas_pos      = 3 --PRI EIACS to ND  
-     elseif crtState==52 then --capt inbd to eicas - fo lwr to ND
+     B747DR_flt_inst_pri_eicas_pos      = 3 --PRI EIACS to ND
+     B747DR_elec_display_power[0]=capt_power
+     B747DR_elec_display_power[1]=fo_power
+     B747DR_elec_display_power[2]=fo_power
+     B747DR_elec_display_power[3]=capt_power
+     B747DR_elec_display_power[4]=fo_power
+     B747DR_elec_display_power[5]=capt_power
+     elseif crtState==52 then --fo inbd to eicas - capt lwr to ND
      B747DR_flt_inst_capt_pfd_pos      	= 0
      B747DR_flt_inst_fo_pfd_pos      	= 0 
      B747DR_flt_inst_capt_nd_pos      	= 1 --ND to Lower EICAS
      B747DR_flt_inst_fo_nd_pos      	= -1 -- No FO ND
      B747DR_flt_inst_eicas_pos      	= 1 --EICAS to fo ND
-     B747DR_flt_inst_pri_eicas_pos      = 2 --PRI EIACS to capt ND 
+     B747DR_flt_inst_pri_eicas_pos      = 2 --PRI EIACS to capt ND
+     B747DR_elec_display_power[0]=capt_power
+     B747DR_elec_display_power[1]=fo_power
+     B747DR_elec_display_power[2]=fo_power
+     B747DR_elec_display_power[3]=fo_power
+     B747DR_elec_display_power[4]=capt_power
+     B747DR_elec_display_power[5]=fo_power
     end
 end
 
@@ -2966,7 +3118,14 @@ function B747_set_inst_all_modes()
     simDR_EFIS_1_sel_fo = 1
     simDR_EFIS_2_sel_fo = 1
 
-    B747DR_nd_data_vor_ndb = 1
+    B747DR_nd_capt_vor_ndb = 0
+    B747DR_nd_fo_vor_ndb = 0
+    B747DR_nd_capt_apt = 0
+    B747DR_nd_fo_apt = 0
+    simDR_EFIS_apt = 0
+    simDR_EFIS_fix = 0
+    simDR_EFIS_vor = 0
+    simDR_EFIS_ndb = 0
 
 end
 
@@ -2976,7 +3135,8 @@ end
 
 ----- SET STATE TO COLD & DARK ----------------------------------------------------------
 function B747_set_inst_CD()
-
+  simDR_EFIS_tcas_on=0
+  B747DR_nd_capt_tfc=0
 
 
 end
@@ -2987,7 +3147,8 @@ end
 
 ----- SET STATE TO ENGINES RUNNING ------------------------------------------------------
 function B747_set_inst_ER()
-	
+    simDR_EFIS_tcas_on=0
+    B747DR_nd_capt_tfc=0
 
 	
 end

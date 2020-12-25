@@ -11,7 +11,7 @@ fmsPages["MAINTSIMCONFIG"].getPage=function(self,pgNo,fmsID)
   return {
   "   SIM CONFIGURATION    ",
   "                        ",
-  ""..display_weight_units,
+  ""..display_weight_units,  --.."             "..simConfigData["data"].irs_align_time,
   "                        ",
   "                        ",
   "                        ",
@@ -36,8 +36,8 @@ fmsPages["MAINTSIMCONFIG"].getSmallPage=function(self,pgNo,fmsID)
 
   return {
   "                        ",
-  "WEIGHT UNITS            ",
-  ""..display_weight_units,
+  "WEIGHT UNITS            ", --IRS ALIGN",
+  ""..display_weight_units,   --.."             mins",
   "                        ",
   "                        ",
   "                        ",
@@ -51,4 +51,5 @@ fmsPages["MAINTSIMCONFIG"].getSmallPage=function(self,pgNo,fmsID)
   }
 end
 fmsFunctionsDefs["MAINTSIMCONFIG"]["L1"]={"setdata","weightUnits"}
+--fmsFunctionsDefs["MAINTSIMCONFIG"]["R1"]={"setdata","irsAlignTime"}
 fmsFunctionsDefs["MAINTSIMCONFIG"]["L6"]={"setpage","MAINT"}

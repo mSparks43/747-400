@@ -71,6 +71,8 @@ end
 
 B747DR_iru_mode_sel_pos         = deferred_dataref("laminar/B747/flt_mgmt/iru/mode_sel_dial_pos", "array[4]")
 B747DR_iru_status         	= deferred_dataref("laminar/B747/flt_mgmt/iru/status", "array[4]")
+B747DR_nd_capt_tcas_off         	= deferred_dataref("laminar/B747/nd/capt/tcas_off", "number")
+B747DR_nd_fo_tcas_off         	= deferred_dataref("laminar/B747/nd/fo/tcas_off", "number")
 B747DR_xpdrMode_sel_pos         = deferred_dataref("laminar/B747/flt_mgmt/txpdr/mode_sel_pos", "number")
 B747DR_xpdr_sel_pos             = deferred_dataref("laminar/B747/flt_mgmt/transponder/sel_dial_pos", "number")
 B747DR_ident_button_pos         = deferred_dataref("laminar/B747/flt_mgmt/transponder/ident_btn_pos", "number")

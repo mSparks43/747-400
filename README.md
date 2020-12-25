@@ -66,7 +66,7 @@ In order to use this aircraft
 
 Additionally, the break lever and X-Plane breaks are now seperated, there is a new command to engage the breaks by lifting the parking break lever.
 
-**Why are my screens half black** IRS alignment cannot complete until you set the IRS position in the FMC. (INIT REF -> POS -> L4 to copy GPS position, L5 to enter it into current position.
+**Why are my screens half black** IRS alignment cannot complete until you set the IRS position in the FMC. (INIT REF -> POS -> R4 to copy GPS position, R5 to enter it into current position.
 
 
 

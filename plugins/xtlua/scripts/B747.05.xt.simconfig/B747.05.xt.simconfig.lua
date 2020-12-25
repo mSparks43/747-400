@@ -53,6 +53,8 @@ function simconfig_values()
 			active = "",
 			op_program = "",  --populated in the IDENT page of FMC via data found in version.lua
 			drag_ff = "+1.1/-3.5",
+			irs_align_time = 600,
+			stdPaxWeight = 120,  --In KGS
 	}
 end
 

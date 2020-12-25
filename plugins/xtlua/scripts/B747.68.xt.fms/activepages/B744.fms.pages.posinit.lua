@@ -2,8 +2,11 @@ fmsPages["POSINIT"]=createPage("POSINIT")
 
 fmsPages["POSINIT"].getPage=function(self,pgNo,fmsID)
   if pgNo==1 then
-    
-    
+
+	--Marauder28
+	--Load last aircraft position (for this livery)
+	aircraft_las_pos("LOAD")
+
     fmsFunctionsDefs["POSINIT"]["R1"]={"getdata","lastpos"}
     
     fmsFunctionsDefs["POSINIT"]["R4"]={"getdata","gpspos"}
@@ -16,21 +19,26 @@ fmsPages["POSINIT"].getPage=function(self,pgNo,fmsID)
       fmsFunctionsDefs["POSINIT"]["L3"]=nil
       fmsFunctionsDefs["POSINIT"]["R5"]=nil
     end
+	if fmsModules["data"].sethdg == "---`" then
+		fmsFunctionsDefs["POSINIT"]["L5"]={"setdata","sethdg"}
+	else
+		fmsFunctionsDefs["POSINIT"]["L5"]=nil
+	end
     fmsFunctionsDefs["POSINIT"]["R6"]={"setpage","RTE1"}
     return {
-    "       POS INIT    1/3  ",
-    "                        ",
-    "      ".. irsSystem.calcLatA() .." "..irsSystem.calcLonA(),
-    "                        ",
-    fmsModules["data"]["airportpos"].."                   ",
-    "                        ",
+    "      POS INIT        1/3 ",
+    "                         ",
+    "      "..fmsModules["data"].lastpos,
+    "                         ",
+    fmsModules["data"]["airportpos"].."  "..fmsModules["data"].irsLat.." "..fmsModules["data"].irsLon,
+    "                         ",
     fmsModules["data"]["airportgate"].."                   ",
-    "                        ",
+    "                         ",
     string.format("%02d%02dz ",hh,mm).. irsSystem.getLat("gpsL") .." " .. irsSystem.getLon("gpsL"),
-    "                        ",
-    "---` ".. irsSystem.getInitLatPos().." ".. irsSystem.getInitLonPos(), 
-    "                        ",
-    "<INDEX            ROUTE>"
+    "                         ",
+    fmsModules["data"].sethdg.."  ".. irsSystem.getInitLatPos().." ".. irsSystem.getInitLonPos(), 
+    "                         ",
+    "<INDEX             ROUTE>"
     } 
   elseif pgNo==2 then 
     fmsFunctionsDefs["POSINIT"]["L2"]=nil
@@ -99,22 +107,22 @@ fmsPages["POSINIT"].getSmallPage=function(self,pgNo,fmsID)
   if pgNo==1 then
     local setIRS="                        "
     if B747DR_iru_status[0]==4 or B747DR_iru_status[1]==4 or B747DR_iru_status[2]==4 or irsSystem["setPos"]==false then
-      setIRS="SET HDG      SET IRS POS"
+      setIRS="SET HDG       SET IRS POS"
     end
     return {
-    "                        ",
-    "	             LAST POS",
-    "                        ",
-    "REF AIRPORT             ",
-    "                        ",
-    "GATE                    ",
-    "                        ",
-    "UTC (GPS)        GPS POS",
-    "                        ",
+    "                         ",
+    "                 LAST POS",
+    "                         ",
+    "REF AIRPORT              ",
+    "                         ",
+    "GATE                     ",
+    "                         ",
+    "UTC (GPS)         GPS POS",
+    "                         ",
     setIRS,
-    "                        ", 
-    "------------------------",
-    "                        "
+    "                         ", 
+    "-------------------------",
+    "                         "
     } 
   elseif pgNo==2 then 
     return {

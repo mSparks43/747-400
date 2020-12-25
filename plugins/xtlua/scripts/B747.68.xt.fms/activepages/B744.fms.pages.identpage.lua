@@ -21,7 +21,7 @@ fmsPages["IDENT"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be th
  "                        ",
  simConfigData["data"].op_program.."       ",
  "                        ",
- simConfigData["data"].drag_ff.."         ******",
+ simConfigData["data"].drag_ff.."         "..fmsModules["data"].codata,
  "------------------------",
  "<INDEX         POS INIT>"
     }
@@ -48,5 +48,6 @@ fmsPages["IDENT"]["templateSmall"]={
   
 fmsFunctionsDefs["IDENT"]={}
 fmsFunctionsDefs["IDENT"]["L6"]={"setpage","INITREF"}
+fmsFunctionsDefs["IDENT"]["R5"]={"setdata","codata"}
 fmsFunctionsDefs["IDENT"]["R6"]={"setpage","POSINIT"}
 

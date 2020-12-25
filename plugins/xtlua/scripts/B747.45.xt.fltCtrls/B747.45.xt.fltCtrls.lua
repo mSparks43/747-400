@@ -84,6 +84,7 @@ B747DR_CAS_advisory_status      = find_dataref("laminar/B747/CAS/advisory_status
 B747DR_airspeed_V1              = find_dataref("laminar/B747/airspeed/V1")
 B747DR_parking_brake_ratio = find_dataref("laminar/B747/flt_ctrls/parking_brake_ratio")
 B747DR_autobrakes_sel_dial_pos  = deferred_dataref("laminar/B747/gear/autobrakes/sel_dial_pos", "number")
+B747DR_CAS_memo_status          = find_dataref("laminar/B747/CAS/memo_status")
 --*************************************************************************************--
 --** 				               FIND CUSTOM COMMANDS              			     **--
 --*************************************************************************************--
@@ -124,8 +125,9 @@ simDR_flap_control_fail         = find_dataref("sim/operation/failures/rel_flap_
 
 simDR_engine_throttle_jet_all   = find_dataref("sim/cockpit2/engine/actuators/throttle_jet_rev_ratio_all")
 
-simDR_hyd_press_1_2               = find_dataref("laminar/B747/hydraulics/indicators/hydraulic_pressure_1_2_4")
+simDR_hyd_press_1_2             = find_dataref("laminar/B747/hydraulics/indicators/hydraulic_pressure_1_2_4")
 
+simDR_cg_adjust					= find_dataref("sim/flightmodel/misc/cgz_ref_to_default")
 --*************************************************************************************--
 --** 				        CREATE READ-ONLY CUSTOM DATAREFS               	         **--
 --*************************************************************************************--
@@ -168,7 +170,8 @@ function B747_speedbrake_lever_DRhandler()
     -- DOWN DETENT
 	if B747DR_speedbrake_lever < 0.01 then
 		B747DR_speedbrake_lever = 0.0
-		simDR_speedbrake_ratio_control = 0.0
+        simDR_speedbrake_ratio_control = 0.0
+        B747DR_CAS_memo_status[45] = 0
 		
      -- ARMED DETENT
     elseif B747DR_speedbrake_lever < 0.15 and
@@ -176,11 +179,13 @@ function B747_speedbrake_lever_DRhandler()
     then
         B747DR_speedbrake_lever = 0.125 
         simDR_speedbrake_ratio_control = -0.5
+        B747DR_CAS_memo_status[45] = 1
     
     -- ALL OTHER POSITIONS    
     else
 	    B747DR_speedbrake_lever = math.min(1.0 - (B747_speedbrake_stop * 0.47), B747DR_speedbrake_lever)
-	    simDR_speedbrake_ratio_control = B747_rescale(0.15, 0.0, 1.0 - (B747_speedbrake_stop * 0.47), 1.0, B747DR_speedbrake_lever) 	       
+        simDR_speedbrake_ratio_control = B747_rescale(0.15, 0.0, 1.0 - (B747_speedbrake_stop * 0.47), 1.0, B747DR_speedbrake_lever)
+        B747DR_CAS_memo_status[45] = 0     
     end	   
     
     B747_sb_manip_changed = 1 
@@ -818,8 +823,20 @@ end
 
 ----- ELEVATOR TRIM ---------------------------------------------------------------------
 function B747_elevator_trim()
-
-     B747DR_elevator_trim_mid_ind = B747_rescale(200000, 1.0, 400000, 0.0, simDR_acf_weight_total_kg)
+	--Marauder28
+	cg_adjust = B747_rescale(-0.801623, 1.48, 0.835151, -1.48, simDR_cg_adjust)  --Base trim midpoint on CG position (FWD and AFT CG limits)
+	
+	if cg_adjust < 0 then
+		B747DR_elevator_trim_mid_ind = 0
+	elseif cg_adjust > 1 then
+		B747DR_elevator_trim_mid_ind = 1	
+	else
+		B747DR_elevator_trim_mid_ind = cg_adjust --simDR_cg_adjust
+	end
+	--Marauder28
+	
+	--B747DR_elevator_trim_mid_ind = B747_rescale(200000, 0.0, 400000, 1.0, simDR_acf_weight_total_kg)
+	--print("Trim Mid Ind = "..B747DR_elevator_trim_mid_ind)
 
 end
 
@@ -853,7 +870,7 @@ function B747_speedbrake_warn()
   if B747DR_speedbrake_lever >0.125 
   and simDR_all_wheels_on_ground == 0 
         and numClimb>=2 then  
-        B747DR_CAS_warning_status[6] = 1
+        B747DR_CAS_caution_status[59] = 1
     end
     
 end
@@ -971,10 +988,13 @@ function B747_fltCtrols_EICAS_msg()
     end
 
     -- >CONFIG STAB
-   
     local midIndTop = B747_rescale(0.0, 1.5, 1.0, 6.0, B747DR_elevator_trim_mid_ind)
     local midIndBtm = midIndTop + 4.5
-    local curTrim   = B747_rescale(-1.0, 15, 1.0, 0.0, simDR_elevator_trim)
+    --local curTrim   = B747_rescale(-1.0, 15, 1.0, 0.0, simDR_elevator_trim)
+	local curTrim   = B747_rescale(-1.0, 0.0, 1.0, 15.0, simDR_elevator_trim)  --Swapped top and bottom of range for better comparisons
+	--print("midIndTop = "..midIndTop)
+	--print("midIndBtm = "..midIndBtm)
+	--print("curTrim = "..curTrim)
     if (curTrim < midIndTop or curTrim > midIndBtm)              -- TODO:  VERIFY RANGE VALUES
         and simDR_all_wheels_on_ground == 1
         and simDR_ind_airspeed_kts_pilot < B747DR_airspeed_V1
@@ -1123,7 +1143,7 @@ end
 function B747_flight_start_deferred()
 
     --B747_init_gear_check_flag()                                                             -- REQUIRED BECAUSE "sim/flightmodel/failures/onground_all" IS NOT VALID AT LOAD
-    B747_elevator_trim()
+    --B747_elevator_trim()  --moved to after_physics loop
     B747_last_sim_sb_handle_pos = simDR_speedbrake_ratio_control
 
 end
@@ -1170,6 +1190,9 @@ if debug_fltctrls>0 then return end
     B747_fltctrls_monitor_AI()
      B747_landing_slats()
     --print(collectgarbage("count")*1024)
+	
+	--Marauder28
+	B747_elevator_trim()  --constantly update the safe stab trim position based on CG
 end
 
 --function after_replay() end

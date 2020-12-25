@@ -27,6 +27,7 @@ irs_line1="TIME TO ALIGN"
 irs_line2="L OFF"
 irs_line3="C OFF"
 irs_line4="R OFF"
+
 function createFMSDatarefs(fmsid)
 create_dataref("laminar/B747/"..fmsid.."/Line01_L", "string")
 create_dataref("laminar/B747/"..fmsid.."/Line02_L", "string")
@@ -95,8 +96,8 @@ B747DR_ND_Wind_Bearing					= deferred_dataref("laminar/B747/nd/wind_bearing", "n
 
 function createFMSCommands(fmsO,cduid,fmsid,keyid,fmskeyid)
 B747CMD_fms1_ls_key_L1              = XLuaCreateCommand("laminar/B747/".. fmskeyid .. "/ls_key/L1", fmsO.." Line Select Key 1-Left")
-  B747CMD_fms1_ls_key_L2            = XLuaCreateCommand("laminar/B747/".. fmskeyid .. "/ls_key/L2", fmsO.." Line Select Key 2-Left")
-  B747CMD_fms1_ls_key_L3            = XLuaCreateCommand("laminar/B747/".. fmskeyid .. "/ls_key/L3", fmsO.." Line Select Key 3-Left")
+B747CMD_fms1_ls_key_L2              = XLuaCreateCommand("laminar/B747/".. fmskeyid .. "/ls_key/L2", fmsO.." Line Select Key 2-Left")
+B747CMD_fms1_ls_key_L3              = XLuaCreateCommand("laminar/B747/".. fmskeyid .. "/ls_key/L3", fmsO.." Line Select Key 3-Left")
 B747CMD_fms1_ls_key_L4              = XLuaCreateCommand("laminar/B747/".. fmskeyid .. "/ls_key/L4", fmsO.." Line Select Key 4-Left")
 B747CMD_fms1_ls_key_L5              = XLuaCreateCommand("laminar/B747/".. fmskeyid .. "/ls_key/L5", fmsO.." Line Select Key 5-Left")
 B747CMD_fms1_ls_key_L6              = XLuaCreateCommand("laminar/B747/".. fmskeyid .. "/ls_key/L6", fmsO.." Line Select Key 6-Left")

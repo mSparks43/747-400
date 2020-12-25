@@ -1,10 +1,10 @@
 fmsPages["CMC"]=createPage("CMC")
-fmsPages ["CMC"].getPage=function(self,pgNo,fmsID)
+fmsPages["CMC"].getPage=function(self,pgNo,fmsID)
 
   if pgNo==1 then 
       fmsFunctionsDefs["CMC"]["L1"]={"setpage","PLFAULTS"}
       fmsFunctionsDefs["CMC"]["L2"]={"setpage","CONFTEST"}
-      fmsFunctionsDefs["CMC"]["L3"]={"setpage","EMANP"}
+      --fmsFunctionsDefs["CMC"]["L3"]={"setpage","EMANP"}
       fmsFunctionsDefs["CMC"]["L4"]={"setpage","GRDTEST"}
     return {
             
@@ -14,7 +14,7 @@ fmsPages ["CMC"].getPage=function(self,pgNo,fmsID)
 "                        ",
 "<CONFIDENCE TESTS       ",
 "                        ",
-"<EICAS MANIT PAGES      ",
+"<EICAS MAINT PAGES      ",
 "                        ",
 "<GROUND TESTS           ",
 "                        ",
@@ -23,9 +23,9 @@ fmsPages ["CMC"].getPage=function(self,pgNo,fmsID)
 "                   HELP>"
     }
   elseif pgNo==2 then
-      fmsFunctionsDefs["CMC"]["L1"]={"setpage","FAULTS"}
-      fmsFunctionsDefs["CMC"]["L2"]={"setpage","FHISTORY"}
-      fmsFunctionsDefs["CMC"]["L3"]={"setpage","OFUCNTION"}
+      --fmsFunctionsDefs["CMC"]["L1"]={"setpage","FAULTS"}
+      --fmsFunctionsDefs["CMC"]["L2"]={"setpage","FHISTORY"}
+      --fmsFunctionsDefs["CMC"]["L3"]={"setpage","OFUCNTION"}
     return {
             
 "     CMC-L MENU      2/2",
@@ -44,9 +44,11 @@ fmsPages ["CMC"].getPage=function(self,pgNo,fmsID)
     }
 end
 end
-
+fmsPages["CMC"].getNumPages=function(self)
+  return 2
+end
 fmsPages["CONFTEST"]=createPage("CONFTEST")
-fmsPages ["CONFTEST"].getPage=function(self,pgNo,fmsID) 
+fmsPages["CONFTEST"].getPage=function(self,pgNo,fmsID) 
     return {
             
 "  CONFIDENCE TESTS   1/1",
@@ -64,20 +66,46 @@ fmsPages ["CONFTEST"].getPage=function(self,pgNo,fmsID)
 "<RETURN            HELP>"
     }
   
-      fmsFunctionsDefs["CONFTEST"]["L1"]={"setpage","CTSTALL"}
-      fmsFunctionsDefs["CONFTEST"]["L2"]={"setpage","CTSTALR"}
-      fmsFunctionsDefs["CONFTEST"]["L3"]={"setpage","CTTOCONFIG"}
-      fmsFunctionsDefs["CONFTEST"]["L4"]={"setpage","CTGPWC"}
-
+end
+fmsFunctionsDefs["CONFTEST"]["L6"]={"setpage","CMC"}
+simDR_stalled_elements= find_dataref("sim/flightmodel2/wing/elements/element_is_stalled")
+fmsPages["PLFAULTS"]=createPage("PLFAULTS")
+fmsPages["PLFAULTS"].getPage=function(self,pgNo,fmsID) 
+  local numStalled=0
+  for i=0,320 do
+    if simDR_stalled_elements[i]>0 then
+      numStalled=numStalled+1
+    end
+  end
+    return {
+            
+"      STALL TESTS    1/1",
+"                        ",
+"STALLED ELEMENTS        ",
+"                        ",
+"    "..numStalled,
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ", 
+"------------------------",
+"<RETURN                 "
+    }
+  
+end
+fmsFunctionsDefs["PLFAULTS"]["L6"]={"setpage","CMC"}
 fmsPages["GRDTEST"]=createPage("GRDTEST")
-fmsPages ["GRDTEST"].getPage=function(self,pgNo,fmsID)
+
+fmsPages["GRDTEST"].getPage=function(self,pgNo,fmsID)
 
   if pgNo==1 then 
-      fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTAC"}
-      fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTCABPSI"}
-      fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTECS"}
-      fmsFunctionsDefs["GRDTEST"]["L4"]={"setpage","GTAPFD"}
-      fmsFunctionsDefs["GRDTEST"]["L5"]={"setpage","GTYAW"}
+      --fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTAC"}
+      --fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTCABPSI"}
+      --fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTECS"}
+      --fmsFunctionsDefs["GRDTEST"]["L4"]={"setpage","GTAPFD"}
+      --fmsFunctionsDefs["GRDTEST"]["L5"]={"setpage","GTYAW"}
       fmsFunctionsDefs["GRDTEST"]["L6"]={"setpage","CMC"}
     return {
             
@@ -97,11 +125,11 @@ fmsPages ["GRDTEST"].getPage=function(self,pgNo,fmsID)
     }
     
   elseif pgNo==2 then
-      fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTCOMM"}
-      fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTELEC"}
-      fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTFIRE"}
-      fmsFunctionsDefs["GRDTEST"]["L4"]={"setpage","GTAIL"}
-      fmsFunctionsDefs["GRDTEST"]["L5"]={"setpage","GTRUDR"}
+      --fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTCOMM"}
+      --fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTELEC"}
+      --fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTFIRE"}
+      --fmsFunctionsDefs["GRDTEST"]["L4"]={"setpage","GTAIL"}
+      --fmsFunctionsDefs["GRDTEST"]["L5"]={"setpage","GTRUDR"}
       fmsFunctionsDefs["GRDTEST"]["L6"]={"setpage","CMC"}
     return {
       
@@ -121,11 +149,11 @@ fmsPages ["GRDTEST"].getPage=function(self,pgNo,fmsID)
     }
     
   elseif pgNo==3 then
-      fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTFLAP"}
-      fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTSTALL"}
-      fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTFUEL"}
-      fmsFunctionsDefs["GRDTEST"]["L4"]={"setpage","GTHYD"}
-      fmsFunctionsDefs["GRDTEST"]["L5"]={"setpage","GTICE"}
+      --fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTFLAP"}
+      --fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTSTALL"}
+     --fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTFUEL"}
+      --fmsFunctionsDefs["GRDTEST"]["L4"]={"setpage","GTHYD"}
+      --fmsFunctionsDefs["GRDTEST"]["L5"]={"setpage","GTICE"}
       fmsFunctionsDefs["GRDTEST"]["L6"]={"setpage","CMC"}
     return {
       
@@ -145,11 +173,11 @@ fmsPages ["GRDTEST"].getPage=function(self,pgNo,fmsID)
     }
     
   elseif pgNo==4 then
-      fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTWARN"}
-      fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTREC"}
-      fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTBRAKE"}
-      fmsFunctionsDefs["GRDTEST"]["L4"]={"setpage","GTPSEU"}
-      fmsFunctionsDefs["GRDTEST"]["L5"]={"setpage","GTBRKTEMP"}
+      --fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTWARN"}
+      --fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTREC"}
+      --fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTBRAKE"}
+      --fmsFunctionsDefs["GRDTEST"]["L4"]={"setpage","GTPSEU"}
+      --fmsFunctionsDefs["GRDTEST"]["L5"]={"setpage","GTBRKTEMP"}
       fmsFunctionsDefs["GRDTEST"]["L6"]={"setpage","CMC"}
     return {
       
@@ -169,4 +197,7 @@ fmsPages ["GRDTEST"].getPage=function(self,pgNo,fmsID)
     }
 end
 end
+
+fmsPages["GRDTEST"].getNumPages=function(self)
+  return 4
 end
