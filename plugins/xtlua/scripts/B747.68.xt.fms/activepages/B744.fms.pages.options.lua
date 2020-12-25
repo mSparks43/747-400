@@ -72,3 +72,26 @@ fmsFunctionsDefs["CONFIG-SOUNDS"]["L3"]={"setpage","SOUND-CABIN"}
 fmsFunctionsDefs["CONFIG-SOUNDS"]["L4"]={"setpage","SOUND-GPWS"}
 fmsFunctionsDefs["CONFIG-SOUNDS"]["L5"]={"setpage","SOUND-SWITCHES"}
 fmsFunctionsDefs["CONFIG-SOUNDS"]["L6"]={"setpage","OPTIONS"}
+
+fmsPages["SOUND-INFO"]=createPage("SOUND-INFO")
+fmsPages["SOUND-INFO"].getPage=function(self,pgNo,fmsID)
+
+  return {
+            
+"       SOUND INFO       ",
+"                        ",
+"    FMOD SOUNDPACK      ",
+"BY                      ",
+"  MISTER FAHRENHEIT     ",
+"VERSION                 ",
+"0.1                     ",
+"                        ",
+"                        ",
+"                        ",
+"                        ", 
+"------------------------",
+"<RETURN                 "
+    }
+end
+
+fmsFunctionsDefs["CONFIG-SOUNDS"]["L6"]={"setpage","CONFIG-SOUNDS"}
