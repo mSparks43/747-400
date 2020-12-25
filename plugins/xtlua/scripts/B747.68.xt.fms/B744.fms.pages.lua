@@ -38,7 +38,7 @@ gs1,
 "                        ",
 "<ACMS                   ", 
 "                        ",
-"<CMC                    "
+"<CMC        SIM OPTIONS>"
 }
 end
 fmsPages["INDEX"].getSmallPage=function(self,pgNo,fmsID)
@@ -70,6 +70,7 @@ fmsFunctionsDefs["INDEX"]["L2"]={"setpage","ACARS"}
 fmsFunctionsDefs["INDEX"]["L5"]={"setpage","ACMS"}
 fmsFunctionsDefs["INDEX"]["L6"]={"setpage","CMC"}
 fmsFunctionsDefs["INDEX"]["R4"]={"setpage","GNDHNDL"}
+fmsFunctionsDefs["INDEX"]["R6"]={"setpage","OPTIONS"}
 fmsPages["RTE1"]=createPage("RTE1")
 fmsPages["RTE1"].getPage=function(self,pgNo,fmsID)
   local lastLine="<RTE 2             PERF>"
