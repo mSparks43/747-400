@@ -1,4 +1,4 @@
-B747DR_GPWS/GPWS_TEST	= deferred_dataref("laminar/B747/gpws/gpws_test", "string")
+B747DR_GPWS_GPWS_TEST	= deferred_dataref("laminar/B747/gpws/gpws_test", "string")
 
 fmsPages["CMC"]=createPage("CMC")
 fmsPages["CMC"].getPage=function(self,pgNo,fmsID)
