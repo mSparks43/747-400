@@ -1,3 +1,5 @@
+B747DR_GPWS/GPWS_TEST	= deferred_dataref("laminar/B747/gpws/gpws_test", "string")
+
 fmsPages["CMC"]=createPage("CMC")
 fmsPages["CMC"].getPage=function(self,pgNo,fmsID)
 
@@ -95,36 +97,7 @@ fmsPages["CONFTEST"].getPage=function(self,pgNo,fmsID)
     }
   
 end
-fmsFunctionsDefs["CONFTEST"]["L6"]={"setpage","CMC"}
-simDR_stalled_elements= find_dataref("sim/flightmodel2/wing/elements/element_is_stalled")
-
-fmsPages["PLFAULTS"]=createPage("PLFAULTS")
-fmsPages["PLFAULTS"].getPage=function(self,pgNo,fmsID) 
-  local numStalled=0
-  for i=0,320 do
-    if simDR_stalled_elements[i]>0 then
-      numStalled=numStalled+1
-    end
-  end
-    return {
-            
-"      STALL TESTS    1/1",
-"                        ",
-"STALLED ELEMENTS        ",
-"                        ",
-"    "..numStalled,
-"                        ",
-"                        ",
-"                        ",
-"                        ",
-"                        ",
-"                        ", 
-"------------------------",
-"<RETURN                 "
-    }
-  
-end
-fmsFunctionsDefs["PLFAULTS"]["L6"]={"setpage","CMC"}
+fmsFunctionsDefs["CMC"]["L3"]={"setDref","B747DR_GPWS/GPWS_TEST"}
 
 fmsPages["GRDTEST"]=createPage("GRDTEST")
 fmsPages["GRDTEST"].getPage=function(self,pgNo,fmsID)
