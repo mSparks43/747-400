@@ -47,6 +47,34 @@ end
 fmsPages["CMC"].getNumPages=function(self)
   return 2
 end
+
+fmsPages["PLFAULTS"]=createPage("PLFAULTS")
+fmsPages["PLFAULTS"].getPage=function(self,pgNo,fmsID) 
+  local numStalled=0
+  for i=0,320 do
+    if simDR_stalled_elements[i]>0 then
+      numStalled=numStalled+1
+    end
+  end
+    return {
+            
+"      STALL TESTS    1/1",
+"                        ",
+"STALLED ELEMENTS        ",
+"                        ",
+"    "..numStalled,
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ", 
+"------------------------",
+"<RETURN                 "
+    }
+  
+end
+
 fmsPages["CONFTEST"]=createPage("CONFTEST")
 fmsPages["CONFTEST"].getPage=function(self,pgNo,fmsID) 
     return {
@@ -69,6 +97,7 @@ fmsPages["CONFTEST"].getPage=function(self,pgNo,fmsID)
 end
 fmsFunctionsDefs["CONFTEST"]["L6"]={"setpage","CMC"}
 simDR_stalled_elements= find_dataref("sim/flightmodel2/wing/elements/element_is_stalled")
+
 fmsPages["PLFAULTS"]=createPage("PLFAULTS")
 fmsPages["PLFAULTS"].getPage=function(self,pgNo,fmsID) 
   local numStalled=0
@@ -96,8 +125,8 @@ fmsPages["PLFAULTS"].getPage=function(self,pgNo,fmsID)
   
 end
 fmsFunctionsDefs["PLFAULTS"]["L6"]={"setpage","CMC"}
-fmsPages["GRDTEST"]=createPage("GRDTEST")
 
+fmsPages["GRDTEST"]=createPage("GRDTEST")
 fmsPages["GRDTEST"].getPage=function(self,pgNo,fmsID)
 
   if pgNo==1 then 
@@ -201,3 +230,5 @@ end
 fmsPages["GRDTEST"].getNumPages=function(self)
   return 4
 end
+
+--page is WIP
