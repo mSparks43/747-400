@@ -3,9 +3,12 @@ simDR_longitude=find_dataref("sim/flightmodel/position/longitude")
 simDR_groundspeed=find_dataref("sim/flightmodel/position/groundspeed")
 B747DR_iru_mode_sel_pos         = find_dataref("laminar/B747/flt_mgmt/iru/mode_sel_dial_pos")
 local timeToAlign=600  --simConfigData["data"].irs_align_time
+irs_A_status=find_dataref("laminar/B747/irs/line1") 
 irs_L_status=find_dataref("laminar/B747/irs/line2") 
 irs_C_status=find_dataref("laminar/B747/irs/line3") 
 irs_R_status=find_dataref("laminar/B747/irs/line4") 
+local allIRSOff=true
+
 startLat=0
 startLon=0
 
@@ -127,10 +130,27 @@ function cancelAlign(func)
     stop_timer(func)
   end
 end
+irsSystem.setStatus=function()
+  local L_status=irsSystem.getStatus("irsL")
+  local C_status=irsSystem.getStatus("irsC")
+  local R_status=irsSystem.getStatus("irsR")
+
+  if string.sub(L_status,-3)=="OFF" and string.sub(C_status,-3)=="OFF"  and string.sub(R_status,-3)=="OFF" then
+    irs_A_status=" "
+    irs_L_status=" "
+    irs_C_status=" "
+    irs_R_status=" "
+  else
+    irs_A_status="TIME TO ALIGN"
+    irs_L_status=L_status
+    irs_C_status=C_status
+    irs_R_status=R_status
+  end
+end
+
 irsSystem.off=function()
-    irs_L_status=irsSystem.getStatus("irsL")
-    irs_C_status=irsSystem.getStatus("irsC")
-    irs_R_status=irsSystem.getStatus("irsR")
+  irsSystem.setStatus()
+    
     irsSystem["irsL"]["aligned"] = false
     irsSystem["irsC"]["aligned"] = false
     irsSystem["irsR"]["aligned"] = false
@@ -174,9 +194,7 @@ irsSystem.update=function()
     if irsSystem["setPos"]==true and irsSystem[irsFromNum(B747DR_irs_src_fo)]["aligned"]==true then B747DR_pfd_mode_fo=1 else B747DR_pfd_mode_fo=0 end
     
     if irsSystem[irsFromNum(B747DR_irs_src_capt)]["aligned"]==false or irsSystem[irsFromNum(B747DR_irs_src_fo)]["aligned"]==false or irsSystem["setPos"]==false then
-      irs_L_status=irsSystem.getStatus("irsL")
-      irs_C_status=irsSystem.getStatus("irsC")
-      irs_R_status=irsSystem.getStatus("irsR")
+      irsSystem.setStatus()
     end
     if B747DR_iru_mode_sel_pos[0]==0 then B747DR_iru_status[0]=0 cancelAlign(doIRSAlign["irsL"])
     elseif B747DR_iru_status[0]==1 and B747DR_iru_mode_sel_pos[0]==2 then B747DR_iru_status[0]=4 irsSystem.align("irsL",false)

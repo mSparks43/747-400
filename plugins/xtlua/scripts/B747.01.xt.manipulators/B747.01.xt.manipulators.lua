@@ -88,7 +88,7 @@ local B747_button_switch_cover_CMDhandler = {}
 
 simDR_startup_running               	= find_dataref("sim/operation/prefs/startup_running")
 --simDR_ext_pwr_1_on                  	= find_dataref("sim/cockpit/electrical/gpu_on")
-simDR_all_wheels_on_ground          	= find_dataref("sim/flightmodel/failures/onground_all")
+simDR_all_wheels_on_ground          	= find_dataref("sim/flightmodel/failures/onground_any")
 --simDR_autopilot_flight_dir_mode     	= find_dataref("sim/cockpit2/autopilot/flight_director_mode")
 simDR_autopilot_servos_on           	= find_dataref("sim/cockpit2/autopilot/servos_on")
 --simDR_autopilot_vs_status           	= find_dataref("sim/cockpit2/autopilot/vvi_status")

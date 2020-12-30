@@ -23,11 +23,14 @@ irs_line1=deferred_dataref("laminar/B747/irs/line1", "string")
 irs_line2=deferred_dataref("laminar/B747/irs/line2", "string") 
 irs_line3=deferred_dataref("laminar/B747/irs/line3", "string") 
 irs_line4=deferred_dataref("laminar/B747/irs/line4", "string") 
-irs_line1="TIME TO ALIGN"
+--[[irs_line1="TIME TO ALIGN"
 irs_line2="L OFF"
 irs_line3="C OFF"
-irs_line4="R OFF"
-
+irs_line4="R OFF"]]
+irs_line1=" "
+irs_line2=" "
+irs_line3=" "
+irs_line4=" "
 function createFMSDatarefs(fmsid)
 create_dataref("laminar/B747/"..fmsid.."/Line01_L", "string")
 create_dataref("laminar/B747/"..fmsid.."/Line02_L", "string")
@@ -93,6 +96,9 @@ B747DR_ND_GS_TAS_Line_Pilot				= deferred_dataref("laminar/B747/nd/gs_tas_line_p
 B747DR_ND_GS_TAS_Line_CoPilot			= deferred_dataref("laminar/B747/nd/gs_tas_line_copilot", "string")
 B747DR_ND_Wind_Line						= deferred_dataref("laminar/B747/nd/wind_line", "string")
 B747DR_ND_Wind_Bearing					= deferred_dataref("laminar/B747/nd/wind_bearing", "number")
+
+--STAB TRIM setting
+B747DR_elevator_trim				    = deferred_dataref("laminar/B747/fmc/elevator_trim", "number")
 
 function createFMSCommands(fmsO,cduid,fmsid,keyid,fmskeyid)
 B747CMD_fms1_ls_key_L1              = XLuaCreateCommand("laminar/B747/".. fmskeyid .. "/ls_key/L1", fmsO.." Line Select Key 1-Left")

@@ -76,7 +76,7 @@ simDR_ai_flies_aircraft				= find_dataref("sim/operation/prefs/ai_flies_aircraft
 
 simDR_electrical_bus_volts          = find_dataref("sim/cockpit2/electrical/bus_volts")
 
-simDR_aircraft_on_ground            = find_dataref("sim/flightmodel/failures/onground_all")
+simDR_aircraft_on_ground            = find_dataref("sim/flightmodel/failures/onground_any")
 simDR_all_wheels_on_ground          = find_dataref("sim/flightmodel/failures/onground_any")
 
 simDR_generic_brightness_switch     = find_dataref("sim/cockpit2/switches/generic_lights_switch")

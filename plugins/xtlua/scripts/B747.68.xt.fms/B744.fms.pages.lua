@@ -9,6 +9,9 @@ B747DR_airspeed_V1			= deferred_dataref("laminar/B747/airspeed/V1", "number")
 B747DR_airspeed_Vr			= deferred_dataref("laminar/B747/airspeed/Vr", "number")
 B747DR_airspeed_V2			= deferred_dataref("laminar/B747/airspeed/V2", "number")
 B747DR_airspeed_flapsRef	= deferred_dataref("laminar/B747/airspeed/flapsRef", "number")
+
+--Refuel DR
+B747DR_refuel							= deferred_dataref("laminar/B747/fuel/refuel", "number")
 --Marauder28
 
 fmsFunctions={}
@@ -258,9 +261,10 @@ function findILS(value)
 	    end
 	    simDR_nav1Freq=navAids[n][3]
 	    simDR_nav2Freq=navAids[n][3]
-	    local course=(navAids[n][4]+simDR_variation)
-	    simDR_radio_nav_obs_deg[0]=course
-	    simDR_radio_nav_obs_deg[1]=course
+      --local course=(navAids[n][4]+simDR_variation)
+      local course=(navAids[n][4]+simDR_variation)
+	    simDR_radio_nav1_obs_deg=course
+	    simDR_radio_nav2_obs_deg=course
 	    print("68 - Tuned ILS "..course)
 	    print("68 - useThis"..bestDist)
 	  end
@@ -290,13 +294,18 @@ fmsPages["NAVRAD"].getPage=function(self,pgNo,fmsID)
     if original_distance == -1 then
 		original_distance = B747BR_totalDistance  --capture original flightplan distance
 	end
-	--print("Dist to TOD = "..dist_to_tod)	
+  --print("Dist to TOD = "..dist_to_tod)	
+  local course = ilsNav[4]+simDR_variation
+  if course<0 then
+    course=course+360
+  end
+
     if (dist_to_TOD >= 50 and dist_to_TOD < 200) then
 		--ils2= string.format("%6.2f/%03d%s %4s          .", ilsNav[3]*0.01,(ilsNav[4]+simDR_variation), "˚", park)
 		ils1 = "            "..park
-		ils_line1 = string.format("<%6.2f/%03d%s           ", ilsNav[3]*0.01,(round((ilsNav[4]+round(simDR_variation)))), "˚")
+		ils_line1 = string.format("<%6.2f/%03d%s           ", ilsNav[3]*0.01,((simDR_radio_nav_obs_deg[0])), "˚")
 	elseif (dist_to_TOD < 50) then
-		ils1= string.format("%6.2f/%03d%s          ", ilsNav[3]*0.01,(round((ilsNav[4]+round(simDR_variation)))), "`"..modes:sub(1, 1))
+		ils1= string.format("%6.2f/%03d%s          ", ilsNav[3]*0.01,((simDR_radio_nav_obs_deg[0])), "`"..modes:sub(1, 1))
 		ils_line1 = ""
 	end
   else
@@ -551,6 +560,11 @@ function preselect_fuel()
 	B747DR_fuel_preselect_temp = B747DR_fuel_preselect
 	B747DR_fuel_add=0
 	simDR_m_jettison=simDR_acf_m_jettison
+	
+	--Marauder28
+	--Set the totalizer to the current fuel amount before refueling
+	simDR_fuel_totalizer_kg = simDR_fueL_tank_weight_total_kg
+	--Marauder28
 end
 
 --Marauder28
@@ -857,22 +871,28 @@ function fmsFunctions.setdata(fmsO,value)
 	end
 
   elseif value == "grwt" then
-	if string.len(fmsO["scratchpad"]) > 5 then
-		fmsO["notify"]="INVALID ENTRY"
-		return
-	end
+--	if string.len(fmsO["scratchpad"]) > 5 then
+--		fmsO["notify"]="INVALID ENTRY"
+--		return
+--	end
 	local grwt
-	if string.len(fmsO["scratchpad"]) > 0 then
+	if string.len(fmsO["scratchpad"]) > 0 and string.len(fmsO["scratchpad"]) <= 5 and string.match(fmsO["scratchpad"], "%d") then
 		if simConfigData["data"].weight_display_units == "LBS" then
 			grwt = fmsO["scratchpad"] / simConfigData["data"].kgs_to_lbs  --store LBS in KGS
 		else
 			grwt = fmsO["scratchpad"]
 		end
+	elseif fmsO["scratchpad"] == "" then
+		grwt = simDR_GRWT / 1000
 	else
-		grwt = (simDR_GRWT / 1000)
+		fmsO["notify"]="INVALID ENTRY"
+		fmsO["scratchpad"] = ""
+		return
 	end
+	grwt = string.format("%5.1f", grwt)
+	zfw = string.format("%5.1f", tonumber(grwt) - (simDR_fuel / 1000))
 	setFMSData(value, grwt)
-	setFMSData("zfw", tonumber(grwt) - (simDR_fuel/1000))
+	setFMSData("zfw", zfw)
 	calc_CGMAC()  --Recalc CG %MAC and TRIM units
 	if (B747DR_airspeed_V1 < 999 or B747DR_airspeed_Vr < 999 or B747DR_airspeed_V2 < 999) and simDR_onground == 1 then
 		B747DR_airspeed_flapsRef = 0
@@ -882,23 +902,25 @@ function fmsFunctions.setdata(fmsO,value)
 		fmsO["notify"] = "TAKEOFF SPEEDS DELETED"
 	end
 
-  elseif value == "zfw" then
-	if string.len(fmsO["scratchpad"]) > 5 then
-		fmsO["notify"]="INVALID ENTRY"
-		return
-	end
+  elseif value == "zfw" and not del then
 	local zfw
-	if string.len(fmsO["scratchpad"]) > 0 then
+	if string.len(fmsO["scratchpad"]) > 0 and string.len(fmsO["scratchpad"]) <= 5 and string.match(fmsO["scratchpad"], "%d") then
 		if simConfigData["data"].weight_display_units == "LBS" then
 			zfw = fmsO["scratchpad"] / simConfigData["data"].kgs_to_lbs  --store LBS in KGS
 		else
 			zfw = fmsO["scratchpad"]
 		end
-	else
+	elseif fmsO["scratchpad"] == "" then
 		zfw = (simDR_GRWT-simDR_fuel) / 1000
+	else
+		fmsO["notify"]="INVALID ENTRY"
+		fmsO["scratchpad"] = ""
+		return
 	end
+	zfw = string.format("%5.1f", zfw)
+	grwt = string.format("%5.1f", tonumber(zfw) + (simDR_fuel / 1000))
 	setFMSData(value, zfw)
-	setFMSData("grwt", tonumber(zfw) + simDR_fuel / 1000)
+	setFMSData("grwt", grwt)
 	calc_CGMAC()  --Recalc CG %MAC and TRIM units
 	if (B747DR_airspeed_V1 < 999 or B747DR_airspeed_Vr < 999 or B747DR_airspeed_V2 < 999) and simDR_onground == 1 then
 		B747DR_airspeed_flapsRef = 0
@@ -906,6 +928,20 @@ function fmsFunctions.setdata(fmsO,value)
 		--B747DR_airspeed_Vr = 999
 		--B747DR_airspeed_V2 = 999
 		fmsO["notify"] = "TAKEOFF SPEEDS DELETED"
+	end
+  elseif value == "reserves" then
+	local rsv = 0
+	if not string.match(fmsO["scratchpad"], "%d") or string.len(fmsO["scratchpad"]) > 5 then
+		fmsO["notify"] = "INVALID ENTRY"
+		fmsO["scratchpad"] = ""
+		return
+	else
+		if simConfigData["data"].weight_display_units == "LBS" then
+			rsv = string.format("%5.1f", fmsO["scratchpad"] / simConfigData["data"].kgs_to_lbs)  --store LBS in KGS
+		else
+			rsv = string.format("%5.1f", fmsO["scratchpad"])
+		end
+		setFMSData(value, rsv)
 	end
   elseif value == "crzcg" then
 	if string.len(fmsO["scratchpad"]) > 0 and not string.find(fmsO["scratchpad"], " ") then
@@ -1202,7 +1238,14 @@ function fmsFunctions.setDref(fmsO,value)
   if value=="VNAVS1" and B747DR_ap_vnav_system ~=1.0 then B747DR_ap_vnav_system=1 return elseif value=="VNAVS1" then B747DR_ap_vnav_system=0 return end 
   if value=="VNAVS2" and B747DR_ap_vnav_system ~=2.0 then B747DR_ap_vnav_system=2 return elseif value=="VNAVS2" then B747DR_ap_vnav_system=0 return end 
   if value=="VNAVSPAUSE" then B747DR_ap_vnav_pause=1-B747DR_ap_vnav_pause return end 
-  if value=="CHOCKS" then B747DR__gear_chocked=1-B747DR__gear_chocked return  end
+  if value=="CHOCKS" then
+	B747DR__gear_chocked = 1 - B747DR__gear_chocked
+	--Stop refueling operation if CHOCKS are removed
+	if B747DR__gear_chocked == 0 then
+		B747DR_refuel=0.0
+	end
+	return
+  end
   if value=="TO" then toderate=0 clbderate=0 return  end
   if value=="TO1" then toderate=1 clbderate=1 return  end
   if value=="TO2" then toderate=2 clbderate=2 return  end

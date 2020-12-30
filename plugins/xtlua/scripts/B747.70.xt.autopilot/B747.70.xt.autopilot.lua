@@ -155,7 +155,7 @@ simDR_allThrottle           	= find_dataref("sim/cockpit2/engine/actuators/throt
 simDR_descent           	= find_dataref("sim/cockpit2/autopilot/des_adjust")
 simDR_pitch           	= find_dataref("sim/cockpit2/autopilot/sync_hold_pitch_deg")
 simDR_touchGround=find_dataref("sim/flightmodel/failures/onground_any")
-simDR_onGround=find_dataref("sim/flightmodel/failures/onground_all")
+simDR_onGround=find_dataref("sim/flightmodel/failures/onground_any")
 --simDR_pitch2           	= find_dataref("sim/cockpit2/autopilot/fpa")
 B744_fpm=find_dataref("laminar/B747/vsi/fpm")
 simDR_AHARS_pitch_heading_deg_pilot=find_dataref("sim/cockpit2/gauges/indicators/pitch_AHARS_deg_pilot")
@@ -1291,6 +1291,8 @@ simDR_nav2Freq=find_dataref("sim/cockpit/radios/nav2_freq_hz")
 --simDR_nav1crs=find_dataref("sim/cockpit/radios/nav1_course_degm")
 --simDR_nav2crs=find_dataref("sim/cockpit/radios/nav2_course_degm")
 simDR_radio_nav_obs_deg             = find_dataref("sim/cockpit2/radios/actuators/nav_obs_deg_mag_pilot")
+simDR_radio_nav1_obs_deg             = find_dataref("sim/cockpit/radios/nav1_obs_degt")
+simDR_radio_nav2_obs_deg             = find_dataref("sim/cockpit/radios/nav2_obs_degt")
 navAidsJSON   = find_dataref("xtlua/navaids")
 fmsJSON   = find_dataref("xtlua/fms")
 nSize=0
@@ -1354,9 +1356,10 @@ function B747_fltmgmt_setILS()
   lastILSUpdate=simDRTime
   local n1=simDR_nav1Freq
   local n2=simDR_nav2Freq
+  local d1=simDR_radio_nav1_obs_deg
+  local d2=simDR_radio_nav2_obs_deg--continually get latest
   local d1=simDR_radio_nav_obs_deg[0]
   local d2=simDR_radio_nav_obs_deg[1]--continually get latest
-  
   --print("fmsJSON=".. fmsSTR)
   local fms=json.decode(fmsSTR)
   if table.getn(fms)>2 then
@@ -1364,11 +1367,13 @@ function B747_fltmgmt_setILS()
   end
   local newTargetFix=0
   local hitI=-1
+  --print(navAidsJSON)
   if table.getn(fms)>4 and (fms[targetFMSnum]==nil or targetFMS~=fms[targetFMSnum][8]) then
     
     if string.len(navAidsJSON) ~= nSize then
       navAids=json.decode(navAidsJSON)
-      nSize=string.len(navAidsJSON)
+	  nSize=string.len(navAidsJSON)
+	  
     end
     if fms[table.getn(fms)][2] == 1 then
       --we have an airport as our dst
@@ -1391,7 +1396,8 @@ function B747_fltmgmt_setILS()
 	  --end
       --Marauder28
 	  
-      found =false
+	  found =false
+	  local runwayHeading=-999
      for i=table.getn(fms)-1,2,-1 do --last is the airport, before that go-around [may] be dup
 	--we have a fix coming in to the airport
        --if fms[i][2] == 512 then
@@ -1399,25 +1405,35 @@ function B747_fltmgmt_setILS()
 	  local ap2Heading=getHeading(fms[i-1][5],fms[i-1][6],fms[table.getn(fms)][5],fms[table.getn(fms)][6])
 	  local diffap=getHeadingDifference(ap1Heading,ap2Heading)
 	  local distance = getDistance(fms[i][5],fms[i][6],fms[table.getn(fms)][5],fms[table.getn(fms)][6])
-	  print("FMS i=" .. i.. ":" .. ap1Heading .. ":" .. ap2Heading .. ":" .. diffap .. ":" .. distance)
-	  if diffap<90 and diffap>-90 and fms[i][8]~=fms[i-1][8] and distance< 11 and found == false then
-	  for n=table.getn(navAids),1,-1 do
-	    if navAids[n][2] == 8 then
-	      local diff=getHeadingDifference(navAids[n][4],getHeading(fms[i][5],fms[i][6],navAids[n][5],navAids[n][6]))
-	      if diff<0 then diff=diff*-1 end
-	      local distance2 = getDistance(fms[table.getn(fms)][5],fms[table.getn(fms)][6],navAids[n][5],navAids[n][6])
-	      if diff<1 and diff<=bestDiff and distance2<10 then
-			  --print("navaid "..n.."->"..fms[i][8].."="..diff.." ".. navAids[n][1].." ".. navAids[n][2].." ".. navAids[n][3].." ".. navAids[n][4].." ".. navAids[n][5].." ".. navAids[n][6].." ".. navAids[n][7].." ".. navAids[n][8])
-			  bestDiff=diff
-			  print("bestdiff = "..bestDiff)
-			  --if targetFix == newTargetFix then 
-			  found=true
-			  newTargetFix=n
-			  print("newTargetFix = "..newTargetFix)
-			  hitI=i
-	      end
-	    end
-	  end
+	  print("finding ils FMS i=" .. i.. ":" .. ap1Heading .. ":" .. ap2Heading .. ":" .. diffap .. ":" .. distance)
+	  if diffap<10 and diffap>-10 and fms[i][8]~=fms[i-1][8] and distance< 11 then
+		print("potential matched from"..i)
+		for n=table.getn(navAids),1,-1 do
+			--now find an ils
+
+			if navAids[n][2] == 8 then
+				local headingToILS=getHeading(fms[i][5],fms[i][6],navAids[n][5],navAids[n][6])
+				local headingToNext=getHeading(fms[i][5],fms[i][6],fms[i+1][5],fms[i+1][6])
+				local diff=getHeadingDifference(navAids[n][4],headingToILS)
+				local diff2=getHeadingDifference(headingToILS,headingToNext)
+				if diff<0 then diff=diff*-1 end
+
+				if diff2<5 and diff2>-5 then
+					local distance2 = getDistance(fms[table.getn(fms)][5],fms[table.getn(fms)][6],navAids[n][5],navAids[n][6])
+					if diff<1 and diff<=bestDiff and distance2<10 then
+						--print("navaid "..n.."->"..fms[i][8].."="..diff.." ".. navAids[n][1].." ".. navAids[n][2].." ".. navAids[n][3].." ".. navAids[n][4].." ".. navAids[n][5].." ".. navAids[n][6].." ".. navAids[n][7].." ".. navAids[n][8])
+						bestDiff=diff
+						runwayHeading=headingToNext
+						print("bestdiff = "..bestDiff.." on heading "..headingToILS.." course="..headingToNext)
+						--if targetFix == newTargetFix then 
+						found=true
+						newTargetFix=n
+						print("newTargetFix = "..newTargetFix)
+						hitI=i
+					end
+				end
+			end
+	  	end
 	  
        end
       end
@@ -1427,6 +1443,7 @@ function B747_fltmgmt_setILS()
 	
       --else
 	if targetFix~=0 then
+		--navAids[targetFix][4]=runwayHeading
 	targetILSS=json.encode(navAids[targetFix])
 	targetFMS=fms[hitI][8]
 	targetFMSnum=hitI
@@ -1438,7 +1455,10 @@ function B747_fltmgmt_setILS()
 	    local ilsNav=json.decode(targetILSS)
 	    simDR_nav1Freq=ilsNav[3]
 	    simDR_nav2Freq=ilsNav[3]
-	    local course=round((ilsNav[4]+int(simDR_variation)))
+		local course=(ilsNav[4]+int(simDR_variation))
+		if course<0 then
+			course=course+360
+  		end
 	    simDR_radio_nav_obs_deg[0]=course
 	    simDR_radio_nav_obs_deg[1]=course
 	    print("Tuned ILS "..course)
@@ -1453,14 +1473,20 @@ function B747_fltmgmt_setILS()
     
     end
   elseif string.len(targetILSS)>1 then
-	    --print("Tuning ILS".. targetILSS)
+	    print("Tuning ILS".. targetILSS)
 	    local ilsNav=json.decode(targetILSS)
 	    simDR_nav1Freq=ilsNav[3]
 	    simDR_nav2Freq=ilsNav[3]
-	    local course=round((ilsNav[4]+int(simDR_variation)))
+		local course=(ilsNav[4]+simDR_variation)
+		if course<0 then
+			course=course+360
+		elseif course>360 then
+			course=course-360
+  		end
+		--course=round(course)	
 	    simDR_radio_nav_obs_deg[0]=course
 	    simDR_radio_nav_obs_deg[1]=course
-	    --print("Tuned ILS "..course)
+	    print("Tuned ILS "..course)
   end
   
   --print("target="..targetILS.."= "..targetILSS.."= "..targetFix.. " "..nSize.. " "..table.getn(navAids))
@@ -2888,8 +2914,9 @@ function B747_ap_EICAS_msg()
     end
     --print("test drag required".. B747DR_speedbrake_lever .. " " .. simDR_all_wheels_on_ground .. " " .. simDR_autopilot_vs_fpm .. " " .. simDR_autopilot_vs_status .. " " )
     -- >AUTOTHROT DISC 
-    if B747DR_speedbrake_lever <0.3  and simDR_autopilot_vs_fpm<-2000 and simDR_autopilot_vs_status >= 1 and B747DR_ap_vnav_state>0 then 
-      --just a simple one for now, min thrust and increasing speed in vs mode would be better
+    --if B747DR_speedbrake_lever <0.3  and simDR_autopilot_vs_fpm<-2000 and simDR_autopilot_vs_status >= 1 and B747DR_ap_vnav_state>0 then 
+	if B747DR_speedbrake_lever <0.3  and simDR_ind_airspeed_kts_pilot>(simDR_autopilot_airspeed_kts+10) and simDR_autopilot_vs_status >= 1 and B747DR_ap_vnav_state>0 then 
+	--just a simple one for now, min thrust and increasing speed in vs mode would be better
       B747DR_fmc_notifications[9]=1
     else
       B747DR_fmc_notifications[9]=0

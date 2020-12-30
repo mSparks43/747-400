@@ -1,19 +1,22 @@
 --Read out and set displays for ND icons
 -- (C) Mark 'mSparks' Parker 2020 CCBYNC4 release
 
+simDR_tcas_lat                = find_dataref("sim/cockpit2/tcas/targets/position/lat")
+simDR_tcas_lon                = find_dataref("sim/cockpit2/tcas/targets/position/lon")
+simDR_tcas_vs                = find_dataref("sim/cockpit2/tcas/targets/position/vertical_speed")
 
-B747DR_text_capt_show 				= find_dataref("laminar/B747/nd/capt/text/show","array[60]")
-B747DR_text_capt_heading			= find_dataref("laminar/B747/nd/capt/text/heading","array[60]")
-B747DR_text_capt_distance			= find_dataref("laminar/B747/nd/capt/text/distance","array[60]")
+B747DR_text_capt_show 				= find_dataref("laminar/B747/nd/capt/text/show")
+B747DR_text_capt_heading			= find_dataref("laminar/B747/nd/capt/text/heading")
+B747DR_text_capt_distance			= find_dataref("laminar/B747/nd/capt/text/distance")
 --B747DR_text_capt_icon				= find_dataref("laminar/B747/nd/capt/text/icon","array[60]")
 
-B747DR_text_fo_show 				= find_dataref("laminar/B747/nd/fo/text/show","array[60]")
-B747DR_text_fo_heading			= find_dataref("laminar/B747/nd/fo/text/heading","array[60]")
-B747DR_text_fo_distance			= find_dataref("laminar/B747/nd/fo/text/distance","array[60]")
+B747DR_text_fo_show 				= find_dataref("laminar/B747/nd/fo/text/show")
+B747DR_text_fo_heading			= find_dataref("laminar/B747/nd/fo/text/heading")
+B747DR_text_fo_distance			= find_dataref("laminar/B747/nd/fo/text/distance")
 --B747DR_text_fo_icon				= find_dataref("laminar/B747/nd/fo/text/icon","array[60]")
 
 iconTextDataCapt={}
-iconTextDataCapt.icons=find_dataref("laminar/B747/nd/capt/text/icon","array[60]")
+iconTextDataCapt.icons=find_dataref("laminar/B747/nd/capt/text/icon")
 for n=0,59,1 do
   iconTextDataCapt[n]={}
   iconTextDataCapt[n].whitetext=find_dataref("laminar/B747/nd/capt/text/whitetext"..n)
@@ -23,7 +26,7 @@ for n=0,59,1 do
 end
 
 iconTextDataFO={}
-iconTextDataFO.icons=find_dataref("laminar/B747/nd/fo/text/icon","array[60]")
+iconTextDataFO.icons=find_dataref("laminar/B747/nd/fo/text/icon")
 for n=0,59,1 do
   iconTextDataFO[n]={}
   iconTextDataFO[n].whitetext=find_dataref("laminar/B747/nd/fo/text/whitetext"..n)
@@ -52,7 +55,8 @@ B747DR_nd_capt_apt	                = find_dataref("laminar/B747/nd/data/capt/apt
 B747DR_nd_fo_apt	                = find_dataref("laminar/B747/nd/data/fo/apt")
 B747DR_pfd_mode_capt		 = find_dataref("laminar/B747/pfd/capt/irs")
 B747DR_pfd_mode_fo		 = find_dataref("laminar/B747/pfd/fo/irs")
-
+B747DR_nd_capt_tfc	                        = find_dataref("laminar/B747/nd/capt/tfc")
+B747DR_nd_fo_tfc	                        = find_dataref("laminar/B747/nd/fo/tfc")
 local captIRS=0
 local foIRS=0
 local ranges = {10, 20, 40, 80, 160, 320, 640}
@@ -110,8 +114,8 @@ function getDistance(lat1,lon1,lat2,lon2)
   return retVal
 end
 function makeIcon(iconTextData,navtype,text,latitude,longitude,distance)
-  if text~="LATLON" and iconTextData==iconTextDataCapt and usedNaviadsTableCapt[text]~=nil then return end
-  if text~="LATLON" and iconTextData==iconTextDataFO and usedNaviadsTableFO[text]~=nil then return end
+  if text~=nil and text~="LATLON" and iconTextData==iconTextDataCapt and usedNaviadsTableCapt[text]~=nil then return end
+  if text~=nil and text~="LATLON" and iconTextData==iconTextDataFO and usedNaviadsTableFO[text]~=nil then return end
   local abs_heading=getHeading(simDR_latitude,simDR_longitude,latitude,longitude)
   local heading_diff=0
   if simDR_map_mode==2 then
@@ -169,6 +173,12 @@ function makeIcon(iconTextData,navtype,text,latitude,longitude,distance)
     iconTextData[lastNavaid].bluetext=" "
     iconTextData[lastNavaid].redtext=" "
     iconTextData[lastNavaid].greentext=" "
+  elseif navtype==6 then --white tcas no vspeed
+    iconTextData.icons[lastNavaid]=23
+    iconTextData[lastNavaid].whitetext=" "
+    iconTextData[lastNavaid].bluetext=" "
+    iconTextData[lastNavaid].redtext=" "
+    iconTextData[lastNavaid].greentext=" "  
   elseif navtype==4 and vor_ndb>0 then
     iconTextData.icons[lastNavaid]=9
     iconTextData[lastNavaid].bluetext=text
@@ -197,13 +207,13 @@ function makeIcon(iconTextData,navtype,text,latitude,longitude,distance)
     B747DR_text_capt_heading[lastNavaid]=heading_diff
     B747DR_text_capt_distance[lastNavaid]=displayDistance
     lastCaptNavaid=lastCaptNavaid+1
-    usedNaviadsTableCapt[text]=true;
+    if text~=nil then usedNaviadsTableCapt[text]=true end
   else
      B747DR_text_fo_show[lastNavaid]=1
      B747DR_text_fo_heading[lastNavaid]=heading_diff
      B747DR_text_fo_distance[lastNavaid]=displayDistance
      lastFONavaid=lastFONavaid+1
-     usedNaviadsTableFO[text]=true;
+     if text~=nil then usedNaviadsTableFO[text]=true end
   end
   
 end
@@ -255,25 +265,40 @@ function newIcons()
   end
   usedNaviadsTableCapt={}
   usedNaviadsTableFO={}
+  --flightplan
   for n=1,table.getn(fmsTable),1 do
     local distance = getDistance(simDR_latitude,simDR_longitude,fmsTable[n][5],fmsTable[n][6])
+    --Captain flightplan
     if distance < ranges[simDR_range_dial_capt + 1] then 
 
       if fmsTable[n][10]==true then
-	makeIcon(iconTextDataCapt,3,fmsTable[n][8],fmsTable[n][5],fmsTable[n][6],distance)
+	      makeIcon(iconTextDataCapt,3,fmsTable[n][8],fmsTable[n][5],fmsTable[n][6],distance)
       else
-	makeIcon(iconTextDataCapt,5,fmsTable[n][8],fmsTable[n][5],fmsTable[n][6],distance)
+	      makeIcon(iconTextDataCapt,5,fmsTable[n][8],fmsTable[n][5],fmsTable[n][6],distance)
       end
     end
+    --FO flightplan
     if distance < ranges[simDR_range_dial_fo + 1] then 
 
       if fmsTable[n][10]==true then
-	makeIcon(iconTextDataFO,3,fmsTable[n][8],fmsTable[n][5],fmsTable[n][6],distance)
+	      makeIcon(iconTextDataFO,3,fmsTable[n][8],fmsTable[n][5],fmsTable[n][6],distance)
       else
-	makeIcon(iconTextDataFO,5,fmsTable[n][8],fmsTable[n][5],fmsTable[n][6],distance)
+	      makeIcon(iconTextDataFO,5,fmsTable[n][8],fmsTable[n][5],fmsTable[n][6],distance)
       end
     end
   end
+  --TCAS
+  for n=1,64,1 do
+    local distance = getDistance(simDR_latitude,simDR_longitude,simDR_tcas_lat[n],simDR_tcas_lon[n])
+    if B747DR_nd_capt_tfc>0 and distance < ranges[simDR_range_dial_capt + 1] then 
+      makeIcon(iconTextDataCapt,6,nil,simDR_tcas_lat[n],simDR_tcas_lon[n],distance)
+    end
+    if B747DR_nd_fo_tfc>0 and distance < ranges[simDR_range_dial_fo + 1] then 
+      makeIcon(iconTextDataFO,6,nil,simDR_tcas_lat[n],simDR_tcas_lon[n],distance)
+    end
+  end  
+
+  --NAVAIDS
   for n=table.getn(currentNaviadsTable),1,-1 do
     local distance = getDistance(simDR_latitude,simDR_longitude,currentNaviadsTable[n][5],currentNaviadsTable[n][6])
     if distance < ranges[simDR_range_dial_capt + 1] then 

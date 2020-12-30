@@ -78,7 +78,7 @@ local B747_gear_handle_lock = 0
 --*************************************************************************************--
 
 simDR_startup_running       = find_dataref("sim/operation/prefs/startup_running")
-simDR_aircraft_on_ground    = find_dataref("sim/flightmodel/failures/onground_all")
+simDR_aircraft_on_ground    = find_dataref("sim/flightmodel/failures/onground_any")
 simDR_gear_deploy_ratio     = find_dataref("sim/flightmodel2/gear/deploy_ratio")
 simDR_tire_steer_deg        = find_dataref("sim/flightmodel2/gear/tire_steer_actual_deg")
 simDR_gear_claw_angle       = find_dataref("sim/flightmodel2/gear/eagle_claw_angle_deg")

@@ -79,7 +79,7 @@ B747DR_elevator_trim_mid_ind    = deferred_dataref("laminar/B747/flt_ctrls/eleva
 
 B747DR_init_fltctrls_CD         = deferred_dataref("laminar/B747/fltctrls/init_CD", "number")
 B747DR_parking_brake_ratio      = deferred_dataref("laminar/B747/flt_ctrls/parking_brake_ratio", "number")
-
+B747DR_CAS_memo_status          = find_dataref("laminar/B747/CAS/memo_status")
 
 --*************************************************************************************--
 --** 				       READ-WRITE CUSTOM DATAREF HANDLERS     	        	     **--
@@ -108,18 +108,19 @@ function B747_speedbrake_lever_DRhandler()
 	if B747DR_speedbrake_lever < 0.01 then
 		B747DR_speedbrake_lever = 0.0
 		simDR_speedbrake_ratio_control = 0.0
-		
+		B747DR_CAS_memo_status[45] = 0
      -- ARMED DETENT
     elseif B747DR_speedbrake_lever < 0.15 and
         B747DR_speedbrake_lever > 0.10
     then
         B747DR_speedbrake_lever = 0.125 
         simDR_speedbrake_ratio_control = -0.5
-    
+		B747DR_CAS_memo_status[45] = 1
     -- ALL OTHER POSITIONS    
     else
 	    B747DR_speedbrake_lever = math.min(1.0 - (B747_speedbrake_stop * 0.47), B747DR_speedbrake_lever)
-	    simDR_speedbrake_ratio_control = B747_rescale(0.15, 0.0, 1.0 - (B747_speedbrake_stop * 0.47), 1.0, B747DR_speedbrake_lever) 	       
+		simDR_speedbrake_ratio_control = B747_rescale(0.15, 0.0, 1.0 - (B747_speedbrake_stop * 0.47), 1.0, B747DR_speedbrake_lever) 	       
+		B747DR_CAS_memo_status[45] = 0
     end	   
     
     B747_sb_manip_changed = 1 
