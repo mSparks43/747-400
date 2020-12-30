@@ -197,11 +197,56 @@ fmsPages["GRDTEST"].getPage=function(self,pgNo,fmsID)
 "------------------------",
 "<RETURN            HELP>"
     }
-end
+    
+elseif pgNo==5 then
+      --fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTAIRDAT"}
+      --fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTIR"}
+      --fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTNAVRAD"}
+      --fmsFunctionsDefs["GRDTEST"]["L4"]={"setpage","GTFM"}
+      --fmsFunctionsDefs["GRDTEST"]["L5"]={"setpage","GTPNEU"}
+      fmsFunctionsDefs["GRDTEST"]["L6"]={"setpage","CMC"}
+    return {
+      
+"    GROUND TESTS     5/6",
+"                        ",
+"<34 AIR DATA            ",
+"                        ",
+"<34 INERTIAL REFERENCE  ",
+"                        ",
+"<34 NAVIGATION RADIOS   ",
+"                        ",
+"<34 FLIGHT MANAGEMENT   ",
+"                        ",
+"<36 PNEUMATICS          ", 
+"------------------------",
+"<RETURN            HELP>"
+    }
+    
+elseif pgNo==6 then
+      --fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTCMC"}
+      --fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTAPU"}
+      --fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTENGFUEL"}
+      fmsFunctionsDefs["GRDTEST"]["L6"]={"setpage","CMC"}
+    return {
+      
+"    GROUND TESTS     6/6",
+"                        ",
+"<45 CENTRAL MAINTENANCE ",
+"                        ",
+"<49 APU                 ",
+"                        ",
+"<73 ENGINE FUEL CONTROL ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"------------------------",
+"<RETURN            HELP>"
+    }
+  
+  end
 end
 
 fmsPages["GRDTEST"].getNumPages=function(self)
-  return 4
+  return 6
 end
-
---page is WIP
