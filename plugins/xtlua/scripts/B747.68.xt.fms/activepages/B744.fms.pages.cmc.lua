@@ -6,7 +6,7 @@ fmsPages["CMC"].getPage=function(self,pgNo,fmsID)
   if pgNo==1 then 
       fmsFunctionsDefs["CMC"]["L1"]={"setpage","PLFAULTS"}
       fmsFunctionsDefs["CMC"]["L2"]={"setpage","CONFTEST"}
-      --fmsFunctionsDefs["CMC"]["L3"]={"setpage","EMANP"}
+      fmsFunctionsDefs["CMC"]["L3"]={"setpage","EMANP"}
       fmsFunctionsDefs["CMC"]["L4"]={"setpage","GRDTEST"}
     return {
             
@@ -98,6 +98,79 @@ fmsPages["CONFTEST"].getPage=function(self,pgNo,fmsID)
   
 end
 fmsFunctionsDefs["CMC"]["L3"]={"setDref","B747DR_GPWS/GPWS_TEST"}
+
+fmsPages["EMANP"]=createPage("EMANP")
+fmsPages["EMANP"].getPage=function(self,pgNo,fmsID)
+  
+  if pgNo==1 then
+      --fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTCMC"}
+      --fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTAPU"}
+      --fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTENGFUEL"}
+      fmsFunctionsDefs["GRDTEST"]["L6"]={"setpage","CMC"}
+    return {
+      
+" EICAS MAINT PAGES   1/3",
+"                        ",
+"<21 ECS                 ",
+"                        ",
+"<24 ELECTRICAL          ",
+"                        ",
+"<27 FLT CONT            ",
+"                        ",
+"<28 FUEL                ",
+"                        ",
+"<29 HYDRAULIC           ",
+"------------------------",
+"<RETURN            HELP>"
+    }
+  elseif pgNo==2 then
+      --fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTCMC"}
+      --fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTAPU"}
+      --fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTENGFUEL"}
+      fmsFunctionsDefs["GRDTEST"]["L6"]={"setpage","CMC"}
+    return {
+      
+" EICAS MAINT PAGES   2/3",
+"                        ",
+"<31 CONFIGURATIONS      ",
+"                        ",
+"<31 GEAR                ",
+"                        ",
+"<49 APU                 ",
+"                        ",
+"<73 EPCS                ",
+"                        ",
+"<74 PERFORMANCE         ",
+"------------------------",
+"<RETURN            HELP>"
+    }
+  elseif pgNo==3 then
+      --fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTCMC"}
+      --fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTAPU"}
+      --fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTENGFUEL"}
+      fmsFunctionsDefs["GRDTEST"]["L6"]={"setpage","CMC"}
+    return {
+      
+" EICAS MAINT PAGES   3/3",
+"                        ",
+"<73 ENG EXCD            ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"------------------------",
+"<RETURN            HELP>"
+    }  
+  end
+end
+
+fmsPages["EMANP"].getNumPages=function(self)
+  return 3
+end
 
 fmsPages["GRDTEST"]=createPage("GRDTEST")
 fmsPages["GRDTEST"].getPage=function(self,pgNo,fmsID)
