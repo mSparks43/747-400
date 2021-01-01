@@ -155,6 +155,9 @@ B747DR_speedbrake_lever_detent  = deferred_dataref("laminar/B747/flt_ctrls/speed
 ----- FLAP HANDLE -----------------------------------------------------------------------
 B747DR_flap_lever_detent		= deferred_dataref("laminar/B747/flt_ctrls/flap_lever_detent", "number")
 
+--STAB TRIM setting
+B747DR_elevator_trim				    = deferred_dataref("laminar/B747/fmc/elevator_trim", "number")
+
 
 --*************************************************************************************--
 --** 				       READ-WRITE CUSTOM DATAREF HANDLERS     	        	     **--
@@ -823,21 +826,14 @@ end
 
 ----- ELEVATOR TRIM ---------------------------------------------------------------------
 function B747_elevator_trim()
-	--Marauder28
-	cg_adjust = B747_rescale(-0.801623, 1.48, 0.835151, -1.48, simDR_cg_adjust)  --Base trim midpoint on CG position (FWD and AFT CG limits)
-	
-	if cg_adjust < 0 then
-		B747DR_elevator_trim_mid_ind = 0
-	elseif cg_adjust > 1 then
-		B747DR_elevator_trim_mid_ind = 1	
-	else
-		B747DR_elevator_trim_mid_ind = cg_adjust --simDR_cg_adjust
-	end
-	--Marauder28
-	
 	--B747DR_elevator_trim_mid_ind = B747_rescale(200000, 0.0, 400000, 1.0, simDR_acf_weight_total_kg)
+	
+	--Marauder28
+	--Use the calculated Stab Trim (adjusted) in the FMC to determine the Green Band range
+	B747DR_elevator_trim_mid_ind = B747_rescale(0.0, 0.0, 4.5, 1.0, B747DR_elevator_trim - 3.75)
+	--print("Stab Trim = "..B747DR_elevator_trim)
 	--print("Trim Mid Ind = "..B747DR_elevator_trim_mid_ind)
-
+	--Marauder28
 end
 
 
@@ -870,7 +866,7 @@ function B747_speedbrake_warn()
   if B747DR_speedbrake_lever >0.125 
   and simDR_all_wheels_on_ground == 0 
         and numClimb>=2 then  
-        B747DR_CAS_caution_status[59] = 1
+        B747DR_CAS_warning_status[6] = 1
     end
     
 end
@@ -988,8 +984,19 @@ function B747_fltCtrols_EICAS_msg()
     end
 
     -- >CONFIG STAB
-    local midIndTop = B747_rescale(0.0, 1.5, 1.0, 6.0, B747DR_elevator_trim_mid_ind)
-    local midIndBtm = midIndTop + 4.5
+    --local midIndTop = B747_rescale(0.0, 1.5, 1.0, 6.0, B747DR_elevator_trim_mid_ind)
+    --local midIndBtm = midIndTop + 4.5
+	
+	--Marauder28
+	--Make the top & bottom of the band a range of 4.5 units from the Stab Trim calculation
+	local midIndTop = B747DR_elevator_trim - 2.25
+	local midIndBtm = B747DR_elevator_trim + 2.25
+	if midIndTop < 0 then
+		midIndTop = 0
+		midIndBtm = 4.5
+	end
+	--Marauder28
+	
     --local curTrim   = B747_rescale(-1.0, 15, 1.0, 0.0, simDR_elevator_trim)
 	local curTrim   = B747_rescale(-1.0, 0.0, 1.0, 15.0, simDR_elevator_trim)  --Swapped top and bottom of range for better comparisons
 	--print("midIndTop = "..midIndTop)
@@ -1020,12 +1027,12 @@ function B747_fltCtrols_EICAS_msg()
     -- >SPEEDBRAKES EXT
     
     if simDR_speedbrake_ratio_control > 0.15
-        and
+        and 
         ((simDR_radio_alt_height_capt > 15.0 and simDR_radio_alt_height_capt < 800.0)
         or
         (simDR_wing_flap1_deg[0] > 24.0 and simDR_wing_flap1_deg[0] < 31.0)
-        or
-        num_thrust_levers_open >= 2)
+        and
+        num_thrust_levers_open >= 1)
     then
         B747DR_CAS_caution_status[59] = 1
     else

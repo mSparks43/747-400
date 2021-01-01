@@ -109,7 +109,7 @@ throttlederate=find_dataref("sim/aircraft/engine/acf_throtmax_FWD")
 --*************************************************************************************--
 
 simDR_startup_running           = find_dataref("sim/operation/prefs/startup_running")
-simDR_all_wheels_on_ground      = find_dataref("sim/flightmodel/failures/onground_all")
+simDR_all_wheels_on_ground      = find_dataref("sim/flightmodel/failures/onground_any")
 
 simDR_thrust_rev_deploy_ratio   = find_dataref("sim/flightmodel2/engines/thrust_reverser_deploy_ratio")
 
@@ -136,11 +136,13 @@ simDR_engine_fuel_mix_ratio     = find_dataref("sim/cockpit2/engine/actuators/mi
 simDR_engine_oil_pressure       = find_dataref("sim/cockpit2/engine/indicators/oil_pressure_psi")
 simDR_engine_oil_temp           = find_dataref("sim/cockpit2/engine/indicators/oil_temperature_deg_C")
 simDR_engine_oil_qty_ratio      = find_dataref("sim/cockpit2/engine/indicators/oil_quantity_ratio")
+
 simDR_engine_fire		= find_dataref("sim/flightmodel2/engines/is_on_fire")
 simDR_flap_deploy_ratio         = find_dataref("sim/flightmodel2/controls/flap_handle_deploy_ratio")
 simDR_allThrottle           	= find_dataref("sim/cockpit2/engine/actuators/throttle_ratio_all")
 simDR_engine_running            = find_dataref("sim/flightmodel/engine/ENGN_running")
 simDR_apu_running            	= find_dataref("sim/cockpit/engine/APU_running")
+
 simDR_thrust_rev_fail_01        = find_dataref("sim/operation/failures/rel_revers0")
 simDR_thrust_rev_fail_02        = find_dataref("sim/operation/failures/rel_revers1")
 simDR_thrust_rev_fail_03        = find_dataref("sim/operation/failures/rel_revers2")
@@ -171,7 +173,9 @@ B747DR_engine02_fire_ext_switch_pos_disch   = find_dataref("laminar/B747/fire/en
 B747DR_engine03_fire_ext_switch_pos_disch   = find_dataref("laminar/B747/fire/engine03/ext_switch/pos_disch")
 B747DR_engine04_fire_ext_switch_pos_disch   = find_dataref("laminar/B747/fire/engine04/ext_switch/pos_disch")
 
-
+B747DR_engine_apu_oil_qty_ratio      	= find_dataref("laminar/B747/apu/oil")
+B747DR_engine_apu_n2      	        = find_dataref("laminar/B747/apu/n2")
+B747DR_elec_apu_inlet_door_pos      = find_dataref("laminar/B747/electrical/apu_inlet_door")
 
 B747DR_CAS_caution_status                   = find_dataref("laminar/B747/CAS/caution_status")
 B747DR_CAS_advisory_status                  = find_dataref("laminar/B747/CAS/advisory_status")
@@ -1275,15 +1279,14 @@ end
 
 
 
-
+local initial_apu_oil = 0.75+(math.random()*0.25)
 ----- ENGINE OIL QUANTITY ---------------------------------------------------------------
 function B747_engine_oil_qty()
 
     B747DR_engine_oil_qty_liters[0] = math.max(0, (B747_eng1oilStart - (B747_eng1startupOilTxfr * B747_rescale(0.0, 0.0, 15.0, 1.0, simDR_engine_N1_pct[0]))) * simDR_engine_oil_qty_ratio[0])
     B747DR_engine_oil_qty_liters[1] = math.max(0, (B747_eng2oilStart - (B747_eng2startupOilTxfr * B747_rescale(0.0, 0.0, 15.0, 1.0, simDR_engine_N1_pct[1]))) * simDR_engine_oil_qty_ratio[0])
-    B747DR_engine_oil_qty_liters[2] = math.max(0, (B747_eng3oilStart - (B747_eng3startupOilTxfr * B747_rescale(0.0, 0.0, 15.0, 1.0, simDR_engine_N1_pct[2]))) * simDR_engine_oil_qty_ratio[0])
-    B747DR_engine_oil_qty_liters[3] = math.max(0, (B747_eng4oilStart - (B747_eng4startupOilTxfr * B747_rescale(0.0, 0.0, 15.0, 1.0, simDR_engine_N1_pct[3]))) * simDR_engine_oil_qty_ratio[0])
-
+    B747DR_engine_oil_qty_liters[2] = math.max(0, (B747_eng3oilStart - (B747_eng3startupOilTxfr * B747_rescale(0.0, 0.0, 15.0, 1.0, simDR_engine_N1_pct[2]))) * simDR_engine_oil_qty_ratio[0]) 
+    B747DR_engine_apu_oil_qty_ratio=B747_animate_value(B747DR_engine_apu_oil_qty_ratio,initial_apu_oil - (B747DR_engine_apu_n2*0.003),0,1,20)
 end
 
 
@@ -1298,7 +1301,7 @@ function B747_EPR()
     for i = 0, 3 do
         B747DR_EPR_max_limit[i] = 2.0
     end
-
+    B747DR_engine_apu_n2 = 85.5 * B747DR_elec_apu_inlet_door_pos
 --[[
     -- TOGA
     if B747DR_engine_TOGA_mode == 1 then

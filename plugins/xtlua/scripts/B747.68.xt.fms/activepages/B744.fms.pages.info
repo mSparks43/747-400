@@ -1,0 +1,21 @@
+fmsPages["INFO"]=createPage("INFO")
+fmsPages["INFO"].getPage=function(self,pgNo,fmsID)
+
+  return {
+            
+"         INFO           ",
+"                        ",
+"M S P A R K S    747-400",
+"                        ",
+"VERSION: MASTER         ",
+"                        ",
+"2012-2014               ",
+"                        ",
+"SOUNDS V0.1 BY:         ",
+"                        ",
+"MISTER FAHRENHEIT       ", 
+"------------------------",
+"<MENU                   "
+    }
+end
+fmsFunctionsDefs["OPTIONS"]["L6"]={"setpage","INDEX"}

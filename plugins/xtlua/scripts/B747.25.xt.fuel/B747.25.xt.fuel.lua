@@ -367,7 +367,7 @@ simDR_override_fuel_system          = find_dataref("sim/operation/override/overr
 simDR_elec_bus_volts                = find_dataref("sim/cockpit2/electrical/bus_volts")
 simDR_flap_deploy_ratio             = find_dataref("sim/flightmodel2/controls/flap_handle_deploy_ratio")
 simDR_wing_flap1_deg                = find_dataref("sim/flightmodel2/wing/flap1_deg")
-simDR_all_wheels_on_ground          = find_dataref("sim/flightmodel/failures/onground_all")
+simDR_all_wheels_on_ground          = find_dataref("sim/flightmodel/failures/onground_any")
 simDR_TAT                           = find_dataref("sim/cockpit2/temperature/outside_air_LE_temp_degc")
 
 simDR_engine_fire                   = find_dataref("sim/cockpit2/annunciators/engine_fires")
@@ -390,7 +390,7 @@ simDR_fuel_filter_block_02          = find_dataref("sim/operation/failures/rel_f
 simDR_fuel_filter_block_03          = find_dataref("sim/operation/failures/rel_fuel_block2")
 simDR_fuel_filter_block_04          = find_dataref("sim/operation/failures/rel_fuel_block3")
 
-
+simDR_fuel_totalizer_kg				= find_dataref("sim/cockpit2/fuel/fuel_totalizer_init_kg")
 
 
 --*************************************************************************************--
@@ -2168,7 +2168,7 @@ function B747_fuel_tank_levels()
     -- FROM CENTER TANK TO MAIN TANK 2 (SCAVENGE)
     if simDR_fuel_tank_weight_kg[0] > 0 and simDR_fuel_tank_weight_kg[2] < B747.fuel.main2_tank.capacity then
         simDR_fuel_tank_weight_kg[0] = math.max(B747.fuel.center_tank.min, simDR_fuel_tank_weight_kg[0] - (centerTank_to_mainTank2_xfr_KgSec_L1 * fuel_calc_rate))
-        --simDR_fuel_tank_weight_kg[2] = math.min(B747.fuel.main2_tank.capacity, simDR_fuel_tank_weight_kg[2] + (centerTank_to_mainTank2_xfr_KgSec_L1 * fuel_calc_rate))
+        simDR_fuel_tank_weight_kg[2] = math.min(B747.fuel.main2_tank.capacity, simDR_fuel_tank_weight_kg[2] + (centerTank_to_mainTank2_xfr_KgSec_L1 * fuel_calc_rate))
 
         simDR_fuel_tank_weight_kg[0] = math.max(B747.fuel.center_tank.min, simDR_fuel_tank_weight_kg[0] - (centerTank_to_mainTank2_xfr_KgSec_L2 * fuel_calc_rate))
         simDR_fuel_tank_weight_kg[2] = math.min(B747.fuel.main2_tank.capacity, simDR_fuel_tank_weight_kg[2] + (centerTank_to_mainTank2_xfr_KgSec_L2 * fuel_calc_rate))
@@ -3026,13 +3026,201 @@ function B747_fuel_EICAS_msg()
 
 end
 
+--Marauder28
+function B747_fuel_balance_check()
+	--Initial check to ensure that this balance function only runs once
+	if simDR_fuel_totalizer_kg ~= simDR_fueL_tank_weight_total_kg then
+		return
+	end
+	
+  --Determine amount for each tank based on existing fuel and load order.
+  --Load order is:
+  --1) Even distribution in Main1, Main2, Main3, Main4 (Wing)
+  --3) Reserve 5 & Reserve 6 (Wing)
+  --4) Center 0
+  --5) Horizontal Stabilizer 7
 
+	local overage = 0
+  
+	--Use and rebalance any existing fuel into their proper tanks before starting the refueling process
+	--Start by placing all fuel into the first 2 main tanks and then take overages and place it in tanks in the order above
+	simDR_fuel_tank_weight_kg[1] = simDR_fueL_tank_weight_total_kg / 4
+	simDR_fuel_tank_weight_kg[4] = simDR_fueL_tank_weight_total_kg / 4
+	simDR_fuel_tank_weight_kg[2] = simDR_fueL_tank_weight_total_kg / 4
+	simDR_fuel_tank_weight_kg[3] = simDR_fueL_tank_weight_total_kg / 4
+
+	--print("Initial Split Main1 = "..simDR_fuel_tank_weight_kg[1])
+	--print("Initial Split Main4 = "..simDR_fuel_tank_weight_kg[4])
+	--print("Initial Split Main2 = "..simDR_fuel_tank_weight_kg[2])
+	--print("Initial Split Main3 = "..simDR_fuel_tank_weight_kg[3])
+	
+	simDR_fuel_tank_weight_kg[5] = 0
+	simDR_fuel_tank_weight_kg[6] = 0
+	simDR_fuel_tank_weight_kg[7] = 0
+	simDR_fuel_tank_weight_kg[0] = 0
+	
+	--Move overages from Main1 to Main2
+	if simDR_fuel_tank_weight_kg[1] > B747.fuel.main1_tank.capacity then
+		overage = simDR_fuel_tank_weight_kg[1] - B747.fuel.main1_tank.capacity
+		simDR_fuel_tank_weight_kg[1] = B747.fuel.main1_tank.capacity
+		simDR_fuel_tank_weight_kg[2] = simDR_fuel_tank_weight_kg[2] + overage
+		--print("Main1 OVERAGE --> Main2 = "..overage)
+		overage = 0
+		--print("Bal Main1 = "..simDR_fuel_tank_weight_kg[1])
+	end
+	
+	--Move overages from Main4 to Main3
+	if simDR_fuel_tank_weight_kg[4] > B747.fuel.main4_tank.capacity then
+		overage = simDR_fuel_tank_weight_kg[4] - B747.fuel.main4_tank.capacity
+		simDR_fuel_tank_weight_kg[4] = B747.fuel.main4_tank.capacity
+		simDR_fuel_tank_weight_kg[3] = simDR_fuel_tank_weight_kg[3] + overage
+		--print("Main4 OVERAGE --> Main3 = "..overage)
+		overage = 0
+		--print("Bal Main4 = "..simDR_fuel_tank_weight_kg[4])
+	end
+
+	--Move overages from Main2 to Reserve5
+	if simDR_fuel_tank_weight_kg[2] > B747.fuel.main2_tank.capacity then
+		overage = simDR_fuel_tank_weight_kg[2] - B747.fuel.main2_tank.capacity
+		simDR_fuel_tank_weight_kg[2] = B747.fuel.main2_tank.capacity
+		simDR_fuel_tank_weight_kg[5] = overage
+		--print("Main2 OVERAGE --> Rsv5 = "..overage)
+		overage = 0
+		--print("Bal Main2 = "..simDR_fuel_tank_weight_kg[2])
+	end
+
+	--Move overages from Main3 to Reserve6
+	if simDR_fuel_tank_weight_kg[3] > B747.fuel.main3_tank.capacity then
+		overage = simDR_fuel_tank_weight_kg[3] - B747.fuel.main3_tank.capacity
+		simDR_fuel_tank_weight_kg[3] = B747.fuel.main3_tank.capacity
+		simDR_fuel_tank_weight_kg[6] = overage
+		--print("Main3 OVERAGE --> Rsv6 = "..overage)
+		overage = 0
+		--print("Bal Main3 = "..simDR_fuel_tank_weight_kg[3])
+	end
+
+	--Move overages from Reserve5 to Center0 (Reserve5 is also known as res2 in previous code)
+	if simDR_fuel_tank_weight_kg[5] > B747.fuel.res2_tank.capacity then
+		overage = simDR_fuel_tank_weight_kg[5] - B747.fuel.res2_tank.capacity
+		simDR_fuel_tank_weight_kg[5] = B747.fuel.res2_tank.capacity
+		simDR_fuel_tank_weight_kg[0] = overage
+		--print("Rsv5 OVERAGE --> Center0 = "..overage)
+		overage = 0
+		--print("Bal RSV5 = "..simDR_fuel_tank_weight_kg[5])
+	end
+
+	--Move overages from Reserve6 to Center0 (Reserve6 is also known as res3 in previous code)
+	if simDR_fuel_tank_weight_kg[6] > B747.fuel.res3_tank.capacity then
+		overage = simDR_fuel_tank_weight_kg[6] - B747.fuel.res3_tank.capacity
+		simDR_fuel_tank_weight_kg[6] = B747.fuel.res3_tank.capacity
+		simDR_fuel_tank_weight_kg[0] = simDR_fuel_tank_weight_kg[0] + overage
+		--print("Rsv6 OVERAGE --> Center0 = "..overage)
+		overage = 0
+		--print("Bal RSV6 = "..simDR_fuel_tank_weight_kg[6])
+	end
+
+	--Move overages from Center0 to Stab7
+	if simDR_fuel_tank_weight_kg[0] > B747.fuel.center_tank.capacity then
+		overage = simDR_fuel_tank_weight_kg[0] - B747.fuel.center_tank.capacity
+		simDR_fuel_tank_weight_kg[0] = B747.fuel.center_tank.capacity
+		simDR_fuel_tank_weight_kg[7] = overage
+		--print("Center0 OVERAGE --> Stab7 = "..overage)
+		overage = 0
+		--print("Bal CENTER0 = "..simDR_fuel_tank_weight_kg[0])
+	end
+
+	--print("Main1 = "..simDR_fuel_tank_weight_kg[1])
+	--print("Main4 = "..simDR_fuel_tank_weight_kg[4])
+	--print("Main2 = "..simDR_fuel_tank_weight_kg[2])
+	--print("Main3 = "..simDR_fuel_tank_weight_kg[3])
+	--print("Rsv5 = "..simDR_fuel_tank_weight_kg[5])
+	--print("Rsv6 = "..simDR_fuel_tank_weight_kg[6])
+	--print("Center0 = "..simDR_fuel_tank_weight_kg[0])
+	--print("Stab7 = "..simDR_fuel_tank_weight_kg[7])
+
+end
+--Marauder28
 
 function B747_refueling()
-  if B747DR_refuel<=0.0 then return end
-  local fuelIn=math.min(10.5*fuel_calc_rate,B747DR_refuel)
+  if B747DR_refuel<=0.0 then
+	--Marauder28
+	--Set the totalizer to the current fuel amount after refueling
+	simDR_fuel_totalizer_kg = simDR_fueL_tank_weight_total_kg
+	--Marauder28
+
+	return
+  end
+  
+  --local fuelIn=math.min(10.5*fuel_calc_rate,B747DR_refuel)
+  local fuelIn=math.min(100*fuel_calc_rate,B747DR_refuel)
   --print("sending fuel "..fuelIn)
-  if simDR_fuel_tank_weight_kg[1] < B747.fuel.main1_tank.capacity then
+  
+	--Marauder28
+	B747_fuel_balance_check()  --Ensure existing fuel is ordered in the tanks correctly before refueling
+
+	--Now start adding fuel
+	--Load order is:
+	--1) Even distribution in Main1, Main2, Main3, Main4 (Wing)  e.g. BLOCK FUEL / 4
+	--3) Reserve 5 & Reserve 6 (Wing)
+	--4) Center 0
+	--5) Horizontal Stabilizer 7
+	
+	--Finish filling Main1 - Main4 First
+	if simDR_fuel_tank_weight_kg[1] < B747.fuel.main1_tank.capacity then
+		B747DR_refuel = B747DR_refuel - fuelIn
+		simDR_fuel_tank_weight_kg[1] = simDR_fuel_tank_weight_kg[1] + fuelIn
+	end
+	if simDR_fuel_tank_weight_kg[4] < B747.fuel.main4_tank.capacity then
+		B747DR_refuel = B747DR_refuel - fuelIn
+		simDR_fuel_tank_weight_kg[4] = simDR_fuel_tank_weight_kg[4] + fuelIn
+	end
+	if simDR_fuel_tank_weight_kg[2] < B747.fuel.main2_tank.capacity then
+		B747DR_refuel = B747DR_refuel - fuelIn
+		simDR_fuel_tank_weight_kg[2] = simDR_fuel_tank_weight_kg[2] + fuelIn
+	end
+	if simDR_fuel_tank_weight_kg[3] < B747.fuel.main3_tank.capacity then
+		B747DR_refuel = B747DR_refuel - fuelIn
+		simDR_fuel_tank_weight_kg[3] = simDR_fuel_tank_weight_kg[3] + fuelIn
+	end
+	
+	--Now deal with overflows in Main1 - Main4 using Reserve5 & Reserve6 (known as Res2 & Res3 in other code)
+	if simDR_fuel_tank_weight_kg[1] == B747.fuel.main1_tank.capacity and 
+		simDR_fuel_tank_weight_kg[4] == B747.fuel.main4_tank.capacity then
+		if simDR_fuel_tank_weight_kg[2] < B747.fuel.main2_tank.capacity then
+			B747DR_refuel = B747DR_refuel - fuelIn
+			simDR_fuel_tank_weight_kg[2] = simDR_fuel_tank_weight_kg[2] + fuelIn
+		elseif simDR_fuel_tank_weight_kg[5] < B747.fuel.res2_tank.capacity then
+			B747DR_refuel = B747DR_refuel - fuelIn
+			simDR_fuel_tank_weight_kg[5] = simDR_fuel_tank_weight_kg[5] + fuelIn
+		end
+		if simDR_fuel_tank_weight_kg[3] < B747.fuel.main3_tank.capacity then
+			B747DR_refuel = B747DR_refuel - fuelIn
+			simDR_fuel_tank_weight_kg[3] = simDR_fuel_tank_weight_kg[3] + fuelIn
+		elseif simDR_fuel_tank_weight_kg[6] < B747.fuel.res3_tank.capacity then
+			B747DR_refuel = B747DR_refuel - fuelIn
+			simDR_fuel_tank_weight_kg[6] = simDR_fuel_tank_weight_kg[6] + fuelIn
+		end		
+	end
+	
+	--Reserve5 & Reserve6 are full so move on to Center 0
+	if simDR_fuel_tank_weight_kg[5] == B747.fuel.res2_tank.capacity and 
+		simDR_fuel_tank_weight_kg[6] == B747.fuel.res3_tank.capacity then
+		if simDR_fuel_tank_weight_kg[0] < B747.fuel.center_tank.capacity then
+			B747DR_refuel = B747DR_refuel - fuelIn
+			simDR_fuel_tank_weight_kg[0] = simDR_fuel_tank_weight_kg[0] + fuelIn
+		elseif simDR_fuel_tank_weight_kg[7] < B747.fuel.stab_tank.capacity then
+			B747DR_refuel = B747DR_refuel - fuelIn
+			simDR_fuel_tank_weight_kg[7] = simDR_fuel_tank_weight_kg[7] + fuelIn
+		end
+	end
+	
+	-- Don't overfill
+	if simDR_fuel_tank_weight_kg[7] == B747.fuel.stab_tank.capacity then
+		B747DR_refuel = 0
+	end
+	--Marauder28
+	
+--[[  if simDR_fuel_tank_weight_kg[1] < B747.fuel.main1_tank.capacity then
     B747DR_refuel=B747DR_refuel-fuelIn
     simDR_fuel_tank_weight_kg[1]=simDR_fuel_tank_weight_kg[1]+fuelIn
   end
@@ -3062,6 +3250,7 @@ function B747_refueling()
     B747DR_refuel=B747DR_refuel-fuelIn
     simDR_fuel_tank_weight_kg[7]=simDR_fuel_tank_weight_kg[7]+fuelIn
   end
+]]
 end
 
 
@@ -3255,7 +3444,6 @@ function before_physics()
     if debug_fuel>0 then return end
     B747_engine_fuel_source()
     B747_engine_has_fuel()
-
 end
 
 function after_physics()
