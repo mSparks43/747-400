@@ -168,6 +168,7 @@
     </object>
     <object class="MixerBusEffectChain" id="{8aeb978c-34bb-47b9-a3f3-2c880bfb90c8}">
         <relationship name="effects">
+            <destination>{2b668c1c-79f6-4d74-b972-975340296a55}</destination>
             <destination>{61b719ff-809b-4909-94a3-f9d6713752ed}</destination>
             <destination>{e5a82349-cb62-4960-9aed-678bc9eb3203}</destination>
         </relationship>
@@ -226,6 +227,11 @@
             <value>-80</value>
         </property>
     </object>
+    <object class="PluginEffect" id="{2b668c1c-79f6-4d74-b972-975340296a55}">
+        <relationship name="plugin">
+            <destination>{1e104709-b85e-4c50-a665-170b7d2cef9c}</destination>
+        </relationship>
+    </object>
     <object class="MixerBusFader" id="{61b719ff-809b-4909-94a3-f9d6713752ed}"/>
     <object class="SpatialiserEffect" id="{e5a82349-cb62-4960-9aed-678bc9eb3203}">
         <property name="maximumDistance">
@@ -233,4 +239,23 @@
         </property>
     </object>
     <object class="MixerBusFader" id="{43c8b78d-5256-4638-b0c7-f92863290daf}"/>
+    <object class="Plugin" id="{1e104709-b85e-4c50-a665-170b7d2cef9c}">
+        <property name="identifier">
+            <value>FMOD Lowpass Simple</value>
+        </property>
+        <relationship name="pluginParameters">
+            <destination>{ea2d2f5a-7452-4a6c-9df9-1670d6ccfa01}</destination>
+        </relationship>
+    </object>
+    <object class="FloatPluginParameter" id="{ea2d2f5a-7452-4a6c-9df9-1670d6ccfa01}">
+        <property name="name">
+            <value>Cutoff freq</value>
+        </property>
+        <property name="curve">
+            <value>LinearPiecewiseCurveStrategy{(0.000000,10.000000)(1.000000,100.000000)(2.000000,400.000000)(3.000000,750.000000)(4.000000,1250.000000)(5.000000,2000.000000)(6.000000,3200.000000)(7.000000,5500.000000)(8.000000,10000.000000)(9.000000,18000.000000)(10.000000,22000.000000)}</value>
+        </property>
+        <property name="value">
+            <value>22000</value>
+        </property>
+    </object>
 </objects>

@@ -9,7 +9,7 @@ ACF_SOUNDS
 #                                                                                    #
 #     E n g i n e s : P W 4 0 6 2                                                    #
 #                                                                                    #
-#     V e r s i o n : v0.1.1b                                                        #
+#     V e r s i o n : v0.2b                                                          #
 #                                                                                    #
 #     B y :  F a h r e n h e i t                                                     #
 #                                                                                    #
@@ -29,16 +29,6 @@ REQUIRES_BANK GPWS.bank
 REQUIRES_BANK PW.bank
 
 DISABLE_LEGACY_ALERT_SOUNDS
-
-BEGIN_SOUND_ATTACHMENT
-	SNAPSHOT_NAME /in_mute
-	EVENT_ALWAYS 
-END_SOUND_ATTACHMENT
-
-BEGIN_SOUND_ATTACHMENT
-	SNAPSHOT_NAME /ex_mute
-	EVENT_ALWAYS 
-END_SOUND_ATTACHMENT
 
 #######################
 #Switches
@@ -788,173 +778,1698 @@ BEGIN_SOUND_ATTACHMENT
 	EVENT_CMND_UP laminar/B747/autopilot/button_switch/vs_mode
 END_SOUND_ATTACHMENT
 
-BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Cockpit/Switches/button4_hold
-	VEH_XYZ 0 5.1 -26
-	EVENT_CMND_DOWN laminar/B747/autopilot/button_switch/yoke_disengage_capt
-END_SOUND_ATTACHMENT
-
-BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Cockpit/Switches/button4_release
-	VEH_XYZ 0 5.1 -26
-	EVENT_CMND_UP laminar/B747/autopilot/button_switch/yoke_disengage_capt
-END_SOUND_ATTACHMENT
-
 ##################
 #FMC buttons
 ##################
 
+#FMC L
+
 BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Switches/fmc button hold
-	VEH_XYZ -0.25 5.3 -25.8
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/0
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/1
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/2
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/3
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/4
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/5
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/6
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/7
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/8
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/9
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/A
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/B
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/C
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/D
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/E
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/F
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/G
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/H
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/I
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/J
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/K
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/L
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/M
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/N
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/O
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/P
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/Q
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/R
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/S
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/T
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/U
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/V
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/W
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/X
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/Y
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/alphanum_key/Z
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/func_key/clb
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/func_key/crz
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/func_key/dep_arr
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/func_key/des
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/func_key/dir_intc
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/func_key/fix
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/func_key/fpln
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/func_key/hold
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/func_key/index
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/func_key/legs
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/func_key/navrad
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/func_key/next_pg
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/func_key/prev_pg
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/func_key/prog
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/key/clear
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/key/del
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/key/execute
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/key/minus
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/key/period
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/key/slash
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/key/space
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/ls_key/L1
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/ls_key/L2
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/ls_key/L3
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/ls_key/L4
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/ls_key/L5
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/ls_key/L6
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/ls_key/R1
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/ls_key/R2
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/ls_key/R3
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/ls_key/R4
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/ls_key/R5
-	EVENT_CMND_DOWN DELTA=laminar/B747/fms1/ls_key/R6
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/0
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/1
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/2
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/3
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/4
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/5
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/6
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/7
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/8
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/9
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/A
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/B
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/C
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/D
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/E
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/F
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/G
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/H
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/I
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/J
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/K
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/L
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/M
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/N
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/O
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/P
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/Q
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/R
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/S
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/T
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/U
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/V
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/W
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/X
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/Y
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/Z
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/clb
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/crz
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/dep_arr
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/des
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/dir_intc
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/fix
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/fpln
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/hold
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/index
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/legs
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/navrad
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/next_pg
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/prev_pg
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/prog
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/key/clear
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/key/del
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/key/execute
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/key/minus
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/key/period
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/key/slash
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/key/space
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/L1
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/L2
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/L3
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/L4
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/L5
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/L6
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/R1
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/R2
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/R3
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/R4
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/R5
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/R6
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Switches/fmc button release
-	VEH_XYZ -0.25 5.3 -25.8
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/0
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/1
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/2
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/3
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/4
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/5
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/6
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/7
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/8
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/9
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/A
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/B
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/C
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/D
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/E
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/F
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/G
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/H
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/I
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/J
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/K
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/L
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/M
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/N
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/O
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/P
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/Q
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/R
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/S
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/T
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/U
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/V
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/W
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/X
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/Y
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/alphanum_key/Z
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/func_key/clb
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/func_key/crz
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/func_key/dep_arr
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/func_key/des
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/func_key/dir_intc
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/func_key/fix
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/func_key/fpln
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/func_key/hold
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/func_key/index
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/func_key/legs
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/func_key/navrad
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/func_key/next_pg
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/func_key/prev_pg
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/func_key/prog
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/key/clear
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/key/del
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/key/execute
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/key/minus
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/key/period
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/key/slash
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/key/space
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/ls_key/L1
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/ls_key/L2
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/ls_key/L3
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/ls_key/L4
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/ls_key/L5
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/ls_key/L6
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/ls_key/R1
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/ls_key/R2
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/ls_key/R3
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/ls_key/R4
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/ls_key/R5
-	EVENT_CMND_UP DELTA=laminar/B747/fms1/ls_key/R6
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/0
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/1
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/2
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/3
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/4
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/5
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/6
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/7
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/8
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/9
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/A
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/B
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/C
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/D
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/E
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/F
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/G
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/H
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/I
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/J
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/K
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/L
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/M
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/N
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/O
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/P
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/Q
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/R
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/S
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/T
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/U
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/V
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/W
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/X
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/Y
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/Z
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/clb
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/crz
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/dep_arr
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/des
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/dir_intc
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/fix
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/fpln
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/hold
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/index
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/legs
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/navrad
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/next_pg
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/prev_pg
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/prog
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/key/clear
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/key/del
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/key/execute
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/key/minus
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/key/period
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/key/slash
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/key/space
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/L1
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/L2
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/L3
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/L4
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/L5
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/L6
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/R1
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/R2
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/R3
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/R4
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/R5
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/R6
+END_SOUND_ATTACHMENT
+
+#FMC R
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/0
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/1
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/2
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/3
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/4
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/5
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/6
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/7
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/8
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/9
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/A
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/B
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/C
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/D
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/E
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/F
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/G
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/H
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/I
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/J
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/K
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/L
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/M
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/N
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/O
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/P
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/Q
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/R
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/S
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/T
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/U
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/V
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/W
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/X
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/Y
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/alphanum_key/Z
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/clb
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/crz
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/dep_arr
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/des
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/dir_intc
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/fix
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/fpln
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/hold
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/index
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/legs
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/navrad
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/next_pg
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/prev_pg
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/func_key/prog
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ 0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/key/clear
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/key/del
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/key/execute
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/key/minus
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/key/period
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/key/slash
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/key/space
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/L1
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/L2
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/L3
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/L4
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/L5
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/L6
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/R1
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/R2
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/R3
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/R4
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/R5
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_DOWN laminar/B747/fms1/ls_key/R6
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/0
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/1
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/2
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/3
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/4
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/5
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/6
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/7
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/8
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/9
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/A
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/B
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/C
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/D
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/E
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/F
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/G
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/H
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/I
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/J
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/K
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/L
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/M
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/N
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/O
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/P
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/Q
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/R
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/S
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/T
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/U
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/V
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/W
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/X
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/Y
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/alphanum_key/Z
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/clb
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/crz
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/dep_arr
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/des
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/dir_intc
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/fix
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/fpln
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/hold
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/index
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/legs
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/navrad
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/next_pg
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/prev_pg
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/func_key/prog
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/key/clear
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/key/del
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/key/execute
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/key/minus
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/key/period
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/key/slash
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/key/space
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/L1
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/L2
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/L3
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/L4
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/L5
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/L6
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button hold
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/R1
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/R2
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/R3
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/R4
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/R5
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/fmc button release
+	VEH_XYZ -0.2 4.7 -26.57
+	EVENT_CMND_UP laminar/B747/fms1/ls_key/R6
 END_SOUND_ATTACHMENT
 
 ###########
 #Knobs
 ###########
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/button3
+	VEH_XYZ -0.25 5.3 -25.8
+	EVENT_START_COND DELTA=laminar/B747/flt_mgmt/iru/mode_sel_dial_pos[0]
+	EVENT_START_COND DELTA=laminar/B747/flt_mgmt/iru/mode_sel_dial_pos[1]
+	EVENT_START_COND DELTA=laminar/B747/flt_mgmt/iru/mode_sel_dial_pos[2]
+	EVENT_START_COND DELTA=laminar/B747/electrical/standby_power/sel_dial_pos
+	EVENT_START_COND DELTA=laminar/B747/electrical/apu/sel_dial_pos
+    	EVENT_START_COND DELTA=laminar/B747/hydraulics/dmd_pump/sel_dial_pos[0]
+    	EVENT_START_COND DELTA=laminar/B747/hydraulics/dmd_pump/sel_dial_pos[1]
+	EVENT_START_COND DELTA=laminar/B747/hydraulics/dmd_pump/sel_dial_pos[2]
+    	EVENT_START_COND DELTA=laminar/B747/hydraulics/dmd_pump/sel_dial_pos[3]
+	EVENT_START_COND DELTA=laminar/B747/air/cabin_alt_auto/sel_dial_pos
+    	EVENT_START_COND DELTA=laminar/B747/air/equip_cooling/sel_dial_pos
+	EVENT_START_COND DELTA=laminar/B747/air/pack_ctrl/sel_dial_pos[0]
+    	EVENT_START_COND DELTA=laminar/B747/air/pack_ctrl/sel_dial_pos[1]
+    	EVENT_START_COND DELTA=laminar/B747/air/pack_ctrl/sel_dial_pos[2]
+	EVENT_START_COND DELTA=laminar/B747/electrical/auto_ignit/sel_dial_pos
+    	EVENT_START_COND DELTA=laminar/B747/fuel/fuel_jettison/sel_dial_pos
+	EVENT_START_COND DELTA=laminar/B747/electrical/stby_ignit/sel_dial_pos
+	EVENT_START_COND DELTA=laminar/B747/air/cabin_alt_auto/sel_dial_pos
+	EVENT_START_COND DELTA=laminar/B747/antiice/wndshlsd_wiper_L/sel_dial_pos
+END_SOUND_ATTACHMENT
+
 BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Switches/button3
 	VEH_XYZ -0.75 4.52 -26.7
@@ -1032,32 +2547,6 @@ BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Switches/fire handle pull
 	VEH_XYZ 0 5.3 -25.8
 	EVENT_CMND_DOWN laminar/B747/fire/engine04/ext_switch_arm
-END_SOUND_ATTACHMENT
-
-#FMC buttons
-
-BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Cockpit/Switches/button3
-	VEH_XYZ 0 4.9 -26
-	EVENT_START_COND DELTA=laminar/B747/flt_mgmt/iru/mode_sel_dial_pos[0]
-	EVENT_START_COND DELTA=laminar/B747/flt_mgmt/iru/mode_sel_dial_pos[1]
-	EVENT_START_COND DELTA=laminar/B747/flt_mgmt/iru/mode_sel_dial_pos[2]
-	EVENT_START_COND DELTA=laminar/B747/electrical/standby_power/sel_dial_pos
-	EVENT_START_COND DELTA=laminar/B747/electrical/apu/sel_dial_pos
-    	EVENT_START_COND DELTA=laminar/B747/hydraulics/dmd_pump/sel_dial_pos[0]
-    	EVENT_START_COND DELTA=laminar/B747/hydraulics/dmd_pump/sel_dial_pos[1]
-	EVENT_START_COND DELTA=laminar/B747/hydraulics/dmd_pump/sel_dial_pos[2]
-    	EVENT_START_COND DELTA=laminar/B747/hydraulics/dmd_pump/sel_dial_pos[3]
-	EVENT_START_COND DELTA=laminar/B747/air/cabin_alt_auto/sel_dial_pos
-    	EVENT_START_COND DELTA=laminar/B747/air/equip_cooling/sel_dial_pos
-	EVENT_START_COND DELTA=laminar/B747/air/pack_ctrl/sel_dial_pos[0]
-    	EVENT_START_COND DELTA=laminar/B747/air/pack_ctrl/sel_dial_pos[1]
-    	EVENT_START_COND DELTA=laminar/B747/air/pack_ctrl/sel_dial_pos[2]
-	EVENT_START_COND DELTA=laminar/B747/electrical/auto_ignit/sel_dial_pos
-    	EVENT_START_COND DELTA=laminar/B747/fuel/fuel_jettison/sel_dial_pos
-	EVENT_START_COND DELTA=laminar/B747/electrical/stby_ignit/sel_dial_pos
-	EVENT_START_COND DELTA=laminar/B747/air/cabin_alt_auto/sel_dial_pos
-	EVENT_START_COND DELTA=laminar/B747/antiice/wndshlsd_wiper_L/sel_dial_pos
 END_SOUND_ATTACHMENT
 
 ############################
@@ -1411,10 +2900,8 @@ END_SOUND_ATTACHMENT
 #ENGINES
 ###############################
 
-#EXTERIOR
-
 BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Engines/PW/1/engineX
+	EVENT_NAME /Engines/PW/engine1
 	VEH_PART engine 1
 	PARAM_DREF_IDX 1
 	EVENT_START_COND sim/flightmodel2/engines/N1_percent[1] > 0
@@ -1422,7 +2909,7 @@ BEGIN_SOUND_ATTACHMENT
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Engines/PW/2/engineX
+	EVENT_NAME /Engines/PW/engine2
 	VEH_PART engine 2
 	PARAM_DREF_IDX 2
 	EVENT_START_COND sim/flightmodel2/engines/N1_percent[2] > 0
@@ -1430,7 +2917,7 @@ BEGIN_SOUND_ATTACHMENT
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Engines/PW/3/engineX
+	EVENT_NAME /Engines/PW/engine3
 	VEH_PART engine 3
 	PARAM_DREF_IDX 3
 	EVENT_START_COND sim/flightmodel2/engines/N1_percent[3] > 0
@@ -1438,7 +2925,7 @@ BEGIN_SOUND_ATTACHMENT
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Engines/PW/4/engineX
+	EVENT_NAME /Engines/PW/engine4
 	VEH_PART engine 4
 	PARAM_DREF_IDX 4
 	EVENT_START_COND sim/flightmodel2/engines/N1_percent[4] > 0
@@ -1446,34 +2933,6 @@ BEGIN_SOUND_ATTACHMENT
 END_SOUND_ATTACHMENT
 
 #INTERIOR
-
-BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Engines/PW/1/engineN
-	VEH_XYZ -20 -1.5 2
-	EVENT_START_COND sim/cockpit2/engine/indicators/N1_percent[1] > 1
-	EVENT_END_COND sim/cockpit2/engine/indicators/N1_percent[1] == 0
-END_SOUND_ATTACHMENT
-
-BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Engines/PW/2/engineN
-	VEH_XYZ -12 -1.5 -7
-	EVENT_START_COND sim/cockpit2/engine/indicators/N1_percent[2] > 1
-	EVENT_END_COND sim/cockpit2/engine/indicators/N1_percent[2] == 0
-END_SOUND_ATTACHMENT
-
-BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Engines/PW/3/engineN
-	VEH_XYZ 12 -1.5 -7
-	EVENT_START_COND sim/cockpit2/engine/indicators/N1_percent[3] > 1
-	EVENT_END_COND sim/cockpit2/engine/indicators/N1_percent[3] == 0
-END_SOUND_ATTACHMENT
-
-BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Engines/PW/4/engineN
-	VEH_XYZ 20 -1.5 2
-	EVENT_START_COND sim/cockpit2/engine/indicators/N1_percent[4] > 1
-	EVENT_END_COND sim/cockpit2/engine/indicators/N1_percent[4] == 0
-END_SOUND_ATTACHMENT
 
 #########################
 #APU
@@ -1487,18 +2946,6 @@ END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /APU/apu_start
-	VEH_XYZ 0 3.5 35
-	EVENT_START_COND sim/cockpit2/electrical/APU_running == 1
-END_SOUND_ATTACHMENT
-
-BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /APU/apuN
-	VEH_XYZ 0 3.5 35
-	EVENT_START_COND sim/cockpit2/electrical/APU_running == 1
-END_SOUND_ATTACHMENT
-
-BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /APU/APU_startN
 	VEH_XYZ 0 3.5 35
 	EVENT_START_COND sim/cockpit2/electrical/APU_running == 1
 END_SOUND_ATTACHMENT

@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.01.08.00">
-    <object class="Snapshot" id="{ec6c83a0-0157-4151-a83e-dd97266d78e2}">
-        <relationship name="uiLastParameterSelection">
-            <destination>{eac6e590-376c-48ba-8583-df744e1cc305}</destination>
-        </relationship>
-    </object>
+    <object class="Snapshot" id="{ec6c83a0-0157-4151-a83e-dd97266d78e2}"/>
     <object class="EventAutomatableProperties" id="{3b55e6ee-0a9e-45a9-b4ab-c1b9c5361f32}"/>
     <object class="MarkerTrack" id="{4caac371-e36f-48b9-b6dc-200d0a6ab877}"/>
     <object class="Timeline" id="{eac6e590-376c-48ba-8583-df744e1cc305}">
@@ -14,7 +10,7 @@
     </object>
     <object class="GameParameter" id="{53ab36d3-e9e2-43bb-9016-f0ab43b52339}">
         <property name="cursorPosition">
-            <value>0.020979020979020976</value>
+            <value>1</value>
         </property>
         <property name="uiLastRulerScaleRatio">
             <value>0.00053792361484669173</value>

@@ -16,9 +16,40 @@
     </object>
     <object class="MixerBusEffectChain" id="{504fd514-50a1-4927-8998-61ccfa9686b9}">
         <relationship name="effects">
+            <destination>{ed5b23c9-9bd3-4c8c-9b08-ef8839457d09}</destination>
             <destination>{83cb150d-906c-4206-ba8c-7b746205d974}</destination>
+            <destination>{8b9cd9b3-99f2-4c0a-82a4-7e2414c41422}</destination>
         </relationship>
     </object>
     <object class="MixerBusPanner" id="{8f5682a7-4bf1-4813-9ce5-7f9302a4531f}"/>
+    <object class="PluginEffect" id="{ed5b23c9-9bd3-4c8c-9b08-ef8839457d09}">
+        <relationship name="plugin">
+            <destination>{5d717f00-2875-4f92-882e-2cd9752a5ed7}</destination>
+        </relationship>
+    </object>
     <object class="MixerBusFader" id="{83cb150d-906c-4206-ba8c-7b746205d974}"/>
+    <object class="LimiterEffect" id="{8b9cd9b3-99f2-4c0a-82a4-7e2414c41422}">
+        <property name="boost">
+            <value>12</value>
+        </property>
+    </object>
+    <object class="Plugin" id="{5d717f00-2875-4f92-882e-2cd9752a5ed7}">
+        <property name="identifier">
+            <value>FMOD Lowpass Simple</value>
+        </property>
+        <relationship name="pluginParameters">
+            <destination>{8a342afa-67e3-4c7e-b1eb-dedb0d37e26a}</destination>
+        </relationship>
+    </object>
+    <object class="FloatPluginParameter" id="{8a342afa-67e3-4c7e-b1eb-dedb0d37e26a}">
+        <property name="name">
+            <value>Cutoff freq</value>
+        </property>
+        <property name="curve">
+            <value>LinearPiecewiseCurveStrategy{(0.000000,10.000000)(1.000000,100.000000)(2.000000,400.000000)(3.000000,750.000000)(4.000000,1250.000000)(5.000000,2000.000000)(6.000000,3200.000000)(7.000000,5500.000000)(8.000000,10000.000000)(9.000000,18000.000000)(10.000000,22000.000000)}</value>
+        </property>
+        <property name="value">
+            <value>22000</value>
+        </property>
+    </object>
 </objects>

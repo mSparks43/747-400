@@ -53,7 +53,9 @@
     <object class="MixerBusFader" id="{f1bd0422-0321-4988-ae36-e5956326fc56}"/>
     <object class="MixerBusEffectChain" id="{fcea4fe3-386f-477c-92f6-76d23eab56dc}"/>
     <object class="MixerBusPanner" id="{2c776fac-4a05-48b5-b18a-0c1833ab69e6}"/>
+    <object class="PluginEffect" id="{2b668c1c-79f6-4d74-b972-975340296a55}"/>
     <object class="MixerBusFader" id="{61b719ff-809b-4909-94a3-f9d6713752ed}"/>
     <object class="SpatialiserEffect" id="{e5a82349-cb62-4960-9aed-678bc9eb3203}"/>
     <object class="MixerBusFader" id="{43c8b78d-5256-4638-b0c7-f92863290daf}"/>
+    <object class="FloatPluginParameter" id="{ea2d2f5a-7452-4a6c-9df9-1670d6ccfa01}"/>
 </objects>

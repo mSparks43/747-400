@@ -1,41 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.01.08.00">
-    <object class="Event" id="{d3f3adc6-9c6f-4942-9009-9d11704e3f0c}">
-        <relationship name="selectables">
-            <destination>{de987031-49ca-4469-9195-18a365953cb1}</destination>
-            <destination>{93d3b2f4-ef74-4d5c-a799-2d51b25e5c3e}</destination>
-            <destination>{e2486775-4ef5-4dfb-be19-ca8635a5aec8}</destination>
-            <destination>{29a34215-260a-4b1d-ab77-012fb8b1070b}</destination>
-            <destination>{5305b8a8-75ed-401e-b432-69ae6322f6ca}</destination>
-            <destination>{88e2fa1c-2ab4-4212-bb46-a39019247ce0}</destination>
-            <destination>{c44d2d51-2cb4-4884-9914-82b01b0619fc}</destination>
-            <destination>{f1043a73-c846-4480-9b00-4795efc13ecf}</destination>
-            <destination>{4f6a17ec-dd85-48c7-a168-1b08945bca2d}</destination>
-            <destination>{4930b50f-1d72-4cb7-b6d8-e0779f601081}</destination>
-            <destination>{eddc21a7-bf24-417c-a920-891abe1f1984}</destination>
-            <destination>{afe7a3ce-ab81-4b58-a1a7-90f02abbb108}</destination>
-            <destination>{fe14e6c9-1d23-40eb-9508-05b004d356f0}</destination>
-            <destination>{5d75487c-1cd9-40e2-8aee-90378f1f7817}</destination>
-            <destination>{ef71e71c-b194-4f31-b3b3-1ab913c5d927}</destination>
-            <destination>{97436ac0-b061-4257-bb16-8787d838cf39}</destination>
-            <destination>{432ba87a-1e95-4422-918b-2db22a2422a5}</destination>
-            <destination>{4cd2603e-b5b9-4a60-8daf-6d2fd47f88e2}</destination>
-            <destination>{8a5f40da-03a7-4421-9e71-b44102869a2d}</destination>
-            <destination>{047128d7-fc69-4b1d-b6e0-7e728c460715}</destination>
-            <destination>{895cd050-e4f9-443f-aa66-8ba882d7074c}</destination>
-            <destination>{2dc70bc4-d9c6-4198-a22e-88da8ed96bf3}</destination>
-            <destination>{370f8d2e-94ba-4c44-be28-48af397bfe7f}</destination>
-            <destination>{1aea2b8d-4c62-4e79-8ff0-1160071032cf}</destination>
-            <destination>{f6d9ff1c-59bb-40e8-8b46-483efea640f1}</destination>
-            <destination>{05f647ca-363c-4f6b-9620-f07f2d2f2fcc}</destination>
-            <destination>{a3f5f5cc-a184-493a-aff6-16ae5e1df9e4}</destination>
-            <destination>{2e75157a-6747-41cb-a440-05346254a5c2}</destination>
-            <destination>{066acde2-8f26-420b-a02d-bb4346097d65}</destination>
-        </relationship>
-        <relationship name="uiLastParameterSelection">
-            <destination>{181b8a74-d698-4493-9700-21f90743f8c6}</destination>
-        </relationship>
-    </object>
+    <object class="Event" id="{d3f3adc6-9c6f-4942-9009-9d11704e3f0c}"/>
     <object class="MasterTrack" id="{08933f8e-804d-4dfa-880c-7801ff63f446}"/>
     <object class="MixerInput" id="{d7dc50e9-f630-41d7-973e-ea04dd910367}"/>
     <object class="EventAutomatableProperties" id="{1e9ea21b-8a30-4108-b04b-8aec457cdda4}"/>
