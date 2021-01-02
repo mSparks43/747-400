@@ -8,6 +8,9 @@
     <object class="EventAutomatableProperties" id="{84437b9c-5d73-4ff2-bf81-ba6cc03d52b4}"/>
     <object class="MarkerTrack" id="{1f5fd7cd-7321-4434-877b-dd556cf11b08}"/>
     <object class="Timeline" id="{7bedb519-b504-4418-b8f3-792fb83c2e5f}">
+        <property name="cursorPosition">
+            <value>2.4367939752555134</value>
+        </property>
         <property name="uiLastRulerScaleRatio">
             <value>0.016137708445400752</value>
         </property>

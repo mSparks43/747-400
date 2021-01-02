@@ -9,7 +9,7 @@ ACF_SOUNDS
 #                                                                                    #
 #     E n g i n e s : P W 4 0 6 2                                                    #
 #                                                                                    #
-#     V e r s i o n : v0.1b                                                          #
+#     V e r s i o n : v0.1.1b                                                        #
 #                                                                                    #
 #     B y :  F a h r e n h e i t                                                     #
 #                                                                                    #
@@ -21,11 +21,14 @@ ACF_SOUNDS
 ######################################################################################
 
 REQUIRES_BANK ambience.bank
+REQUIRES_BANK apu.bank
 REQUIRES_BANK cabin.bank
 REQUIRES_BANK cockpit.bank
 REQUIRES_BANK warnings.bank
 REQUIRES_BANK GPWS.bank
 REQUIRES_BANK PW.bank
+
+DISABLE_LEGACY_ALERT_SOUNDS
 
 BEGIN_SOUND_ATTACHMENT
 	SNAPSHOT_NAME /in_mute
@@ -618,25 +621,25 @@ BEGIN_SOUND_ATTACHMENT
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Cockpit/Switches/button2
+	EVENT_NAME /Cockpit/Switches/button3
 	VEH_XYZ 0 5.3 -25.8
 	EVENT_CMND_HOLD_CUE laminar/B747/antiice_wndshld_wiper_L/sel_dial_dn
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Cockpit/Switches/button2
+	EVENT_NAME /Cockpit/Switches/button3
 	VEH_XYZ 0 5.3 -25.8
 	EVENT_CMND_HOLD_CUE laminar/B747/antiice_wndshld_wiper_L/sel_dial_up
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Cockpit/Switches/button2
+	EVENT_NAME /Cockpit/Switches/button3
 	VEH_XYZ 0 5.3 -25.8
 	EVENT_CMND_HOLD_CUE laminar/B747/antiice_wndshld_wiper_R/sel_dial_dn
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Cockpit/Switches/button2
+	EVENT_NAME /Cockpit/Switches/button3
 	VEH_XYZ 0 5.3 -25.8
 	EVENT_CMND_HOLD_CUE laminar/B747/antiice_wndshld_wiper_R/sel_dial_up
 END_SOUND_ATTACHMENT
@@ -795,12 +798,6 @@ BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Switches/button4_release
 	VEH_XYZ 0 5.1 -26
 	EVENT_CMND_UP laminar/B747/autopilot/button_switch/yoke_disengage_capt
-END_SOUND_ATTACHMENT
-
-BEGIN_SOUND_ATTACHMENT
-	EVENT_NAME /Cockpit/Switches/button2
-	VEH_XYZ 0 5.1 -26
-	EVENT_CMND_DOWN laminar/B747/autopilot/button_switch/disengage_bar
 END_SOUND_ATTACHMENT
 
 ##################
@@ -1323,4 +1320,32 @@ BEGIN_SOUND_ATTACHMENT
 	VEH_XYZ 20 -1.5 2
 	EVENT_START_COND sim/cockpit2/engine/indicators/N1_percent[4] > 1
 	EVENT_END_COND sim/cockpit2/engine/indicators/N1_percent[4] == 0
+END_SOUND_ATTACHMENT
+
+#########################
+#APU
+#########################
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /APU/apu
+	VEH_XYZ 0 3.5 35
+	EVENT_START_COND sim/cockpit2/electrical/APU_running == 1
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /APU/apu_start
+	VEH_XYZ 0 3.5 35
+	EVENT_START_COND sim/cockpit2/electrical/APU_running == 1
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /APU/apuN
+	VEH_XYZ 0 3.5 35
+	EVENT_START_COND sim/cockpit2/electrical/APU_running == 1
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /APU/APU_startN
+	VEH_XYZ 0 3.5 35
+	EVENT_START_COND sim/cockpit2/electrical/APU_running == 1
 END_SOUND_ATTACHMENT

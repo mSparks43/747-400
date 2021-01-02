@@ -1,3 +1,12 @@
+{5245b4e1-cbcd-4158-a437-5ef694a72485} event:/Ambience/gear_wind
+{8864d702-aee0-4919-9cfd-0e5447e22660} event:/Ambience/gear_windX
+{56c600a7-2aa1-4248-956f-ccd004b30053} event:/Ambience/in_wind
+{61d7b833-736c-44d7-bd29-4fd85bf89452} event:/Ambience/speedbrake_wind
+{5e0909b5-6e3e-49c0-8047-60f8f2beb482} event:/Ambience/windX
+{c3556ead-5132-46a1-95dc-18c61ab3e278} event:/APU/apu
+{aa6fc2cf-1f69-4e1b-815f-39e190c8ea80} event:/APU/apu_start
+{71159998-8f00-47a1-b8b8-f3fe9742ec66} event:/APU/APU_startN
+{5c7192ab-9eb0-4afe-b558-acaedd7bb6f3} event:/APU/apuN
 {d0fadee7-567a-4623-a4f4-c17b6e198b6a} event:/Cabin/Passenger/packs
 {54cacac0-7885-49eb-9e32-b5adf780cb64} event:/Cockpit/Avionics/Contactors/contactor1
 {64cb6652-9603-41eb-bb50-7f644c0100d9} event:/Cockpit/Avionics/Contactors/contactor2
@@ -18,12 +27,12 @@
 {94bea654-e22e-45ad-8941-7bc029e843ae} event:/Cockpit/Switches/fmc button release
 {4cfe80cb-4811-4ef3-b9aa-c563b50e83eb} event:/Engines/PW/1/engineN
 {573bb406-ca4b-4631-b1b8-2fad754905e5} event:/Engines/PW/1/engineX
-{41749b91-e118-41fe-98e9-32286050a1b1} event:/Engines/PW/2/engineN
-{901e9fd5-1ee6-4b60-b8a7-331fa1cbfbf6} event:/Engines/PW/2/engineX
-{de30198b-6a6d-45de-b9b6-f20ee9a85634} event:/Engines/PW/3/engineN
-{644a28d8-85a5-4e32-b736-0aa43d8913c2} event:/Engines/PW/3/engineX
-{89c8177d-618d-4927-8402-a7b45ef5d4f2} event:/Engines/PW/4/engineN
-{5146b87d-0850-4cee-a6e7-1a1e65a73c14} event:/Engines/PW/4/engineX
+{16f3589a-3722-41de-b161-9facc6892be8} event:/Engines/PW/2/engineN
+{28f439fe-fa04-4f42-98fa-e02778830d4c} event:/Engines/PW/2/engineX
+{a0713524-8d16-4385-8262-1bc9c32a679e} event:/Engines/PW/3/engineN
+{7b4f41df-0e64-42f0-acea-7467b4ed5070} event:/Engines/PW/3/engineX
+{fcf90b63-a58c-4f50-9242-bcbee8604f04} event:/Engines/PW/4/engineN
+{d6b7fb17-f60b-477a-bba3-0fe2f35edaff} event:/Engines/PW/4/engineX
 {b5daf23d-2819-4fed-a48d-2f9de355de16} event:/Warnings/GPWS/10
 {d1be1282-78a2-49ad-89ba-a38a45f385a4} event:/Warnings/GPWS/100
 {d52b64d0-5af0-4a89-8ca6-438e62195427} event:/Warnings/GPWS/1000
@@ -60,12 +69,6 @@
 {66570e2d-068b-403d-86b6-d826956f85b2} event:/Warnings/master-warning
 {9b7c9b53-9b83-43c3-816d-619fb33e8108} event:/Warnings/master_caution
 {3704064f-1469-40bf-92b8-96ca933a4315} event:/Warnings/stall
-{5245b4e1-cbcd-4158-a437-5ef694a72485} event:/Ambience/gear_wind
-{8864d702-aee0-4919-9cfd-0e5447e22660} event:/Ambience/gear_windX
-{61d7b833-736c-44d7-bd29-4fd85bf89452} event:/Ambience/speedbrake_wind
-{56c600a7-2aa1-4248-956f-ccd004b30053} event:/Ambience/in_wind
-{5e0909b5-6e3e-49c0-8047-60f8f2beb482} event:/Ambience/windX
-{71159998-8f00-47a1-b8b8-f3fe9742ec66} event:/APU/APU_start
 {9f08114d-36ec-44cc-b8bf-b2babda09f9e} bus:/
 {7f7c05a4-e05a-4d44-94fe-d4691147a9b7} bus:/Master
 {e3492bec-f854-4fbb-b2bc-23586269032e} bus:/Master/Copilot
@@ -77,11 +80,12 @@
 {d8526059-b27c-4eae-9b14-a1ee1cb3dfa1} bus:/Master/Radios
 {77575f3b-b9cd-4bff-9056-637cff744a14} bus:/Master/UI
 {188a8ccc-270d-4864-a90f-c24423ffe65b} snapshot:/in_mute
-{3cf86f84-1c96-4ff1-b70f-a18e2445a0cf} snapshot:/ex_mute
+{ec6c83a0-0157-4151-a83e-dd97266d78e2} snapshot:/ex_mute
+{e5a1fdba-6cfa-4169-89a0-7c97e382c7a1} bank:/ambience
+{70cfa2b8-fa37-43dc-9b35-64f6c52f0e54} bank:/apu
 {96d29e97-9aae-40b4-80a8-03806fd247a9} bank:/cabin
 {b8ef1611-04fc-43af-a47b-72e10f7ff39a} bank:/cockpit
 {6660d8e6-89a7-46a1-8f37-7dce9a982237} bank:/GPWS
 {45f3cc7c-bc21-440f-96c3-15f4d2fc4006} bank:/PW
 {1ab07404-3f10-4048-bcbf-9c1ca1eab876} bank:/warnings
 {93173edc-09f8-4879-84f8-11d5f4cbf842} bank:/Master Bank
-{e5a1fdba-6cfa-4169-89a0-7c97e382c7a1} bank:/ambience
