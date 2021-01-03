@@ -1,0 +1,83 @@
+{5245b4e1-cbcd-4158-a437-5ef694a72485} event:/Ambience/gear_wind
+{8864d702-aee0-4919-9cfd-0e5447e22660} event:/Ambience/gear_windX
+{56c600a7-2aa1-4248-956f-ccd004b30053} event:/Ambience/in_wind
+{61d7b833-736c-44d7-bd29-4fd85bf89452} event:/Ambience/speedbrake_wind
+{5e0909b5-6e3e-49c0-8047-60f8f2beb482} event:/Ambience/windX
+{c3556ead-5132-46a1-95dc-18c61ab3e278} event:/APU/apu
+{aa6fc2cf-1f69-4e1b-815f-39e190c8ea80} event:/APU/apu_start
+{d0fadee7-567a-4623-a4f4-c17b6e198b6a} event:/Cabin/Passenger/packs
+{54cacac0-7885-49eb-9e32-b5adf780cb64} event:/Cockpit/Avionics/Contactors/contactor1
+{64cb6652-9603-41eb-bb50-7f644c0100d9} event:/Cockpit/Avionics/Contactors/contactor2
+{86eaac51-c74a-4239-bffd-8f6e01e66ef1} event:/Cockpit/Avionics/Contactors/contactor3
+{e0520c10-8c6a-4d06-a066-a72215554b0a} event:/Cockpit/Avionics/avionics fans
+{358c0b4c-f54d-4fb1-8bbb-b4e92c320358} event:/Cockpit/Avionics/avionics fans shutdown
+{73513f2b-8c75-4931-a273-12a8beb0fe21} event:/Cockpit/Avionics/battery
+{a8744c00-fcf1-415e-b10c-186abe52132d} event:/Cockpit/Avionics/fan1
+{8c82228e-4d31-49b7-a0ab-85ff78b84317} event:/Cockpit/Avionics/fan2
+{fa60a749-55fb-4da3-a152-16976df039a1} event:/Cockpit/Avionics/fan3
+{24967cb5-82df-4ec5-9705-c66b9d112a49} event:/Cockpit/Switches/button1
+{30b44714-eb40-4645-9316-eb9b9eb0fec1} event:/Cockpit/Switches/button2
+{40e4a1fa-4f34-40c3-a853-e9753d22efba} event:/Cockpit/Switches/button3
+{ece586c7-2125-4d97-b873-c9c885318a59} event:/Cockpit/Switches/button4_hold
+{ab590e31-248f-4d03-9082-dae76e569708} event:/Cockpit/Switches/button4_release
+{b5c2a426-824a-4da2-874f-03e8436c1e5c} event:/Cockpit/Switches/fire handle pull
+{8a2e27b8-348c-4289-a181-84edbc2738de} event:/Cockpit/Switches/fmc button hold
+{94bea654-e22e-45ad-8941-7bc029e843ae} event:/Cockpit/Switches/fmc button release
+{573bb406-ca4b-4631-b1b8-2fad754905e5} event:/Engines/PW/engine1
+{9b1a4861-6fe6-45da-8837-f58544557dbc} event:/Engines/PW/engine2
+{12891399-832b-4cdc-98be-5c6a544ee1e5} event:/Engines/PW/engine3
+{74975a88-75fb-4af0-8e20-2a283429f375} event:/Engines/PW/engine4
+{5263f8c2-1b33-4a7b-8a9d-eaa8c018bf0e} event:/Warnings/GPWS/10
+{7f55a41b-5115-4ace-92ae-51cab1a84d20} event:/Warnings/GPWS/100
+{a2177ed5-5ec3-49dc-9626-c329fd7c9731} event:/Warnings/GPWS/1000
+{54d06daa-5bbb-4f35-8356-1eddf26029a2} event:/Warnings/GPWS/20
+{36a2a2af-e011-48a8-af23-a9de7428ed56} event:/Warnings/GPWS/200
+{7151dfbe-c29c-4e9c-bf62-7e0904a8f29b} event:/Warnings/GPWS/2500
+{40ff500f-42e6-4e9f-9385-5b4adc7d5f54} event:/Warnings/GPWS/30
+{54441b94-1883-4abf-824b-5916dfe0b6e6} event:/Warnings/GPWS/300
+{1851d812-37a9-43e6-9bbc-34943bf7ab36} event:/Warnings/GPWS/40
+{a858e062-856f-45ba-bc86-83d9e190b839} event:/Warnings/GPWS/400
+{dcd3bbe8-02c2-49c3-a0e2-7154db7c98c5} event:/Warnings/GPWS/5
+{2dce020f-de86-42c9-ac6e-4287971a4655} event:/Warnings/GPWS/50
+{c74f07ed-d6ef-4c19-9a50-a275a6d51e71} event:/Warnings/GPWS/500
+{ea1b8507-f821-4c10-b162-4bc2652579b4} event:/Warnings/GPWS/approaching_decision_height
+{62071752-08fd-4aba-a2d2-e74edbb70ac7} event:/Warnings/GPWS/approaching_minimums
+{714ffe1d-e1ba-4f32-8d9d-8b1b12b8a78a} event:/Warnings/GPWS/bankangle
+{97ebba70-e64c-4537-8aac-a6fb748eebd4} event:/Warnings/GPWS/decision_height
+{efa352e6-60c1-474a-bb55-f96c0ff71646} event:/Warnings/GPWS/dontsink
+{6fee73b6-f15b-4896-9042-a4d6a77611c2} event:/Warnings/GPWS/glideslope
+{2f29f07f-f982-4ea1-95f4-da9158e643a2} event:/Warnings/GPWS/GPWC_TEST
+{4c29961b-dcd6-416b-af6a-8155f2160e6d} event:/Warnings/GPWS/minimums
+{444de21d-649b-4bb4-a0f4-26c2d98ed6b5} event:/Warnings/GPWS/pull_up
+{de14b663-4c34-4ca3-ae01-bebebc30542f} event:/Warnings/GPWS/sinkrate
+{34e6f9f1-465f-4c89-bced-a90e1fa1afc3} event:/Warnings/GPWS/terrain
+{1282a10b-2c27-4855-8599-897111eac81d} event:/Warnings/GPWS/terrain_pull_up
+{fcada2bd-f112-4871-a99d-973b7432f32d} event:/Warnings/GPWS/too_low_flaps
+{9088981f-4226-466a-8eed-b9e71f43fd96} event:/Warnings/GPWS/too_low_gear
+{9b37fc6b-75ef-4d5c-a1da-ffdcbfd98395} event:/Warnings/GPWS/too_low_terrain
+{93444807-506b-4471-b69f-6b0861fbbb95} event:/Warnings/GPWS/windshear
+{33c46132-62cf-4b8f-9339-cfe0854a5800} event:/Warnings/ding
+{ddc39869-8256-4e8c-bdd4-8dc4a099ea3b} event:/Warnings/evac_signal
+{2cb8e0f4-3cfc-49c0-9492-cf8c1b008c48} event:/Warnings/fire bell
+{f3debaf5-bb4f-4e93-8df5-8b001e552be5} event:/Warnings/ground_horn
+{1c26290c-d853-425c-9fc5-860ff2306cef} event:/Warnings/master-warning
+{78211b4b-b0e3-48bb-bee8-374a09439b31} event:/Warnings/master_caution
+{327d8e20-870c-4de0-aff6-f949a543e035} event:/Warnings/stall
+{9f08114d-36ec-44cc-b8bf-b2babda09f9e} bus:/
+{7f7c05a4-e05a-4d44-94fe-d4691147a9b7} bus:/Master
+{e3492bec-f854-4fbb-b2bc-23586269032e} bus:/Master/Copilot
+{a5a85a81-afd5-4425-9dc2-6e50f7776e6a} bus:/Master/Exterior Processed
+{06db5351-0b2f-4648-b97a-a33b40a00e11} bus:/Master/Exterior Processed/Aircraft
+{b6c156f1-9861-405c-a622-92b2ab8010a7} bus:/Master/Exterior Processed/Environment
+{8dbbc9d7-a954-4ed0-b1f1-f8111b03cbd1} bus:/Master/Exterior Unprocessed
+{751f5066-4651-4afb-a410-4cb9db0894c9} bus:/Master/Interior
+{d8526059-b27c-4eae-9b14-a1ee1cb3dfa1} bus:/Master/Radios
+{77575f3b-b9cd-4bff-9056-637cff744a14} bus:/Master/UI
+{e5a1fdba-6cfa-4169-89a0-7c97e382c7a1} bank:/ambience
+{70cfa2b8-fa37-43dc-9b35-64f6c52f0e54} bank:/apu
+{96d29e97-9aae-40b4-80a8-03806fd247a9} bank:/cabin
+{b8ef1611-04fc-43af-a47b-72e10f7ff39a} bank:/cockpit
+{6660d8e6-89a7-46a1-8f37-7dce9a982237} bank:/GPWS
+{45f3cc7c-bc21-440f-96c3-15f4d2fc4006} bank:/PW
+{1ab07404-3f10-4048-bcbf-9c1ca1eab876} bank:/warnings
+{93173edc-09f8-4879-84f8-11d5f4cbf842} bank:/Master Bank

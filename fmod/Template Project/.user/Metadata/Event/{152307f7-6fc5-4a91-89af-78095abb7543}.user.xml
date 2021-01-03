@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.08.00">
+    <object class="Event" id="{152307f7-6fc5-4a91-89af-78095abb7543}">
+        <relationship name="uiLastParameterSelection">
+            <destination>{3a614512-d3bb-4511-9f73-37b6f4c30f41}</destination>
+        </relationship>
+    </object>
+</objects>
