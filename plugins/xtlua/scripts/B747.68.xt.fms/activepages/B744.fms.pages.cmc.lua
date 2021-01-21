@@ -103,9 +103,11 @@ fmsPages["EMANP"]=createPage("EMANP")
 fmsPages["EMANP"].getPage=function(self,pgNo,fmsID)
   
   if pgNo==1 then
-      --fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTCMC"}
-      --fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTAPU"}
-      --fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTENGFUEL"}
+      fmsFunctionsDefs["EMANP"]["L1"]={"setpage","EECS"}
+      fmsFunctionsDefs["EMANP"]["L2"]={"setpage","EELEC"}
+      fmsFunctionsDefs["EMANP"]["L3"]={"setpage","EFLTCONT"}
+      fmsFunctionsDefs["EMANP"]["L4"]={"setpage","EFUEL"}
+      fmsFunctionsDefs["EMANP"]["L5"]={"setpage","EHYD"}
       fmsFunctionsDefs["EMANP"]["L6"]={"setpage","CMC"}
     return {
       
@@ -124,9 +126,11 @@ fmsPages["EMANP"].getPage=function(self,pgNo,fmsID)
 "<RETURN            HELP>"
     }
   elseif pgNo==2 then
-      --fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTCMC"}
-      --fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTAPU"}
-      --fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTENGFUEL"}
+      fmsFunctionsDefs["EMANP"]["L1"]={"setpage","ECONFIG"}
+      fmsFunctionsDefs["EMANP"]["L2"]={"setpage","EGEAR"}
+      fmsFunctionsDefs["EMANP"]["L3"]={"setpage","EAPU"}
+      fmsFunctionsDefs["EMANP"]["L4"]={"setpage","EEPCS"}
+      fmsFunctionsDefs["EMANP"]["L5"]={"setpage","EPERF"}
       fmsFunctionsDefs["EMANP"]["L6"]={"setpage","CMC"}
     return {
       
@@ -145,9 +149,7 @@ fmsPages["EMANP"].getPage=function(self,pgNo,fmsID)
 "<RETURN            HELP>"
     }
   elseif pgNo==3 then
-      --fmsFunctionsDefs["GRDTEST"]["L1"]={"setpage","GTCMC"}
-      --fmsFunctionsDefs["GRDTEST"]["L2"]={"setpage","GTAPU"}
-      --fmsFunctionsDefs["GRDTEST"]["L3"]={"setpage","GTENGFUEL"}
+      fmsFunctionsDefs["EMANP"]["L1"]={"setpage","EENGEXCD"}
       fmsFunctionsDefs["EMANP"]["L6"]={"setpage","CMC"}
     return {
       
@@ -170,6 +172,123 @@ end
 
 fmsPages["EMANP"].getNumPages=function(self)
   return 3
+end
+
+fmsPages["EECS"]=createPage("EECS")
+fmsPages["EECS"].getPage=function(self,pgNo,fmsID)
+  return {
+      
+" EICAS PAGE CONTROL  1/1",
+" 21 ECS                 ",
+"<DISPLAY                ",
+"                        ",
+"<RECORD                 ",
+"                        ",
+"<MANUAL SNAPSHOTS       ",
+"                        ",
+"<AUTO SNAPSHOTS         ",
+"------------------------",
+"<ERASE SYSTEM    REPORT>",
+"                        ",
+"<RETURN            HELP>"
+    }
+  end
+
+fmsPages["EECS"].getSmallPage=function(self,pgNo,fmsID)
+    return {
+  
+"                        ",
+" 21 ECS                 ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+    }
+  end
+
+fmsPages["EELEC"]=createPage("EELEC")
+fmsPages["EELEC"].getPage=function(self,pgNo,fmsID)
+  return {
+      
+" EICAS PAGE CONTROL  1/1",
+" 24 ELECTRICAL          ",
+"<DISPLAY                ",
+"                        ",
+"<RECORD                 ",
+"                        ",
+"<MANUAL SNAPSHOTS       ",
+"                        ",
+"<AUTO SNAPSHOTS         ",
+"------------------------",
+"<ERASE SYSTEM    REPORT>",
+"                        ",
+"<RETURN            HELP>"
+    }
+  end
+
+fmsPages["EELEC"].getSmallPage=function(self,pgNo,fmsID)
+    return {
+  
+"                        ",
+" 24 ELECTRICAL          ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+    }
+end
+
+fmsPages["EFLTCONT"]=createPage("EFLTCONT")
+fmsPages["EFLTCONT"].getPage=function(self,pgNo,fmsID)
+  return {
+      
+" EICAS PAGE CONTROL  1/1",
+" 27 FLT CONT            ",
+"<DISPLAY                ",
+"                        ",
+"<RECORD                 ",
+"                        ",
+"<MANUAL SNAPSHOTS       ",
+"                        ",
+"<AUTO SNAPSHOTS         ",
+"------------------------",
+"<ERASE SYSTEM    REPORT>",
+"                        ",
+"<RETURN            HELP>"
+    }
+  end
+
+fmsPages["EELEC"].getSmallPage=function(self,pgNo,fmsID)
+    return {
+  
+"                        ",
+" 27 FLT CONT            ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+"                        ",
+    }
 end
 
 fmsPages["GRDTEST"]=createPage("GRDTEST")
