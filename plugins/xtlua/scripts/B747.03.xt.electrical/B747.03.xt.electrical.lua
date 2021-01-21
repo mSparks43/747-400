@@ -418,9 +418,11 @@ function B747_battery()
         and simDR_battery_on[0] == 0
     then
         simDR_battery_on[0] = 1
-        B747DR_elec_apu_volts = 28
+        
     end
-
+    if simDR_battery_on[0] == 1 then
+         B747DR_elec_apu_volts = 28
+    end
 end
 
 

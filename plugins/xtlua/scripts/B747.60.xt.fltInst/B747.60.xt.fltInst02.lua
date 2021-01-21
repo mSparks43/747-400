@@ -261,7 +261,8 @@ B747DR_nd_arpt_capt_switch_pos                  = deferred_dataref("laminar/B747
 B747DR_nd_data_capt_switch_pos                  = deferred_dataref("laminar/B747/nd/data/capt/switch_pos", "number")
 B747DR_nd_pos_capt_switch_pos                   = deferred_dataref("laminar/B747/nd/pos/capt/switch_pos", "number")
 B747DR_nd_terr_capt_switch_pos                  = deferred_dataref("laminar/B747/nd/terr/capt/switch_pos", "number")
-
+B747DR_nd_capt_traffic_Selected                 = deferred_dataref("laminar/B747/nd/traffic/capt/selected", "number")
+B747DR_nd_fo_traffic_Selected                   = deferred_dataref("laminar/B747/nd/traffic/fo/selected", "number")
 B747DR_nd_capt_vor_ndb                          = deferred_dataref("laminar/B747/nd/data/capt/vor_ndb", "number")
 B747DR_nd_fo_vor_ndb                          	= deferred_dataref("laminar/B747/nd/data/fo/vor_ndb", "number")
 B747DR_nd_capt_apt	                        = deferred_dataref("laminar/B747/nd/data/capt/apt", "number")
@@ -728,6 +729,10 @@ end
 function B747_efis_dh_capt_reset_switch_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_efis_dh_reset_capt_switch_pos = 1
+        simDR_radio_alt_DH_capt=350
+        B747DR_efis_baro_alt_ref_capt=1000
+        simDR_radio_alt_DH_fo=350
+        B747DR_efis_baro_alt_ref_fo=1000
     elseif phase == 2 then
         B747DR_efis_dh_reset_capt_switch_pos = 0
     end
@@ -862,6 +867,11 @@ end
 function B747_efis_dh_fo_reset_switch_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_efis_dh_reset_fo_switch_pos = 1
+        B747DR_efis_dh_reset_capt_switch_pos = 1
+        simDR_radio_alt_DH_capt=350
+        B747DR_efis_baro_alt_ref_capt=1000
+        simDR_radio_alt_DH_fo=350
+        B747DR_efis_baro_alt_ref_fo=1000
     elseif phase == 2 then
         B747DR_efis_dh_reset_fo_switch_pos = 0
     end
@@ -1002,13 +1012,11 @@ function B747_nd_center_capt_switch_CMDhandler(phase, duration)
 end
 
 
-local capt_traffic_Selected=0
-local fo_traffic_Selected=0
 function B747_nd_traffic_capt_switch_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_nd_traffic_capt_switch_pos = 1
         --simCMD_EFIS_tcas:once()
-        capt_traffic_Selected=1-capt_traffic_Selected
+        B747DR_nd_capt_traffic_Selected=1-B747DR_nd_capt_traffic_Selected
 	
     elseif phase == 2 then
         B747DR_nd_traffic_capt_switch_pos = 0
@@ -1159,7 +1167,7 @@ function B747_nd_traffic_fo_switch_CMDhandler(phase, duration)
         B747DR_nd_traffic_fo_switch_pos = 1
         --simCMD_EFIS_tcas:once()
 	
-        fo_traffic_Selected=1-fo_traffic_Selected
+        B747DR_nd_fo_traffic_Selected=1-B747DR_nd_fo_traffic_Selected
 	
     elseif phase == 2 then
         B747DR_nd_traffic_fo_switch_pos = 0
@@ -2385,17 +2393,17 @@ function B747_nd_EFIS_map_modes()
     end
     if seenRASet==0 and B747DR_pfd_mode_capt==1 then --TA/RA never selected, ND IRS aligned, TCAS OFF ND Messages
       capttcas_off=1
-    elseif B747DR_xpdr_sel_pos<=2 and B747DR_pfd_mode_capt==1 and capt_traffic_Selected==1 then
+    elseif B747DR_xpdr_sel_pos<=2 and B747DR_pfd_mode_capt==1 and B747DR_nd_capt_traffic_Selected==1 then
       capttcas_off=1
-    elseif B747DR_xpdr_sel_pos>2 and B747DR_pfd_mode_capt==1 and capt_traffic_Selected==1 then
+    elseif B747DR_xpdr_sel_pos>2 and B747DR_pfd_mode_capt==1 and B747DR_nd_capt_traffic_Selected==1 then
       capttfc=1
     end
     
     if seenRASet==0 and B747DR_pfd_mode_fo==1 then --TA/RA never selected, ND IRS aligned, TCAS OFF ND Messages
       fotcas_off=1
-    elseif B747DR_xpdr_sel_pos<=2 and B747DR_pfd_mode_fo==1 and fo_traffic_Selected==1 then
+    elseif B747DR_xpdr_sel_pos<=2 and B747DR_pfd_mode_fo==1 and B747DR_nd_fo_traffic_Selected==1 then
       fotcas_off=1
-    elseif B747DR_xpdr_sel_pos>2 and B747DR_pfd_mode_fo==1 and fo_traffic_Selected==1 then
+    elseif B747DR_xpdr_sel_pos>2 and B747DR_pfd_mode_fo==1 and B747DR_nd_fo_traffic_Selected==1 then
       fotfc=1
     end
     

@@ -21444,8 +21444,11 @@ ANIM_begin
 	ATTR_no_solid_camera
 	TRIS	2178 30
 ANIM_end
+
 ATTR_manip_toggle	button	  1.00	  0.00	sim/cockpit2/switches/door_open[9]	Open/Close Cockpit Door
 ANIM_begin
+    ANIM_hide	1.0 1.0	laminar/B747/freighter
+	ANIM_show	0.0 0.0	laminar/B747/freighter
 	ANIM_trans	   0.2626    2.0464    8.2555	   0.2626    2.0464    8.2555	0 0	no_ref
 	ANIM_rotate	  -0.0000   -1.0000    0.0000	  0.00  88.14	0 1	sim/flightmodel2/misc/door_open_ratio[9]
 	ATTR_solid_camera
@@ -22183,9 +22186,9 @@ ATTR_manip_command	button	laminar/B747/fms3/ls_key/R6	Right Line Select Key 6
 TRIS	14442 30
 ATTR_manip_command	button	laminar/B747/gear_lock/override	Gear Lock Override
 TRIS	14472 30
-ATTR_manip_command	button	laminar/B747/glareshield/captain/chrono_switch	Chrono Start/Stop/Reset
+ATTR_manip_command	button	laminar/B747/fltInst/capt/clock_chrono_switch	Chrono Start/Stop/Reset
 TRIS	14502 30
-ATTR_manip_command	button	laminar/B747/glareshield/fo/chrono_switch	Chrono Start/Stop/Reset
+ATTR_manip_command	button	laminar/B747/fltInst/fo/clock_chrono_switch	Chrono Start/Stop/Reset
 TRIS	14532 30
 ATTR_manip_command	button	laminar/B747/nd/arpt/capt/switch	ARPT ON/OFF
 TRIS	14562 30
@@ -23663,6 +23666,8 @@ ANIM_begin
 ANIM_end
 ATTR_manip_toggle	button	  1.00	  0.00	sim/cockpit2/switches/door_open[9]	Open/Close Cockpit Door
 ANIM_begin
+    ANIM_hide	1.0 1.0	laminar/B747/freighter
+	ANIM_show	0.0 0.0	laminar/B747/freighter
 	ANIM_trans	   0.2626    2.0464    8.2555	   0.2626    2.0464    8.2555	0 0	no_ref
 	ANIM_rotate	  -0.0000   -1.0000    0.0000	  0.00  88.14	0 1	sim/flightmodel2/misc/door_open_ratio[9]
 	TRIS	27144 36

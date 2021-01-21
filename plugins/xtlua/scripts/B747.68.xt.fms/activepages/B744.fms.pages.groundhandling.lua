@@ -61,13 +61,13 @@ fmsPages["GNDSRV"]=createPage("GNDSRV")
 fmsPages["GNDSRV"].getPage=function(self,pgNo,fmsID)
   local lineA=string.format("%03d",B747DR_fuel_add)
 
-  local lineC = " ".. string.format("%03d",B747DR_payload_weight/120)
+  local lineC = "                        "
   if simDR_acf_m_jettison>0 then
 	local jet_weight=simDR_m_jettison
 	if simConfigData["data"].SIM.weight_display_units == "LBS" then
 	   jet_weight=simDR_m_jettison * simConfigData["data"].SIM.kgs_to_lbs
 	end
-	lineC = "               ".. string.format("%06d",jet_weight) .."         "
+	lineC = "               ".. string.format("%05d",jet_weight) .."         "
   end	  
 
 
@@ -81,8 +81,8 @@ fmsPages["GNDSRV"].getPage=function(self,pgNo,fmsID)
   "                        ",
   " "..lineA,
   "                        ",
-  "                        ",
-  --lineC,
+
+  lineC,
   "                        ",
   "  "..fmsModules["lastcmd"], 
   "                        ",

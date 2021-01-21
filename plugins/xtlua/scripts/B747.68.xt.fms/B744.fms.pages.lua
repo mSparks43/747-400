@@ -77,6 +77,8 @@ fmsFunctionsDefs["INDEX"]["L1"]={"setpage","FMC"}
 
 fmsFunctionsDefs["INDEX"]["L5"]={"setpage","ACMS"}
 fmsFunctionsDefs["INDEX"]["L6"]={"setpage","CMC"}
+fmsFunctionsDefs["INDEX"]["R1"]={"setpage","EFISCTL152"}
+fmsFunctionsDefs["INDEX"]["R2"]={"setpage","EICASMODES"}
 fmsFunctionsDefs["INDEX"]["R4"]={"setpage","GNDHNDL"}
 
 fmsPages["RTE1"]=createPage("RTE1")
@@ -221,6 +223,8 @@ dofile("activepages/atc/B744.fms.pages.whencanwe.lua")
 dofile("activepages/B744.fms.pages.cmc.lua")
 dofile("activepages/B744.fms.pages.acms.lua")
 dofile("activepages/B744.fms.pages.pax-cargo.lua")
+dofile("activepages/B744.fms.pages.efisctl.lua")
+dofile("activepages/B744.fms.pages.eicasctl.lua")
 --[[
 dofile("B744.fms.pages.actclb.lua")
 dofile("B744.fms.pages.actcrz.lua")
@@ -755,8 +759,137 @@ timer_start = 0
 function fmsFunctions.setdata(fmsO,value)
   local del=false  
   if fmsO["scratchpad"]=="DELETE" then fmsO["scratchpad"]="" del=true end
+  if value=="WXR" then
+		fmsModules["cmds"]["sim/instruments/EFIS_wxr"]:once()  
+  elseif value=="POS" then
+  elseif value=="TERR" then
+  elseif value=="TFC" then
+	if fmsO.id=="fmsR" then 
+		B747DR_nd_fo_traffic_Selected=1-B747DR_nd_fo_traffic_Selected
+	else
+		B747DR_nd_capt_traffic_Selected=1-B747DR_nd_capt_traffic_Selected
+	end
+	
+  elseif value=="VORDISP" then
+	if fmsO.id=="fmsR" then 
+		simDR_EFIS_1_sel_fo =2
+		simDR_EFIS_2_sel_fo =2
+	else
+		simDR_EFIS_1_sel_pilot=2
+		simDR_EFIS_2_sel_pilot=2
+	end
+  elseif value=="WPT" then
 
-  if value=="depdst" and string.len(fmsO["scratchpad"])>3  then
+  elseif value=="STA" then
+	if fmsO.id=="fmsR" then 
+		B747DR_nd_fo_vor_ndb = 1-B747DR_nd_fo_vor_ndb 
+	else
+		B747DR_nd_capt_vor_ndb=1-B747DR_nd_capt_vor_ndb
+	end
+  elseif value=="ARPT" then
+	if fmsO.id=="fmsR" then 
+		B747DR_nd_fo_apt=1-B747DR_nd_fo_apt
+	else
+		B747DR_nd_capt_apt=1-B747DR_nd_capt_apt
+	end
+  elseif value=="DATA" then
+  elseif value=="ADFDISP" then
+	if fmsO.id=="fmsR" then 
+		simDR_EFIS_1_sel_fo =0
+		simDR_EFIS_2_sel_fo =0
+	else
+		simDR_EFIS_1_sel_pilot=0
+		simDR_EFIS_2_sel_pilot=0
+	end
+  elseif value=="DH" then
+	if tonumber(fmsO["scratchpad"]) ==nil then 
+		fmsO["notify"]="INVALID ENTRY"
+		return
+	end
+	local alt=tonumber(fmsO["scratchpad"])
+	if fmsO.id=="fmsR" then 
+		simDR_radio_alt_DH_fo=alt
+	else
+		simDR_radio_alt_DH_capt=alt
+	end
+  elseif value=="MDA" then
+		if tonumber(fmsO["scratchpad"]) ==nil then 
+			fmsO["notify"]="INVALID ENTRY"
+			return
+		end
+		local alt=tonumber(fmsO["scratchpad"])
+		if fmsO.id=="fmsR" then 
+			B747DR_efis_baro_alt_ref_fo=alt
+		else
+			B747DR_efis_baro_alt_ref_capt=alt
+		end
+  elseif value=="EFISMAP" then
+	if fmsO.id=="fmsR" then 
+		simDR_nd_mode_dial_fo= 2
+	else
+		simDR_nd_mode_dial_capt= 2
+	end
+  elseif value=="EFISPLN" then
+		if fmsO.id=="fmsR" then 
+			simDR_nd_mode_dial_fo= 3
+		else
+			simDR_nd_mode_dial_capt= 3
+		end	
+  elseif value=="EFISAPP" then
+		if fmsO.id=="fmsR" then 
+			simDR_nd_mode_dial_fo= 0
+		else
+			simDR_nd_mode_dial_capt= 0
+		end	
+  elseif value=="EFISVOR" then
+		if fmsO.id=="fmsR" then 
+			simDR_nd_mode_dial_fo= 1
+		else
+			simDR_nd_mode_dial_capt= 1
+		end	
+  elseif value=="EFISCTR" then
+		if fmsO.id=="fmsR" then 
+			simDR_nd_center_dial_fo= 1-simDR_nd_center_dial_fo
+		else
+			simDR_nd_center_dial_capt= 1-simDR_nd_center_dial_capt
+		end	
+	elseif value=="BARO" then
+		if fmsO["scratchpad"]=="S" or fmsO["scratchpad"]=="STD" then
+			simDR_altimeter_baro_inHg_fo=29.92
+			simDR_altimeter_baro_inHg=29.92
+			B747DR_efis_baro_std_capt_switch_pos=1
+			B747DR_efis_baro_std_fo_switch_pos=1
+			return
+		end
+		if tonumber(fmsO["scratchpad"]) ==nil then 
+			fmsO["notify"]="INVALID ENTRY"
+			return
+		end
+		local baro=tonumber(fmsO["scratchpad"])
+		if fmsO.id=="fmsR" then 
+			if B747DR_efis_baro_ref_fo_sel_dial_pos==1 then 
+				baro=baro/33.863892
+			end
+			
+		else
+			if B747DR_efis_baro_ref_capt_sel_dial_pos==1 then 
+				baro=baro/33.863892
+			end
+			
+		end	
+		simDR_altimeter_baro_inHg_fo=baro
+		simDR_altimeter_baro_inHg=baro
+		B747DR_efis_baro_std_capt_switch_pos=0
+		B747DR_efis_baro_std_fo_switch_pos=0
+  elseif value=="RANGEINC" then
+	simDR_range_dial_fo=math.min(simDR_range_dial_fo+1, 6)
+	simDR_range_dial_capt=simDR_range_dial_fo
+	simDR_EFIS_map_range=simDR_range_dial_fo
+  elseif value=="RANGEDEC" then	
+	simDR_range_dial_fo=math.max(simDR_range_dial_fo-1, 0)
+	simDR_range_dial_capt=simDR_range_dial_fo
+	simDR_EFIS_map_range=simDR_range_dial_fo
+  elseif value=="depdst" and string.len(fmsO["scratchpad"])>3  then
     dep=string.sub(fmsO["scratchpad"],1,4)
     dst=string.sub(fmsO["scratchpad"],-4)
     --fmsModules["data"]["fltdep"]=dep
@@ -1931,5 +2064,8 @@ end
 
 function fmsFunctions.doCMD(fmsO,value)
   print("do fmc command "..value)
-  if fmsModules["cmds"][value] ~= nil then fmsModules["cmds"][value]:once() fmsModules["lastcmd"]=fmsModules["cmdstrings"][value] end
+  if fmsModules["cmds"][value] ~= nil then 
+	fmsModules["cmds"][value]:once() 
+	fmsModules["lastcmd"]=fmsModules["cmdstrings"][value] 
+  end
 end
