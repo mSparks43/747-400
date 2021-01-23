@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.01.08.00">
     <object class="Event" id="{762a9b74-36fb-43c2-b58d-147a68eb1f91}">
         <relationship name="selectables">
-            <destination>{5d8b1766-456e-47fc-bcbd-217e3f31cadc}</destination>
+            <destination>{28ddfe3d-71a7-4cbf-b705-abe4ea429357}</destination>
         </relationship>
         <relationship name="uiLastParameterSelection">
             <destination>{5d8b1766-456e-47fc-bcbd-217e3f31cadc}</destination>
@@ -27,7 +27,7 @@
     </object>
     <object class="GameParameter" id="{5d8b1766-456e-47fc-bcbd-217e3f31cadc}">
         <property name="cursorPosition">
-            <value>0.020441097364174286</value>
+            <value>0</value>
         </property>
         <property name="uiLastRulerScaleRatio">
             <value>0.00053792361484669173</value>

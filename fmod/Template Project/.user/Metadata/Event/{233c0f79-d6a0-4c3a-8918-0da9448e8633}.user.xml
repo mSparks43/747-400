@@ -5,7 +5,7 @@
             <destination>{e24457e3-481f-4d6e-8c94-696b19db26fd}</destination>
         </relationship>
         <relationship name="uiLastParameterSelection">
-            <destination>{0f2e2eaa-4918-41fb-9133-576ece77f575}</destination>
+            <destination>{a99a88bf-7c12-40da-9191-0ac73b9a1c94}</destination>
         </relationship>
     </object>
     <object class="MasterTrack" id="{ff72560a-2784-4974-b65c-74de38e48239}"/>
@@ -27,7 +27,7 @@
     </object>
     <object class="DistanceParameter" id="{a99a88bf-7c12-40da-9191-0ac73b9a1c94}">
         <property name="cursorPosition">
-            <value>0.0099999997764825821</value>
+            <value>0</value>
         </property>
         <property name="uiLastRulerScaleRatio">
             <value>0.5376344086021505</value>
@@ -43,7 +43,7 @@
     </object>
     <object class="AngleParameter" id="{b3c5e6a4-77dd-44ce-a5ca-488534be5cc2}">
         <property name="cursorPosition">
-            <value>180</value>
+            <value>0</value>
         </property>
         <property name="uiLastRulerScaleRatio">
             <value>0.096826250672404524</value>

@@ -2,10 +2,10 @@
 <objects serializationModel="Studio.01.08.00">
     <object class="Event" id="{28c72ed5-11a8-4eaa-816d-af0469b0f2a0}">
         <relationship name="selectables">
-            <destination>{fba4e454-48ee-4c7a-b6b0-80f229de11e4}</destination>
+            <destination>{e4b03aea-3cd2-4848-bcbe-f336e40cb231}</destination>
         </relationship>
         <relationship name="uiLastParameterSelection">
-            <destination>{4b4c9ebd-9a14-4939-b4b4-bfd3c9351807}</destination>
+            <destination>{6a90198c-2dc6-4ba2-a0ba-4afd3b9d2182}</destination>
         </relationship>
     </object>
     <object class="MasterTrack" id="{d0398e5c-8de4-47d7-aad2-455609c1c52f}"/>
@@ -16,11 +16,7 @@
     <object class="GroupTrack" id="{f4d01852-fec3-4deb-a944-1e0defce41a2}"/>
     <object class="GroupTrack" id="{27779d55-05d6-400d-97d9-bd8884458576}"/>
     <object class="GroupTrack" id="{3f461333-d9d0-43a1-8903-3e4100442d9f}"/>
-    <object class="GroupTrack" id="{b61abe17-f9df-403f-9a5b-f73fc3b46f59}">
-        <property name="uiAutomationTracksVisible">
-            <value>true</value>
-        </property>
-    </object>
+    <object class="GroupTrack" id="{b61abe17-f9df-403f-9a5b-f73fc3b46f59}"/>
     <object class="Timeline" id="{460d4563-1705-4641-b971-09c2fbc02b76}">
         <property name="cursorPosition">
             <value>0</value>
@@ -31,18 +27,18 @@
     </object>
     <object class="GameParameter" id="{4b4c9ebd-9a14-4939-b4b4-bfd3c9351807}">
         <property name="cursorPosition">
-            <value>96.915584415584419</value>
+            <value>98.268398268398272</value>
         </property>
         <property name="uiLastRulerScaleRatio">
-            <value>0.053792361484669177</value>
+            <value>0.054112554112554112</value>
         </property>
     </object>
     <object class="DistanceParameter" id="{6a90198c-2dc6-4ba2-a0ba-4afd3b9d2182}">
         <property name="cursorPosition">
-            <value>0.0099999997764825821</value>
+            <value>507.03463745117188</value>
         </property>
         <property name="uiLastRulerScaleRatio">
-            <value>0.54112554112554112</value>
+            <value>0.53792361484669182</value>
         </property>
     </object>
     <object class="AngleParameter" id="{7470ce24-352b-44ed-9f1b-b0c25ae2889d}">
@@ -50,7 +46,7 @@
             <value>5.0089556680177338e-06</value>
         </property>
         <property name="uiLastRulerScaleRatio">
-            <value>0.097402597402597407</value>
+            <value>0.096826250672404524</value>
         </property>
     </object>
     <object class="GameParameter" id="{8776d506-feda-43e5-b142-3e9a7681b807}">
