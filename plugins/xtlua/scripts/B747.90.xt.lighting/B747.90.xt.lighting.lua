@@ -618,17 +618,17 @@ function B747_init_lighting()
     X	Y	Z	R	G	B	A	SIZE	SEMI	Dx	Dy	Dz
     --]]
 
-    local capt_panel_flood_values = {1.0, 0.92, 0.59, 0.0, 0.55, 0.60, -0.05, -0.525, -0.425}
-    local center_panel_flood_values = {1.0, 0.92, 0.59, 0.0, 0.65, 0.15, 0.0, -1.0, 0.0}
-    local capt_map_values = {1.0, 1.0, 0.7, 0.0, 2.0, 0.98, 0.0, -1.0, 0.0}
-    local capt_chart_values = {1.0 ,1.0, 0.7, 0.0, 0.37, 0.88, -0.35, -0.65, 0.25}
-    local fo_panel_flood_values = {1.0, 0.92, 0.59,  0.0, 0.55, 0.60, 0.05, -0.525, -0.425}
-    local fo_map_values = {1.0, 1.0, 0.7, 0.0, 2.0, 0.98, 0.0, -1.0, 0.0}
-    local fo_chart_values = {1.0, 1.0, 0.7, 0.0, 0.37, 0.88, 0.35, -0.65, 0.25}
-    local observer_map_values = {1.0, 1.0, 0.7, 0.0, 2.5, 0.95, 0.15, -0.68, 0.17}
-    local mcp_flood_values = {1.0, 0.92, 0.59, 0.0, 0.12, 0.08, 0.0, -0.50, 0.50}
-    local aisle_stand_flood_values = {1.0, 0.92, 0.59, 0.0, 2.0, 0.85, 0.0, -0.8, -0.2}
-    local mag_compass_flood_values = {1.0, 0.92, 0.59, 0.0, 0.1, 0.55, 0.0, 0.0 , -1.0}
+    local capt_panel_flood_values = {1.0, 0.70, 0.24, 0.0, 0.55, 0.60, -0.05, -0.525, -0.425}
+    local center_panel_flood_values = {1.0, 0.70, 0.24, 0.0, 0.65, 0.15, 0.0, -1.0, 0.0}
+    local capt_map_values = {1.0, 0.70, 0.24, 0.0, 2.0, 0.98, 0.0, -1.0, 0.0}
+    local capt_chart_values = {1.0, 0.70, 0.24, 0.0, 0.37, 0.88, -0.35, -0.65, 0.25}
+    local fo_panel_flood_values = {1.0, 0.70, 0.24,  0.0, 0.55, 0.60, 0.05, -0.525, -0.425}
+    local fo_map_values = {1.0, 0.70, 0.24, 0.0, 2.0, 0.98, 0.0, -1.0, 0.0}
+    local fo_chart_values = {1.0, 0.70, 0.24, 0.0, 0.37, 0.88, 0.35, -0.65, 0.25}
+    local observer_map_values = {1.0, 0.70, 0.24, 0.0, 2.5, 0.95, 0.15, -0.68, 0.17}
+    local mcp_flood_values = {1.0, 0.70, 0.24, 0.0, 0.12, 0.08, 0.0, -0.50, 0.50}
+    local aisle_stand_flood_values = {1.0, 0.70, 0.24, 0.0, 2.0, 0.85, 0.0, -0.8, -0.2}
+    local mag_compass_flood_values = {1.0, 0.70, 0.24, 0.0, 0.1, 0.55, 0.0, 0.0 , -1.0}
 
     for i = 1, NUM_SPILL_LIGHT_INDICES do
         B747DR_spill_light_capt_panel_flood[i-1] = capt_panel_flood_values[i]

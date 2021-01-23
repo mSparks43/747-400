@@ -204,10 +204,14 @@ if simDR_acf_tailnum ~= nil then
 end
 
 function flight_start()
+	local refreshLivery=simDR_livery_path
 	B747DR_simconfig_data=json.encode(simConfigData["data"]["values"]) --make the simConfig data available to other modules
-	run_after_time(aircraft_simConfig, 3)  --Load specific simConfig data for current livery
+	run_after_time(aircraft_simConfig, 1)  --Load specific simConfig data for current livery
 end
-
+function livery_load()
+	local refreshLivery=simDR_livery_path
+	run_after_time(aircraft_simConfig, 1)  --Load specific simConfig data for current livery
+end
 function after_physics()
 	--Keep the structure fresh
 	simConfigData["data"] = json.decode(B747DR_simconfig_data)

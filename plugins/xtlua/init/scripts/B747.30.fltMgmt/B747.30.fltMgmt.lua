@@ -80,7 +80,7 @@ B747DR_xpdr_code_12_dial_pos    = deferred_dataref("laminar/B747/flt_mgmt/transp
 B747DR_xpdr_code_34_dial_pos    = deferred_dataref("laminar/B747/flt_mgmt/transponder_code/digts_34_dial_pos", "number")
 
 B747DR_init_fltmgmt_CD          = deferred_dataref("laminar/B747/fltmgmt/init_CD", "number")
-
+B747DR_is_freighter          = deferred_dataref("laminar/B747/freighter", "number")
 
 -- IRU MODE SELECTORS
 B747CMD_flt_mgmgt_iru_mode_sel_L_up = deferred_command("laminar/B747/flt_mgmt/iru/mode_sel_dial_L_up", "Flight Management IRU Mode Selector L Up", B747_flt_mgmgt_iru_mode_sel_L_up_CMDhandler)

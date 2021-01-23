@@ -1676,17 +1676,7 @@ function B747_ap_ias_mach_mode()
 	    print("IAS end Go Around")
 	  end
 	----- SET THE IAS/MACH WINDOW STATUS
-	if ((simDR_autopilot_autothrottle_enabled > 0
-		or simDR_autopilot_flch_status > 1
-		or simDR_autopilot_vs_status > 1
-		or B747DR_engine_TOGA_mode > 0
-		or simDR_autopilot_TOGA_vert_status > 0
-		or simDR_autopilot_alt_hold_status > 1
-		or simDR_autopilot_gs_status > 0)
-		or B747DR_ap_autothrottle_armed == 1) 
-		and switchingIASMode==0 
-		and (B747DR_ap_vnav_state<2 or manualVNAVspd==1) --inop until we know speed!
-		and B747DR_ap_autothrottle_armed == 1
+	if switchingIASMode==0 and (B747DR_ap_vnav_state<2 or manualVNAVspd==1) --inop until we know speed!
 	then	
 		B747DR_ap_ias_mach_window_open = 1
 	else
@@ -2943,9 +2933,16 @@ function B747_ap_EICAS_msg()
 		B747DR_CAS_caution_status[4] = 1
 	else
 		B747DR_CAS_caution_status[4] = 0
-    end
+	end
+
+	
     --print("test drag required".. B747DR_speedbrake_lever .. " " .. simDR_all_wheels_on_ground .. " " .. simDR_autopilot_vs_fpm .. " " .. simDR_autopilot_vs_status .. " " )
-    -- >AUTOTHROT DISC 
+	-- >AUTOTHROT DISC 
+	if B747DR_ap_autothrottle_armed == 0 then
+		B747DR_CAS_caution_status[5] = 1
+	else
+		B747DR_CAS_caution_status[5] = 0
+	end
     --if B747DR_speedbrake_lever <0.3  and simDR_autopilot_vs_fpm<-2000 and simDR_autopilot_vs_status >= 1 and B747DR_ap_vnav_state>0 then 
 	if B747DR_speedbrake_lever <0.3  and simDR_ind_airspeed_kts_pilot>(simDR_autopilot_airspeed_kts+10) and simDR_autopilot_vs_status >= 1 and B747DR_ap_vnav_state>0 then 
 	--just a simple one for now, min thrust and increasing speed in vs mode would be better

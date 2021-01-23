@@ -132,7 +132,8 @@ B747DR_nd_arpt_fo_switch_pos                    = deferred_dataref("laminar/B747
 B747DR_nd_data_fo_switch_pos                    = deferred_dataref("laminar/B747/nd/data/fo/switch_pos", "number")
 B747DR_nd_pos_fo_switch_pos                     = deferred_dataref("laminar/B747/nd/pos/fo/switch_pos", "number")
 B747DR_nd_terr_fo_switch_pos                    = deferred_dataref("laminar/B747/nd/terr/fo/switch_pos", "number")
-
+B747DR_nd_capt_traffic_Selected                 = deferred_dataref("laminar/B747/nd/traffic/capt/selected", "number")
+B747DR_nd_fo_traffic_Selected                   = deferred_dataref("laminar/B747/nd/traffic/fo/selected", "number")
 B747_nd_vorL_ID_flag_fo                         = deferred_dataref("laminar/B747/nd/vorL_id_flag/fo", "number")
 B747_nd_vorR_ID_flag_fo                         = deferred_dataref("laminar/B747/nd/vorR_id_flag/fo", "number")
 

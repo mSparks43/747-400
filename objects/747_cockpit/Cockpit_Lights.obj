@@ -11,7 +11,7 @@ ATTR_LOD	0 500
 # 		   CAPTAIN PANEL FLOOD     		#
 #########################################################
 #			X	Y	Z	R	G	B	A	SIZE	Dx	Dy	Dz	semi	Dataref
-LIGHT_SPILL_CUSTOM 	-0.497 	2.949 	4.962	1.0 	0.92 	0.59 	0.0 	0.55 	-0.05 	-0.525 	-0.425 	0.60	laminar/B747/light/spill/ratio/captain_panel
+LIGHT_SPILL_CUSTOM 	-0.497 	2.949 	4.962	0.96 	0.98 	0.50 	0.0 	0.55 	-0.05 	-0.525 	-0.425 	0.60	laminar/B747/light/spill/ratio/captain_panel
 
 	
 #########################################################

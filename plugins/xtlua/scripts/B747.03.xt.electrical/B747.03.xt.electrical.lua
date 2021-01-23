@@ -418,9 +418,11 @@ function B747_battery()
         and simDR_battery_on[0] == 0
     then
         simDR_battery_on[0] = 1
-        B747DR_elec_apu_volts = 28
+        
     end
-
+    if simDR_battery_on[0] == 1 then
+         B747DR_elec_apu_volts = 28
+    end
 end
 
 
@@ -773,7 +775,7 @@ function B747_electrical_EICAS_msg()
     end
     if (B747DR_elec_apu_sel_pos > 0.95 and simDR_apu_N1_pct < 0.1)
         or
-        (B747DR_elec_apu_sel_pos < 0.05 and simDR_apu_N1_pct > 95.0)
+        (B747DR_elec_apu_sel_pos < 0.05 and simDR_apu_N1_pct > 95.0 and is_timer_scheduled(B747_apu_shutdown) == false)
     then
         B747DR_CAS_advisory_status[13] = 1
     else

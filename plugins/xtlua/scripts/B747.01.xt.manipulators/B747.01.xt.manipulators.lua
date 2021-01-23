@@ -2169,9 +2169,12 @@ end
 function flight_start()
     print("XTLua Flight Start "..simDR_livery)
     B747_flight_start_manip()
-    run_after_time(setACFType,3)
+    run_after_time(setACFType,1)
 end
-
+function livery_load()
+	local refreshLivery=simDR_livery_path
+	run_after_time(setACFType, 1)  --Load specific simConfig data for current livery
+end
 --function flight_crash() end
 
 --function before_physics() end
