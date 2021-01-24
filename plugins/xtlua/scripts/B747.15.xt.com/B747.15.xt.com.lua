@@ -78,6 +78,8 @@ end
 simDR_startup_running       = find_dataref("sim/operation/prefs/startup_running")
 
 simDR_audio_com_selector    = find_dataref("sim/cockpit2/radios/actuators/audio_com_selection")
+simDR_audio_com1_power         = find_dataref("sim/cockpit2/radios/actuators/com1_power")
+simDR_audio_com2_power         = find_dataref("sim/cockpit2/radios/actuators/com2_power")
 simDR_audio_on_com1         = find_dataref("sim/cockpit2/radios/actuators/audio_selection_com1")
 simDR_audio_on_com2         = find_dataref("sim/cockpit2/radios/actuators/audio_selection_com2")
 simDR_audio_on_nav1         = find_dataref("sim/cockpit2/radios/actuators/audio_selection_nav1")
@@ -3328,28 +3330,34 @@ end
 acars=find_dataref("laminar/B747/comm/acars")
 ----- LCD DISPLAY STATUS ----------------------------------------------------------------
 function B747_lcd_display_status()
-
+    local com1_power=0
+    local com2_power=0
     -- SET WHICH LCD TO DISPLAY (PLANEMAKER HIDE/SHOW)
     if B747DR_rtp_L_off_status == 0 then
         if B747DR_rtp_L_vhf_L_status == 1 then
             B747DR_rtp_L_lcd_to_display = 0
+            com1_power=1
         elseif B747DR_rtp_L_vhf_R_status == 1 then
             B747DR_rtp_L_lcd_to_display = 1
+            com2_power=1
         else
-	  if acars==0 then
-            B747DR_rtp_L_lcd_to_display = 99
-	  else
-	    B747DR_rtp_L_lcd_to_display = 98
-	  end
+            if acars==0 then
+                    B747DR_rtp_L_lcd_to_display = 99
+            else
+                B747DR_rtp_L_lcd_to_display = 98
+            end
         end
-    end
 
+    end
+    
 
     if B747DR_rtp_C_off_status == 0 then
         if B747DR_rtp_C_vhf_L_status == 1 then
             B747DR_rtp_C_lcd_to_display = 0
+            com1_power=1
         elseif B747DR_rtp_C_vhf_R_status == 1 then
             B747DR_rtp_C_lcd_to_display = 1
+            com2_power=1
         else
 	  if acars==0 then
             B747DR_rtp_C_lcd_to_display = 99
@@ -3363,8 +3371,10 @@ function B747_lcd_display_status()
     if B747DR_rtp_R_off_status == 0 then
         if B747DR_rtp_R_vhf_L_status == 1 then
             B747DR_rtp_R_lcd_to_display = 0
+            com1_power=1
         elseif B747DR_rtp_R_vhf_R_status == 1 then
             B747DR_rtp_R_lcd_to_display = 1
+            com2_power=1
         else
 	  if acars==0 then
             B747DR_rtp_R_lcd_to_display = 99
@@ -3373,7 +3383,10 @@ function B747_lcd_display_status()
 	  end
         end
     end
-
+    local last_simDR_audio_com1_power=simDR_audio_com1_power
+    local last_simDR_audio_com2_power=simDR_audio_com2_power
+    simDR_audio_com1_power=com1_power
+    simDR_audio_com2_power=com2_power
 end
 
 
