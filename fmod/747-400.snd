@@ -93,6 +93,8 @@ END_SOUND_SPACE
 #Switches
 #######################
 
+#sim/cockpit/warnings/annunciators/autopilot_disconnect
+
 BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Switches/stab_trim
 	VEH_XYZ -0.55 4.8 -26.26

@@ -79,6 +79,9 @@
         <relationship name="modules">
             <destination>{45caf7d9-0019-4833-bde3-db24facfa4f2}</destination>
         </relationship>
+        <relationship name="automationCurves">
+            <destination>{547d1e9c-1037-4181-9a57-774a494b7efb}</destination>
+        </relationship>
     </object>
     <object class="DistanceParameter" id="{a99a88bf-7c12-40da-9191-0ac73b9a1c94}">
         <property name="maximum">
@@ -141,6 +144,7 @@
         <relationship name="automationCurves">
             <destination>{2df63e1d-d476-4e6a-b2cf-89b04e449c67}</destination>
             <destination>{e7d9ec03-d04e-417b-b690-818fd5613adc}</destination>
+            <destination>{547d1e9c-1037-4181-9a57-774a494b7efb}</destination>
         </relationship>
         <relationship name="objectBeingAutomated">
             <destination>{3676243f-4ff3-459d-84ee-b16e2195ef51}</destination>
@@ -172,6 +176,11 @@
         </relationship>
         <relationship name="output">
             <destination>{7966ead4-c877-418f-8dc1-a9d9c8b473b4}</destination>
+        </relationship>
+    </object>
+    <object class="AutomationCurve" id="{547d1e9c-1037-4181-9a57-774a494b7efb}">
+        <relationship name="automationPoints">
+            <destination>{16648f8a-e3e7-40cd-9b53-5592c0d13550}</destination>
         </relationship>
     </object>
     <object class="AutomationCurve" id="{e7d9ec03-d04e-417b-b690-818fd5613adc}">
@@ -213,6 +222,14 @@
         </relationship>
     </object>
     <object class="MixerBusPanner" id="{9586a20d-0d7d-477d-b015-9c6824d1bc13}"/>
+    <object class="AutomationPoint" id="{16648f8a-e3e7-40cd-9b53-5592c0d13550}">
+        <property name="position">
+            <value>0</value>
+        </property>
+        <property name="value">
+            <value>-15.0391312</value>
+        </property>
+    </object>
     <object class="AutomationPoint" id="{918ee93f-29bf-4632-b41c-a1d44f888fc5}">
         <property name="position">
             <value>0.53792361484669171</value>

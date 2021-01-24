@@ -83,6 +83,9 @@
         <relationship name="modules">
             <destination>{2ccfe489-3b91-4bc5-9a61-bf13abe55f8c}</destination>
         </relationship>
+        <relationship name="automationCurves">
+            <destination>{1bcc2e8c-f92d-429b-945b-e2153bbdb7b6}</destination>
+        </relationship>
     </object>
     <object class="GameParameter" id="{33d2356b-5ed7-4783-895a-310a10b3472f}">
         <property name="name">
@@ -133,6 +136,7 @@
         <relationship name="automationCurves">
             <destination>{1d953100-cb91-4137-bb49-1a6f6904817a}</destination>
             <destination>{306ff637-ce6e-4710-8882-9d00dc39fe48}</destination>
+            <destination>{1bcc2e8c-f92d-429b-945b-e2153bbdb7b6}</destination>
         </relationship>
         <relationship name="objectBeingAutomated">
             <destination>{8ac5dcce-2402-497b-96df-a0cca974dc05}</destination>
@@ -175,6 +179,11 @@
             <destination>{b5940d8b-78cb-40db-8f0c-c5c793e3476a}</destination>
         </relationship>
     </object>
+    <object class="AutomationCurve" id="{1bcc2e8c-f92d-429b-945b-e2153bbdb7b6}">
+        <relationship name="automationPoints">
+            <destination>{c54ee32f-cb76-49d6-838f-adb52a1f2e20}</destination>
+        </relationship>
+    </object>
     <object class="AutomationCurve" id="{4a98a0b0-cd47-45bb-86f0-f6ea443dfbb4}">
         <relationship name="automationPoints">
             <destination>{cace5a5d-a2b7-46a4-af59-623a13395897}</destination>
@@ -214,6 +223,14 @@
         </relationship>
     </object>
     <object class="MixerBusPanner" id="{74fa3455-d924-4042-8c4a-74a42db6e271}"/>
+    <object class="AutomationPoint" id="{c54ee32f-cb76-49d6-838f-adb52a1f2e20}">
+        <property name="position">
+            <value>0</value>
+        </property>
+        <property name="value">
+            <value>-15.0391312</value>
+        </property>
+    </object>
     <object class="AutomationPoint" id="{cace5a5d-a2b7-46a4-af59-623a13395897}">
         <property name="position">
             <value>0</value>

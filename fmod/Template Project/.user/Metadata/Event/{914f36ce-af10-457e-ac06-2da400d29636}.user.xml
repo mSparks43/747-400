@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.01.08.00">
     <object class="Event" id="{914f36ce-af10-457e-ac06-2da400d29636}">
-        <relationship name="selectables">
-            <destination>{02f1aace-be8d-4b39-8092-9c35cb723716}</destination>
-        </relationship>
         <relationship name="uiLastParameterSelection">
-            <destination>{aacd631d-b626-41d2-b908-d4b295b75be7}</destination>
+            <destination>{517d73d3-6052-409e-9870-72ed38d99af4}</destination>
         </relationship>
     </object>
     <object class="MasterTrack" id="{1d41c3d4-52ed-4fef-9566-ebde38f6518c}"/>
@@ -19,10 +16,10 @@
     </object>
     <object class="Timeline" id="{517d73d3-6052-409e-9870-72ed38d99af4}">
         <property name="cursorPosition">
-            <value>32.970209674981106</value>
+            <value>0</value>
         </property>
         <property name="uiLastRulerScaleRatio">
-            <value>0.03064145880574452</value>
+            <value>0.03065794157002948</value>
         </property>
     </object>
     <object class="DistanceParameter" id="{aacd631d-b626-41d2-b908-d4b295b75be7}">

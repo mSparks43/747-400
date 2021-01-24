@@ -63,9 +63,9 @@
 {914f36ce-af10-457e-ac06-2da400d29636} event:/Engines/PW/start/start2
 {28c72ed5-11a8-4eaa-816d-af0469b0f2a0} event:/Engines/PW/engine1
 {623f8045-df33-46d3-adab-aeb6aa8a7522} event:/Engines/PW/shutdown
-{1aefafc1-8024-4113-a935-cb2d0f35e2ce} event:/Engines/PW/engine2
-{e09ec4a9-af81-4c6c-8ad1-a73a19d4e0d9} event:/Engines/PW/engine3
-{f2f465aa-4cef-4ec5-a230-e517521028aa} event:/Engines/PW/engine4
+{0267b3fd-c334-4e1d-81a6-2ad43bc11c57} event:/Engines/PW/engine2
+{065b377d-2ebf-4f9a-a6f5-c1aff6fcd34c} event:/Engines/PW/engine3
+{77c2cd20-9144-44d4-a760-fbbf9803b502} event:/Engines/PW/engine4
 {5263f8c2-1b33-4a7b-8a9d-eaa8c018bf0e} event:/Warnings/GPWS/10
 {7f55a41b-5115-4ace-92ae-51cab1a84d20} event:/Warnings/GPWS/100
 {a2177ed5-5ec3-49dc-9626-c329fd7c9731} event:/Warnings/GPWS/1000
