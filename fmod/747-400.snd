@@ -188,6 +188,18 @@ BEGIN_SOUND_ATTACHMENT
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/throttle at
+	VEH_XYZ 0 4.7 -26.2
+	EVENT_START_COND laminar/B747/autopilot/button_switch/autothrottle_disco_L
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Switches/throttle at
+	VEH_XYZ 0 4.7 -26.2
+	EVENT_START_COND laminar/B747/autopilot/button_switch/autothrottle_disco_R
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Switches/button1
 	VEH_XYZ 0 4.9 -26
     	EVENT_CMND_DOWN laminar/B747/button_switch/altn_flap
@@ -913,6 +925,7 @@ BEGIN_SOUND_ATTACHMENT
 	EVENT_CMND_HOLD_CUE laminar/B747/toggle_switch/autothrottle
 END_SOUND_ATTACHMENT
 
+END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Switches/rhotery
@@ -3970,8 +3983,21 @@ BEGIN_SOUND_ATTACHMENT
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Avionics/avioncs3
+	VEH_XYZ 0 5 -24.6
+    	EVENT_START_COND sim/cockpit2/electrical/battery_on[0] != 0
+	EVENT_END_COND sim/cockpit2/electrical/battery_on[0] == 0
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Avionics/battery_shutdown
+	VEH_XYZ 0 4.9 -26
+    	EVENT_START_COND sim/cockpit2/electrical/battery_on[0] == 0
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Avionics/gyro
-	VEH_XYZ 0.17 4.78 26.7
+	VEH_XYZ -0.17 4.8 26.67
     	EVENT_START_COND sim/cockpit2/electrical/battery_on[0] != 0
 	EVENT_END_COND sim/cockpit2/electrical/battery_on[0] == 0
 END_SOUND_ATTACHMENT
@@ -4023,15 +4049,31 @@ END_SOUND_ATTACHMENT
 BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Avionics/Contactors/contactor2
 	VEH_XYZ 0 4.9 -26
-	EVENT_START_COND sim/cockpit2/electrical/bus_volts[0] == 28
-	EVENT_END_COND sim/cockpit2/electrical/bus_volts[0] != 28
+	EVENT_START_COND sim/cockpit2/electrical/bus_volts[0] > 24
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Cockpit/Avionics/Contactors/contactor2
 	VEH_XYZ 0 4.9 -26
 	EVENT_START_COND sim/cockpit2/electrical/bus_volts[0] != 28
-	EVENT_END_COND sim/cockpit2/electrical/bus_volts[0] == 28
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Avionics/Contactors/MAWEA_test
+	VEH_XYZ 0 4.9 -26
+	EVENT_START_COND sim/cockpit2/electrical/bus_volts[0] > 24
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Avionics/Contactors/contactor3
+	VEH_XYZ 0.55 4.8 -26.26
+    	EVENT_START_COND laminar/B747/electrical/standby_power/sel_dial_pos > 0
+END_SOUND_ATTACHMENT
+
+BEGIN_SOUND_ATTACHMENT
+	EVENT_NAME /Cockpit/Avionics/Contactors/contactor3
+	VEH_XYZ 0.55 4.8 -26.26
+    	EVENT_START_COND laminar/B747/electrical/standby_power/sel_dial_pos == 0
 END_SOUND_ATTACHMENT
 
 ################################
@@ -4282,10 +4324,7 @@ BEGIN_SOUND_ATTACHMENT
 	EVENT_NAME /Warnings/GPWS/too_low_flaps
 	VEH_XYZ 0 4.2 -26.8
 	EVENT_START_COND sim/cockpit2/controls/flap_ratio == 0
-	EVENT_START_COND sim/cockpit2/gauges/indicators/vvi_fpm_pilot < -100
-	EVENT_START_COND sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot < 2450
-  	EVENT_START_COND sim/cockpit2/annunciators/gear_warning_aural == 1
-  	EVENT_END_COND sim/cockpit2/gauges/indicators/vvi_fpm_pilot > -5
+	EVENT_END_COND sim/cockpit2/controls/flap_ratio =! 0
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
@@ -4544,7 +4583,7 @@ BEGIN_SOUND_ATTACHMENT
 	VEH_XYZ -20 -1.5 2
 	EVENT_ALLOWED_FOR_AI
 	EVENT_START_COND sim/time/total_flight_time_sec > 0
-	EVENT_START_COND sim/cockpit2/engine/indicators/N1_percent[0] < 19
+	EVENT_START_COND sim/cockpit2/engine/indicators/N1_percent[0] < 19.8
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
@@ -4552,7 +4591,7 @@ BEGIN_SOUND_ATTACHMENT
 	VEH_XYZ -12 -1.5 -2
 	EVENT_ALLOWED_FOR_AI
 	EVENT_START_COND sim/time/total_flight_time_sec > 0
-	EVENT_START_COND sim/cockpit2/engine/indicators/N1_percent[1] < 19
+	EVENT_START_COND sim/cockpit2/engine/indicators/N1_percent[1] < 19.8
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
@@ -4560,7 +4599,7 @@ BEGIN_SOUND_ATTACHMENT
 	VEH_XYZ 12 -1.5 -2
 	EVENT_ALLOWED_FOR_AI
 	EVENT_START_COND sim/time/total_flight_time_sec > 0
-	EVENT_START_COND sim/cockpit2/engine/indicators/N1_percent[2] < 19
+	EVENT_START_COND sim/cockpit2/engine/indicators/N1_percent[2] < 19.8
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
@@ -4568,7 +4607,7 @@ BEGIN_SOUND_ATTACHMENT
 	VEH_XYZ 20 -1.5 2
 	EVENT_ALLOWED_FOR_AI
 	EVENT_START_COND sim/time/total_flight_time_sec > 0
-	EVENT_START_COND sim/cockpit2/engine/indicators/N1_percent[3] < 19
+	EVENT_START_COND sim/cockpit2/engine/indicators/N1_percent[3] < 19.8
 END_SOUND_ATTACHMENT
 
 #########################

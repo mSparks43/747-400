@@ -15,16 +15,20 @@
 {c3556ead-5132-46a1-95dc-18c61ab3e278} event:/APU/apu
 {138cea42-f425-46f3-a806-2dcdc918d714} event:/APU/apu_ground_fire
 {d6bd600a-ffa2-4e79-babd-71dba832b0b1} event:/APU/apu_start
+{9cf291db-01d6-4844-8890-f5f76d068399} event:/Cabin/Music/song1
 {d0fadee7-567a-4623-a4f4-c17b6e198b6a} event:/Cabin/Passenger/packs
 {54cacac0-7885-49eb-9e32-b5adf780cb64} event:/Cockpit/Avionics/Contactors/contactor1
 {64cb6652-9603-41eb-bb50-7f644c0100d9} event:/Cockpit/Avionics/Contactors/contactor2
 {86eaac51-c74a-4239-bffd-8f6e01e66ef1} event:/Cockpit/Avionics/Contactors/contactor3
+{a4b39ecb-7c3b-4e55-bf48-53b43404f5c0} event:/Cockpit/Avionics/Contactors/MAWEA_test
 {94e38009-6d31-46c3-97b1-bdffeb2db632} event:/Cockpit/Avionics/Contactors/shaker_test
+{df193eb6-15e5-482e-a74a-0bc366a7b03f} event:/Cockpit/Avionics/avioncs3
 {e0520c10-8c6a-4d06-a066-a72215554b0a} event:/Cockpit/Avionics/avionics fans
 {358c0b4c-f54d-4fb1-8bbb-b4e92c320358} event:/Cockpit/Avionics/avionics fans shutdown
 {c43d4791-366f-40bd-9137-2f1e8e14c389} event:/Cockpit/Avionics/avionics fans2
 {db2b0bb1-7078-419a-a7eb-f6265da9b2f5} event:/Cockpit/Avionics/avionics fans2 shutdown
-{73513f2b-8c75-4931-a273-12a8beb0fe21} event:/Cockpit/Avionics/battery
+{596860a3-317e-4d1e-aa61-9a1052919f86} event:/Cockpit/Avionics/battery
+{d77d903d-2b87-4800-bec5-e708a62546d5} event:/Cockpit/Avionics/battery_shutdown
 {a8744c00-fcf1-415e-b10c-186abe52132d} event:/Cockpit/Avionics/fan1
 {8c82228e-4d31-49b7-a0ab-85ff78b84317} event:/Cockpit/Avionics/fan2
 {fa60a749-55fb-4da3-a152-16976df039a1} event:/Cockpit/Avionics/fan3
@@ -33,6 +37,7 @@
 {6387bbd2-79fa-4b71-ba2e-231d9fae4f3c} event:/Cockpit/Switches/auto_spoiler_retract
 {dc728e2b-e66e-4576-8cbc-82183b01b9b5} event:/Cockpit/Switches/autothrottle
 {24967cb5-82df-4ec5-9705-c66b9d112a49} event:/Cockpit/Switches/button1
+{177569f7-98cf-4c85-a171-d56d62f69332} event:/Cockpit/Switches/button1_release
 {30b44714-eb40-4645-9316-eb9b9eb0fec1} event:/Cockpit/Switches/button2
 {40e4a1fa-4f34-40c3-a853-e9753d22efba} event:/Cockpit/Switches/button3
 {ece586c7-2125-4d97-b873-c9c885318a59} event:/Cockpit/Switches/button4_hold
@@ -63,9 +68,9 @@
 {914f36ce-af10-457e-ac06-2da400d29636} event:/Engines/PW/start/start2
 {28c72ed5-11a8-4eaa-816d-af0469b0f2a0} event:/Engines/PW/engine1
 {623f8045-df33-46d3-adab-aeb6aa8a7522} event:/Engines/PW/shutdown
-{09f4a8de-2cfd-4432-89b4-6e855ebbc726} event:/Engines/PW/engine2
-{70fad7fb-fd96-4380-87ae-70c506c135d3} event:/Engines/PW/engine3
-{a88efa43-8a2e-4403-82b8-7a7e92e2740f} event:/Engines/PW/engine4
+{94a0800f-af0c-45e6-85b3-8a07da4c4f5b} event:/Engines/PW/engine2
+{dfc5195b-0248-412a-9d58-68079f360a89} event:/Engines/PW/engine3
+{8cab7ddf-2e90-491e-aa45-5f166ec31257} event:/Engines/PW/engine4
 {5263f8c2-1b33-4a7b-8a9d-eaa8c018bf0e} event:/Warnings/GPWS/10
 {7f55a41b-5115-4ace-92ae-51cab1a84d20} event:/Warnings/GPWS/100
 {a2177ed5-5ec3-49dc-9626-c329fd7c9731} event:/Warnings/GPWS/1000

@@ -26,6 +26,14 @@ Email: mfahrenheit135@gmail.com
 ---
 ## CHANGELOG:
 
+###v0.8.4b:
+
+-adjusted batteries
+-better contactors
+-better shaker test
+-added MAWEA test
+-added back of cockpit avionics
+
 ###v0.8.3b:
 
 -adjusted engines
