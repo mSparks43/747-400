@@ -35,82 +35,81 @@ function keyDown(fmsModule,key)
   run_after_time(switchCustomMode, 0.5)
   print(fmsModule.. " do " .. key)
   if key=="index" then
-      fmsModules[fmsModule].targetCustomFMC=true
-      fmsModules[fmsModule].targetPage="INITREF"
-      fmsModules[fmsModule].targetpgNo=1
-      return
+    fmsModules[fmsModule].targetCustomFMC=true
+    fmsModules[fmsModule].targetPage="INITREF"
+    fmsModules[fmsModule].targetpgNo=1
+    return
   elseif key=="fpln" then --RTE
-      fmsModules[fmsModule].targetCustomFMC=true
-      simCMD_FMS_key[fmsModule]["fpln"]:once()
-      fmsModules[fmsModule].targetPage="RTE1"
-      fmsModules[fmsModule].targetpgNo=1
-      --[[fmsModules[fmsModule].inCustomFMC=false
-      simCMD_FMS_key[fmsModule]["fpln"]:once()]]
-      return
+    fmsModules[fmsModule].targetCustomFMC=true
+    simCMD_FMS_key[fmsModule]["fpln"]:once()
+    fmsModules[fmsModule].targetPage="RTE1"
+    fmsModules[fmsModule].targetpgNo=1
+    --[[fmsModules[fmsModule].inCustomFMC=false
+    simCMD_FMS_key[fmsModule]["fpln"]:once()]]
+    return
   elseif key=="clb" then
-      fmsModules[fmsModule].targetCustomFMC=false
-      simCMD_FMS_key[fmsModule]["dep_arr"]:once()
-      fmsModules[fmsModule].targetPage="DEPARR"
-      fmsModules[fmsModule].targetpgNo=1
-      return
+    fmsModules[fmsModule].targetCustomFMC=false
+    simCMD_FMS_key[fmsModule]["dep_arr"]:once()
+    fmsModules[fmsModule].targetPage="DEPARR"
+    fmsModules[fmsModule].targetpgNo=1
+    return
   elseif key=="crz" then
-      fmsModules[fmsModule].targetCustomFMC=true
-      fmsModules[fmsModule].targetPage="ATCINDEX"
-      fmsModules[fmsModule].targetpgNo=1
-      return
+    fmsModules[fmsModule].targetCustomFMC=true
+    fmsModules[fmsModule].targetPage="ATCINDEX"
+    fmsModules[fmsModule].targetpgNo=1
+    return
   elseif key=="des" then
-      fmsModules[fmsModule].targetCustomFMC=true
-      --simCMD_FMS_key[fmsModule]["clb"]:once()
-      fmsModules[fmsModule].targetPage="VNAV"
-      fmsModules[fmsModule].targetpgNo=1
-      return
+    fmsModules[fmsModule].targetCustomFMC=true
+    --simCMD_FMS_key[fmsModule]["clb"]:once()
+    fmsModules[fmsModule].targetPage="VNAV"
+    fmsModules[fmsModule].targetpgNo=1
+    return
   elseif key=="dir_intc" then
-      fmsModules[fmsModule].targetCustomFMC=false
-      fmsModules[fmsModule].targetPage="FIX"
-      simCMD_FMS_key[fmsModule]["fix"]:once()
-      fmsModules[fmsModule].targetpgNo=1
-      return
+    fmsModules[fmsModule].targetCustomFMC=false
+    fmsModules[fmsModule].targetPage="FIX"
+    simCMD_FMS_key[fmsModule]["fix"]:once()
+    fmsModules[fmsModule].targetpgNo=1
+    return
   elseif key=="legs" then
-      
-      if simDR_onGround ==1 then
-	fmsModules[fmsModule].targetCustomFMC=true
-	fmsModules[fmsModule].targetPage="LEGS"
+    if fmsModules[fmsModule].currentPage == "LEGS" then
+    	fmsModules[fmsModule].targetCustomFMC=false
+	fmsModules[fmsModule].targetPage="RTE2"
+    	simCMD_FMS_key[fmsModule]["dir_intc"]:once()
+    	fmsModules[fmsModule].targetpgNo=1
+    else
+    	fmsModules[fmsModule].targetCustomFMC=true
+    	fmsModules[fmsModule].targetPage="LEGS"
 	simCMD_FMS_key[fmsModule]["legs"]:once()
 	fmsModules[fmsModule].targetpgNo=1
-      else
-	fmsModules[fmsModule].targetCustomFMC=false
-	fmsModules[fmsModule].targetPage="RTE2"
-	simCMD_FMS_key[fmsModule]["dir_intc"]:once()
-	fmsModules[fmsModule].targetpgNo=1
-      end
-      return
+    end
+    return
   elseif key=="dep_arr" then
-      fmsModules[fmsModule].targetCustomFMC=false
-      fmsModules[fmsModule].targetPage="HOLD"
-      simCMD_FMS_key[fmsModule]["hold"]:once()
-      fmsModules[fmsModule].targetpgNo=1
-      return
+    fmsModules[fmsModule].targetCustomFMC=false
+    fmsModules[fmsModule].targetPage="HOLD"
+    simCMD_FMS_key[fmsModule]["hold"]:once()
+    fmsModules[fmsModule].targetpgNo=1
+    return
   elseif key=="hold" then --FMC COMM
-      fmsModules[fmsModule].targetCustomFMC=true 
-      fmsModules[fmsModule].targetPage="FMCCOMM"
-      fmsModules[fmsModule].targetpgNo=1
-      return
+    fmsModules[fmsModule].targetCustomFMC=true 
+    fmsModules[fmsModule].targetPage="FMCCOMM"
+    fmsModules[fmsModule].targetpgNo=1
+    return
   elseif key=="fix" then --menu
-      fmsModules[fmsModule].targetCustomFMC=true
-      fmsModules[fmsModule].targetPage="INDEX"
-      fmsModules[fmsModule].targetpgNo=1
-      return
+    fmsModules[fmsModule].targetCustomFMC=true
+    fmsModules[fmsModule].targetPage="INDEX"
+    fmsModules[fmsModule].targetpgNo=1
+    return
   elseif key=="navrad" then
-      fmsModules[fmsModule].targetCustomFMC=true
-      fmsModules[fmsModule].targetPage="NAVRAD"
-      fmsModules[fmsModule].targetpgNo=1
-      return
+    fmsModules[fmsModule].targetCustomFMC=true
+    fmsModules[fmsModule].targetPage="NAVRAD"
+    fmsModules[fmsModule].targetpgNo=1
+    return
   elseif key=="prog" then
-      fmsModules[fmsModule].targetCustomFMC=true
-      simCMD_FMS_key[fmsModule][key]:once()
-      fmsModules[fmsModule].targetPage="PROGRESS"
-      fmsModules[fmsModule].targetpgNo=1
-      return
+    fmsModules[fmsModule].targetCustomFMC=true
+    simCMD_FMS_key[fmsModule][key]:once()
+    fmsModules[fmsModule].targetPage="PROGRESS"
+    fmsModules[fmsModule].targetpgNo=1
+    return
   end
 
   if not fmsModules[fmsModule].targetCustomFMC then
