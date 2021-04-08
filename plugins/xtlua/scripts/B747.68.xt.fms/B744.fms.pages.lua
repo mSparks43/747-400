@@ -238,17 +238,13 @@ dofile("B744.fms.pages.actrte1legs.lua")
 dofile("B744.fms.pages.altnnavradio.lua")
 dofile("B744.fms.pages.approach.lua")
 dofile("B744.fms.pages.arrivals.lua")
-
-
 dofile("B744.fms.pages.atcrejectdueto.lua")
-
 dofile("B744.fms.pages.atcreport2.lua")
 dofile("B744.fms.pages.atcuplink.lua")
 dofile("B744.fms.pages.atcverifyresponse.lua")
 dofile("B744.fms.pages.deparrindex.lua")
 dofile("B744.fms.pages.departures.lua")
 dofile("B744.fms.pages.fixinfo.lua")
-
 dofile("B744.fms.pages.identpage.lua")
 dofile("B744.fms.pages.irsprogress.lua")
 dofile("B744.fms.pages.navradpage.lua")
@@ -256,7 +252,6 @@ dofile("B744.fms.pages.progress.lua")
 dofile("B744.fms.pages.refnavdata1.lua")
 dofile("B744.fms.pages.satcom.lua")
 dofile("B744.fms.pages.waypointwinds.lua")
-
 ]]
 
 
@@ -781,12 +776,7 @@ function fmsFunctions.setdata(fmsO,value)
 		simDR_EFIS_2_sel_pilot=2
 	end
   elseif value=="WPT" then
-	
-	if fmsO.id=="fmsR" then 
-		B747DR_nd_fo_wpt=1-B747DR_nd_fo_wpt 
-	else
-		B747DR_nd_capt_wpt=1-B747DR_nd_capt_wpt
-	end
+
   elseif value=="STA" then
 	if fmsO.id=="fmsR" then 
 		B747DR_nd_fo_vor_ndb = 1-B747DR_nd_fo_vor_ndb 
@@ -2049,11 +2039,20 @@ function fmsFunctions.setDref(fmsO,value)
 	return 
   end
 -- sound options (crazytimtimtim + Matt726)
-  if value == "B747DR_SNDoptions_gpws" then B747DR_SNDoptions_gpws = 1 - B747DR_SNDoptions_gpws return end
-  if value == "B747DR_SNDoptions_seatBelt" then B747DR_SNDoptions_seatBelt = 1 - B747DR_SNDoptions_seatBelt return end
-  if value == "B747DR_SNDoptions_pa" then B747DR_SNDoptions_pa = 1 - B747DR_SNDoptions_pa return end
-  if value == "B747DR_SNDoptions_music" then B747DR_SNDoptions_music = 1 - B747DR_SNDoptions_music return end
-  if value == "B747DR_SNDoptions_modernAlarms" then B747DR_SNDoptions_modernAlarms = 1 - B747DR_SNDoptions_modernAlarms return end
+  if value == "gpwsOption" then B747DR_SNDoptions[0] = 1 - B747DR_SNDoptions[0] return end
+  if value == "seatBeltOption" then B747DR_SNDoptions[1] = 1 - B747DR_SNDoptions[1] return end
+  if value == "paOption" then B747DR_SNDoptions[2] = 1 - B747DR_SNDoptions[2] return end
+  if value == "musicOption" then B747DR_SNDoptions[3] = 1 - B747DR_SNDoptions[3] return end
+  if value == "alarmsOption" then
+    if B747DR_SNDoptions[4] == 0 then
+	  B747DR_SNDoptions[4] = 1
+	elseif B747DR_SNDoptions[4] == 1 then
+	  B747DR_SNDoptions[4] = 2
+	elseif B747DR_SNDoptions[4] == 2 then
+	  B747DR_SNDoptions[4] = 0
+	  end
+	return
+  end
   -- Matt, add another if statement here just like the previous, but change the dataref for the sound option.
 -- end sound options
   if value=="TO" then toderate=0 clbderate=0 return  end

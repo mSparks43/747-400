@@ -195,9 +195,7 @@ simDR_EFIS_1_sel_fo              = find_dataref("sim/cockpit2/EFIS/EFIS_1_select
 simDR_EFIS_2_sel_pilot                 = find_dataref("sim/cockpit2/EFIS/EFIS_2_selection_pilot")
 simDR_EFIS_2_sel_fo                 = find_dataref("sim/cockpit2/EFIS/EFIS_2_selection_copilot")
 B747DR_nd_capt_vor_ndb                          = find_dataref("laminar/B747/nd/data/capt/vor_ndb")
-B747DR_nd_capt_wpt							= find_dataref("laminar/B747/nd/data/capt/wpt")
 B747DR_nd_fo_vor_ndb                          	= find_dataref("laminar/B747/nd/data/fo/vor_ndb")
-B747DR_nd_fo_wpt                          	= find_dataref("laminar/B747/nd/data/fo/wpt")
 B747DR_nd_capt_apt	                        = find_dataref("laminar/B747/nd/data/capt/apt")
 B747DR_nd_fo_apt	                        = find_dataref("laminar/B747/nd/data/fo/apt")
 B747DR_nd_fo_ftc	                        = find_dataref("laminar/B747/nd/fo/tfc")
@@ -291,12 +289,8 @@ B747DR_ND_Wind_Bearing					= deferred_dataref("laminar/B747/nd/wind_bearing", "n
 B747DR_elevator_trim				    = deferred_dataref("laminar/B747/fmc/elevator_trim", "number")
 
 --Sound Options (crazytimtimtim + Matt726)
-B747DR_SNDoptions_gpws                  = deferred_dataref("laminar/B747/fmod/options/gpws", "number") -- GPWS sound option
-B747DR_SNDoptions_seatBelt              = deferred_dataref("laminar/B747/fmod/options/seatBelt", "number") -- Seatbelt Sound option
-B747DR_SNDoptions_pa                    = deferred_dataref("laminar/B747/fmod/options/pa", "number") -- PA sounds
-B747DR_SNDoptions_music                 = deferred_dataref("laminar/B747/fmod/options/music", "number") -- Boarding Music
-B747DR_SNDoptions_modernAlarms          = deferred_dataref("laminar/B747/fmod/options/modernAlarms", "number") -- 777 sounding alarms
---sound options end						Matt, add another entry here to create another dataref for sound options. Make sure there is an identical line in the xt file.
+B747DR_SNDoptions			        	= deferred_dataref("laminar/B747/fmod/options", "array[4]")
+--crazytimtimtim end.
 
 --Simulator Config Options
 simConfigData = {}
