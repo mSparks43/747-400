@@ -1,3 +1,4 @@
+-- Very minor modification by crazytimtimtim
 simDR_acf_weight_total_kg          				= find_dataref("sim/flightmodel/weight/m_total")
 B747DR_airspeed_Vf25                            = find_dataref("laminar/B747/airspeed/Vf25")
 B747DR_airspeed_Vf30                            = find_dataref("laminar/B747/airspeed/Vf30")
@@ -13,7 +14,7 @@ end
     return{
 "      APPROACH REF      ",
 "                        ",
-string.format("%4.1f             %3d", acf_weight/1000,B747DR_airspeed_Vf25),
+string.format("%4.1f              %3d", acf_weight/1000,B747DR_airspeed_Vf25),
 "                        ",
 string.format("                   %3d", B747DR_airspeed_Vf30),
 "                        ",

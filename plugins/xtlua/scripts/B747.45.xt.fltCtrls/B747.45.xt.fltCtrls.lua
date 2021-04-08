@@ -85,6 +85,11 @@ B747DR_airspeed_V1              = find_dataref("laminar/B747/airspeed/V1")
 B747DR_parking_brake_ratio = find_dataref("laminar/B747/flt_ctrls/parking_brake_ratio")
 B747DR_autobrakes_sel_dial_pos  = deferred_dataref("laminar/B747/gear/autobrakes/sel_dial_pos", "number")
 B747DR_CAS_memo_status          = find_dataref("laminar/B747/CAS/memo_status")
+
+-- crazytimtimtim
+B747DR_IRS_dial_pos             = find_dataref("laminar/B747/flt_mgmt/iru/mode_sel_dial_pos")
+B747DR_ELEC_BATT                = find_dataref("sim/cockpit/electrical/battery_array_on")
+-- crazytimtimtim end
 --*************************************************************************************--
 --** 				               FIND CUSTOM COMMANDS              			     **--
 --*************************************************************************************--
@@ -102,6 +107,7 @@ B747CMD_yaw_damper_lwr = find_command("laminar/B747/button_switch/yaw_damper_lwr
 simDR_startup_running           = find_dataref("sim/operation/prefs/startup_running")
 
 simDR_innerslats_ratio  	= find_dataref("sim/flightmodel2/controls/slat1_deploy_ratio")
+simDR_outerslats_ratio  	= find_dataref("sim/flightmodel2/controls/slat2_deploy_ratio")
 simDR_autoslats_ratio  		= find_dataref("sim/aircraft/parts/acf_slatEQ")
 simDR_prop_mode                 = find_dataref("sim/cockpit2/engine/actuators/prop_mode")
 simDR_all_wheels_on_ground      = find_dataref("sim/flightmodel/failures/onground_all")
@@ -641,6 +647,7 @@ function B747_speedbrake_lever_stop()
 
     if simDR_all_wheels_on_ground < 1 and simDR_radarAlt1>15 then
         B747_speedbrake_stop = 1
+        B747DR__gear_chocked=0
     else
 		B747_speedbrake_stop = 0	        
     end
@@ -688,18 +695,31 @@ function B747_yaw_damper()
         B747DR_button_switch_position[83] > 0.95)
         and
         simDR_yaw_damper_on == 0
+        and
+        (B747DR_IRS_dial_pos[0] == 2 or                 -- make sure at leaset 1 IRU is in NAV position  (crazytimtimtim)
+        B747DR_IRS_dial_pos[1] == 2 or
+        B747DR_IRS_dial_pos[2] == 2) and
+        B747DR_ELEC_BATT[0] == 1
     then
         simCMD_yaw_damper_on:once()
-
-    elseif B747DR_button_switch_position[82] < 0.05 and
+    elseif
+        B747DR_button_switch_position[82] < 0.05 and
         B747DR_button_switch_position[83] < 0.05 and
         simDR_yaw_damper_on == 1
     then
         simCMD_yaw_damper_off:once()
     end
 
-end
+    if  ((B747DR_IRS_dial_pos[0] ~= 2 and
+        B747DR_IRS_dial_pos[1] ~= 2 and
+        B747DR_IRS_dial_pos[2] ~= 2) or
+        B747DR_ELEC_BATT[0] == 0) and
+        simDR_yaw_damper_on == 1
+    then
+        simCMD_yaw_damper_off:once()                -- disable Yaw Damper if all IRS is not on (crazytimtimtim)
+    end
 
+end
 
 
 function B747_flap_move_to_slot()
@@ -784,8 +804,9 @@ end
 local slatsRetract=false
 
 function B747_landing_slats()
-
-   if (B747DR_speedbrake_lever >0.5 and (simDR_prop_mode[0] == 3 or simDR_prop_mode[1] == 3 or simDR_prop_mode[2] == 3 or simDR_prop_mode[3] == 3)) 
+   if simDR_flap_ratio_control==0 and simDR_innerslats_ratio==0 and simDR_outerslats_ratio==0 then
+        simDR_autoslats_ratio=0
+   elseif (B747DR_speedbrake_lever >0.5 and (simDR_prop_mode[0] == 3 or simDR_prop_mode[1] == 3 or simDR_prop_mode[2] == 3 or simDR_prop_mode[3] == 3)) 
        or (slatsRetract==true and B747DR_speedbrake_lever >0.5) then	
      simDR_innerslats_ratio = B747_set_animation_position(simDR_innerslats_ratio, 0.0, 0.0, 1.0, 0.5)
      simDR_autoslats_ratio=0
@@ -798,7 +819,9 @@ function B747_landing_slats()
      else 
        simDR_autoslats_ratio=1
      end
-     
+
+    else 
+        simDR_autoslats_ratio=1 
    end
   
 end

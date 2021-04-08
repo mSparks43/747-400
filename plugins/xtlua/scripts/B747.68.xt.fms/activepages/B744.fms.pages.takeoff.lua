@@ -1,3 +1,6 @@
+
+-- small modification by crazytimtimtim
+
 B747DR_airspeed_V1                              = deferred_dataref("laminar/B747/airspeed/V1", "number")
 B747DR_airspeed_Vr                              = deferred_dataref("laminar/B747/airspeed/Vr", "number")
 B747DR_airspeed_V2                              = deferred_dataref("laminar/B747/airspeed/V2", "number")
@@ -19,9 +22,9 @@ fmsPages["TAKEOFF"]=createPage("TAKEOFF")
 fmsPages["TAKEOFF"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be this way
   local flaps = string.format("%02d",roundToIncrement(B747DR_airspeed_flapsRef, 5))
   if B747DR_airspeed_flapsRef==0 then flaps="**" end
-  local v1="***"
-  local vr="***"
-  local v2="***"
+  local v1="---"
+  local vr="---"
+  local v2="---"
   
 	--Marauder28
 	if string.len(cg_lineLg) == 0 then
@@ -45,11 +48,11 @@ fmsPages["TAKEOFF"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be 
 
   "      TAKEOFF REF       ",
   "                        ",
-  flaps.. string.format("                %3d", v1),
+  flaps.. string.format("                   %3d", v1),
   "                        ",
-  string.format("                  %3d", vr),
+  string.format("                     %3d", vr),
   "                        ",
-  string.format("FLAPS *  CLB *    %3d", v2),
+  string.format("FLAPS *  CLB *       %3d", v2),
   "                        ",
   "                     "..cg_lineLg,
   "                        ",
@@ -62,11 +65,11 @@ fmsPages["TAKEOFF"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be 
 
   "      TAKEOFF REF       ",
   "                        ",
-  flaps..string.format("                ***"),
+  flaps..string.format("                   ---"),
   "                        ",
-  string.format("                  ***"),
+  string.format("                     ---"),
   "                        ",
-  string.format("FLAPS *  CLB *    ***"),
+  string.format("FLAPS *  CLB *       ---"),
   "                        ",
   "                     "..cg_lineLg,
   "                        ",
@@ -95,11 +98,11 @@ fmsPages["TAKEOFF"].getSmallPage=function(self,pgNo,fmsID)
 
 "                        ",
 " FLAP/ACCEL HT    REF V1",
-"  /1500FT            KT>",
+"  /1500FT               ",
 " E/O ACCEL HT     REF VR",
-"1500FT               KT>",
+"1500FT                  ",
 " THR REDUCTION    REF V2",
-"                     KT>",
+"                        ",
 "               TRIM   CG",
 --"                        ",
 "                "..stab_trim.."     "..cg_lineSm,

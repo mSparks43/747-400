@@ -1,162 +1,174 @@
 
---This script was made by crazytimtimtim
-
+--THIS SCRIPT WAS MADE BY CRAZYTIMTIMTIM, with some help from mSparks43 and Marauder28
 
 registerFMCCommand("sim/flight_controls/door_open_1","OPEN DOOR 1")
 registerFMCCommand("sim/flight_controls/door_close_1","CLOSE DOOR 1")
 registerFMCCommand("sim/flight_controls/door_open_2","OPEN DOOR 2")
 registerFMCCommand("sim/flight_controls/door_close_2","CLOSE DOOR 2")
 
+simDR_doors = find_dataref("sim/cockpit2/switches/door_open")
 
 fmsPages["DOORS"]=createPage("DOORS")
 fmsPages["DOORS"].getPage=function(self,pgNo,fmsID)
-return {
-"    DOOR CONTROL 1/3    ",
-"                        ",
-"<OPEN             CLOSE>",
-"                        ", 
-"<OPEN             CLOSE>",
-"                        ", 
-"<OPEN             CLOSE>",
-"                        ",
-"<OPEN             CLOSE>",
-"                        ",
-"<OPEN             CLOSE>",
-"------------------------",
-"<GND HANDLE   NEXT PAGE>"
-}
-end
+  if pgNo == 1 then
 
-fmsFunctionsDefs["DOORS"]={}
-fmsFunctionsDefs["DOORS"]["L1"]={"doCMD","sim/flight_controls/door_open_2"}
-fmsFunctionsDefs["DOORS"]["R1"]={"doCMD","sim/flight_controls/door_close_2"}
-fmsFunctionsDefs["DOORS"]["L3"]={"doCMD","sim/flight_controls/door_open_1"}
-fmsFunctionsDefs["DOORS"]["R3"]={"doCMD","sim/flight_controls/door_close_1"}
-fmsFunctionsDefs["DOORS"]["L6"]={"setpage","GNDHNDL"}
-fmsFunctionsDefs["DOORS"]["R6"]={"setpage","DOORS2"}
+    local lineA = "<OPEN                    "
+    local lineB = "<OPEN                    "
+
+    if simDR_doors[1] == 1 then
+      lineA = "<CLOSE                   "
+      fmsFunctionsDefs["DOORS"]["L1"]={"doCMD","sim/flight_controls/door_close_2"}
+    else
+      lineA = "<OPEN                    "
+      fmsFunctionsDefs["DOORS"]["L1"]={"doCMD","sim/flight_controls/door_open_2"}
+    end
+
+    if simDR_doors[0] == 1 then
+      lineB = "<CLOSE                   "
+      fmsFunctionsDefs["DOORS"]["L2"]={"doCMD","sim/flight_controls/door_close_1"}
+      else
+      lineB = "<OPEN                    "
+      fmsFunctionsDefs["DOORS"]["L2"]={"doCMD","sim/flight_controls/door_open_1"}
+    end
+
+    return {
+      "     DOOR CONTROL       ",
+      "                        ",
+      lineA,
+      "                        ",
+      lineB,
+      "                        ",
+      "INOP                    ",
+      "                        ",
+      "INOP                    ",
+      "                        ",
+      "INOP                    ",
+      "------------------------",
+      "<INDEX       GND HANDLE>"
+    }
+
+  elseif pgNo == 2 then
+    
+    fmsFunctionsDefs["DOORS"]["L1"]=nil
+    fmsFunctionsDefs["DOORS"]["L2"]=nil
+    
+    return {
+      "     Door Control       ",
+      "                        ",
+      "INOP                    ",
+      "                        ",
+      "INOP                    ",
+      "                        ",
+      "INOP                    ",
+      "                        ",
+      "INOP                    ",
+      "                        ",
+      "INOP                    ",
+      "------------------------",
+      "<INDEX       GND HANDLE>"
+    }
+
+  elseif pgNo == 3 then
+
+    fmsFunctionsDefs["DOORS"]["L1"]=nil
+    fmsFunctionsDefs["DOORS"]["L2"]=nil
+    
+    return {
+      "     Door Control       ",
+      "                        ",
+      "INOP                    ",
+      "                        ",
+      "INOP                    ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "------------------------",
+      "<INDEX       GND HANDLE>"
+    }
+    
+  end
+end
 
 fmsPages["DOORS"].getSmallPage=function(self,pgNo,fmsID)
-    return {
-    "                        ",
-    "          FWD L         ",
-    "                        ",
-    "      FWD R (INOP)      ",
-    "                        ",
-    "         UPPER L        ",
-    "                        ",
-    "     UPPER R (INOP)     ",
-    "                        ",
-    "    FWD WING L (INOP)   ",
-    "                        ",
-    "                        ",
-    "                        "
+
+  if pgNo == 1 then
+
+    local lineC = "                        "
+    local lineD = "                        "
+
+    if simDR_doors[1] == 1 then
+      lineC = "                 (OPENED)"
+    else
+      lineC = "                 (CLOSED)"
+    end
+
+    if simDR_doors[0] == 1 then
+      lineD = "                 (OPENED)"
+    else
+      lineD = "                 (CLOSED)"
+    end
+
+    return{
+      "                     1/3",
+      "FWD L                   ",
+      lineC,
+      "Upper L                 ",
+      lineD,
+      "FWD R                   ",
+      "                        ",
+      "UPPER R                 ",
+      "                        ",
+      "FWD WING L              ",
+      "                        ",
+      "                        ",
+      "                        "
     }
-end
 
+  elseif pgNo == 2 then
 
--- Page 2
-
-
-fmsPages["DOORS2"]=createPage("DOORS2")
-fmsPages["DOORS2"].getPage=function(self,pgNo,fmsID)
-return {
-
-"    Door Control 2/3    ",
-"                        ",
-"<OPEN             CLOSE>",
-"                        ",
-"<OPEN             CLOSE>",
-"                        ",
-"<OPEN             CLOSE>",
-"                        ",
-"<OPEN             CLOSE>",
-"                        ",
-"<OPEN             CLOSE>",
-"------------------------",
-"<PREV PAGE    NEXT PAGE>"
-}
-end
-
-fmsFunctionsDefs["DOORS2"]={}
-fmsFunctionsDefs["DOORS2"]["L6"]={"setpage","DOORS"}
-fmsFunctionsDefs["DOORS2"]["R6"]={"setpage","DOORS3"}
-
-fmsPages["DOORS2"].getSmallPage=function(self,pgNo,fmsID)
-    return {
-    "                        ",
-    "   FWD WING L (INOP)    ",
-    "                        ",
-    "     WING L (INOP)      ",
-    "                        ",
-    "     WING R (INOP)      ",
-    "                        ",
-    "   AFT WING L (INOP)    ",
-    "                        ",
-    "   AFT WING R (INOP)    ",
-    "                        ",
-    "                        ",
-    "                        "
+    return{
+      "                     2/3",
+      "FWD WING R              ",
+      "                        ",
+      "WING L                  ",
+      "                        ",
+      "WING R                  ",
+      "                        ",
+      "AFT WING L              ",
+      "                        ",
+      "AFT WING R              ",
+      "                        ",
+      "                        ",
+      "                        "
     }
+
+  elseif pgNo == 3 then
+    return{
+
+      "                     3/3",
+      "AFT L                   ",
+      "                        ",
+      "AFT R                   ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        "
+   }
+
+  end
 end
 
+fmsFunctionsDefs["DOORS"]["L6"]={"setpage","INDEX"}
+fmsFunctionsDefs["DOORS"]["R6"]={"setpage","GNDHNDL"}
 
--- Page 3
-
-
-fmsPages["DOORS3"]=createPage("DOORS3")
-fmsPages["DOORS3"].getPage=function(self,pgNo,fmsID)
-return {
-
-"    Door Control 3/3    ",
-"                        ",
-"<OPEN             CLOSE>",
-"                        ",
-"<OPEN             CLOSE>",
-"                        ",
-"                        ",
-"                        ",
-"                        ",
-"                        ",
-"                        ",
-"------------------------",
-"<PREV PAGE   GND HANDLE>"
-}
+fmsPages["DOORS"].getNumPages=function(self)
+  return 3
 end
-
-fmsFunctionsDefs["DOORS3"]={}
-fmsFunctionsDefs["DOORS3"]["L6"]={"setpage","DOORS2"}
-fmsFunctionsDefs["DOORS3"]["R6"]={"setpage","GNDHNDL"}
-
-fmsPages["DOORS3"].getSmallPage=function(self,pgNo,fmsID)
-    return {
-    "                        ",
-    "      AFT L (INOP)      ",
-    "                        ",
-    "      AFT R (INOP)      ",
-    "                        ",
-    "                        ",
-    "                        ",
-    "                        ",
-    "                        ",
-    "                        ",
-    "                        ",
-    "                        ",
-    "                        "
-    }
-end
-
-
---[[ This is for making it a dynamic page in the future. The problem with this is if multiple doors are open, it won't work.
-
-if sim/cockpit2/switches/door_open == [0,1,0,0,0,0,0,0,0,0] then
-  lineA = "<CLOSE         Forward L"
-  else
-  lineA = "<OPEN          Forward L"
-end
-
-if sim/cockpit2/switches/door_open == [1,0,0,0,0,0,0,0,0,0] then
-  lineB = "<CLOSE           Upper L"
-  else
-  lineB = "<OPEN            Upper L"
-end
-]]

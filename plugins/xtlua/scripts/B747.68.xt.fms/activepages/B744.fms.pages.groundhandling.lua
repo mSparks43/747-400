@@ -26,7 +26,7 @@ fmsPages["GNDHNDL"].getPage=function(self,pgNo,fmsID)
   "                        ",
   "<PUSH BACK     PAX/CARGO>",
   "                        ",
-  "                        ",
+  "<DOOR CONTROL           ",
   "                        ",
   "  "..fmsModules["lastcmd"], 
   "                        ",
@@ -56,6 +56,7 @@ fmsFunctionsDefs["GNDHNDL"]["L2"]={"setDref","CHOCKS"}
 fmsFunctionsDefs["GNDHNDL"]["L3"]={"setpage","PUSHBACK"} 
 fmsFunctionsDefs["GNDHNDL"]["L6"]={"setpage","INDEX"}
 fmsFunctionsDefs["GNDHNDL"]["R3"]={"setpage","PAXCARGO"}
+fmsFunctionsDefs["GNDHNDL"]["L4"]={"setpage","DOORS"}
 
 fmsPages["GNDSRV"]=createPage("GNDSRV")
 fmsPages["GNDSRV"].getPage=function(self,pgNo,fmsID)

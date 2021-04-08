@@ -506,9 +506,16 @@ function fms:B747_fms_display()
     local page=self.currentPage
     if B747DR_srcfms[thisID][14]=="[NAV DATA OUT OF DATE  ]" then simCMD_FMS_key[thisID]["clear"]:once() return end
     if not inCustomFMC then
-      for i=1,14,1 do
-	B747DR_fms[thisID][i]=cleanFMSLine(B747DR_srcfms[thisID][i])
-	B747DR_fms_s[thisID][i]="                        "
+      for i=1,13,1 do
+	      B747DR_fms[thisID][i]=cleanFMSLine(B747DR_srcfms[thisID][i])
+	      B747DR_fms_s[thisID][i]="                        "
+      end
+      if string.len(self.notify)>0 then 
+        B747DR_fms[thisID][14]=self.notify
+        B747DR_fms_s[thisID][14]="                        "
+      else
+        B747DR_fms[thisID][14]=cleanFMSLine(B747DR_srcfms[thisID][14])
+	      B747DR_fms_s[thisID][14]="                        "
       end
     else
       if self.pgNo>fmsPages[page]:getNumPages() then self.pgNo=fmsPages[page]:getNumPages() self.targetpgNo=fmsPages[page]:getNumPages() end

@@ -195,7 +195,9 @@ simDR_EFIS_1_sel_fo              = find_dataref("sim/cockpit2/EFIS/EFIS_1_select
 simDR_EFIS_2_sel_pilot                 = find_dataref("sim/cockpit2/EFIS/EFIS_2_selection_pilot")
 simDR_EFIS_2_sel_fo                 = find_dataref("sim/cockpit2/EFIS/EFIS_2_selection_copilot")
 B747DR_nd_capt_vor_ndb                          = find_dataref("laminar/B747/nd/data/capt/vor_ndb")
+B747DR_nd_capt_wpt							= find_dataref("laminar/B747/nd/data/capt/wpt")
 B747DR_nd_fo_vor_ndb                          	= find_dataref("laminar/B747/nd/data/fo/vor_ndb")
+B747DR_nd_fo_wpt                          	= find_dataref("laminar/B747/nd/data/fo/wpt")
 B747DR_nd_capt_apt	                        = find_dataref("laminar/B747/nd/data/capt/apt")
 B747DR_nd_fo_apt	                        = find_dataref("laminar/B747/nd/data/fo/apt")
 B747DR_nd_fo_ftc	                        = find_dataref("laminar/B747/nd/fo/tfc")
@@ -287,6 +289,14 @@ B747DR_ND_Wind_Bearing					= deferred_dataref("laminar/B747/nd/wind_bearing", "n
 
 --STAB TRIM setting
 B747DR_elevator_trim				    = deferred_dataref("laminar/B747/fmc/elevator_trim", "number")
+
+--Sound Options (crazytimtimtim + Matt726)
+B747DR_SNDoptions_gpws                  = deferred_dataref("laminar/B747/fmod/options/gpws", "number") -- GPWS sound option
+B747DR_SNDoptions_seatBelt              = deferred_dataref("laminar/B747/fmod/options/seatBelt", "number") -- Seatbelt Sound option
+B747DR_SNDoptions_pa                    = deferred_dataref("laminar/B747/fmod/options/pa", "number") -- PA sounds
+B747DR_SNDoptions_music                 = deferred_dataref("laminar/B747/fmod/options/music", "number") -- Boarding Music
+B747DR_SNDoptions_modernAlarms          = deferred_dataref("laminar/B747/fmod/options/modernAlarms", "number") -- 777 sounding alarms
+--sound options end						Matt, add another entry here to create another dataref for sound options. Make sure there is an identical line in the xt file.
 
 --Simulator Config Options
 simConfigData = {}
@@ -518,6 +528,7 @@ function defaultFMSData()
   spdtransalt="10000",
   transalt="18000",
   clbrestspd="180",
+  maxkts="420",
   clbrestalt="5000 ",
   stepalt="FL360",
   crzspd="810",
@@ -609,6 +620,7 @@ fmsModules["setData"]=function(self,id,value)
     end
     --newVal=string.sub(value,1,len)
     self["data"][id]=string.format("%s%"..(len-string.len(value)).."s",value,"")
+	B747DR_FMSdata=json.encode(fmsModules["data"]["values"])--make the fms data available to other modules
 end
 function setFMSData(id,value)
     --print("setting " .. id .. " to "..value.." curently "..fmsModules["data"][id])
@@ -639,7 +651,7 @@ function switchCustomMode()
   fmsModules["fmsL"]["pgNo"]=fmsModules["fmsL"]["targetpgNo"]
   fmsModules["fmsC"]["pgNo"]=fmsModules["fmsC"]["targetpgNo"]
   fmsModules["fmsR"]["pgNo"]=fmsModules["fmsR"]["targetpgNo"]
-  print("left cdu blanking")
+  --print("left cdu blanking")
 end
 function createPage(page)
   retVal={}
@@ -955,7 +967,7 @@ function setNotifications()
       fmsModules["fmsL"]["notify"]=B747_FMCAlertMsg[i].name
       fmsModules["fmsC"]["notify"]=B747_FMCAlertMsg[i].name
       fmsModules["fmsR"]["notify"]=B747_FMCAlertMsg[i].name
-      print("do FMS notify"..B747_FMCAlertMsg[i].name)
+      print("do FMS notify "..B747_FMCAlertMsg[i].name)
       break
     else
       if fmsModules["fmsL"]["notify"]==B747_FMCAlertMsg[i].name then fmsModules["fmsL"]["notify"]="" end
@@ -970,7 +982,10 @@ function after_physics()
 --     for i =1,24,1 do
 --       print(string.byte(fms_style,i))
 --     end
-
+	--refresh time
+	local cM=hh
+	cM=mm
+	cM=ss
     setNotifications()
     B747DR_FMSdata=json.encode(fmsModules["data"]["values"])--make the fms data available to other modules
     --print(B747DR_FMSdata)

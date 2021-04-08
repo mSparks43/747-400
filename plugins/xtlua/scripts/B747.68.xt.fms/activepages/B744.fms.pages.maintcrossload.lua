@@ -18,4 +18,4 @@ fmsPages["MAINTCROSSLOAD"]["template"]={
 
 
 fmsFunctionsDefs["MAINTCROSSLOAD"]={}
-fmsFunctionsDefs["MAINTCROSSLOAD"]["L6"]={"setpage","INITREF"}
+fmsFunctionsDefs["MAINTCROSSLOAD"]["L6"]={"setpage","MAINT"}

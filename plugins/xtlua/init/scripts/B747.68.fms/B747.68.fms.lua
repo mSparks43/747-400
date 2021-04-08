@@ -100,6 +100,14 @@ B747DR_ND_Wind_Bearing					= deferred_dataref("laminar/B747/nd/wind_bearing", "n
 --STAB TRIM setting
 B747DR_elevator_trim				    = deferred_dataref("laminar/B747/fmc/elevator_trim", "number")
 
+--Sound Options (crazytimtimtim + Matt726)
+B747DR_SNDoptions_gpws                  = deferred_dataref("laminar/B747/fmod/options/gpws", "number") -- GPWS sound option
+B747DR_SNDoptions_seatBelt              = deferred_dataref("laminar/B747/fmod/options/seatBelt", "number") -- Seatbelt Sound option
+B747DR_SNDoptions_pa                    = deferred_dataref("laminar/B747/fmod/options/pa", "number") -- PA sounds
+B747DR_SNDoptions_music                 = deferred_dataref("laminar/B747/fmod/options/music", "number") -- Boarding Music
+B747DR_SNDoptions_modernAlarms          = deferred_dataref("laminar/B747/fmod/options/modernAlarms", "number") -- 777 sounding alarms
+--crazytimtimtim end					Matt, add another entry here to create another dataref for sound options. Make sure there is an identical line in the xt file.
+
 function createFMSCommands(fmsO,cduid,fmsid,keyid,fmskeyid)
 B747CMD_fms1_ls_key_L1              = XLuaCreateCommand("laminar/B747/".. fmskeyid .. "/ls_key/L1", fmsO.." Line Select Key 1-Left")
 B747CMD_fms1_ls_key_L2              = XLuaCreateCommand("laminar/B747/".. fmskeyid .. "/ls_key/L2", fmsO.." Line Select Key 2-Left")

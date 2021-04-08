@@ -18,4 +18,4 @@ fmsPages["MAINTPERFFACTOR"]["template"]={
 
 
 fmsFunctionsDefs["MAINTPERFFACTOR"]={}
-fmsFunctionsDefs["MAINTPERFFACTOR"]["L6"]={"setpage","INITREF"}
+fmsFunctionsDefs["MAINTPERFFACTOR"]["L6"]={"setpage","MAINT"}

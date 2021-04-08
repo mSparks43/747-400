@@ -3,12 +3,7 @@ fmsPages["ATCLOGONSTATUS"].getPage=function(self,pgNo,fmsID)--dynamic pages need
     local logon="   N/A  "	
     local data= "OFFLINE"
     if acarsSystem.provider.online() then 
-      if fmsModules["data"]["atc"]~="****" then 
-	logon="ACCEPTED"
-      else
-	logon="   READY"
-      end
-      
+	    logon=acarsSystem.provider.loggedOn()
       data="  READY" 
     else
       fmsModules["data"]["atc"]="****"

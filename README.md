@@ -10,7 +10,7 @@ Yes! Of course! This project is an open source project, consisting of developers
 
 **What happened to the YesAviation 747?**
 
-The YesAviation team now goes under another name, and is developing another 747 somewhere else. Everyone sends a big thank you to the former team, and wish them good luck in their endeavors.
+The YesAviation team now goes under another name, and is developing another aircraft somewhere else. Everyone sends a big thank you to the former team, and wish them good luck in their endeavors.
 
 **What are the differences between the default 747, and the Sparky 747?**
 
@@ -39,8 +39,7 @@ Please use the [github issue page](https://github.com/mSparks43/747-400/issues) 
 
 The 744 project was licenced as CC-BY-NC 4 on the 1st of May 2019, anyone with any confusion as to what this means should review the [licence](https://creativecommons.org/licenses/by-nc/4.0/)
 
-You can follow progress, make requests and generally chat about the 747 on the 747-400 channel on the Go Ahead discord server
-[Discord](https://discord.gg/cStTXy5)
+You can follow progress, make requests and generally chat about the 747 on the 747-400 channel on the [Go Ahead discord server.](https://discord.gg/cStTXy5)
 
 Feel free to join the conversation, fork this repository, and make the plane your own.
 
@@ -71,6 +70,8 @@ In order to use this aircraft
 Additionally, the break lever and X-Plane breaks are now seperated, there is a new command to engage the breaks by lifting the parking break lever.
 
 **Why are my screens half black?** IRS alignment cannot complete until you set the IRS position in the FMC. (INIT REF -> POS -> R4 to copy GPS position, R5 to enter it into current position.
+
+**Why do I have the default X-Plane FMC?** In order to use the custom FMC, you need to use the INIT REF button. If you click "FMC" (Key L1) from the main menu, it will take you to the default FMC.
 
 ### Changelog:
 See the [commit history](https://github.com/mSparks43/747-400/commits/master) for detailed changes.

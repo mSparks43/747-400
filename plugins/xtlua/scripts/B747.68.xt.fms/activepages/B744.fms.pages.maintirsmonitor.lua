@@ -19,4 +19,4 @@ fmsPages["MAINTIRSMONITOR"].getPage=function(self,pgNo,fmsID)
 end
 
 fmsFunctionsDefs["MAINTIRSMONITOR"]={}
-fmsFunctionsDefs["MAINTIRSMONITOR"]["L6"]={"setpage","INITREF"}
+fmsFunctionsDefs["MAINTIRSMONITOR"]["L6"]={"setpage","MAINT"}

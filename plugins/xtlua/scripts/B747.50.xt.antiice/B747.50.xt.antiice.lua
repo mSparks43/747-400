@@ -89,8 +89,10 @@ simDR_pitot_heat_fail_fo            = find_dataref("sim/operation/failures/rel_i
 simDR_static_heat_fail_capt         = find_dataref("sim/operation/failures/rel_ice_static_heat")
 simDR_static_heat_fail_fo           = find_dataref("sim/operation/failures/rel_ice_static_heat2")
 
-
-
+simDR_pitot_heat1                   = find_dataref("sim/cockpit/switches/pitot_heat_on")
+simDR_pitot_heat2                   = find_dataref("sim/cockpit/switches/pitot_heat_on2")
+simDR_static_heat1                  = find_dataref("sim/cockpit/switches/static_heat_on")
+simDR_static_heat2                  = find_dataref("sim/cockpit/switches/static_heat_on2")
 
 
 --*************************************************************************************--
@@ -275,7 +277,22 @@ function B747_set_anim_value(current_value, target, min, max, speed)
 end
 
 
-
+function B747_pitot_antiice()
+    if B747DR_engine1_bleed_air_psi > 12.0 
+        or B747DR_engine2_bleed_air_psi > 12.0 
+        or B747DR_engine3_bleed_air_psi > 12.0 
+        or B747DR_engine4_bleed_air_psi > 12.0 then
+            simDR_pitot_heat1=1
+            simDR_pitot_heat2=1
+            simDR_static_heat1=1
+            simDR_static_heat2=1
+        else
+            simDR_pitot_heat1=0
+            simDR_pitot_heat2=0
+            simDR_static_heat1=0
+            simDR_static_heat2=0
+        end
+end
 
 ----- NACELLE ANTI-ICE VALVES------------------------------------------------------------
 function B747_nacelle_antiice()
@@ -629,7 +646,7 @@ if debug_antiice>0 then return end
     B747_nacelle_antiice()
     B747_wing_antiice()
     B747_window_antiice()
-
+    B747_pitot_antiice()
     B747_antiice_EICAS_msg()
 
     B747_ice_monitor_AI()
