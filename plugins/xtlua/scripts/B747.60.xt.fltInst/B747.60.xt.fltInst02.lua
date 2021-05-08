@@ -429,7 +429,8 @@ B747DR_glideslope_ptr_vis_fo                    = deferred_dataref("laminar/B747
 
 -- crazytimtimtim ( + Matt726)
 B747DR_v1_alert                                 = deferred_dataref("laminar/B747/alerts/v1", "number")
-B747DR_toga_mode                                = find_dataref("sim/cockpit2/autopilot/TOGA_status")
+B747DR_
+= find_dataref("sim/cockpit2/autopilot/TOGA_status")
 B747DR_appDH_alert                              = deferred_dataref("laminar/B747/alerts/appDH", "number")
 
 
@@ -2715,6 +2716,7 @@ function B747_setV1VrV2()
     -- crazytimtimtim V1 callout
     if simDR_airspeed >= B747DR_airspeed_V1 and
     simDR_all_wheels_on_ground == 1 and
+    B747DR_airspeed_V1 > 0 and
     B747DR_toga_mode ~= 0 then
         B747DR_v1_alert = 1
     else
