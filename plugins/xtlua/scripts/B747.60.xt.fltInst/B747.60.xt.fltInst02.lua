@@ -2256,6 +2256,7 @@ function B747_decision_height_capt()
     if simDR_radio_alt_height_capt <= simDR_radio_alt_DH_capt + 80 and -- RA less than/equal to 80 feet above DH
     simDR_radio_alt_height_capt > simDR_radio_alt_DH_capt and -- RA greater than DH
     simDR_all_wheels_on_ground == 0 and -- Aircraft not on ground
+    simDR_radio_alt_DH_capt ~= 0 and -- DH is not 0
     B747DR_toga_mode == 0 then -- Not taking off
         B747DR_appDH_alert = 1
     else
