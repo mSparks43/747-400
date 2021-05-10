@@ -999,6 +999,7 @@ function B747_fltCtrols_EICAS_msg()
         and num_fuel_ctrl_sw_on >= 3
         and simDR_engine_N1_pct[1] > 90.0
         and simDR_engine_N1_pct[2] > 90.0
+	and simDR_all_wheels_on_ground == 1
     then
         B747DR_CAS_warning_status[5] = 1
     else
