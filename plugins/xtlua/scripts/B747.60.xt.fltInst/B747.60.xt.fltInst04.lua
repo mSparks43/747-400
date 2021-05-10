@@ -89,6 +89,7 @@ B747DR_fltInst_fo_clock_ET_hours			= deferred_dataref("laminar/B747/fltInst/fo/c
 B747DR_fltInst_fo_clock_CHR_seconds			= deferred_dataref("laminar/B747/fltInst/fo/clock_chr_seconds", "number")
 B747DR_fltInst_fo_clock_CHR_minutes			= deferred_dataref("laminar/B747/fltInst/fo/clock_chr_minutes", "number")
 B747DR_fltInst_fo_clock_year				= deferred_dataref("laminar/B747/fltInst/fo/clock_year", "number")
+B747DR_et_seconds_fo                          = deferred_dataref("laminar/B747/fltInst/fo/clock_et_seconds", "number")
 
 
 
@@ -277,9 +278,9 @@ function B747_fltInst_fo_elapsed_timer()
 			
 			if B747DR_fltInst_fo_clock_ET_hours < 100 then
 				
-				B747_et_seconds_fo = B747_et_seconds_fo + ((simDR_time_now - sim_et_old_time_fo) / (sim_et_new_time_fo - sim_et_old_time_fo) * 0.001)
-				B747DR_fltInst_fo_clock_ET_hours 		= math.modf(B747_et_seconds_fo / 3600)
-				B747DR_fltInst_fo_clock_ET_minutes	= math.modf((B747_et_seconds_fo % 3600) / 60)
+				B747DR_et_seconds_fo = B747DR_et_seconds_fo + ((simDR_time_now - sim_et_old_time_fo) / (sim_et_new_time_fo - sim_et_old_time_fo) * 0.001)
+				B747DR_fltInst_fo_clock_ET_hours 		= math.modf(B747DR_et_seconds_fo / 3600)
+				B747DR_fltInst_fo_clock_ET_minutes	= math.modf((B747DR_et_seconds_fo % 3600) / 60)
 		
 				sim_et_old_time_fo = simDR_time_now
 				sim_et_new_time_fo = sim_et_old_time_fo + 0.001
@@ -304,7 +305,7 @@ function B747_fltInst_fo_elapsed_timer_reset()
 		
 	sim_et_old_time_fo 						= 0
 	sim_et_new_time_fo 						= 0
-	B747_et_seconds_fo 						= 0		
+	B747DR_et_seconds_fo 						= 0		
 	B747DR_fltInst_fo_clock_ET_minutes 		= 0
 	B747DR_fltInst_fo_clock_ET_hours 		= 0		
 	

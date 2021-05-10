@@ -52,8 +52,6 @@ local B747_chrono_seconds_capt	= 0
 
 local sim_ch_old_time_capt 		= 0
 local sim_ch_new_time_capt 		= 0	
-														
-local B747_et_seconds_capt		= 0
 
 local sim_et_old_time_capt 		= 0
 local sim_et_new_time_capt 		= 0
@@ -85,6 +83,7 @@ B747DR_fltInst_capt_clock_UTC_display		= deferred_dataref("laminar/B747/fltInst/
 B747DR_fltInst_capt_clock_DATE_display_mode	= deferred_dataref("laminar/B747/fltInst/capt/clock_date_display_mode", "number")			-- 0=DAY/MONTH, 1=YEAR	
 B747DR_fltInst_capt_clock_ET_CHR_display	= deferred_dataref("laminar/B747/fltInst/capt/clock_et_chr_display", "number")			-- 0=ET, 1=CHR	
 B747DR_fltInst_capt_clock_ET_minutes		= deferred_dataref("laminar/B747/fltInst/capt/clock_et_minutes", "number")
+B747DR_et_seconds_capt                      = deferred_dataref("laminar/B747/fltInst/capt/clock_et_seconds", "number")              -- not displayed. Allows digits to be hidden when 0, by crazytimtimtim
 B747DR_fltInst_capt_clock_ET_hours			= deferred_dataref("laminar/B747/fltInst/capt/clock_et_hours", "number")
 B747DR_fltInst_capt_clock_CHR_seconds		= deferred_dataref("laminar/B747/fltInst/capt/clock_chr_seconds", "number")
 B747DR_fltInst_capt_clock_CHR_minutes		= deferred_dataref("laminar/B747/fltInst/capt/clock_chr_minutes", "number")
@@ -148,7 +147,7 @@ function B747_capt_clock_chrono_switch_CMDhandler(phase, duration)
 		elseif B747_chrono_mode_capt == 2 then
 			B747_fltInst_capt_chrono_timer_reset()
 			B747DR_fltInst_capt_clock_ET_CHR_display = 0
-			B747_chrono_mode_capt = 0	
+			B747_chrono_mode_capt = 0
 		end	
 		
 	elseif phase == 2 then
@@ -174,7 +173,7 @@ function B747_capt_clock_date_switch_CMDhandler(phase, duration)
 				stop_timer(B747_capt_set_date_display)
 			end				
 		elseif B747DR_fltInst_capt_clock_UTC_display == 1 then
-			if is_timer_scheduled(B747_capt_set_date_display) == false then 
+			if is_timer_scheduled(B747_capt_set_date_display) == false then
 				B747DR_fltInst_capt_clock_DATE_display_mode = 1
 				run_at_interval(B747_capt_set_date_display, 1.0)
 			end			
@@ -198,16 +197,16 @@ function B747_capt_clock_ET_sel_up_CMDhandler(phase, duration)
 				sim_et_old_time_capt = simDR_time_now
 				sim_et_new_time_capt = sim_et_old_time_capt + 0.001
 			elseif B747DR_fltInst_capt_clock_ET_sel_pos == 2 then
-				B747_fltInst_capt_elapsed_timer_reset()		
+				B747_fltInst_capt_elapsed_timer_reset()
 			end	
 		end
 	elseif phase == 2 then	
-		if B747DR_fltInst_capt_clock_ET_sel_pos == 2 then B747DR_fltInst_capt_clock_ET_sel_pos = 0 end						
+		if B747DR_fltInst_capt_clock_ET_sel_pos == 2 then B747DR_fltInst_capt_clock_ET_sel_pos = 0 end
 	end			
 end
 function B747_capt_clock_ET_sel_dn_CMDhandler(phase, duration) 
 	if phase == 0 then
-		B747DR_fltInst_capt_clock_ET_sel_pos = math.max(0, B747DR_fltInst_capt_clock_ET_sel_pos - 1)			
+		B747DR_fltInst_capt_clock_ET_sel_pos = math.max(0, B747DR_fltInst_capt_clock_ET_sel_pos - 1)
 	end			
 end
 
@@ -218,7 +217,7 @@ end
 
 function B747_capt_clock_SET_sel_up_CMDhandler(phase, duration) 
 	if phase == 0 then
-		B747DR_fltInst_capt_clock_SET_sel_pos = math.min(3, B747DR_fltInst_capt_clock_SET_sel_pos + 1)	
+		B747DR_fltInst_capt_clock_SET_sel_pos = math.min(3, B747DR_fltInst_capt_clock_SET_sel_pos + 1)
 	end				
 end
 function B747_capt_clock_SET_sel_dn_CMDhandler(phase, duration) 
@@ -277,9 +276,9 @@ function B747_fltInst_capt_elapsed_timer()
 			
 			if B747DR_fltInst_capt_clock_ET_hours < 100 then
 				
-				B747_et_seconds_capt = B747_et_seconds_capt + ((simDR_time_now - sim_et_old_time_capt) / (sim_et_new_time_capt - sim_et_old_time_capt) * 0.001)
-				B747DR_fltInst_capt_clock_ET_hours 		= math.modf(B747_et_seconds_capt / 3600)
-				B747DR_fltInst_capt_clock_ET_minutes	= math.modf((B747_et_seconds_capt % 3600) / 60)
+				B747DR_et_seconds_capt = B747DR_et_seconds_capt + ((simDR_time_now - sim_et_old_time_capt) / (sim_et_new_time_capt - sim_et_old_time_capt) * 0.001)
+				B747DR_fltInst_capt_clock_ET_hours 		= math.modf(B747DR_et_seconds_capt / 3600)
+				B747DR_fltInst_capt_clock_ET_minutes	= math.modf((B747DR_et_seconds_capt % 3600) / 60)
 		
 				sim_et_old_time_capt = simDR_time_now
 				sim_et_new_time_capt = sim_et_old_time_capt + 0.001
@@ -287,7 +286,7 @@ function B747_fltInst_capt_elapsed_timer()
 			else
 				
 				B747DR_fltInst_capt_clock_ET_hours 		= 99
-				B747DR_fltInst_capt_clock_ET_minutes	= 59		
+				B747DR_fltInst_capt_clock_ET_minutes	= 59
 				
 			end		
 			
@@ -304,9 +303,9 @@ function B747_fltInst_capt_elapsed_timer_reset()
 		
 	sim_et_old_time_capt 					= 0
 	sim_et_new_time_capt 					= 0
-	B747_et_seconds_capt 					= 0		
+	B747DR_et_seconds_capt 					= 0
 	B747DR_fltInst_capt_clock_ET_minutes 	= 0
-	B747DR_fltInst_capt_clock_ET_hours 		= 0		
+	B747DR_fltInst_capt_clock_ET_hours 		= 0
 	
 end	
 
@@ -334,7 +333,7 @@ function B747_fltInst_capt_chrono_timer()
 			else
 				
 				B747DR_fltInst_capt_clock_CHR_minutes 	= 59
-				B747DR_fltInst_capt_clock_CHR_seconds	= 99		
+				B747DR_fltInst_capt_clock_CHR_seconds	= 99
 				
 			end	
 			
@@ -343,7 +342,6 @@ function B747_fltInst_capt_chrono_timer()
 	end		
 	
 end	
-
 
 
 
