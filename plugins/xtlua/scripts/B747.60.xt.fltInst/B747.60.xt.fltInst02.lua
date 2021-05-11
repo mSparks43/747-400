@@ -433,6 +433,7 @@ B747DR_glideslope_ptr_vis_fo                    = deferred_dataref("laminar/B747
 -- crazytimtimtim ( + Matt726)
 B747DR_v1_alert                                 = deferred_dataref("laminar/B747/alerts/v1", "number")
 B747DR_appDH_alert                              = deferred_dataref("laminar/B747/alerts/appDH", "number")
+B747DR_DH_alert                                 = deferred_dataref("laminar/B747/alerts/DH", "number")
 
 
 --*************************************************************************************--
@@ -2253,27 +2254,65 @@ function B747_decision_height_capt()
             B747_DH_alert_mode = 0
         end
     end
-	
-    -- "Approaching Minimums" Callout (crazytimtimtim + Matt726)
-    if B747DR_toga_mode == 0
-    and simDR_all_wheels_on_ground == 0 
-    then
-        if  (B747DR_efis_min_ref_alt_capt_sel_dial_pos == 0                  -- RADIO mode
-        and simDR_radio_alt_height_capt <= simDR_radio_alt_DH_capt + 80
-        and simDR_radio_alt_height_capt ~= 0)
 
-        or (B747DR_efis_min_ref_alt_capt_sel_dial_pos == 1                   -- BARO mode
-        and simDR_altitude_ft_pilot <= B747DR_efis_baro_alt_ref_capt + 80)
+    -- "Approaching Minimums" and "Minimums" Callouts (crazytimtimtim + Matt726)
+    if B747DR_toga_mode == 0
+    and simDR_all_wheels_on_ground == 0
+    then
+
+        if  B747DR_efis_min_ref_alt_capt_sel_dial_pos == 0                  -- RADIO mode
+        and simDR_radio_alt_DH_capt ~= 0
         then
-            B747DR_appDH_alert = 1
+
+            if simDR_radio_alt_height_capt <= simDR_radio_alt_DH_capt + 80 and simDR_radio_alt_height_capt > simDR_radio_alt_DH_capt then
+                B747DR_appDH_alert = 1
+            elseif simDR_radio_alt_height_capt <= simDR_radio_alt_DH_capt then
+                B747DR_DH_alert = 1
+                B747DR_appDH_alert = 0
+            else
+                B747DR_DH_alert = 0
+                B747DR_appDH_alert = 0
+            end
+
+        elseif B747DR_efis_min_ref_alt_capt_sel_dial_pos == 1                   -- BARO mode
+        and B747DR_efis_baro_alt_ref_capt ~= 0
+        then
+
+            if simDR_altitude_ft_pilot <= B747DR_efis_baro_alt_ref_capt + 80 and simDR_altitude_ft_pilot > B747DR_efis_baro_alt_ref_capt then
+                B747DR_appDH_alert = 1
+            elseif simDR_altitude_ft_pilot <= B747DR_efis_baro_alt_ref_capt then
+                B747DR_DH_alert = 1
+                B747DR_appDH_alert = 0
+            else
+                B747DR_DH_alert = 0
+                B747DR_appDH_alert = 0
+            end
         else
+            B747DR_DH_alert = 0
             B747DR_appDH_alert = 0
         end
+    else
+        B747DR_DH_alert = 0
+        B747DR_appDH_alert = 0
     end
 end
 
+--[[if B747DR_toga_mode == 0
+and simDR_all_wheels_on_ground == 0
+then
+    if  (B747DR_efis_min_ref_alt_capt_sel_dial_pos == 0                  -- RADIO mode
+    and simDR_radio_alt_height_capt <= simDR_radio_alt_DH_capt + 80
+    and simDR_radio_alt_height_capt ~= 0)
 
-
+    or (B747DR_efis_min_ref_alt_capt_sel_dial_pos == 1                   -- BARO mode
+    and simDR_altitude_ft_pilot <= B747DR_efis_baro_alt_ref_capt + 80)
+    then
+        B747DR_appDH_alert = 1
+    else
+        B747DR_appDH_alert = 0
+    end
+end
+]]
 ----- RADIO ALTITUDE --------------------------------------------------------------------
 function B747_radio_altitude()
 
