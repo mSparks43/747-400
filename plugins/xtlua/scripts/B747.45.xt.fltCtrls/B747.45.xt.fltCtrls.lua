@@ -89,6 +89,7 @@ B747DR_CAS_memo_status          = find_dataref("laminar/B747/CAS/memo_status")
 -- crazytimtimtim
 B747DR_IRS_dial_pos             = find_dataref("laminar/B747/flt_mgmt/iru/mode_sel_dial_pos")
 B747DR_ELEC_BATT                = find_dataref("sim/cockpit/electrical/battery_array_on")
+B747DR_engines_throttle_ind     = find_dataref("sim/cockpit2/engine/actuators/throttle_ratio")
 -- crazytimtimtim end
 --*************************************************************************************--
 --** 				               FIND CUSTOM COMMANDS              			     **--
@@ -904,7 +905,7 @@ local last_simDR_Brake=simDR_parking_brake_ratio
 local last_B747DR_Brake=B747DR_parking_brake_ratio
 
 function B747_fltCtrols_EICAS_msg()
-
+    
     -- FUEL CONTROL SWITCH STATUS
     local num_fuel_ctrl_sw_on = 0
     for i = 0, 3 do
@@ -999,6 +1000,7 @@ function B747_fltCtrols_EICAS_msg()
         and num_fuel_ctrl_sw_on >= 3
         and simDR_engine_N1_pct[1] > 90.0
         and simDR_engine_N1_pct[2] > 90.0
+	    and simDR_all_wheels_on_ground == 1
     then
         B747DR_CAS_warning_status[5] = 1
     else
@@ -1006,7 +1008,13 @@ function B747_fltCtrols_EICAS_msg()
     end
 
     -- >CONFIG SPOILERS
-    
+
+    local numLeverClimb = 0;
+    if B747DR_engines_throttle_ind[0] > 0.9 then numLeverClimb = numLeverClimb + 1 end
+    if B747DR_engines_throttle_ind[1] > 0.9 then numLeverClimb = numLeverClimb + 1 end
+    if B747DR_engines_throttle_ind[2] > 0.9 then numLeverClimb = numLeverClimb + 1 end
+    if B747DR_engines_throttle_ind[3] > 0.9 then numLeverClimb = numLeverClimb + 1 end
+
     if B747DR_speedbrake_lever >0.01 --< 0.99
         and simDR_all_wheels_on_ground == 1
         and simDR_ind_airspeed_kts_pilot < B747DR_airspeed_V1
@@ -1018,10 +1026,10 @@ function B747_fltCtrols_EICAS_msg()
     elseif B747DR_speedbrake_lever >0.125 
         and simDR_all_wheels_on_ground == 0  
         and num_fuel_ctrl_sw_on >= 3
-        and numClimb>=2 
+        and numLeverClimb>=2
 	and is_timer_scheduled(B747_speedbrake_warn) == false then
 	--print("warning speedbrake")  
-        run_after_time(B747_speedbrake_warn, 3.0)
+        run_after_time(B747_speedbrake_warn, 1.0)
     elseif is_timer_scheduled(B747_speedbrake_warn) == false or numClimb<=1 then 
         B747DR_CAS_warning_status[6] = 0
     end
