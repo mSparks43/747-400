@@ -3,36 +3,49 @@ fmsPages["POSINIT"]=createPage("POSINIT")
 fmsPages["POSINIT"].getPage=function(self,pgNo,fmsID)
   if pgNo==1 then
 
-	--Marauder28
-	--Load last aircraft position (for this livery)
-	aircraft_last_pos("LOAD")
+    local refAirport = fmsModules["data"]["airportpos"]
+    local refGate = fmsModules["data"]["airportgate"]
+		
+    --Marauder28
+    --Load last aircraft position (for this livery)
+    aircraft_last_pos("LOAD")
 
     fmsFunctionsDefs["POSINIT"]["R1"]={"getdata","lastpos"}
-    
+    fmsFunctionsDefs["POSINIT"]["R6"]={"setpage","RTE1"}
     fmsFunctionsDefs["POSINIT"]["R4"]={"getdata","gpspos"}
+
     if irsSystem["setPos"]==false or irsSystem["irsL"]["aligned"]==false or irsSystem["irsC"]["aligned"]==false or irsSystem["irsR"]["aligned"]==false then 
       fmsFunctionsDefs["POSINIT"]["R5"]={"setdata","irspos"}
+    else
+      fmsFunctionsDefs["POSINIT"]["R5"]=nil
+    end
+		
+    if simDR_onGround == 1 then -- edits by crazytimtimtim
       fmsFunctionsDefs["POSINIT"]["L2"]={"setdata","airportpos"}
       fmsFunctionsDefs["POSINIT"]["L3"]={"setdata","airportgate"}
+      refAirport = fmsModules["data"]["airportpos"]
+      refGate = fmsModules["data"]["airportgate"]	
     else
       fmsFunctionsDefs["POSINIT"]["L2"]=nil
       fmsFunctionsDefs["POSINIT"]["L3"]=nil
-      fmsFunctionsDefs["POSINIT"]["R5"]=nil
+      refAirport = "    "
+      refGate = "    "
     end
-	if fmsModules["data"].sethdg == "---`" then
-		fmsFunctionsDefs["POSINIT"]["L5"]={"setdata","sethdg"}
-	else
-		fmsFunctionsDefs["POSINIT"]["L5"]=nil
-	end
-    fmsFunctionsDefs["POSINIT"]["R6"]={"setpage","RTE1"}
+		
+    if fmsModules["data"].sethdg == "---`" then
+      fmsFunctionsDefs["POSINIT"]["L5"]={"setdata","sethdg"}
+    else
+      fmsFunctionsDefs["POSINIT"]["L5"]=nil
+    end
+	
     return {
     "      POS INIT        1/3 ",
     "                         ",
     "      "..fmsModules["data"].lastpos,
     "                         ",
-    fmsModules["data"]["airportpos"].."  "..fmsModules["data"].irsLat.." "..fmsModules["data"].irsLon,
+    refAirport.."  "..fmsModules["data"].irsLat.." "..fmsModules["data"].irsLon,
     "                         ",
-    fmsModules["data"]["airportgate"].."                   ",
+    refGate.."                   ",
     "                         ",
     string.format("%02d%02dz ",hh,mm).. irsSystem.getLat("gpsL") .." " .. irsSystem.getLon("gpsL"),
     "                         ",
@@ -105,17 +118,30 @@ fmsPages["POSINIT"].getPage=function(self,pgNo,fmsID)
 end
 fmsPages["POSINIT"].getSmallPage=function(self,pgNo,fmsID)
   if pgNo==1 then
+		
     local setIRS="                        "
+    local refAirport = "                        "
+    local refGate = "                        "
+		
     if B747DR_iru_status[0]==4 or B747DR_iru_status[1]==4 or B747DR_iru_status[2]==4 or irsSystem["setPos"]==false then
       setIRS="SET HDG       SET IRS POS"
     end
+
+    if simDR_onGround == 1 then -- edits by craytimtimtim
+      refAirport = "REF AIRPORT             "
+      refGate = "GATE                    "
+    else
+      refAirport = "                        " 
+      refGate = "                        "
+    end
+		
     return {
     "                         ",
     "                 LAST POS",
     "                         ",
-    "REF AIRPORT              ",
+    refAirport,
     "                         ",
-    "GATE                     ",
+    refGate,
     "                         ",
     "UTC (GPS)         GPS POS",
     "                         ",
