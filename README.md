@@ -77,7 +77,7 @@ You need to manually install [C++ support](https://www.microsoft.com/en-us/downl
 
 **Why can't I move?** The aircraft brakes require hydraulic pressure to function, to prevent the aircraft rolling away before the hydraulics are pressurised the wheels are fitted with chocks when starting cold and dark, remove the from the ground services menu in an FMC.
 
-Additionally, the break lever and X-Plane breaks are now seperated, there is a new command to engage the breaks by lifting the parking break lever.
+Additionally, the brake lever and X-Plane brakes are now separated, there is a new command to engage the brakes by lifting the parking brake lever.
 
 **Why are my screens half black?** IRS alignment cannot complete until you set the IRS position in the FMC. (INIT REF -> POS -> R4 to copy GPS position, R5 to enter it into current position.
 
