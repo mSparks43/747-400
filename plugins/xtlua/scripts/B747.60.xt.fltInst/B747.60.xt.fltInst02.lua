@@ -435,6 +435,8 @@ B747DR_glideslope_ptr_vis_fo                    = deferred_dataref("laminar/B747
 
 -- crazytimtimtim ( + Matt726)
 B747DR_v1_alert                                 = deferred_dataref("laminar/B747/alerts/v1", "number")
+B747DR_vr_alert                                 = deferred_dataref("laminar/B747/alerts/vr", "number")
+B747DR_v2_alert                                 = deferred_dataref("laminar/B747/alerts/v2", "number")
 B747DR_appDH_alert                              = deferred_dataref("laminar/B747/alerts/appDH", "number")
 B747DR_DH_alert                                 = deferred_dataref("laminar/B747/alerts/DH", "number")
 
@@ -2756,6 +2758,26 @@ function B747_setV1VrV2()
         B747DR_v1_alert = 1
     else
         B747DR_v1_alert = 0
+    end
+
+    -- crazytimtimtim VR callout
+    if simDR_airspeed >= B747DR_airspeed_Vr and
+    simDR_all_wheels_on_ground == 1 and
+    B747DR_airspeed_Vr > 0 and
+    B747DR_toga_mode ~= 0 then
+        B747DR_vr_alert = 1
+    else
+        B747DR_vr_alert = 0
+    end
+
+    -- crazytimtimtim V2 callout
+    if simDR_airspeed >= B747DR_airspeed_V2 and
+    simDR_all_wheels_on_ground == 0 and
+    B747DR_airspeed_V2 > 0 and
+    B747DR_toga_mode ~= 0 then
+        B747DR_v2_alert = 1
+    else
+        B747DR_v2_alert = 0
     end
 
 end
