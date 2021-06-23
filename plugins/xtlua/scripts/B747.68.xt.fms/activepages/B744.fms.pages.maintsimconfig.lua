@@ -124,18 +124,15 @@ fmsPages["MAINTSIMCONFIG"].getPage=function(self,pgNo,fmsID)
 		}
 
 	elseif pgNo == 4 then
-		-- Sound options (crazytimtimtim + Matt726)
-	
-		local lineA = "         ALARMS          "
-		local lineB = "        SEAT BELT        "
-		local lineC = "           PA            "
-		local lineD = "          MUSIC          "
+
+		-- SOUND OPTIONS (CRAZYTIMTIMTIM + MATT726)
 
 		fmsFunctionsDefs["MAINTSIMCONFIG"]["L1"]={"setDref","alarmsOption"}
-		fmsFunctionsDefs["MAINTSIMCONFIG"]["L2"]={"setDref","seatBeltOption"}
-		fmsFunctionsDefs["MAINTSIMCONFIG"]["L3"]={"setDref","paOption"}
-		fmsFunctionsDefs["MAINTSIMCONFIG"]["L4"]={"setDref","musicOption"}
-		
+		fmsFunctionsDefs["MAINTSIMCONFIG"]["L2"]={"setpage","PASSENGERSOUNDCONFIG"}
+		fmsFunctionsDefs["MAINTSIMCONFIG"]["L3"]={"setpage","PMCALLOUTSCONFIG"}
+		fmsFunctionsDefs["MAINTSIMCONFIG"]["L4"]={"setpage","GPWSSOUNDCONFIG"}
+		--fmsFunctionsDefs["MAINTSIMCONFIG"]["L5"]={"setpage","VOLUME"}
+
 		fmsFunctionsDefs["MAINTSIMCONFIG"]["R1"] = nil
 		fmsFunctionsDefs["MAINTSIMCONFIG"]["R2"] = nil
 		fmsFunctionsDefs["MAINTSIMCONFIG"]["R3"] = nil
@@ -150,37 +147,19 @@ fmsPages["MAINTSIMCONFIG"].getPage=function(self,pgNo,fmsID)
 		elseif B747DR_SNDoptions[0] == 2 then
 			lineA = "<USE DEFAULT WARN        "
 		end
-		
-		if B747DR_SNDoptions[1] == 0 then
-			lineB = "<USE SEATBELT SND 2      "
-		else
-			lineB = "<USE SEATBELT SND 1      "
-		end
-
-		if B747DR_SNDoptions[2] == 0 then
-			lineC = "<DISABLE PA             "
-		else
-			lineC = "<ENABLE PA              "
-		end
-
-		if B747DR_SNDoptions[3] == 0 then
-			lineD = "<DISABLE BRD MUSIC      "
-		else
-			lineD = "<ENABLE BRD MUSIC       "
-		end
 
 		return{
 		"      SOUND CONFIG      ",
 		"                        ",
 		lineA,
 		"                        ",
-		lineB,
+		"<PASSENGERS             ",
 		"                        ",
-		lineC,
+		"<F/O CALLOUTS           ",
 		"                        ",
-		lineD,
+		"<GPWS CALLOUTS          ",
 		"                        ",
-		"                        ",
+		"<VOLUME (INOP.)         ",
 		"------------------------",
 		"<MAINT                  "
 		}
