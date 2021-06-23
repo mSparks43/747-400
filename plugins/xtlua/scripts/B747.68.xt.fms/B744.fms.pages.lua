@@ -2241,22 +2241,6 @@ function fmsFunctions.setDref(fmsO,value)
 	return 
   end
 	
--- sound options (crazytimtimtim + Matt726)    
-  if value == "alarmsOption" then
-	if B747DR_SNDoptions[0] == 0 then
-	  B747DR_SNDoptions[0] = 1
-	elseif B747DR_SNDoptions[0] == 1 then
-	  B747DR_SNDoptions[0] = 2
-	elseif B747DR_SNDoptions[0] == 2 then
-	  B747DR_SNDoptions[0] = 0
-	end
-	return
-  end  
-  if value == "seatBeltOption" then B747DR_SNDoptions[1] = 1 - B747DR_SNDoptions[1] return end
-  if value == "paOption" then B747DR_SNDoptions[2] = 1 - B747DR_SNDoptions[2] return end
-  if value == "musicOption" then B747DR_SNDoptions[3] = 1 - B747DR_SNDoptions[3] return end
--- end sound options
-	
   if value=="TO" then toderate=0 clbderate=0 return  end
   if value=="TO1" then toderate=1 clbderate=1 return  end
   if value=="TO2" then toderate=2 clbderate=2 return  end
@@ -2299,4 +2283,51 @@ function fmsFunctions.doCMD(fmsO,value)
 	fmsModules["cmds"][value]:once() 
 	fmsModules["lastcmd"]=fmsModules["cmdstrings"][value] 
   end
+end
+
+function fmsFunctions.setSoundOption(fmsO,value) -- sound options (crazytimtimtim + Matt726)
+
+	if value == "alarmsOption" then
+		if B747DR_SNDoptions[0] == 0 then
+			B747DR_SNDoptions[0] = 1
+		elseif B747DR_SNDoptions[0] == 1 then
+			B747DR_SNDoptions[0] = 2
+		elseif B747DR_SNDoptions[0] == 2 then
+	  		B747DR_SNDoptions[0] = 0
+		end
+		return
+	end
+
+	if value == "seatBeltOption" then B747DR_SNDoptions[1] = 1 - B747DR_SNDoptions[1] return end
+	if value == "paOption" then B747DR_SNDoptions[2] = 1 - B747DR_SNDoptions[2] return end
+	if value == "musicOption" then B747DR_SNDoptions[3] = 1 - B747DR_SNDoptions[3] return end
+
+	if value == "GPWS2500" then B747DR_SNDoptions_gpws[1] = 1 - B747DR_SNDoptions_gpws[1] return end
+	if value == "GPWS1000" then B747DR_SNDoptions_gpws[2] = 1 - B747DR_SNDoptions_gpws[2] return end
+	if value == "GPWS500" then B747DR_SNDoptions_gpws[3] = 1 - B747DR_SNDoptions_gpws[3] return end
+	if value == "GPWS400" then B747DR_SNDoptions_gpws[4] = 1 - B747DR_SNDoptions_gpws[4] return end
+	if value == "GPWS300" then B747DR_SNDoptions_gpws[5] = 1 - B747DR_SNDoptions_gpws[5] return end
+	if value == "GPWS200" then B747DR_SNDoptions_gpws[6] = 1 - B747DR_SNDoptions_gpws[6] return end
+	if value == "GPWS100" then B747DR_SNDoptions_gpws[7] = 1 - B747DR_SNDoptions_gpws[7] return end
+	if value == "GPWS50" then B747DR_SNDoptions_gpws[8] = 1 - B747DR_SNDoptions_gpws[8] return end
+	if value == "GPWS40" then B747DR_SNDoptions_gpws[9] = 1 - B747DR_SNDoptions_gpws[9] return end
+	if value == "GPWS30" then B747DR_SNDoptions_gpws[10] = 1 - B747DR_SNDoptions_gpws[10] return end
+	if value == "GPWS20" then B747DR_SNDoptions_gpws[11] = 1 - B747DR_SNDoptions_gpws[11] return end
+	if value == "GPWS10" then B747DR_SNDoptions_gpws[12] = 1 - B747DR_SNDoptions_gpws[12] return end
+	if value == "GPWS5" then B747DR_SNDoptions_gpws[13] = 1 - B747DR_SNDoptions_gpws[13] return end
+	if value == "GPWSminimums" then B747DR_SNDoptions_gpws[14] = 1 - B747DR_SNDoptions_gpws[14] return end
+	if value == "GPWSapproachingMinimums" then B747DR_SNDoptions_gpws[15] = 1 - B747DR_SNDoptions_gpws[15] return end
+
+	if value == "PM_80kt" then B747DR_SNDoptions_pm[1] = 1 - B747DR_SNDoptions_pm[1] return end
+	if value == "PM_V1" then B747DR_SNDoptions_pm[2] = 1 - B747DR_SNDoptions_pm[2] return end
+	if value == "PM_rotate" then B747DR_SNDoptions_pm[3] = 1 - B747DR_SNDoptions_pm[3] return end
+	if value == "PM_V2" then B747DR_SNDoptions_pm[4] = 1 - B747DR_SNDoptions_pm[4] return end
+	if value == "PM_posRate" then B747DR_SNDoptions_pm[5] = 1 - B747DR_SNDoptions_pm[5] return end
+	if value == "PM_10000ft" then B747DR_SNDoptions_pm[6] = 1 - B747DR_SNDoptions_pm[6] return end
+	if value == "PM_transAlt" then B747DR_SNDoptions_pm[7] = 1 - B747DR_SNDoptions_pm[7] return end
+	if value == "PM_1000ToGO" then B747DR_SNDoptions_pm[8] = 1 - B747DR_SNDoptions_pm[8] return end
+	if value == "PM_spdbrk" then B747DR_SNDoptions_pm[9] = 1 - B747DR_SNDoptions_pm[9] return end
+	if value == "PM_rto" then B747DR_SNDoptions_pm[10] = 1 - B747DR_SNDoptions_pm[10] return end
+	if value == "PM_reverse" then B747DR_SNDoptions_pm[11] = 1 - B747DR_SNDoptions_pm[11] return end
+
 end
