@@ -228,6 +228,7 @@ dofile("activepages/B744.fms.pages.pax-cargo.lua")
 dofile("activepages/B744.fms.pages.efisctl.lua")
 dofile("activepages/B744.fms.pages.eicasctl.lua")
 dofile("activepages/B744.fms.pages.doors.lua")
+dofile("activepages/B744.fms.pages.soundconfig.lua")
 --[[
 dofile("B744.fms.pages.actclb.lua")
 dofile("B744.fms.pages.actcrz.lua")
