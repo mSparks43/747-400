@@ -227,7 +227,8 @@ dofile("activepages/B744.fms.pages.acms.lua")
 dofile("activepages/B744.fms.pages.pax-cargo.lua")
 dofile("activepages/B744.fms.pages.efisctl.lua")
 dofile("activepages/B744.fms.pages.eicasctl.lua")
-dofile("activepages/B744.fms.pages.doors.lua")
+dofile("activepages/B744.fms.pages.doors.lua")			--crazytimtimtim
+dofile("activepages/B744.fms.pages.soundconfig.lua")	--crazytimtimtim
 --[[
 dofile("B744.fms.pages.actclb.lua")
 dofile("B744.fms.pages.actcrz.lua")
@@ -687,7 +688,6 @@ function calc_pax_cargo()
 	local freight_weightB		= 0
 	local freight_weightC		= 0
 	local freight_weightD		= 0
-	local freight_weightE		= 0
 	local freight_weight_tot	= 0
 
 	pax_total		= 	tonumber(fmsModules["data"].paxFirstClassA) + tonumber(fmsModules["data"].paxBusClassB)
@@ -1383,80 +1383,6 @@ function fmsFunctions.setdata(fmsO,value)
 	else
 		fmsO["notify"] = "INVALID ENTRY"
 	end
-  elseif value == "paxPayload" then
-	if string.match(fmsO["scratchpad"], "%d") then
-		local weight_factor = 1
-
-		if simConfigData["data"].SIM.weight_display_units == "LBS" then
-			weight_factor = simConfigData["data"].SIM.kgs_to_lbs
-		else
-			weight_factor = 1
-		end
-
-		local pax_weight = math.abs(tonumber(fmsO["scratchpad"])) * 1000
-		local pax = 0
-		local paxA = 0
-		local paxB = 0
-		local paxC = 0
-		local paxD = 0
-		local paxE = 0
-	
-		pax = math.ceil(pax_weight / (simConfigData["data"].SIM.std_pax_weight * weight_factor))
-		if pax > 416 then
-			pax = 416
-		end
-
-		setFMSData("paxFirstClassA", "")
-		setFMSData("paxBusClassB", "")
-		setFMSData("paxEconClassC", "")
-		setFMSData("paxEconClassD", "")
-		setFMSData("paxEconClassE", "")
-		setFMSData("freightZoneA", "")
-		setFMSData("freightZoneB", "")
-		setFMSData("freightZoneC", "")
-		setFMSData("freightZoneD", "")
-		setFMSData("freightZoneE", "")
-
-		repeat
-			if pax > 0 and paxA < 23 then
-				paxA = paxA + 1
-				pax = pax - 1
-			end
-			if pax > 0 and paxB < 80 then
-				paxB = paxB + 1
-				pax = pax - 1
-			end
-			if pax > 0 and paxC < 77 then
-				paxC = paxC + 1
-				pax = pax - 1
-			end
-			if pax > 0 and paxD < 104 then
-				paxD = paxD + 1
-				pax = pax - 1
-			end
-			if pax > 0 and paxE < 132 then
-				paxE = paxE + 1
-				pax = pax - 1
-			end
-		until (pax == 0)
-		
-		fmsModules["data"].paxFirstClassA = string.format("%2d", paxA)
-		fmsModules["data"].paxBusClassB = string.format("%2d", paxB)
-		fmsModules["data"].paxEconClassC = string.format("%2d", paxC)
-		fmsModules["data"].paxEconClassD = string.format("%3d", paxD)
-		fmsModules["data"].paxEconClassE = string.format("%3d", paxE)
-
-		calc_pax_cargo()
-	elseif string.len(fmsO["scratchpad"]) < 1 then
-		setFMSData("paxFirstClassA", "0")
-		setFMSData("paxBusClassB", "0")
-		setFMSData("paxEconClassC", "0")
-		setFMSData("paxEconClassD", "0")
-		setFMSData("paxEconClassE", "0")
-		calc_pax_cargo()
-	else
-		fmsO["notify"] = "INVALID ENTRY"
-	end
   elseif value == "cargoFwd" then
 	local weight_factor = 1
 
@@ -1621,8 +1547,8 @@ function fmsFunctions.setdata(fmsO,value)
 		local zoneD = 0
 		local zoneE = 0
 		
-		if x > 112890 then  --112,900 KGS is the MAX Revenue Payload.  112,890 KGS is the defined average pallet weight (3763) * 30 pallets
-			x = 112890
+		if x > (112890 * weight_factor) then  --112,900 KGS is the MAX Revenue Payload.  112,890 KGS is the defined average pallet weight (3763) * 30 pallets
+			x = 112890 * weight_factor
 		end
 		repeat
 			if x > 0 and zoneA < 11289 then
@@ -1829,74 +1755,6 @@ function fmsFunctions.setdata(fmsO,value)
 		end
 		
 		setFMSData(value, string.format("%4d", fwt))
-		calc_pax_cargo()
-	else
-		fmsO["notify"] = "INVALID ENTRY"
-	end
-   elseif value == "freightPayload" then
-	if string.match(fmsO["scratchpad"], "%d") then --and not string.match(fmsO["scratchpad"], "%u") then
-		local weight_factor = 1
-
-		if simConfigData["data"].SIM.weight_display_units == "LBS" then
-			weight_factor = simConfigData["data"].SIM.kgs_to_lbs
-		else
-			weight_factor = 1
-		end
-
-		setFMSData("paxFirstClassA", "")
-		setFMSData("paxBusClassB", "")
-		setFMSData("paxEconClassC", "")
-		setFMSData("paxEconClassD", "")
-		setFMSData("paxEconClassE", "")
-		setFMSData("freightZoneA", "")
-		setFMSData("freightZoneB", "")
-		setFMSData("freightZoneC", "")
-		setFMSData("freightZoneD", "")
-		setFMSData("freightZoneE", "")
-
-		local x = math.abs(tonumber(fmsO["scratchpad"]) / weight_factor) * 1000  --convert to base units of KGS
-		local zoneA = 0
-		local zoneB = 0
-		local zoneC = 0
-		local zoneD = 0
-		local zoneE = 0
-		
-		if x > 112890 then  --112,900 KGS is the MAX Revenue Payload.  112,890 KGS is the defined average pallet weight (3763) * 30 pallets
-			x = 112890
-		end
-		
-		repeat
-			if x > 0 and zoneA < 11289 then
-				zoneA = zoneA + 1
-				x = x - 1
-			end
-			if x > 0 and zoneB < 30104 then
-				zoneB = zoneB + 1
-				x = x - 1
-			end
-			if x > 0 and zoneC < 22578 then
-				zoneC = zoneC + 1
-				x = x - 1
-			end
-			if x > 0 and zoneD < 45156 then
-				zoneD = zoneD + 1
-				x = x - 1
-			end
-			if x > 0 and zoneE < 3763 then
-				zoneE = zoneE + 1
-				x = x - 1
-			end
-			--print("X = "..x.." ZoneA = "..zoneA.." ZoneB = "..zoneB.." ZoneC = "..zoneC.." ZoneD = "..zoneD.." ZoneE = "..zoneE)
-		until (x <= 0)
-		
-		fmsModules["data"].freightZoneA = string.format("%5d", zoneA)
-		fmsModules["data"].freightZoneB = string.format("%5d", zoneB)
-		fmsModules["data"].freightZoneC = string.format("%5d", zoneC)
-		fmsModules["data"].freightZoneD = string.format("%5d", zoneD)
-		fmsModules["data"].freightZoneE = string.format("%4d", zoneE)
-		
-		fmsO["scratchpad"] = ""
-		
 		calc_pax_cargo()
 	else
 		fmsO["notify"] = "INVALID ENTRY"
@@ -2240,23 +2098,12 @@ function fmsFunctions.setDref(fmsO,value)
 	B747DR_ap_vnav_pause=numVal
 	return 
   end
-	
--- sound options (crazytimtimtim + Matt726)    
-  if value == "alarmsOption" then
-	if B747DR_SNDoptions[0] == 0 then
-	  B747DR_SNDoptions[0] = 1
-	elseif B747DR_SNDoptions[0] == 1 then
-	  B747DR_SNDoptions[0] = 2
-	elseif B747DR_SNDoptions[0] == 2 then
-	  B747DR_SNDoptions[0] = 0
-	end
-	return
-  end  
-  if value == "seatBeltOption" then B747DR_SNDoptions[1] = 1 - B747DR_SNDoptions[1] return end
-  if value == "paOption" then B747DR_SNDoptions[2] = 1 - B747DR_SNDoptions[2] return end
-  if value == "musicOption" then B747DR_SNDoptions[3] = 1 - B747DR_SNDoptions[3] return end
--- end sound options
-	
+
+
+
+
+
+
   if value=="TO" then toderate=0 clbderate=0 return  end
   if value=="TO1" then toderate=1 clbderate=1 return  end
   if value=="TO2" then toderate=2 clbderate=2 return  end
@@ -2299,4 +2146,51 @@ function fmsFunctions.doCMD(fmsO,value)
 	fmsModules["cmds"][value]:once() 
 	fmsModules["lastcmd"]=fmsModules["cmdstrings"][value] 
   end
+end
+
+function fmsFunctions.setSoundOption(fmsO,value) -- sound options (crazytimtimtim + Matt726)
+
+	if value == "alarmsOption" then
+		if B747DR_SNDoptions[0] == 0 then
+			B747DR_SNDoptions[0] = 1
+		elseif B747DR_SNDoptions[0] == 1 then
+			B747DR_SNDoptions[0] = 2
+		elseif B747DR_SNDoptions[0] == 2 then
+	  		B747DR_SNDoptions[0] = 0
+		end
+		return
+	end
+
+	if value == "seatBeltOption" then B747DR_SNDoptions[1] = 1 - B747DR_SNDoptions[1] return end
+	if value == "paOption" then B747DR_SNDoptions[2] = 1 - B747DR_SNDoptions[2] return end
+	if value == "musicOption" then B747DR_SNDoptions[3] = 1 - B747DR_SNDoptions[3] return end
+
+	if value == "GPWS2500" then B747DR_SNDoptions_gpws[1] = 1 - B747DR_SNDoptions_gpws[1] return end
+	if value == "GPWS1000" then B747DR_SNDoptions_gpws[2] = 1 - B747DR_SNDoptions_gpws[2] return end
+	if value == "GPWS500" then B747DR_SNDoptions_gpws[3] = 1 - B747DR_SNDoptions_gpws[3] return end
+	if value == "GPWS400" then B747DR_SNDoptions_gpws[4] = 1 - B747DR_SNDoptions_gpws[4] return end
+	if value == "GPWS300" then B747DR_SNDoptions_gpws[5] = 1 - B747DR_SNDoptions_gpws[5] return end
+	if value == "GPWS200" then B747DR_SNDoptions_gpws[6] = 1 - B747DR_SNDoptions_gpws[6] return end
+	if value == "GPWS100" then B747DR_SNDoptions_gpws[7] = 1 - B747DR_SNDoptions_gpws[7] return end
+	if value == "GPWS50" then B747DR_SNDoptions_gpws[8] = 1 - B747DR_SNDoptions_gpws[8] return end
+	if value == "GPWS40" then B747DR_SNDoptions_gpws[9] = 1 - B747DR_SNDoptions_gpws[9] return end
+	if value == "GPWS30" then B747DR_SNDoptions_gpws[10] = 1 - B747DR_SNDoptions_gpws[10] return end
+	if value == "GPWS20" then B747DR_SNDoptions_gpws[11] = 1 - B747DR_SNDoptions_gpws[11] return end
+	if value == "GPWS10" then B747DR_SNDoptions_gpws[12] = 1 - B747DR_SNDoptions_gpws[12] return end
+	if value == "GPWS5" then B747DR_SNDoptions_gpws[13] = 1 - B747DR_SNDoptions_gpws[13] return end
+	if value == "GPWSminimums" then B747DR_SNDoptions_gpws[14] = 1 - B747DR_SNDoptions_gpws[14] return end
+	if value == "GPWSapproachingMinimums" then B747DR_SNDoptions_gpws[15] = 1 - B747DR_SNDoptions_gpws[15] return end
+
+	if value == "PM_80kt" then B747DR_SNDoptions_pm[1] = 1 - B747DR_SNDoptions_pm[1] return end
+	if value == "PM_V1" then B747DR_SNDoptions_pm[2] = 1 - B747DR_SNDoptions_pm[2] return end
+	if value == "PM_rotate" then B747DR_SNDoptions_pm[3] = 1 - B747DR_SNDoptions_pm[3] return end
+	if value == "PM_V2" then B747DR_SNDoptions_pm[4] = 1 - B747DR_SNDoptions_pm[4] return end
+	if value == "PM_posRate" then B747DR_SNDoptions_pm[5] = 1 - B747DR_SNDoptions_pm[5] return end
+	if value == "PM_10000ft" then B747DR_SNDoptions_pm[6] = 1 - B747DR_SNDoptions_pm[6] return end
+	if value == "PM_transAlt" then B747DR_SNDoptions_pm[7] = 1 - B747DR_SNDoptions_pm[7] return end
+	if value == "PM_1000ToGO" then B747DR_SNDoptions_pm[8] = 1 - B747DR_SNDoptions_pm[8] return end
+	if value == "PM_spdbrk" then B747DR_SNDoptions_pm[9] = 1 - B747DR_SNDoptions_pm[9] return end
+	if value == "PM_rto" then B747DR_SNDoptions_pm[10] = 1 - B747DR_SNDoptions_pm[10] return end
+	if value == "PM_reverse" then B747DR_SNDoptions_pm[11] = 1 - B747DR_SNDoptions_pm[11] return end
+
 end
