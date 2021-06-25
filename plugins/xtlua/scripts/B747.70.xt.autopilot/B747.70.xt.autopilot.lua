@@ -803,26 +803,26 @@ end
 
 function B747_ap_switch_autothrottle_disco_L_CMDhandler(phase, duration)
 	if phase == 0 then
-		if B747DR_autothrottle_fail==0 then
+		if B747DR_autothrottle_fail==0 and simDR_autopilot_servos_on == 1 then
 			B747DR_autothrottle_fail=1
 		else
 			B747DR_autothrottle_fail=0
-		end			
+		end
 	end
-end	
+end
 
 
 
 
 function B747_ap_switch_autothrottle_disco_R_CMDhandler(phase, duration)
 	if phase == 0 then
-		if B747DR_autothrottle_fail==0 then
+		if B747DR_autothrottle_fail==0 and simDR_autopilot_servos_on == 1 then
 			B747DR_autothrottle_fail=1
 		else
 			B747DR_autothrottle_fail=0
-		end	
+		end
 	end
-end	
+end
 
 
 
