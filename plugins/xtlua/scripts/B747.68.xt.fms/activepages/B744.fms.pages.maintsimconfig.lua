@@ -127,7 +127,7 @@ fmsPages["MAINTSIMCONFIG"].getPage=function(self,pgNo,fmsID)
 
 		-- SOUND OPTIONS (CRAZYTIMTIMTIM + MATT726)
 
-		fmsFunctionsDefs["MAINTSIMCONFIG"]["L1"]={"setDref","alarmsOption"}
+		fmsFunctionsDefs["MAINTSIMCONFIG"]["L1"]={"setSoundOption","alarmsOption"}
 		fmsFunctionsDefs["MAINTSIMCONFIG"]["L2"]={"setpage","PASSENGERSOUNDCONFIG"}
 		fmsFunctionsDefs["MAINTSIMCONFIG"]["L3"]={"setpage","PMCALLOUTSCONFIG"}
 		fmsFunctionsDefs["MAINTSIMCONFIG"]["L4"]={"setpage","GPWSSOUNDCONFIG"}
