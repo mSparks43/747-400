@@ -2330,5 +2330,18 @@ function fmsFunctions.setSoundOption(fmsO,value) -- sound options (crazytimtimti
 	if value == "PM_spdbrk" then B747DR_SNDoptions_pm[9] = 1 - B747DR_SNDoptions_pm[9] return end
 	if value == "PM_rto" then B747DR_SNDoptions_pm[10] = 1 - B747DR_SNDoptions_pm[10] return end
 	if value == "PM_reverse" then B747DR_SNDoptions_pm[11] = 1 - B747DR_SNDoptions_pm[11] return end
+	if value == "PM_all_on" then
+		for i = 1, 11 do
+			B747DR_SNDoptions_pm[i] = 1
+		end
+		return
+	end
+	if value == "PM_all_off" then
+		for i = 1, 11 do
+			B747DR_SNDoptions_pm[i] = 0
+		end
+		return
+	end
 
 end
+
