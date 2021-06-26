@@ -264,38 +264,43 @@ fmsPages["PMCALLOUTSCONFIG"].getPage=function(self,pgNo,fmsID)
 
 	if pgNo == 1 then
 
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L1"]={"setSoundOption","PM_80kt"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L2"]={"setSoundOption","PM_V1"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L3"]={"setSoundOption","PM_rotate"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L4"]={"setSoundOption","PM_V2"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L5"]={"setSoundOption","PM_posRate"}
+		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L1"]={"setSoundOption","PM_all_off"}
+		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["R1"]={"setSoundOption","PM_all_on"}
+		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L2"]={"setSoundOption","PM_80kt"}
+		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L3"]={"setSoundOption","PM_V1"}
+		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L4"]={"setSoundOption","PM_rotate"}
+		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L5"]={"setSoundOption","PM_V2"}
 
-		lineA = "<80 KNOTS               "
-		lineB = "<V1                     "
-		lineC = "<ROTATE                 "
-		lineD = "<V2                     "
-		lineE = "<POSITIVE RATE          "
+
+		lineA = "<ON        ALL      OFF>"
+		lineB = "<80 KNOTS               "
+		lineC = "<V1                     "
+		lineD = "<ROTATE                 "
+		lineE = "<V2                     "
 
 	elseif pgNo == 2 then
 
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L1"]={"setSoundOption","PM_10000ft"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L2"]={"setSoundOption","PM_transAlt"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L3"]={"setSoundOption","PM_1000ToGO"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L4"]={"setSoundOption","PM_spdbrk"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L5"]={"setSoundOption","PM_rto"}
+		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L1"]={"setSoundOption","PM_posRate"}
+		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L2"]={"setSoundOption","PM_10000ft"}
+		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L3"]={"setSoundOption","PM_transAlt"}
+		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L4"]={"setSoundOption","PM_1000ToGO"}
+		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L5"]={"setSoundOption","PM_spdbrk"}
 
-		lineA = "<TEN THOUSAND FT        "
-		lineB = "<TRANSITION ALT         "
-		lineC = "<1000 FT TO LVLOFF      "
-		lineD = "<SPEEDBRAKE             "
-		lineE = "<REJECTED TAKEOFF       "
+
+		lineA = "<POSITIVE RATE          "
+		lineB = "<TEN THOUSAND FT        "
+		lineC = "<TRANSITION ALT         "
+		lineD = "<1000 FT TO LVLOFF      "
+		lineE = "<SPEEDBRAKE             "
+		
 
 	elseif pgNo == 3 then
 
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L1"]={"setSoundOption","PM_reverse"}
+		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L1"]={"setSoundOption","PM_rto"}
+		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L2"]={"setSoundOption","PM_reverse"}
 
-		lineA = "<THRUST REVERSERS       "
-		lineB = "                        "
+		lineA = "<REJECTED TAKEOFF       "
+		lineB = "<THRUST REVERSERS       "
 		lineC = "                        "
 		lineD = "                        "
 		lineE = "                        "
@@ -328,7 +333,7 @@ fmsPages["PMCALLOUTSCONFIG"].getSmallPage=function(self,pgNo,fmsID)
 	local lineC = ""
 	local lineD = ""
 	local lineE = ""
-	local line = {"notInUse", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"}
+	local line = {"1notInUse", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}
 
 	if pgNo == 1 then
 
@@ -340,7 +345,7 @@ fmsPages["PMCALLOUTSCONFIG"].getSmallPage=function(self,pgNo,fmsID)
 			end
 		end
 
-		lineA = line[1]
+		lineA = "                        "
 		lineB = line[2]
 		lineC = line[3]
 		lineD = line[4]
@@ -364,7 +369,7 @@ fmsPages["PMCALLOUTSCONFIG"].getSmallPage=function(self,pgNo,fmsID)
 
 	elseif pgNo == 3 then
 
-		for i = 11, 15 do
+		for i = 11, 12 do
 			if B747DR_SNDoptions_pm[i] == 0 then
 				line[i] = "                       (ON)"
 			else
@@ -373,7 +378,7 @@ fmsPages["PMCALLOUTSCONFIG"].getSmallPage=function(self,pgNo,fmsID)
 		end
 
 		lineA = line[11]
-		lineB = "                        "
+		lineB = line[12]
 		lineC = "                        "
 		lineD = "                        "
 		lineE = "                        "
@@ -404,6 +409,8 @@ fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L6"]={"setpage","MAINTSIMCONFIG_4"}
 fmsPages["PMCALLOUTSCONFIG"].getNumPages=function(self)
   return 3
 end
+
+
 
 -- VOLUME PAGE
 
