@@ -437,6 +437,7 @@ B747DR_glideslope_ptr_vis_fo                    = deferred_dataref("laminar/B747
 B747DR_v1_alert                                 = deferred_dataref("laminar/B747/alerts/v1", "number")
 B747DR_appDH_alert                              = deferred_dataref("laminar/B747/alerts/appDH", "number")
 B747DR_DH_alert                                 = deferred_dataref("laminar/B747/alerts/DH", "number")
+B747DR_10000_callout                            = deferred_dataref("laminar/B747/fmod/callouts/10000", "number")
 
 
 --*************************************************************************************--
@@ -2292,15 +2293,24 @@ function B747_decision_height_capt()
                 B747DR_DH_alert = 0
                 B747DR_appDH_alert = 0
             end
-			
+
         else
             B747DR_DH_alert = 0
-            B747DR_appDH_alert = 0
+            B747DR_appDH_alert = 0  
         end
-		
+
     else
         B747DR_DH_alert = 0
         B747DR_appDH_alert = 0
+    end
+end
+
+-- PM 10,000ft Callout (crazytimtimtim + Matt726)
+function B747_10000_callout()
+    if simDR_altitude_ft_pilot <= 10050 and simDR_altitude_ft_pilot >= 9050 then
+        B747DR_10000_callout = 1
+    elseif simDR_altitude_ft_pilot <= 9000 or simDR_altitude_ft_pilot >= 11000 then
+        B747DR_10000_callout = 0
     end
 end
 
@@ -2326,10 +2336,6 @@ end
 
 
 
-
-
-
-
 ----- ALTIMETER -------------------------------------------------------------------------
 function B747_altimteter()
 
@@ -2337,8 +2343,6 @@ function B747_altimteter()
     B747DR_altimter_ft_adjusted = simDR_altitude_ft_pilot * 0.01
 
 end
-
-
 
 
 
@@ -3536,6 +3540,9 @@ function after_physics()
     B747_inst_monitor_AI()
     fltInstsetCRTs()
     fltInstsetASIs()
+
+    B747_10000_callout()
+
 end
 
 
