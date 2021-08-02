@@ -39,6 +39,8 @@ simDR_acf_tailnum			= find_dataref("sim/aircraft/view/acf_tailnum")
 simDR_baro_capt				= find_dataref("sim/cockpit/misc/barometer_setting")
 simDR_baro_fo				= find_dataref("sim/cockpit/misc/barometer_setting2")
 
+B747DR_SNDoptions			        	= find_dataref("laminar/B747/fmod/options")
+
 --*************************************************************************************--
 --** 				        CREATE READ-WRITE CUSTOM DATAREFS                        **--
 --*************************************************************************************--
@@ -146,6 +148,14 @@ function checkEngineType()
 		B747DR_engineType = 2
 	end
 end
+
+function checkAircraftType()
+	if simConfigData["data"].PLANE.aircraft_type == "FREIGHTER" then
+		B747DR_SNDoptions[2] = 1
+		B747DR_SNDoptions[3] = 1
+	end
+end
+
 -- crazytimtimtim end
 
 function set_loaded_configs()
@@ -241,4 +251,7 @@ function after_physics()
 
 	--Engine Type
 	checkEngineType()
+
+	--Aircraft Type
+	checkAircraftType()
 end
