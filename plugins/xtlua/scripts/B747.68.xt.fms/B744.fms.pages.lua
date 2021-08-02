@@ -46,7 +46,7 @@ gs1,
 "                        ",
 "<ACMS                   ", 
 "                        ",
-"<CMC                    "
+"<CMC             SELECT>"
 }
 end
 fmsPages["INDEX"].getSmallPage=function(self,pgNo,fmsID)
@@ -68,7 +68,7 @@ fmsPages["INDEX"].getSmallPage=function(self,pgNo,fmsID)
       "                        ",
       "                        ",
       "                        ",
-      "                        ",
+      "         AIRCRAFT CONFIG",
       "                        ",
       }
 end
@@ -80,6 +80,7 @@ fmsFunctionsDefs["INDEX"]["L6"]={"setpage","CMC"}
 fmsFunctionsDefs["INDEX"]["R1"]={"setpage","EFISCTL152"}
 fmsFunctionsDefs["INDEX"]["R2"]={"setpage","EICASMODES"}
 fmsFunctionsDefs["INDEX"]["R4"]={"setpage","GNDHNDL"}
+fmsFunctionsDefs["INDEX"]["R6"]={"setpage", "MAINTSIMCONFIG"}
 
 fmsPages["RTE1"]=createPage("RTE1")
 fmsPages["RTE1"].getPage=function(self,pgNo,fmsID)
@@ -2289,14 +2290,11 @@ end
 function fmsFunctions.setSoundOption(fmsO,value) -- sound options (crazytimtimtim + Matt726)
 
 	if value == "alarmsOption" then
-		if B747DR_SNDoptions[0] == 0 then
-			B747DR_SNDoptions[0] = 1
-		elseif B747DR_SNDoptions[0] == 1 then
-			B747DR_SNDoptions[0] = 2
+		if B747DR_SNDoptions[0] ~= 2 then
+			B747DR_SNDoptions[0] = B747DR_SNDoptions[0] + 1
 		elseif B747DR_SNDoptions[0] == 2 then
-	  		B747DR_SNDoptions[0] = 0
+			B747DR_SNDoptions[0] = 0
 		end
-		return
 	end
 
 	if value == "seatBeltOption" then B747DR_SNDoptions[1] = 1 - B747DR_SNDoptions[1] return end
@@ -2319,29 +2317,7 @@ function fmsFunctions.setSoundOption(fmsO,value) -- sound options (crazytimtimti
 	if value == "GPWSminimums" then B747DR_SNDoptions_gpws[14] = 1 - B747DR_SNDoptions_gpws[14] return end
 	if value == "GPWSapproachingMinimums" then B747DR_SNDoptions_gpws[15] = 1 - B747DR_SNDoptions_gpws[15] return end
 
-	if value == "PM_80kt" then B747DR_SNDoptions_pm[1] = 1 - B747DR_SNDoptions_pm[1] return end
-	if value == "PM_V1" then B747DR_SNDoptions_pm[2] = 1 - B747DR_SNDoptions_pm[2] return end
-	if value == "PM_rotate" then B747DR_SNDoptions_pm[3] = 1 - B747DR_SNDoptions_pm[3] return end
-	if value == "PM_V2" then B747DR_SNDoptions_pm[4] = 1 - B747DR_SNDoptions_pm[4] return end
-	if value == "PM_posRate" then B747DR_SNDoptions_pm[5] = 1 - B747DR_SNDoptions_pm[5] return end
-	if value == "PM_10000ft" then B747DR_SNDoptions_pm[6] = 1 - B747DR_SNDoptions_pm[6] return end
-	if value == "PM_transAlt" then B747DR_SNDoptions_pm[7] = 1 - B747DR_SNDoptions_pm[7] return end
-	if value == "PM_1000ToGO" then B747DR_SNDoptions_pm[8] = 1 - B747DR_SNDoptions_pm[8] return end
-	if value == "PM_spdbrk" then B747DR_SNDoptions_pm[9] = 1 - B747DR_SNDoptions_pm[9] return end
-	if value == "PM_rto" then B747DR_SNDoptions_pm[10] = 1 - B747DR_SNDoptions_pm[10] return end
-	if value == "PM_reverse" then B747DR_SNDoptions_pm[11] = 1 - B747DR_SNDoptions_pm[11] return end
-	if value == "PM_all_on" then
-		for i = 1, 11 do
-			B747DR_SNDoptions_pm[i] = 1
-		end
-		return
-	end
-	if value == "PM_all_off" then
-		for i = 1, 11 do
-			B747DR_SNDoptions_pm[i] = 0
-		end
-		return
-	end
+	if value == "PM_toggle" then B747DR_SNDoptions_pm = 1 - B747DR_SNDoptions_pm return end
 
 end
 
