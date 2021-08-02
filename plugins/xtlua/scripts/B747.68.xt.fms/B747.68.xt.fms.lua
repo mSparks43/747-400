@@ -306,7 +306,8 @@ B747DR_elevator_trim				    = deferred_dataref("laminar/B747/fmc/elevator_trim",
 B747DR_SNDoptions			        	= deferred_dataref("laminar/B747/fmod/options", "array[4]")
 B747DR_SNDoptions_volume				= deferred_dataref("laminar/B747/fmod/options/volume", "array[8]")
 B747DR_SNDoptions_gpws					= deferred_dataref("laminar/B747/fmod/options/gpws", "array[16]")
-B747DR_SNDoptions_pm                    = deferred_dataref("laminar/B747/fmod/options/pmCallouts", "array[12]")
+B747DR_SNDoptions_pm                    = deferred_dataref("laminar/B747/fmod/options/pmCallouts", "number")
+B747DR_SNDoptions_pm_10000              = deferred_dataref("laminar/B747/fmod/options/pmCallouts/10000", "number")
 
 --Simulator Config Options
 simConfigData = {}
