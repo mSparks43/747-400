@@ -9,16 +9,12 @@ fmsPages["PASSENGERSOUNDCONFIG"]=createPage("PASSENGERSOUNDCONFIG")
 fmsPages["PASSENGERSOUNDCONFIG"].getPage=function(self,pgNo,fmsID)
 	if pgNo == 1 then
 
-		local lineA = ""
-		local lineB = ""
-		local lineC = ""
-
 		fmsFunctionsDefs["PASSENGERSOUNDCONFIG"]["L1"]={"setSoundOption","seatBeltOption"}
 		fmsFunctionsDefs["PASSENGERSOUNDCONFIG"]["L2"]={"setSoundOption","paOption"}
 		fmsFunctionsDefs["PASSENGERSOUNDCONFIG"]["L3"]={"setSoundOption","musicOption"}
 
 		return{
-			"      SOUND CONFIG      ",
+			"    PASSENGER SOUNDS    ",
 			"                        ",
 			"<SEATBELT SOUND         ",
 			"                        ",
@@ -26,65 +22,59 @@ fmsPages["PASSENGERSOUNDCONFIG"].getPage=function(self,pgNo,fmsID)
 			"                        ",
 			"<BOARDING MUSIC         ",
 			"                        ",
-			"                        ",
+			"                        ", --"<PASSENGERS             ",
 			"                        ",
 			"                        ",
 			"------------------------",
-			"<SIMCONFIG              "
+			"<SOUND CONFIG           "
 		}
 
 	end
 end
 
 fmsPages["PASSENGERSOUNDCONFIG"].getSmallPage=function(self,pgNo,fmsID)
-	if pgNo == 1 then
 
-		local lineA = "                  (STBLT)"
-		local lineB = "                     (PA)"
-		local lineC = "                  (MUSIC)"
+	local lineA = "                  (STBLT)"
+	local lineB = "                     (PA)"
+	local lineC = "                  (MUSIC)"
 
-		if B747DR_SNDoptions[1] == 0 then
-			lineA = "                      (1/2)"
-		else
-			lineA = "                      (2/2)"
-		end
-
-		if B747DR_SNDoptions[2] == 0 then
-			lineB = "                       (ON)"
-		else
-			lineB = "                      (OFF)"
-		end
-
-		if B747DR_SNDoptions[3] == 0 then
-			lineC = "                       (ON)"
-		else
-			lineC = "                      (OFF)"
-		end
-
-		return{
-			"                        ",
-			"PASSENGERS      (CURRENTLY)",
-			lineA,
-			"                        ",
-			lineB,
-			"                        ",
-			lineC,
-			"                        ",
-			"                        ",
-			"                        ",
-			"                        ",
-			"                        ",
-			"                        "
-		}
-
+	if B747DR_SNDoptions[1] == 0 then
+		lineA = "                   (1/2)"
+	else
+		lineA = "                   (2/2)"
 	end
+
+	if B747DR_SNDoptions[2] == 0 then
+		lineB = "                    (ON)"
+	else
+		lineB = "                   (OFF)"
+	end
+
+	if B747DR_SNDoptions[3] == 0 then
+		lineC = "                    (ON)"
+	else
+		lineC = "                   (OFF)"
+	end
+
+	return{
+		"                        ",
+		"OPTION       (CURRENTLY)",
+		lineA,
+		"                        ",
+		lineB,
+		"                        ",
+		lineC,
+		"                        ",
+		"                        ",
+		"                        ",
+		"                        ",
+		"                        ",
+		"                        "
+	}
+
 end
 
 fmsFunctionsDefs["PASSENGERSOUNDCONFIG"]["L6"]={"setpage","MAINTSIMCONFIG_4"}
-
-fmsPages["PASSENGERSOUNDCONFIG"].getNumPages=function(self)
-  return 1
-end
 
 
 
@@ -146,7 +136,7 @@ fmsPages["GPWSSOUNDCONFIG"].getPage=function(self,pgNo,fmsID)
 	end
 
 	return {
-		"      SOUND CONFIG      ",
+		"      GPWS CONFIG       ",
 		"                        ",
 		lineA,
 		"                        ",
@@ -158,7 +148,7 @@ fmsPages["GPWSSOUNDCONFIG"].getPage=function(self,pgNo,fmsID)
 		"                        ",
 		lineE,
 		"------------------------",
-		"<SIMCONFIG              "
+		"<SOUND CONFIG           "
 	}
 
 end
@@ -176,9 +166,9 @@ fmsPages["GPWSSOUNDCONFIG"].getSmallPage=function(self,pgNo,fmsID)
 
 		for i = 1, 5 do
 			if B747DR_SNDoptions_gpws[i] == 0 then
-				line[i] = "                       (ON)"
+				line[i] = "                    (ON)"
 			else
-				line[i] = "                      (OFF)"
+				line[i] = "                   (OFF)"
 			end
 		end
 
@@ -192,9 +182,9 @@ fmsPages["GPWSSOUNDCONFIG"].getSmallPage=function(self,pgNo,fmsID)
 
 		for i = 6, 10 do
 			if B747DR_SNDoptions_gpws[i] == 0 then
-				line[i] = "                       (ON)"
+				line[i] = "                    (ON)"
 			else
-				line[i] = "                      (OFF)"
+				line[i] = "                   (OFF)"
 			end
 		end
 
@@ -208,9 +198,9 @@ fmsPages["GPWSSOUNDCONFIG"].getSmallPage=function(self,pgNo,fmsID)
 
 		for i = 11, 15 do
 			if B747DR_SNDoptions_gpws[i] == 0 then
-				line[i] = "                       (ON)"
+				line[i] = "                    (ON)"
 			else
-				line[i] = "                      (OFF)"
+				line[i] = "                   (OFF)"
 			end
 		end
 
@@ -225,7 +215,7 @@ fmsPages["GPWSSOUNDCONFIG"].getSmallPage=function(self,pgNo,fmsID)
 	return {
 
 		"                      "..pgNo.."/3",
-		"GPWS OPTIONS    (CURRENTLY)",
+		"OPTION       (CURRENTLY)",
 		lineA,
 		"                        ",
 		lineB,
@@ -248,166 +238,80 @@ fmsPages["GPWSSOUNDCONFIG"].getNumPages=function(self)
 end
 
 
-
--- PM CALLOUTS CONFIG
-
+-- GENERAL SOUNDS
 
 
-fmsPages["PMCALLOUTSCONFIG"]=createPage("PMCALLOUTSCONFIG")
-fmsPages["PMCALLOUTSCONFIG"].getPage=function(self,pgNo,fmsID)
 
-	local lineA = ""
-	local lineB = ""
-	local lineC = ""
-	local lineD = ""
-	local lineE = ""
+fmsPages["MISCSOUNDCONFIG"]=createPage("MISCSOUNDCONFIG")
+fmsPages["MISCSOUNDCONFIG"].getPage=function(self,pgNo,fmsID)
 
-	if pgNo == 1 then
+	local lineA = "OLD/DEFLT/NEW"
 
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L1"]={"setSoundOption","PM_all_off"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["R1"]={"setSoundOption","PM_all_on"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L2"]={"setSoundOption","PM_80kt"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L3"]={"setSoundOption","PM_V1"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L4"]={"setSoundOption","PM_rotate"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L5"]={"setSoundOption","PM_V2"}
+	fmsFunctionsDefs["MISCSOUNDCONFIG"]["L2"]={"setSoundOption", "alarmsOption"}
+	fmsFunctionsDefs["MISCSOUNDCONFIG"]["L1"]={"setSoundOption","PM_toggle"}
+	fmsFunctionsDefs["MISCSOUNDCONFIG"]["L6"]={"setpage","MAINTSIMCONFIG_4"}
 
-
-		lineA = "<ON        ALL      OFF>"
-		lineB = "<80 KNOTS               "
-		lineC = "<V1                     "
-		lineD = "<ROTATE                 "
-		lineE = "<V2                     "
-
-	elseif pgNo == 2 then
-
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L1"]={"setSoundOption","PM_posRate"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L2"]={"setSoundOption","PM_10000ft"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L3"]={"setSoundOption","PM_transAlt"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L4"]={"setSoundOption","PM_1000ToGO"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L5"]={"setSoundOption","PM_spdbrk"}
-
-
-		lineA = "<POSITIVE RATE          "
-		lineB = "<TEN THOUSAND FT        "
-		lineC = "<TRANSITION ALT         "
-		lineD = "<1000 FT TO LVLOFF      "
-		lineE = "<SPEEDBRAKE             "
-		
-
-	elseif pgNo == 3 then
-
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L1"]={"setSoundOption","PM_rto"}
-		fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L2"]={"setSoundOption","PM_reverse"}
-
-		lineA = "<REJECTED TAKEOFF       "
-		lineB = "<THRUST REVERSERS       "
-		lineC = "                        "
-		lineD = "                        "
-		lineE = "                        "
-
+	if B747DR_SNDoptions[0] == 0 then
+		lineA = "   /DEFLT/   "
+	elseif B747DR_SNDoptions[0] == 1 then
+		lineA = "   /     /NEW"
+	elseif B747DR_SNDoptions[0] == 2 then
+		lineA = "OLD/     /   "
 	end
 
 	return {
-		"      SOUND CONFIG      ",
+		"     GENERAL SOUNDS     ",
 		"                        ",
-		lineA,
+		"<F/O CALLOUTS           ",
 		"                        ",
-		lineB,
+		"<Warnings  "..lineA,
 		"                        ",
-		lineC,
 		"                        ",
-		lineD,
 		"                        ",
-		lineE,
+		"                        ",
+		"                        ",
+		"                        ",
 		"------------------------",
-		"<SIMCONFIG              "
+		"<SOUND CONFIG            "
 	}
 
 end
 
+fmsPages["MISCSOUNDCONFIG"].getSmallPage=function(self,pgNo,fmsID)
 
-fmsPages["PMCALLOUTSCONFIG"].getSmallPage=function(self,pgNo,fmsID)
-
-	local lineA = ""
+	local lineA = "OLD/DEFLT/NEW"
 	local lineB = ""
-	local lineC = ""
-	local lineD = ""
-	local lineE = ""
-	local line = {"1notInUse", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}
 
-	if pgNo == 1 then
+	if B747DR_SNDoptions_pm == 1 then
+		lineA = " (ON)"
+	elseif B747DR_SNDoptions_pm == 0 then
+		lineA = "(OFF)"
+	end
 
-		for i = 1, 5 do
-			if B747DR_SNDoptions_pm[i] == 0 then
-				line[i] = "                       (ON)"
-			else
-				line[i] = "                      (OFF)"
-			end
-		end
-
-		lineA = "                        "
-		lineB = line[2]
-		lineC = line[3]
-		lineD = line[4]
-		lineE = line[5]
-
-	elseif pgNo == 2 then
-
-		for i = 6, 10 do
-			if B747DR_SNDoptions_pm[i] == 0 then
-				line[i] = "                       (ON)"
-			else
-				line[i] = "                      (OFF)"
-			end
-		end
-
-		lineA = line[6]
-		lineB = line[7]
-		lineC = line[8]
-		lineD = line[9]
-		lineE = line[10]
-
-	elseif pgNo == 3 then
-
-		for i = 11, 12 do
-			if B747DR_SNDoptions_pm[i] == 0 then
-				line[i] = "                       (ON)"
-			else
-				line[i] = "                      (OFF)"
-			end
-		end
-
-		lineA = line[11]
-		lineB = line[12]
-		lineC = "                        "
-		lineD = "                        "
-		lineE = "                        "
-
+	if B747DR_SNDoptions[0] == 0 then
+		lineB = "OLD       NEW"
+	elseif B747DR_SNDoptions[0] == 1 then
+		lineB = "OLD DEFLT    "
+	elseif B747DR_SNDoptions[0] == 2 then
+		lineB = "    DEFLT NEW"
 	end
 
 	return {
-
-		"                      "..pgNo.."/3",
-		"F/O CALLOUTS    (CURRENTLY)",
-		lineA,
+		"                     1/1",
+		"OPTION       (CURRENTLY)",
+		"                   "..lineA,
 		"                        ",
-		lineB,
+		"           "..lineB,
 		"                        ",
-		lineC,
 		"                        ",
-		lineD,
 		"                        ",
-		lineE,
+		"                        ",
+		"                        ",
+		"                        ",
 		"                        ",
 		"                        "
 	}
 
-end
-
-fmsFunctionsDefs["PMCALLOUTSCONFIG"]["L6"]={"setpage","MAINTSIMCONFIG_4"}
-
-fmsPages["PMCALLOUTSCONFIG"].getNumPages=function(self)
-  return 3
 end
 
 
