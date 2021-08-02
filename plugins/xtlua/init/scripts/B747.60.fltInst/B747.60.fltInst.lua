@@ -452,3 +452,4 @@ B747DR_appDH_alert                              = deferred_dataref("laminar/B747
 B747DR_DH_alert                                 = deferred_dataref("laminar/B747/alerts/DH", "number")
 B747DR_fltInst_capt_clock_ET_seconds            = deferred_dataref("laminar/B747/fltInst/capt/clock_et_seconds", "number")
 B747DR_fltInst_fo_clock_ET_seconds              = deferred_dataref("laminar/B747/fltInst/fo/clock_et_seconds", "number")
+B747DR_10000_callout                            = deferred_dataref("laminar/B747/fmod/callouts/10000", "number")
