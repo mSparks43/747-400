@@ -2277,13 +2277,11 @@ function B747_decision_height_capt()
     end
 	
     -- "Approaching Minimums" and "Minimums" Callouts (crazytimtimtim + Matt726)
-    if B747DR_toga_mode == 0
-    and simDR_all_wheels_on_ground == 0
-    then
+    if B747DR_vertical_speed_fpm < 0
+    and simDR_all_wheels_on_ground == 0 then
 
         if  B747DR_efis_min_ref_alt_capt_sel_dial_pos == 0                  -- RADIO mode
-        and simDR_radio_alt_DH_capt ~= 0
-        then
+        and simDR_radio_alt_DH_capt ~= 0 then
 
             if simDR_radio_alt_height_capt <= simDR_radio_alt_DH_capt + 80 and simDR_radio_alt_height_capt > simDR_radio_alt_DH_capt then
                 B747DR_appDH_alert = 1
@@ -2296,8 +2294,7 @@ function B747_decision_height_capt()
             end
 
         elseif B747DR_efis_min_ref_alt_capt_sel_dial_pos == 1               -- BARO mode
-        and B747DR_efis_baro_alt_ref_capt ~= 0
-        then
+        and B747DR_efis_baro_alt_ref_capt ~= 0 then
 
             if simDR_altitude_ft_pilot <= B747DR_efis_baro_alt_ref_capt + 80 and simDR_altitude_ft_pilot > B747DR_efis_baro_alt_ref_capt then
                 B747DR_appDH_alert = 1
