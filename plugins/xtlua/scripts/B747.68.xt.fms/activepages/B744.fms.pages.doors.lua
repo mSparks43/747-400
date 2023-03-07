@@ -14,6 +14,7 @@ fmsPages["DOORS"].getPage=function(self,pgNo,fmsID)
 
     local lineA = "<OPEN                    "
     local lineB = "<OPEN                    "
+    local LineC = "<OPEN                    "
 
     if simDR_doors[1] == 1 then
       lineA = "<CLOSE                   "
@@ -30,6 +31,14 @@ fmsPages["DOORS"].getPage=function(self,pgNo,fmsID)
       lineB = "<OPEN                    "
       fmsFunctionsDefs["DOORS"]["L2"]={"doCMD","sim/flight_controls/door_open_1"}
     end
+    
+     if simDR_doors[0] == 1 then
+      lineC = "<CLOSE                   "
+      fmsFunctionsDefs["DOORS"]["L2"]={"doCMD","sim/flight_controls/door_close_3"}
+      else
+      lineC = "<OPEN                    "
+      fmsFunctionsDefs["DOORS"]["L2"]={"doCMD","sim/flight_controls/door_open_3"}
+    end
 
     return {
       "     DOOR CONTROL       ",
@@ -38,7 +47,8 @@ fmsPages["DOORS"].getPage=function(self,pgNo,fmsID)
       "                        ",
       lineB,
       "                        ",
-      "INOP                    ",
+      LineC,
+      "                        ",
       "                        ",
       "INOP                    ",
       "                        ",
