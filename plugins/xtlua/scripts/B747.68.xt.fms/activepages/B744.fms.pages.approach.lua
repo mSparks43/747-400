@@ -48,6 +48,7 @@ fmsPages["APPROACH"].getSmallPage=function(self,pgNo,fmsID)
 	end
 	
 fmsFunctionsDefs["APPROACH"]={}
+fmsFunctionsDefs["FT"]["L5"]=["setdata","runwaylength"]
 fmsFunctionsDefs["APPROACH"]["L6"]={"setpage","INITREF"}
 fmsFunctionsDefs["APPROACH"]["R6"]={"setpage","THRUSTLIM"}
 fmsFunctionsDefs["APPROACH"]["L1"]={"setdata","grosswt"}
