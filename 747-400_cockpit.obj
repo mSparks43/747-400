@@ -22332,11 +22332,11 @@ ATTR_manip_command_knob	rotate_medium	laminar/B747/air/cabin_alt_auto/sel_dial_u
 TRIS	16866 30
 ATTR_manip_command_knob	rotate_medium	laminar/B747/air/equip_cooling/sel_dial_up	laminar/B747/air/equip_cooling/sel_dial_dn	Equipment Cooling Selector
 TRIS	16896 30
-ATTR_manip_command_knob	rotate_medium	laminar/B747/air/pack_ctrl_01/sel_dial_up	laminar/B747/air/pack_ctrl_01/sel_dial_dn	Pack Selector #1
+ATTR_manip_command_knob	rotate_medium	laminar/B747/air/pack_ctrl_01/sel_dial_up	laminar/B747/air/pack_ctrl_01/sel_dial_dn	Pack Selector 1
 TRIS	16926 30
-ATTR_manip_command_knob	rotate_medium	laminar/B747/air/pack_ctrl_02/sel_dial_up	laminar/B747/air/pack_ctrl_02/sel_dial_dn	Pack Selector #2
+ATTR_manip_command_knob	rotate_medium	laminar/B747/air/pack_ctrl_02/sel_dial_up	laminar/B747/air/pack_ctrl_02/sel_dial_dn	Pack Selector 2
 TRIS	16956 30
-ATTR_manip_command_knob	rotate_medium	laminar/B747/air/pack_ctrl_03/sel_dial_up	laminar/B747/air/pack_ctrl_03/sel_dial_dn	Pack Selector #3
+ATTR_manip_command_knob	rotate_medium	laminar/B747/air/pack_ctrl_03/sel_dial_up	laminar/B747/air/pack_ctrl_03/sel_dial_dn	Pack Selector 3
 TRIS	16986 30
 ATTR_manip_command_knob	rotate_medium	laminar/B747/antiice/wndshlsd_wiper_L/sel_dial_up	laminar/B747/antiice/wndshlsd_wiper_L/sel_dial_dn	Windshield Wiper Selector Left
 TRIS	17016 30
@@ -22418,13 +22418,13 @@ ATTR_manip_command_knob	rotate_medium	laminar/B747/flt_mgmt/transponder/mode_sel
 TRIS	18156 30
 ATTR_manip_command_knob	rotate_medium	laminar/B747/fuel/fuel_jett/el_dial_up	laminar/B747/fuel/fuel_jett/sel_dial_dn	Fuel Jettison Selector
 TRIS	18186 30
-ATTR_manip_command_knob	rotate_medium	laminar/B747/hydraulics/sel_dial/dmd_pump_01_up	laminar/B747/hydraulics/sel_dial/dmd_pump_01_dn	Hydraulic Demand Pump Seelctor 01
+ATTR_manip_command_knob	rotate_medium	laminar/B747/hydraulics/sel_dial/dmd_pump_01_up	laminar/B747/hydraulics/sel_dial/dmd_pump_01_dn	Hydraulic Demand Pump Seelctor 1
 TRIS	18216 30
-ATTR_manip_command_knob	rotate_medium	laminar/B747/hydraulics/sel_dial/dmd_pump_02_up	laminar/B747/hydraulics/sel_dial/dmd_pump_02_dn	Hydraulic Demand Pump Selector 02
+ATTR_manip_command_knob	rotate_medium	laminar/B747/hydraulics/sel_dial/dmd_pump_02_up	laminar/B747/hydraulics/sel_dial/dmd_pump_02_dn	Hydraulic Demand Pump Selector 2
 TRIS	18246 30
-ATTR_manip_command_knob	rotate_medium	laminar/B747/hydraulics/sel_dial/dmd_pump_03_up	laminar/B747/hydraulics/sel_dial/dmd_pump_03_dn	Hydraulic Demand Pump Selector 03
+ATTR_manip_command_knob	rotate_medium	laminar/B747/hydraulics/sel_dial/dmd_pump_03_up	laminar/B747/hydraulics/sel_dial/dmd_pump_03_dn	Hydraulic Demand Pump Selector 3
 TRIS	18276 30
-ATTR_manip_command_knob	rotate_medium	laminar/B747/hydraulics/sel_dial/dmd_pump_04_up	laminar/B747/hydraulics/sel_dial/dmd_pump_04_dn	Hydraulic Demand Pump Selector 03
+ATTR_manip_command_knob	rotate_medium	laminar/B747/hydraulics/sel_dial/dmd_pump_04_up	laminar/B747/hydraulics/sel_dial/dmd_pump_04_dn	Hydraulic Demand Pump Selector 4
 TRIS	18306 30
 ATTR_manip_command_knob	rotate_medium	laminar/B747/nd/mode/capt/sel_dial_up	laminar/B747/nd/mode/capt/sel_dial_dn	ND Mode Selector
 TRIS	18336 30
@@ -22436,12 +22436,12 @@ ATTR_manip_command_knob	rotate_medium	laminar/B747/nd/range/fo/sel_dial_up	lamin
 TRIS	18426 30
 ATTR_manip_command_knob	rotate_medium	sim/autopilot/airspeed_up	sim/autopilot/airspeed_down	IAS/MACH Speed Selector Dial
 TRIS	18456 30
-ATTR_manip_command	button	laminar/B747/button_switch/press_airspeed	airspeed intervention
+ATTR_manip_command	button	laminar/B747/button_switch/press_airspeed	Airspeed Intervention
 ANIM_begin
 	ANIM_trans	   -0.0713    -0.014    0.0	   -0.0713    -0.014    0.0	0 0	no_ref
 	TRIS	16140 72
 ANIM_end
-ATTR_manip_command	button	laminar/B747/button_switch/press_altitude	altitude intervention
+ATTR_manip_command	button	laminar/B747/button_switch/press_altitude	Altitude Intervention
 ANIM_begin
 	ANIM_trans	   0.1283    0.002    0.0	   0.1283    0.002    0.0	0 0	no_ref
 	TRIS	16140 72
@@ -23247,12 +23247,12 @@ ANIM_begin
 	ANIM_trans	  -0.0842    3.4631    5.5904	  -0.0842    3.4555    5.5928	0 1	laminar/B747/toggle_switch/position[17]
 	TRIS	24894 30
 ANIM_end
-ATTR_manip_command	button	laminar/B747/toggle_switch/engine_start4	SNgine 4 Start
+ATTR_manip_command	button	laminar/B747/toggle_switch/engine_start4	Engine 4 Start
 ANIM_begin
 	ANIM_trans	   0.0001    3.4631    5.5904	   0.0001    3.4555    5.5928	0 1	laminar/B747/toggle_switch/position[19]
 	TRIS	24924 30
 ANIM_end
-ATTR_manip_command	button	laminar/B747/toggle_switch/engine_start3	Engine 2 Start
+ATTR_manip_command	button	laminar/B747/toggle_switch/engine_start3	Engine 3 Start
 ANIM_begin
 	ANIM_trans	  -0.0420    3.4631    5.5904	  -0.0420    3.4555    5.5928	0 1	laminar/B747/toggle_switch/position[18]
 	TRIS	24954 30
