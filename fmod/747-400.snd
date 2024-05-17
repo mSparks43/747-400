@@ -99,6 +99,12 @@ BEGIN_SOUND_SPACE
     AABB -3.3 -1 3.5 3.3 3.7 24.5
 END_SOUND_SPACE
 
+#LOWER DECK FAR AFT
+BEGIN_SOUND_SPACE
+    SOUND_INDEX 5
+    BLEND_DEPTH 0.0
+    AABB -3.3 -1 22.5 3.3 3.7 24.5
+END_SOUND_SPACE
 #######################
 #DOOR
 #######################
@@ -6293,8 +6299,8 @@ END_SOUND_ATTACHMENT
 BEGIN_SOUND_ATTACHMENT
     EVENT_NAME /Boeing/747/-400/Cabin/Passenger/morshu
     VEH_XYZ 0 5.1 -25.5
-        EVENT_START_COND sim/graphics/view/pilots_head_z > 22.4
-        EVENT_END_COND sim/graphics/view/pilots_head_z < 22.4
+        EVENT_START_COND sim/operation/sound/inside_ratio[5] > 0.1
+        EVENT_END_COND sim/operation/sound/inside_ratio[5] < 0.1
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT

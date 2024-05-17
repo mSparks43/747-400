@@ -126,7 +126,38 @@ B747CMD_auto_ign_sel_dn = deferred_command("laminar/B747/electrical/auto_ignit/s
 -- AI
 B747CMD_ai_elec_quick_start			= deferred_command("laminar/B747/ai/elec_quick_start", "number", B747_ai_elec_quick_start_CMDhandler)
 
+myDR_simDR_strobes_on             = XLuaCreateDataRef("fs/lighting/strobes_on", "number","yes",nil)
 
+simDR_strobe_lights_switch          = find_dataref("sim/cockpit2/switches/strobe_lights_on")
+simDRTime                            = find_dataref("sim/time/total_running_time_sec")
+simDR_strobe_brightness          = find_dataref("sim/flightmodel2/lights/strobe_brightness_ratio")
+local lastState=0
+local flashCount=0
+local nextOn=0
+function do_strobe_lights()
+    --if our lights off, make it so and return
+    if myDR_simDR_strobes_on == 0 then simDR_strobe_lights_switch=0 return end
+    --if we are on and flashed 3 times switch off until nextOn
+    if simDR_strobe_lights_switch == 1 and flashCount==3 then
+        nextOn=simDRTime+2
+        simDR_strobe_lights_switch=0
+    end
+    --if we are off and we shuld be on reset the flash count and switch on
+    if simDR_strobe_lights_switch == 0 and simDRTime>nextOn then
+        flashCount=0
+        simDR_strobe_lights_switch=1
+    end
+    --if we are now off after being on, count the flash
+    if simDR_strobe_brightness[0]<0.5 and lastState>0.5 then
+        flashCount=flashCount+1
+    end
+    lastState=simDR_strobe_brightness[0]
+end
+
+
+function after_physics()
+    do_strobe_lights()
+end
 
 
 
