@@ -131,7 +131,7 @@ See the [commit history](https://github.com/mSparks43/747-400/commits/master) fo
 
 _Thank you all for your support and contributions!_
 
-## Release XP1206-2024/05/26 (OP Program XP12-10-2024/05/25 10:35):
+## Release XP12.1.0-2024/05/26 (OP Program XP12-10-2024/05/25 10:35):
 Updates focusing on systems, ACARs and autopilot.
 
 ### Bug fixes
