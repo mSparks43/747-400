@@ -1,6 +1,7 @@
 ---
 header-includes:
   - \usepackage{hyperref}
+  - \usepackage[utf8]{inputenc}
   - \hypersetup{colorlinks=true,
             urlcolor=blue,
             linkcolor=blue,
@@ -8,6 +9,7 @@ header-includes:
             pdfborderstyle={/S/U/W 1}}        
 geometry: "left=1.5cm,right=1.5cm,top=2cm,bottom=2cm"
 colorlinks: true  
+
        
 ---
 
@@ -128,6 +130,64 @@ You may be experiencing this if you have SAM v3. To fix, disable the "Jetway Ext
 See the [commit history](https://github.com/mSparks43/747-400/commits/master) for a detailed change log.
 
 _Thank you all for your support and contributions!_
+
+## Release XP1206-2024/05/26 (OP Program XP12-10-2024/05/25 10:35):
+Updates focusing on systems, ACARs and autopilot.
+
+### Bug fixes
+ - ETA time reports 60 for minutes instead of 00 (#864)
+ - Remove floating strobe light in front of cockpit (#863)
+ - Fix conflict conflict between X-Plane and custom autopilot
+ - Hold all reverse thrust now cancels TOGA
+ - Disable flight envelope protection below 15 feet AGL
+ - Fix MAIN BATT DISCH message 
+ - Replace X-Plane Autothrottle commands
+ - Fail A/T is disarmed in active state
+ - Set fltno from ATC LOGON/STATUS page
+ - Fix pitch hold during TOGA 
+ - Reduce yaw damper throw to 3.5 degrees 
+ - FMC scratch pad stuck with error message, "Unable 5000 at GIRRR" (#859)
+ - Co pilot ND missing waypoint lines (#862)
+ - X-Plane 11 wipers, wiper blades not working (#849)
+ - Consider prop mode when pinning levers
+ - Always use prop mode 3 when reversers deployed 
+ - Remove flaps condition from wing anti ice
+ - Fix airborne start
+ - Remove throttle down command from drag required logic
+ - Fix conflict with X-Plane autothrottle.
+ - Fix CDU data transfer for android FMC
+ - Fix fire handles don’t actually shutoff engines (#337)
+ - Some sound fixes
+
+### Enhancements
+
+ - Integrated Hoppie and AutoATC ACARs support
+ - Erase ACARS log
+ - ACARS downlink messages page and datalink active 
+ - Display inforeq downlinks
+ - ACARS position reporting
+ - ATC REQUEST pages 1-4
+ - When can we ACARS pages 
+ - ACARS REQUEST VERIFY and SEND
+ - Emergency report and verify ATC pages
+ - Start windows iced up when cold and dark at a freezing airport
+ - Better cabin lighting (thanks to KSB인천국제공항공사)
+ - Improve reverse handling
+ - Flight Data Recorder visualisations and better logging
+ - FLCH tuning
+ - Update IAS to mach switch speed to match FCOM section 4.10.4/5 
+ - AT during landing tuning
+ - Overhaul throttle IO 
+ - Add some give to center body gear 
+ - Implement Cruise Climb per FCOM section 11.31.22 
+ - Manual throttle animation speed increase
+ - Incorporate Garen Evans fuel management script (auto tank to engine) 
+ - Update ECC thrust targets
+ - Improved Flight director
+ - Consider ToD for VNAV end descent
+ - Flight test analysis framework
+ - Add T/C and progress reporting
+
 
 ## Release XP1206-2023/10/01:
 Bug fix and enhacements release of issues reported since previous release
