@@ -820,7 +820,7 @@ end
 ----- STROBE LIGHTS ---------------------------------------------------------------------
 function B747_strobe_lights()
 
-   	simDR_strobe_lights_switch = 1 - B747DR_toggle_switch_position[10]
+   	simDR_strobe_lights_switch = B747DR_toggle_switch_position[10]
 
 end
 

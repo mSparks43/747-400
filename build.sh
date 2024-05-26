@@ -1,6 +1,8 @@
 cd ..
-zip -rt 2023-08-12 sparky744_update_2023_08_12_$(date '+%Y_%m_%d').zip 747-400/ -x "*/\.DS_Store" "*/B747-400_lastpos.dat" "*/flight_data.jdat" "*/.git*" "*/*_prefs.txt" "*-swp"
+#zip -rt 2023-08-12 sparky744_update_2023_08_12_$(date '+%Y_%m_%d').zip 747-400/ -x "*/\.DS_Store" "*/B747-400_lastpos.dat" "*/flight_data.jdat" "*/.git*" "*/*_prefs.txt" "*-swp"
 
+zip -9 -r -j sparky744.$(date '+%Y.%m.%d').zip /home/msparks/Development/AutoATC_Installers/win_support_binaries/VC_redist.x64.exe
+zip -9 -r -j sparky744.$(date '+%Y.%m.%d').zip /home/msparks/Development/AutoATC_Installers/win_support_binaries/vcredist_x64.exe
 zip -9 -r sparky744.$(date '+%Y.%m.%d').zip 747-400/747-400.acf -x "*/\.DS_Store"
 zip -9 -r sparky744.$(date '+%Y.%m.%d').zip 747-400/747-400.acf.terrain_radar_descr -x "*/\.DS_Store"
 zip -9 -r sparky744.$(date '+%Y.%m.%d').zip 747-400/747-400.cfg -x "*/\.DS_Store"
