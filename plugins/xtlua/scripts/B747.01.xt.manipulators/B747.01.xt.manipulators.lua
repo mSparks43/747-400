@@ -2292,7 +2292,7 @@ function livery_load()
 end
 function B747_animate_value(current_value, target, min, max, speed)
 
-    local fps_factor = math.min(0.1, speed * SIM_PERIOD)
+    --[[local fps_factor = math.min(0.1, speed * SIM_PERIOD)
 
     if target >= (max - 0.001) and current_value >= (max - 0.01) then
         return max
@@ -2300,6 +2300,15 @@ function B747_animate_value(current_value, target, min, max, speed)
        return min
     else
         return current_value + ((target - current_value) * fps_factor)
+    end]]--
+    local fps_factor = math.min(0.1, speed * SIM_PERIOD)
+	local nextValue=current_value + ((target - current_value) * fps_factor)
+    if nextValue >= (max - 0.001) then
+        return max
+    elseif nextValue <= (min + 0.001) then
+       return min
+    else
+        return nextValue
     end
 
 end
