@@ -2595,6 +2595,12 @@ function B747_ap_fma()
 	--B747DR_capt_ap_roll=B747DR_ap_target_roll-simDR_capt_roll
 	--B747DR_fo_ap_roll=B747DR_ap_target_roll-simDR_fo_roll
 	glideSlopeLOCProgress()
+	if B747DR_autothrottle_active==0 then 
+		B747DR_ap_FMA_autothrottle_mode = 0
+	elseif B747DR_autothrottle_active==1 and B747DR_ap_FMA_active_pitch_mode==2 and B747DR_ap_FMA_autothrottle_mode ~= 3 then -- SPD
+			B747DR_ap_lastCommand=simDRTime
+			B747DR_ap_FMA_autothrottle_mode=3
+	end
 	if (B747DR_ap_AFDS_status_annun_pilot == 3 or B747DR_ap_AFDS_status_annun_pilot == 4) and runAutoland() then
 		return
 	end

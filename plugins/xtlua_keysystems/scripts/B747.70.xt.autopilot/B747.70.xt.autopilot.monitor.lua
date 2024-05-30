@@ -588,8 +588,10 @@ function B747_monitorAT()
         
         return 
     end
-    if B747DR_ap_FMA_autothrottle_mode == 3 then -- SPD
-        --B747DR_ap_lastCommand=simDRTime
+
+    if B747DR_autothrottle_active==1 and B747DR_ap_FMA_active_pitch_mode==2 and B747DR_ap_FMA_autothrottle_mode ~= 3 then -- SPD
+        B747DR_ap_lastCommand=simDRTime
+        B747DR_ap_FMA_autothrottle_mode=3
         return 
     end
     --otherwise off  (VNAV ONLY)
