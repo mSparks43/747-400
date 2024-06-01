@@ -533,10 +533,10 @@ end
 
 
 function B747_engine_TOGA_power_CMDhandler(phase, duration) 
-    callEngineReverse[0]=-1
-    callEngineReverse[1]=-1
-    callEngineReverse[2]=-1
-    callEngineReverse[3]=-1	
+    callEngineReverse[0]=0
+    callEngineReverse[1]=0
+    callEngineReverse[2]=0
+    callEngineReverse[3]=0
     simDR_prop_mode[0] = 1													
     simDR_prop_mode[1] = 1													
     simDR_prop_mode[2] = 1													
@@ -729,8 +729,10 @@ function B747_set_animation_position(current_value, target, min, max, speed)
 end
 ----- PROP MODE -------------------------------------------------------------------------
 local LastSpeedBrake=0
+local clearingReverse=false
+local lastThrottleAll=0
 function B747_prop_mode()
-
+    
     -- Mode 0 is feathered, 1 is normal, 2 is in beta, and reverse (prop or jet) is mode 3
     local refreshGroundstate=simDR_all_wheels_on_ground
     if simDR_reallyall_wheels_on_ground==0 then
@@ -738,17 +740,28 @@ function B747_prop_mode()
     else 
         B747DR_reverser_lockout = 0
     end
-   
+    if simDR_prop_mode[i] == 3 and simDR_engine_throttle_jet_all<0 or
+        (simDR_thrust_rev_deploy_ratio[0]<0.01 and simDR_thrust_rev_deploy_ratio[1]<0.01 and simDR_thrust_rev_deploy_ratio[2]<0.01 and simDR_thrust_rev_deploy_ratio[3]<0.01)
+        then
+        clearingReverse=false
+    elseif simDR_engine_throttle_jet_all==0 and lastThrottleAll<0 then
+        clearingReverse=true
+    end
+    lastThrottleAll=simDR_engine_throttle_jet_all
     for i = 0, 3 do
        --print("in clear prop mode "..i.." with "..B747DR_display_N1[i])
-        if callEngineReverse[i]==0 then 
-            simDR_prop_mode[i] = 1
+       if clearingReverse then
+        simDR_prop_mode[i] = 1
+        callEngineReverse[i]=0
+      -- elseif callEngineReverse[i]==0 then 
+        --    simDR_prop_mode[i] = 1
          --   print("do clear prop mode "..i.." with "..B747DR_display_N1[i])
         --elseif B747DR_speedbrake_lever<LastSpeedBrake and callEngineReverse[i]==1 and B747DR_reverser_lockout == 0 then
         --    simDR_prop_mode[i] = 1
         --    callEngineReverse[i]=-1
           --  print("alt do clear prop mode "..i.." with "..B747DR_display_N1[i])
-        elseif (callEngineReverse[i]==1 and B747DR_reverser_lockout == 0 and simDR_engine_throttle_jet_all<=0) or simDR_thrust_rev_deploy_ratio[i]>0.01 then
+          -- 
+        elseif (callEngineReverse[i]==1 and B747DR_reverser_lockout == 0 and simDR_engine_throttle_jet_all<=0) or simDR_thrust_rev_deploy_ratio[i]>0.01 and not(clearingReverse) then
             simDR_prop_mode[i] = 3
             B747DR_engine_TOGA_mode = 0
             B747DR_autothrottle_active=0

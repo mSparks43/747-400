@@ -845,12 +845,16 @@ function B747_flap_transition_status()
     end    
     
 end
+local poppedSpeedbrake=false
 function clearOnreverse()
     B747_sb_manip_changed=0
     B747DR_speedbrake_auto_ext = 0
 end
+
 function B747_speedbrake_onreverse()
-    if (B747DR_speedbrake_lever <1.0 and (simDR_prop_mode[0] == 3 or simDR_prop_mode[1] == 3 or simDR_prop_mode[2] == 3 or simDR_prop_mode[3] == 3)) and B747DR_reverser_lockout==0 then
+    if (B747DR_speedbrake_lever ==1.0 and (simDR_prop_mode[0] == 3 or simDR_prop_mode[1] == 3 or simDR_prop_mode[2] == 3 or simDR_prop_mode[3] == 3)) and B747DR_reverser_lockout==0 then
+        poppedSpeedbrake=true
+    elseif (not(poppedSpeedbrake) and B747DR_speedbrake_lever <1.0 and (simDR_prop_mode[0] == 3 or simDR_prop_mode[1] == 3 or simDR_prop_mode[2] == 3 or simDR_prop_mode[3] == 3)) and B747DR_reverser_lockout==0 then
         B747DR_speedbrake_lever=B747_set_animation_position(math.max(B747DR_speedbrake_lever,0.30), 1.0, 0.0, 1.0, 20.0)
         B747_sb_manip_changed=1
         B747DR_speedbrake_auto_ext = 1
@@ -864,6 +868,8 @@ function B747_speedbrake_onreverse()
             stop_timer(clearOnreverse)    
         end
         run_after_time(clearOnreverse, 1.0)
+    elseif B747DR_speedbrake_lever ==0.0 then  
+        poppedSpeedbrake=false    
     end
 end
 
