@@ -131,6 +131,22 @@ See the [commit history](https://github.com/mSparks43/747-400/commits/master) fo
 
 _Thank you all for your support and contributions!_
 
+## Release XP12.1.0-2024/06/02 (OP Program XP12-10-2024/06/02 08:57):
+
+Small but meaningful fixes
+
+### Bug fixes
+
+ - Fix reversed strobe light switch
+ - EPR PID tuning (cause of redlining in #885)
+ - Update animation functions
+ - Reinstate SPD mode if switching AT on while on the glideslope
+ - Send L1 to default FMC in RTE if not on page one
+ - Send R1 to default FMC in RTE if not on page one
+ - Fix reverse thrust mode clearance
+ - Check have ToD before pausing at ToD
+
+
 ## Release XP12.1.0-2024/05/26 (OP Program XP12-10-2024/05/25 10:35):
 Updates focusing on systems, ACARs and autopilot.
 
