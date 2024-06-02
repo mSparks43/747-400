@@ -109,6 +109,7 @@ fmsPages["RTE1"].getPage=function(self,pgNo,fmsID)
   if pageNo~=1 then
 	fmsFunctionsDefs["RTE1"]["L1"]={"custom2fmc","L1"}
 	fmsFunctionsDefs["RTE1"]["L2"]={"custom2fmc","L2"}
+	fmsFunctionsDefs["RTE1"]["R1"]={"custom2fmc","R1"}
 	fmsFunctionsDefs["RTE1"]["R2"]={"custom2fmc","R2"}
 	fmsFunctionsDefs["RTE1"]["R3"]={"custom2fmc","R3"}
 	return {
@@ -129,6 +130,7 @@ fmsPages["RTE1"].getPage=function(self,pgNo,fmsID)
   end
   fmsFunctionsDefs["RTE1"]["L1"]={"setdata","fltdep"}
   fmsFunctionsDefs["RTE1"]["L2"]={"setdata","runway"}
+  fmsFunctionsDefs["RTE1"]["R1"]={"setdata","fltdst"}
   fmsFunctionsDefs["RTE1"]["R2"]={"custom2fmc","R3"}
   fmsFunctionsDefs["RTE1"]["L4"]={"custom2fmc","L4"}
   fmsFunctionsDefs["RTE1"]["R3"]={"setpage","FMC"}
