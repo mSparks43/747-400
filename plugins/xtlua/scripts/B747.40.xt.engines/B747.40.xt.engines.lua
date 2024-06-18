@@ -116,6 +116,7 @@ simConfigData = {}
 --*************************************************************************************--
 B747DR_display_EGT					= deferred_dataref("laminar/B747/engines/display_EGT", "array[4]")
 simDR_startup_running           = find_dataref("sim/operation/prefs/startup_running")
+simDR_radarAlt1           	= find_dataref("sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot")
 simDR_all_wheels_on_ground      = find_dataref("sim/flightmodel/failures/onground_any")
 simDR_reallyall_wheels_on_ground      = find_dataref("sim/flightmodel/failures/onground_all")
 simDR_thrust_rev_deploy_ratio   = find_dataref("sim/flightmodel2/engines/thrust_reverser_deploy_ratio")
@@ -732,7 +733,12 @@ local LastSpeedBrake=0
 local clearingReverse=false
 local lastThrottleAll=0
 function B747_prop_mode()
-    
+    if simDR_radarAlt1 > 25.1 then
+        callEngineReverse[0]=0
+        callEngineReverse[1]=0
+        callEngineReverse[2]=0
+        callEngineReverse[3]=0
+    end
     -- Mode 0 is feathered, 1 is normal, 2 is in beta, and reverse (prop or jet) is mode 3
     local refreshGroundstate=simDR_all_wheels_on_ground
     if simDR_reallyall_wheels_on_ground==0 then

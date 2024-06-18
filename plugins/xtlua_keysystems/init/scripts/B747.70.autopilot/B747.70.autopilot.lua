@@ -254,7 +254,15 @@ B747CMD_ai_ap_quick_start				= deferred_command("laminar/B747/ai/autopilot_quick
 
 
 
-
+simDR_override_throttles = find_dataref("sim/operation/override/override_throttles")
+simDR_override_control_surfaces       = find_dataref("sim/operation/override/override_control_surfaces")
+simDR_override_steering               = find_dataref("sim/operation/override/override_wheel_steer")
+function aircraft_unload()
+    
+    simDR_override_throttles = 0
+    simDR_override_control_surfaces = 0
+    simDR_override_steering=0
+end
 
 
 

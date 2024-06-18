@@ -271,12 +271,7 @@ simDR_override_control_surfaces       = find_dataref("sim/operation/override/ove
 simDR_override_steering               = find_dataref("sim/operation/override/override_wheel_steer")
 --simDR_hyd_press_2               = find_dataref("sim/cockpit2/hydraulics/indicators/hydraulic_pressure_2")
 B747DR_hyd_dmd_pmp_sel_pos      = deferred_dataref("laminar/B747/hydraulics/dmd_pump/sel_dial_pos", "array[4]")
-function aircraft_unload()
-   
-  simDR_override_control_surfaces = 0
-  simDR_override_steering=0
-  
-end
+
 function B747_animate_value(current_value, target, min, max, speed)
 
     
