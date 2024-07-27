@@ -2234,7 +2234,7 @@ function B747_ap_C_vor_adf_audio_vol_dn_CMDhandler(phase, duration)
     elseif phase == 1 then
         if duration > 0.5 then
             -- SET THE ANIMATION VALUE
-            B747DR_ap_C_vor_adf_audio_vol = math.max(30.0, B747DR_ap_C_vor_adf_audio_volV-1.0)        -- LIMIT
+            B747DR_ap_C_vor_adf_audio_vol = math.max(30.0, B747DR_ap_C_vor_adf_audio_vol-1.0)        -- LIMIT
             B747DR_ap_L_vor_adf_audio_vol = B747DR_ap_C_vor_adf_audio_vol
             B747DR_ap_R_vor_adf_audio_vol = B747DR_ap_C_vor_adf_audio_vol
             -- SET THE XP DATAREF VALUE

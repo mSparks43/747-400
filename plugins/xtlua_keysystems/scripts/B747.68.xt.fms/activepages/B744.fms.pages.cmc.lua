@@ -50,32 +50,82 @@ fmsPages["CMC"].getNumPages=function(self)
   return 2
 end
 simDR_stalled_elements= find_dataref("sim/flightmodel2/wing/elements/element_is_stalled")
+
+B747DR_throttle						= deferred_dataref("laminar/B747/engine/throttle", "array[4]")
+B747DR_throttle_reversor			= deferred_dataref("laminar/B747/engine/throttle_reversor", "array[4]")
+simDR_throttle_ratio_all		= find_dataref("sim/cockpit2/engine/actuators/throttle_ratio_all")
+simDR_throttle_ratio		= find_dataref("sim/cockpit2/engine/actuators/throttle_ratio")
+B747DR_throttle_resolver_angle 		= deferred_dataref("laminar/B747/engines/TRA", "array[4]")
+simDR_engn_thro				= find_dataref("sim/flightmodel/engine/ENGN_thro")
+simDR_engn_thro_use			= find_dataref("sim/flightmodel/engine/ENGN_thro_use")
+simDR_throttle_max			= find_dataref("sim/aircraft/engine/acf_throtmax_FWD")
+
 fmsPages["PLFAULTS"]=createPage("PLFAULTS")
-fmsPages["PLFAULTS"].getPage=function(self,pgNo,fmsID) 
-  local numStalled=0
-  for i=0,320 do
-    if simDR_stalled_elements[i]>0 then
-      numStalled=numStalled+1
-    end
-  end
+fmsPages["PLFAULTS"].getPage=function(self,pgNo,fmsID)
+  if pgNo==1 then
+
     return {
-            
-"      STALL TESTS    1/1",
-"                        ",
-"STALLED ELEMENTS        ",
-"                        ",
-"    "..numStalled,
-"                        ",
-"                        ",
-"                        ",
-"                        ",
-"                        ",
-"                        ", 
-"------------------------",
-"<RETURN                 "
+              
+      "    THROTTLE TESTS   1/2",
+      " ../B747/engine/throttle",
+      string.format("%02.2f", B747DR_throttle[0]).."  "..string.format("%02.2f", B747DR_throttle[1]).."  "..string.format("%02.2f", B747DR_throttle[2]).."  "..string.format("%02.2f", B747DR_throttle[3]).."  ",
+      "    ../throttle_reversor",
+      string.format("%02.2f", B747DR_throttle_reversor[0]).."  "..string.format("%02.2f", B747DR_throttle_reversor[1]).."  "..string.format("%02.2f", B747DR_throttle_reversor[2]).."  "..string.format("%02.2f", B747DR_throttle_reversor[3]).."  ",
+      "   ../throttle_ratio_all",
+      string.format("%02.2f", simDR_throttle_ratio_all).."                        ",
+      "actuators/throttle_ratio",
+      string.format("%02.2f", simDR_throttle_ratio[0]).."  "..string.format("%02.2f", simDR_throttle_ratio[1]).."  "..string.format("%02.2f", simDR_throttle_ratio[2]).."  "..string.format("%02.2f", simDR_throttle_ratio[3]).."  ",
+      "          ../engines/TRA",
+      string.format("%02.2f", B747DR_throttle_resolver_angle[0]).."  "..string.format("%02.2f", B747DR_throttle_resolver_angle[1]).."  "..string.format("%02.2f", B747DR_throttle_resolver_angle[2]).."  "..string.format("%02.2f", B747DR_throttle_resolver_angle[3]).."  ", 
+      "------------------------",
+      "<RETURN                 "
     }
-  
+  elseif pgNo==2 then 
+    return {
+              
+      "    THROTTLE TESTS   2/3",
+      "     ../engine/ENGN_thro",
+      string.format("%02.2f", simDR_engn_thro[0]).."  "..string.format("%02.2f", simDR_engn_thro[1]).."  "..string.format("%02.2f", simDR_engn_thro[2]).."  "..string.format("%02.2f", simDR_engn_thro[3]).."  ",
+      " ../engine/ENGN_thro_use",
+      string.format("%02.2f", simDR_engn_thro_use[0]).."  "..string.format("%02.2f", simDR_engn_thro_use[1]).."  "..string.format("%02.2f", simDR_engn_thro_use[2]).."  "..string.format("%02.2f", simDR_engn_thro_use[3]).."  ",
+      "/engine/acf_throtmax_FWD",
+      string.format("%02.2f", simDR_throttle_max).."                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "------------------------",
+      "<RETURN                 "
+    } 
+  elseif pgNo==3 then  
+    local numStalled=0
+    for i=0,320 do
+      if simDR_stalled_elements[i]>0 then
+        numStalled=numStalled+1
+      end
+    end
+      return {
+              
+  "      STALL TESTS    3/3",
+  "                        ",
+  "STALLED ELEMENTS        ",
+  "                        ",
+  "    "..numStalled,
+  "                        ",
+  "                        ",
+  "                        ",
+  "                        ",
+  "                        ",
+  "                        ", 
+  "------------------------",
+  "<RETURN                 "
+      }
+  end
 end
+fmsPages["PLFAULTS"].getNumPages=function(self)
+  return 3
+end
+
 fmsFunctionsDefs["PLFAULTS"]["L6"]={"setpage","CMC"}
 fmsPages["CONFTEST"]=createPage("CONFTEST")
 fmsPages["CONFTEST"].getPage=function(self,pgNo,fmsID) 

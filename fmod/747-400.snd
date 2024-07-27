@@ -26,6 +26,7 @@ REQUIRES_BANK engine_other.bank
 REQUIRES_BANK engineGE.bank
 REQUIRES_BANK enginePW.bank
 REQUIRES_BANK engineRR.bank
+REQUIRES_BANK engine_other.bank
 REQUIRES_BANK warnings.bank
 
 DISABLE_LEGACY_ALERT_SOUNDS
@@ -5774,19 +5775,22 @@ END_SOUND_ATTACHMENT
 BEGIN_SOUND_ATTACHMENT
     EVENT_NAME /Boeing/747/-400/Warnings/master_caution
     VEH_XYZ 0 4.2 -26.8
-    EVENT_START_COND laminar/B747/warning/master_caution > 0.5
+    EVENT_START_COND laminar/B747/warning/master_caution_audio > 0.5
+    EVENT_END_COND laminar/B747/warning/master_caution_audio < 0.5
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
     EVENT_NAME /Boeing/747/-400/Warnings/master_caution2
     VEH_XYZ 0 4.2 -26.8
-    EVENT_START_COND laminar/B747/warning/master_caution > 0.5
+    EVENT_START_COND laminar/B747/warning/master_caution_audio > 0.5
+    EVENT_END_COND laminar/B747/warning/master_caution_audio < 0.5
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
     EVENT_NAME /Boeing/747/-400/Warnings/master_caution3
     VEH_XYZ 0 4.2 -26.8
-    EVENT_START_COND laminar/B747/warning/master_caution > 0.5
+    EVENT_START_COND laminar/B747/warning/master_caution_audio > 0.5
+    EVENT_END_COND laminar/B747/warning/master_caution_audio < 0.5
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
