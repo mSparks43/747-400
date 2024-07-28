@@ -1086,7 +1086,7 @@ function throttle_management()
 		ecc_throttle()
 	else
 		for i = 0, 3 do
-			if simDR_reverser_deploy_ratio[i]==0 then
+			if simDR_reverser_deploy_ratio[i]<0.01 then
 				B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],simDR_engn_thro[i],0,1.00,1)
 			else
 				B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],0,0,1.00,1)
