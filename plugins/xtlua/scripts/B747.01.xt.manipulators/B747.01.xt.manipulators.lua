@@ -421,7 +421,8 @@ end
 function B747_ap_TOGA_mode_beforeCMDhandler(phase, duration) end
 function B747_ap_TOGA_mode_afterCMDhandler(phase, duration)
 	if phase == 0 then
-		B747DR_ap_ias_mach_window_open = 1		
+		B747DR_ap_ias_mach_window_open = 1	
+        B747DR_autothrottle_active = 1	
 	end		
 end
 
@@ -1443,7 +1444,8 @@ function B747_autothrottle_arm_CMDhandler(phase, duration)
         B747DR_autothrottle_fail=0
     end
 end
-
+function B747_autothrottle_disarm_before_CMDhandler(phase, duration)
+end
 function B747_autothrottle_disarm_CMDhandler(phase, duration)
     if phase == 0 then
         B747_toggle_switch_position_target[29] = 0.0
@@ -1820,7 +1822,7 @@ B747CMD_autothrottle_arm            	= deferred_command("laminar/B747/authrottle
 B747CMD_autothrottle_disarm         	= deferred_command("laminar/B747/authrottle_disarm", "Autothrottle Disarm", B747_autothrottle_disarm_CMDhandler)
     
 simCMD_autothrottle_on                  = replace_command("sim/autopilot/autothrottle_arm", B747_autothrottle_arm_CMDhandler)
-simCMD_autothrottle_off                 = replace_command("sim/autopilot/autothrottle_off", B747_autothrottle_disarm_CMDhandler)
+simCMD_autothrottle_off                 = wrap_command("sim/autopilot/autothrottle_off", B747_autothrottle_disarm_before_CMDhandler, B747_autothrottle_disarm_CMDhandler)
 simCMD_autothrottle_arm_switch 		= replace_command("sim/autopilot/autothrottle_toggle", B747_autothrottle_arm_switch_CMDhandler)
 
 ----- MAIN PANEL TOGGLE SWITCHES --------------------------------------------------------

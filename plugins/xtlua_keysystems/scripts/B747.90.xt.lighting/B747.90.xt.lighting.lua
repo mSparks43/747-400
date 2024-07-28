@@ -161,7 +161,7 @@ simDR_window_heat_fail              = find_dataref("sim/operation/failures/rel_i
 --simDR_bleed_air_fail_L              = find_dataref("sim/operation/failures/rel_bleed_air_lft")
 --simDR_bleed_air_fail_R              = find_dataref("sim/operation/failures/rel_bleed_air_rgt")
 
-simDR_window_ice                    = find_dataref("sim/flightmodel/failures/window_ice")
+--simDR_window_ice                    = find_dataref("sim/flightmodel/failures/window_ice")
 simDR_OAT=find_dataref("sim/weather/temperature_ambient_c")
 
 simDR_engine_bleed_air_fail         = find_dataref("sim/cockpit2/annunciators/bleed_air_fail")
@@ -2130,12 +2130,12 @@ end
 
 
 ----- SET STATE TO COLD & DARK ----------------------------------------------------------
-simDR_window_ice                    = find_dataref("sim/flightmodel/failures/window_ice")
+--simDR_window_ice                    = find_dataref("sim/flightmodel/failures/window_ice")
 simDR_OAT=find_dataref("sim/weather/temperature_ambient_c")
 function B747_set_lighting_CD()
-    if simDR_OAT<-1 then
+    --[[if simDR_OAT<-1 then
         simDR_window_ice                    = 1
-    end
+    end]]--
 end
 
 

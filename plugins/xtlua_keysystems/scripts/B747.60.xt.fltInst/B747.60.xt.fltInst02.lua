@@ -657,7 +657,7 @@ function B747_flt_inst_fmc_master_src_ctr_pnl_sel_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_flt_inst_fmc_master_src_ctr_pnl_sel_pos = 1.0 - B747DR_flt_inst_fmc_master_src_ctr_pnl_sel_pos
         simDR_autopilot_source = B747DR_flt_inst_fmc_master_src_ctr_pnl_sel_pos                               -- TODO:  VERIFY WITH HOW TO SWITCH NAV1/NAV2 (HSI SOURCE SEL)
-        B747CMD_autothrottle_disarm:once()
+        --B747CMD_autothrottle_disarm:once()
     end
 end
 

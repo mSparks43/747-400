@@ -131,6 +131,7 @@ B747DR_ap_vnav_pause = find_dataref("laminar/B747/autopilot/vnav_pause")
 simCMD_pause = find_command("sim/operation/pause_toggle")
 simDRTime = find_dataref("sim/time/total_running_time_sec")
 simDR_autopilot_autothrottle_enabled = find_dataref("sim/cockpit2/autopilot/autothrottle_enabled")
+simDR_autopilot_autothrottle_arm = find_dataref("sim/cockpit2/autopilot/autothrottle_arm")
 simDR_autopilot_bank_limit = find_dataref("sim/cockpit2/autopilot/bank_angle_mode")
 simDR_autopilot_airspeed_is_mach = find_dataref("sim/cockpit2/autopilot/airspeed_is_mach")
 simDR_autopilot_altitude_ft = find_dataref("laminar/B747/autopilot/altitude_dial_ft")
@@ -545,14 +546,13 @@ function B747_ap_switch_speed_mode_CMDhandler(phase, duration)
 		B747_ap_button_switch_position_target[1] = 1 -- SET THE SPEED SWITCH ANIMATION TO "IN"
 		B747DR_ap_lastCommand = simDRTime
 
-		if B747DR_toggle_switch_position[29] == 1 then -- AUTOTHROTTLE ""ARM" SWITCH IS "ON"
-			if B747DR_autothrottle_active == 0 and B747DR_toggle_switch_position[29] == 1 and simDR_onGround == 0 then -- AUTOTHROTTLE IS "OFF"
-				--simCMD_autopilot_autothrottle_on:once() -- ACTIVATE THE AUTOTHROTTLE
-				B747DR_autothrottle_active=1
-				if B747DR_engine_TOGA_mode > 0 then
-					B747DR_engine_TOGA_mode = 0
-				end -- CANX ENGINE TOGA IF ACTIVE
-			end
+		if B747DR_toggle_switch_position[29] == 1 and simDR_onGround == 0 then -- AUTOTHROTTLE ""ARM" SWITCH IS "ON"
+
+			B747DR_autothrottle_active=1
+
+			if B747DR_engine_TOGA_mode > 0 then
+				B747DR_engine_TOGA_mode = 0
+			end -- CANX ENGINE TOGA IF ACTIVE
 		end
 		B747DR_ap_vnav_state = 0
 		B747DR_ap_inVNAVdescent = 0
@@ -562,9 +562,9 @@ function B747_ap_switch_speed_mode_CMDhandler(phase, duration)
 		else
 			B747DR_ap_flightPhase = 3
 		end
-		print("B747DR_ap_thrust_mode " .. B747DR_ap_thrust_mode)
+		--print("B747DR_ap_thrust_mode " .. B747DR_ap_thrust_mode)
 		B747DR_ap_thrust_mode = 0
-		print("B747DR_ap_thrust_mode " .. B747DR_ap_thrust_mode)
+		--print("B747DR_ap_thrust_mode " .. B747DR_ap_thrust_mode)
 		if B747DR_switchingIASMode == 0 then
 			if simDR_autopilot_airspeed_is_mach == 0 then
 				simDR_autopilot_airspeed_kts = B747DR_ap_ias_dial_value
@@ -2643,7 +2643,7 @@ function B747_ap_fma()
 	else
 		if B747DR_ap_vnav_state > 0 and simDR_allThrottle < 0.1 and simDR_onGround == 0 then
 			B747DR_ap_FMA_autothrottle_mode = 2 --IDLE
-		elseif (B747DR_ap_vnav_state > 0 or B747DR_toggle_switch_position[29] > 0) and simDR_onGround == 0 then
+		elseif (B747DR_ap_vnav_state > 0 or B747DR_toggle_switch_position[29] > 0) and simDR_onGround == 0  and simDR_radarAlt1 < 50 then
 			B747DR_ap_FMA_autothrottle_mode = 1 --HOLD
 		else
 			B747DR_ap_FMA_autothrottle_mode = 0

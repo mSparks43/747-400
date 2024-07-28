@@ -7,7 +7,7 @@ TEXTURE_NORMAL ../../objects/747_cockpit/Cockpit_Glass_NML.png
 TEXTURE_LIT ../../objects/747_cockpit/Cockpit_Glass_LIT.png
 
 NORMAL_METALNESS
-RAIN_scale	0.2
+RAIN_scale	1.0
 WIPER_texture	Cockpit_Glass_wiper.png
 WIPER_param	sim/flightmodel2/misc/wiper_angle_deg[1]    140.0   0.0    0.019999999552965164
 WIPER_param	sim/flightmodel2/misc/wiper_angle_deg[0]    140.0   0.0    0.019999999552965164

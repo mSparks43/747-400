@@ -916,6 +916,7 @@ function spd_throttle()
 	for i = 0, 3 do
 		--simDR_engn_thro[i]=B747_interpolate_value(simDR_engn_thro[i],spd_target_throttle,0,1.00,2)
 		B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],spd_target_throttle,0,1.00,2)
+		simDR_throttle_ratio[i]	= B747DR_throttle[i]
 	end
 	
 end
@@ -937,6 +938,7 @@ function ecc_throttle()
 		or (B747DR_ap_FMA_autothrottle_mode==2 and simDR_ind_airspeed_kts_pilot<minSafeSpeed) --IDLE need thrust
 		then
 				spd_throttle()
+				simDR_throttle_ratio		= find_dataref("sim/cockpit2/engine/actuators/throttle_ratio")
 				return
 
 		else
@@ -955,9 +957,9 @@ function ecc_throttle()
 			end
 		end
 	local rog=0.0001+0.0001*math.abs(input-target)
-	if(rog>0.005) then
+	--[[if(rog>0.005) then
 		rog=0.005
-	end
+	end]]--
 	if (target> input+1) then
 		spd_target_throttle= (spd_target_throttle+rog)
 	elseif target< input-1 then
@@ -975,6 +977,7 @@ function ecc_throttle()
 		for i = 0, 3 do
 			--simDR_engn_thro[i]=B747_interpolate_value(simDR_engn_thro[i],spd_target_throttle,0,1.00,2)
 			B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],spd_target_throttle,0,1.00,1)
+			simDR_throttle_ratio[i]	= B747DR_throttle[i]
 		end
 	else
 		--shouldn't get here!, done in throttle_management()

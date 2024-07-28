@@ -1050,22 +1050,31 @@ function B747_fltCtrols_EICAS_msg()
     end
 
     -- >CONFIG PARK BRK
+    local sBrake = simDR_parking_brake_ratio  
+    local lBrake = B747DR_parking_brake_ratio -- because async
     if B747DR__gear_chocked==1 then
       simDR_parking_brake_ratio = 1.0
       last_B747DR_Brake = 1.0
     elseif simDR_hyd_press_1_2 < 1000 and simDR_parking_brake_ratio > 0 then
       simDR_parking_brake_ratio = B747_animate_value(simDR_parking_brake_ratio,0,0,1,1)
     else
-      if B747DR_parking_brake_ratio~=last_B747DR_Brake and B747DR_parking_brake_ratio>0.01 then --manually changed
-	    simDR_parking_brake_ratio = B747DR_parking_brake_ratio
+      
+      if B747DR_parking_brake_ratio~=last_B747DR_Brake and (B747DR_parking_brake_ratio>0.01) then --manually changed
+	    if B747DR_parking_brake_ratio>0.9 then
+            simDR_parking_brake_ratio = 1
+        else
+            simDR_parking_brake_ratio = 0
+        end
+        sBrake = simDR_parking_brake_ratio
       end
-      last_simDR_Brake=simDR_parking_brake_ratio
-      last_B747DR_Brake=B747DR_parking_brake_ratio
+      last_simDR_Brake=sBrake
+      last_B747DR_Brake=lBrake
     end
     if simDR_parking_brake_ratio==0 and B747DR_parking_brake_ratio>0 then
         B747DR_parking_brake_ratio=B747_animate_value(B747DR_parking_brake_ratio,0,0,1,30)
-        last_simDR_Brake=simDR_parking_brake_ratio
-        last_B747DR_Brake=B747DR_parking_brake_ratio
+        lBrake = B747DR_parking_brake_ratio
+        last_simDR_Brake=sBrake
+        last_B747DR_Brake=lBrake
     end
     
     if simDR_parking_brake_ratio > 0.99

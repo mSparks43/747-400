@@ -23404,7 +23404,7 @@ ANIM_begin
 	ANIM_rotate	   1.0000    0.0000   -0.0000	 20.00 -20.00	0 1	laminar/B747/fuel/fuel_control/toggle_sw_pos[3]
 	TRIS	25524 30
 ANIM_end
-ATTR_manip_drag_rotate	hand	-0.0630	2.4227	5.2344	-1.0	0.0	-0.0	58.50	108.50	0.0	0.0	1.0	0.0	0.0	laminar/B747/engine/throttle[0]	none	Thrust Lever - Engine 1
+ATTR_manip_drag_rotate	hand	-0.0630	2.4227	5.2344	-1.0	0.0	-0.0	58.50	108.50	0.0	0.0	1.0	0.0	0.0	sim/flightmodel/engine/ENGN_thro[0]	none	Thrust Lever - Engine 1
 ANIM_begin
 	ANIM_hide	0.0 0.0	laminar/B747/engine/thrust_mnp_show[0]
 	ANIM_show	1.0 1.0	laminar/B747/engine/thrust_mnp_show[0]
@@ -23435,7 +23435,7 @@ ANIM_begin
 		TRIS	25704 120
 	ANIM_end
 ANIM_end
-ATTR_manip_drag_rotate	hand	-0.033	2.4227	5.2344	-1.0	0.0	-0.0	58.50	108.50	0.0	0.0	1.0	0.0	0.0	laminar/B747/engine/throttle[1]	none	Thrust Lever - Engine #2
+ATTR_manip_drag_rotate	hand	-0.033	2.4227	5.2344	-1.0	0.0	-0.0	58.50	108.50	0.0	0.0	1.0	0.0	0.0	sim/flightmodel/engine/ENGN_thro[1]	none	Thrust Lever - Engine #2
 ANIM_begin
 	ANIM_hide	0.0 0.0	laminar/B747/engine/thrust_mnp_show[1]
 	ANIM_show	1.0 1.0	laminar/B747/engine/thrust_mnp_show[1]
@@ -23466,7 +23466,7 @@ ANIM_begin
 		TRIS	25974 120
 	ANIM_end
 ANIM_end
-ATTR_manip_drag_rotate	hand	0.026	2.4227	5.2344	-1.0	0.0	-0.0	58.5	108.50	0.0	0.0	1.0	0.0	0.0	laminar/B747/engine/throttle[3]	none	Thrust Lever - Engine #4
+ATTR_manip_drag_rotate	hand	0.026	2.4227	5.2344	-1.0	0.0	-0.0	58.5	108.50	0.0	0.0	1.0	0.0	0.0	sim/flightmodel/engine/ENGN_thro[3]	none	Thrust Lever - Engine #4
 ANIM_begin
 	ANIM_hide	0.0 0.0	laminar/B747/engine/thrust_mnp_show[3]
 	ANIM_show	1.0 1.0	laminar/B747/engine/thrust_mnp_show[3]
@@ -23497,7 +23497,7 @@ ANIM_begin
 		TRIS	26244 120
 	ANIM_end
 ANIM_end
-ATTR_manip_drag_rotate	hand	-0.004	2.4227	5.2344	-1.0	0.0	-0.0	58.50	108.50	0.0	0.0	1.0	0.0	0.0	laminar/B747/engine/throttle[2]	none	Thrust Lever - Engine #3
+ATTR_manip_drag_rotate	hand	-0.004	2.4227	5.2344	-1.0	0.0	-0.0	58.50	108.50	0.0	0.0	1.0	0.0	0.0	sim/flightmodel/engine/ENGN_thro[2]	none	Thrust Lever - Engine #3
 ANIM_begin
 	ANIM_hide	0.0 0.0	laminar/B747/engine/thrust_mnp_show[2]
 	ANIM_show	1.0 1.0	laminar/B747/engine/thrust_mnp_show[2]
