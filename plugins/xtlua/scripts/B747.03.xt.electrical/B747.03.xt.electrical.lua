@@ -731,7 +731,7 @@ end
 function B747_apu_selector_return_spring()
 
 	if B747DR_elec_apu_sel_pos == 2 then
-	B747DR_elec_apu_sel_pos = 1
+	    B747DR_elec_apu_sel_pos = 1
 	end
 
 end

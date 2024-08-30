@@ -818,7 +818,7 @@ function B747_flap_transition_status()
        B747DR_flap_lever_detent = 0.0
     end
     B747DR_flap_deployed_ratio=math.max(B747DR_flap_deployed_ratio1,B747DR_flap_deployed_ratio2,B747DR_flap_deployed_ratio3,B747DR_flap_deployed_ratio4)
-    if math.abs(simDR_flap_ratio_control - B747DR_flap_deployed_ratio) > 0.01 then --simDR_flap_ratio_control
+    if math.abs(simDR_flap_ratio_control - B747DR_flap_deployed_ratio) > 0.02 then --simDR_flap_ratio_control
         B747DR_flap_trans_status = 1
 	
     else
@@ -887,7 +887,7 @@ function B747_primary_EICAS_flap_display()
          - B747DR_flap_deployed_ratio) > 0.01 then
             tStatus=2  
     end
-    if simDR_flap_deploy_ratio < 0.01 then
+    if simDR_flap_deploy_ratio == 0.0 then
         if B747DR_EICAS1_flap_display_status == 1 and B747DR_flap_trans_status == 0 then
             if is_timer_scheduled(B747_flap_display_shutoff) == false then
                 run_after_time(B747_flap_display_shutoff, 10.0)
