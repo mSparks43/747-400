@@ -324,6 +324,17 @@ B747DR_SNDoptions			        	= deferred_dataref("laminar/B747/fmod/options", "ar
 --B747DR_SNDoptions_volume				= deferred_dataref("laminar/B747/fmod/options/volume", "array[8]")
 B747DR_SNDoptions_gpws					= deferred_dataref("laminar/B747/fmod/options/gpws", "array[16]")
 
+simDR_stalled_elements= find_dataref("sim/flightmodel2/wing/elements/element_is_stalled")
+
+B747DR_throttle						= deferred_dataref("laminar/B747/engine/throttle", "array[4]")
+B747DR_throttle_reversor			= deferred_dataref("laminar/B747/engine/throttle_reversor", "array[4]")
+simDR_throttle_ratio_all		= find_dataref("sim/cockpit2/engine/actuators/throttle_ratio_all")
+simDR_throttle_ratio		= find_dataref("sim/cockpit2/engine/actuators/throttle_ratio")
+B747DR_throttle_resolver_angle 		= deferred_dataref("laminar/B747/engines/TRA", "array[4]")
+simDR_engn_thro				= find_dataref("sim/flightmodel/engine/ENGN_thro")
+simDR_engn_thro_use			= find_dataref("sim/flightmodel/engine/ENGN_thro_use")
+simDR_throttle_max			= find_dataref("sim/aircraft/engine/acf_throtmax_FWD")
+
 --Simulator Config Options
 simConfigData = {}
 function doneNewSimConfig()
@@ -1140,6 +1151,37 @@ function activate_inflightAP()
 	B747DR_ap_ATT=0
 	run_after_time(fin_activate_inflightAP,1)
 end
+
+function throttleDataRefresh()
+	-- make sure all the throttle data is synchronized
+	local ref1=B747DR_throttle[0]
+	local ref2=B747DR_throttle[1]
+	local ref3=B747DR_throttle[2]
+	local ref4=B747DR_throttle[3]
+	local ref5=B747DR_throttle_reversor[0]
+	local ref6=B747DR_throttle_reversor[1]
+	local ref7=B747DR_throttle_reversor[2]
+	local ref8=B747DR_throttle_reversor[3]
+	local ref9=simDR_throttle_ratio_all
+	local ref10=simDR_throttle_ratio[0]
+	local ref11=simDR_throttle_ratio[1]
+	local ref12=simDR_throttle_ratio[2]
+	local ref13=simDR_throttle_ratio[3]
+	local ref14=B747DR_throttle_resolver_angle[0]
+	local ref15=B747DR_throttle_resolver_angle[1]
+	local ref16=B747DR_throttle_resolver_angle[2]
+	local ref17=B747DR_throttle_resolver_angle[3]
+	local ref18=simDR_engn_thro[0]
+	local ref19=simDR_engn_thro[1]
+	local ref20=simDR_engn_thro[2]
+	local ref21=simDR_engn_thro[3]
+	local ref22=simDR_engn_thro_use[0]
+	local ref23=simDR_engn_thro_use[1]
+	local ref24=simDR_engn_thro_use[2]
+	local ref25=simDR_engn_thro_use[3]
+	local ref26=simDR_throttle_max      
+end
+
 function after_physics()
   if debug_fms>0 then return end
 	
@@ -1221,7 +1263,7 @@ function after_physics()
 	local payload_weight = B747DR_payload_weight
 	local fuel_qty = simDR_fuel_qty
 	local simconfig = B747DR_simconfig_data
-		
+	throttleDataRefresh()
 end
 
 function aircraft_load()

@@ -238,9 +238,12 @@ function VNAV_DES(numAPengaged,fms)
             B747DR_ap_inVNAVdescent =1
             B747DR_ap_flightPhase=3
             setDescent(true)
-            print("Begin descent")
+            print("Begin descent 3")
             getDescentTarget()
+            simDR_autopilot_alt_hold_status=0
+            simCMD_autopilot_vert_speed_mode:once()
             B747DR_ap_lastCommand=simDRTime
+            
         else
             B747DR_mcp_hold=2
             print("set B747DR_mcp_hold")

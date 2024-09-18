@@ -49,16 +49,7 @@ end
 fmsPages["CMC"].getNumPages=function(self)
   return 2
 end
-simDR_stalled_elements= find_dataref("sim/flightmodel2/wing/elements/element_is_stalled")
 
-B747DR_throttle						= deferred_dataref("laminar/B747/engine/throttle", "array[4]")
-B747DR_throttle_reversor			= deferred_dataref("laminar/B747/engine/throttle_reversor", "array[4]")
-simDR_throttle_ratio_all		= find_dataref("sim/cockpit2/engine/actuators/throttle_ratio_all")
-simDR_throttle_ratio		= find_dataref("sim/cockpit2/engine/actuators/throttle_ratio")
-B747DR_throttle_resolver_angle 		= deferred_dataref("laminar/B747/engines/TRA", "array[4]")
-simDR_engn_thro				= find_dataref("sim/flightmodel/engine/ENGN_thro")
-simDR_engn_thro_use			= find_dataref("sim/flightmodel/engine/ENGN_thro_use")
-simDR_throttle_max			= find_dataref("sim/aircraft/engine/acf_throtmax_FWD")
 
 fmsPages["PLFAULTS"]=createPage("PLFAULTS")
 fmsPages["PLFAULTS"].getPage=function(self,pgNo,fmsID)
