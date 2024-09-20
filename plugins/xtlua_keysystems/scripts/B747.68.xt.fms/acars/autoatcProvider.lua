@@ -154,6 +154,7 @@ receive=function()
     end
     if newMessage["type"]=="telex" then
       newMessage["read"]=false
+      newMessage["rr"]="N"
       newMessage["time"]=string.format("%02d:%02d",hh,mm)
       newMessage["messageID"]=acarsSystem.provider.messageID
       acarsSystem.provider.messageID=acarsSystem.provider.messageID+1
@@ -161,14 +162,27 @@ receive=function()
       acarsSystem.messages[table.getn(acarsSystem.messages.values)+1]=newMessage
     end
     if newMessage["type"]=="cpdlc" then
+      
       newMessage["read"]=false
+
       if newMessage["msg"]=="LOGON ACCEPTED" then
         newMessage["read"]=true
         autoATCState["online"]=true
+      elseif string.starts(newMessage["msg"],"NEXT CTR ") then 
+        newMessage["read"]=true
+        print("setting nextCTR "..fmsModules["data"]["nextCTR"])
+        if string.len(newMessage["msg"])==13 then
+          setFMSData("nextCTR",string.sub(newMessage["msg"],10,13))
+          print("nextCTR ("..fmsModules["data"]["nextCTR"]..")")
+        end
       elseif newMessage["msg"]=="SERVICE TERMINATED" then
         newMessage["read"]=true
         autoATCState["online"]=false
+        if fmsModules["data"]["nextCTR"]~="****" and fmsModules["data"]["atc"]~=fmsModules["data"]["nextCTR"] then
+          fmsFunctions["acarsLogonATC"](fmsL,fmsModules["data"]["nextCTR"])--send any notifications to fmsL, shouldn't be any if we are here
+        end
       end
+
       newMessage["time"]=string.format("%02d:%02d",hh,mm)
       if newMessage["title"]==nil then
         newMessage["title"]=string.sub(newMessage["msg"],1,15) --newMessage["from"].." "..string.sub(newMessage["msg"],1,15)
@@ -179,6 +193,10 @@ receive=function()
       if newMessage["rt"]~=nil then
         acarsSystem.provider.gotResponse(newMessage["rt"])
       end
+      if newMessage["messageID"]~=nil then
+        newMessage["srcID"]=newMessage["messageID"]
+      end
+      newMessage["REPLIED"]=false
       newMessage["messageID"]=acarsSystem.provider.messageID
       acarsSystem.provider.messageID=acarsSystem.provider.messageID+1
       acarsSystem.messages[table.getn(acarsSystem.messages.values)+1]=newMessage

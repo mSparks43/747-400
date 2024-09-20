@@ -583,6 +583,8 @@ function defaultFMSData()
   acarsREQTO=string.rep("-", 5),
   acarsREQDUE=string.rep("-", 16),
   fltno=string.rep("-", 8),
+  curCTR=string.rep("*", 4),
+  nextCTR=string.rep("*", 4),
   fltdate="********",
   fltdep="****",
   fltdst="****",

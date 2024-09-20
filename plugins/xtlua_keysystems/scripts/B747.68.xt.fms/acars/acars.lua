@@ -35,6 +35,7 @@ function fmsFunctions.initAcars(fmsO,value)
   fmsO["pgNo"]=1
   fmsO["targetCustomFMC"]=true
   fmsO["targetPage"]="PREFLIGHT"
+  fmsFunctions["acarsLogonATC"](fmsO,fmsModules.data["fltdep"])--auto login
   run_after_time(switchCustomMode, 0.5)
 end
 function fmsFunctions.acarsDataReady(fmsO)
@@ -72,16 +73,22 @@ end
 function fmsFunctions.acarsRespondATC(fmsO,value) --value=message being replied to, if, message starts WILCO = accepted, UNABLE = rejected, other=RESPONDED
   if not(fmsFunctions.acarsDataReady(fmsO)) then return end
   local atcLogon={}
+  print("inacarsRespondATC "..value)
   if fmsModules["data"]["atc"]=="****" then fmsO["notify"]="NO LOGON" return end
   if string.len(fmsO["scratchpad"])>0 then
     local msg=acarsSystem.messages[value]
+    
+    local replyingTo=json.encode(msg)
+    print("inacarsRespondATC msg"..replyingTo)
     atcLogon["type"]="cpdlc"
     atcLogon["msg"]=fmsO["scratchpad"]
     atcLogon["RR"]="N"
     atcLogon["status"]="SENDING"
     atcLogon["RT"]=msg["srcID"]
     local newInitSend=json.encode(atcLogon)
+    print("newInitSend "..newInitSend)
     fmsFunctions.acarsSystemSendATC(fmsO,newInitSend)
+    acarsSystem.messages[value]["REPLIED"]=true
     fmsO["scratchpad"] = ""
   else
     fmsO["notify"]="NO MESSAGE"
@@ -180,7 +187,7 @@ function fmsFunctions.acarsSystemSendATC(fmsO,value)
     local tMSG={}
     if string.len(msgToSend) <5 then 
       tMSG["to"]=getFMSData("acarsAddress")
-       if tMSG["to"]=="*******" then fmsO["notify"]="EMPTY ADDRESS" return end
+      if tMSG["to"]=="*******" then fmsO["notify"]="EMPTY ADDRESS" return end
       msgToSend=fmsO["scratchpad"] 
       tMSG["type"]="cpdlc"
       tMSG["msg"]=msgToSend
@@ -189,6 +196,7 @@ function fmsFunctions.acarsSystemSendATC(fmsO,value)
       tMSG=json.decode(value)
     end
     if string.len(msgToSend) <5 then fmsO["notify"]="EMPTY MESSAGE" return end
+    print("sendATC "..value)
     acarsSystem.provider.sendATC(json.encode(tMSG))
     fmsO["targetCustomFMC"]=true
     run_after_time(switchCustomMode, 0.5)
@@ -198,7 +206,7 @@ function fmsFunctions.acarsSystemSendATC(fmsO,value)
     --local rMSG=json.decode(tMSG)
     --print(rMSG["msg"])
   else
-    fmsO["notify"]="ACARS NO COMM" 
+    fmsO["notify"]="ACARS NO COMM"
   end
   --print("setpage" .. value)
 end
@@ -304,15 +312,27 @@ acarsSystem.getUpMessages=function(pgNo)
     if endNo <1 then endNo=1 end
     for i = startNo,endNo , -1 do
       local ln="<"..acarsSystem.messages[i]["title"]
+      --local msg=acarsSystem.messages[i]
+      --local encodedMSG=json.encode(msg)
+      --print("rendering "..encodedMSG)
       local padding=21-string.len(ln)
       if padding<0 then padding=0 end
-      if not acarsSystem.messages[i]["read"] then
-	      retVal.template[line]=string.sub(ln,1,21) .. string.format("%"..padding.."s","").." NEW"
-	--retVal.template[line]=string.sub(ln,1,21) .." NEW"
-      else
-	      retVal.template[line]=string.sub(ln,1,21) .. string.format("%"..padding.."s","").." OLD"
-	--retVal.template[line]=string.sub(ln,1,21) .." OLD"
-      end
+     --[[ if acarsSystem.messages[i]["rr"]~=nil and acarsSystem.messages[i]["rr"]=="N" then
+        local padding=10-string.len(ln)
+        if padding<0 then padding=0 end
+        if not acarsSystem.messages[i]["REPLIED"] then
+          retVal.template[line]=string.sub(ln,1,10) .. string.format("%"..padding.."s","").." REPLY REQUIRED"
+        else
+          retVal.template[line]=string.sub(ln,1,10) .. string.format("%"..padding.."s","").."     REPLY SENT"
+        end
+      else]]--
+        
+        if not acarsSystem.messages[i]["read"] then
+          retVal.template[line]=string.sub(ln,1,21) .. string.format("%"..padding.."s","").." NEW"
+        else
+          retVal.template[line]=string.sub(ln,1,21) .. string.format("%"..padding.."s","").." OLD"
+        end
+      --end
       retVal.templateSmall[line+1]="            "..acarsSystem.messages[i]["time"]
       fmsFunctionsDefs["VIEWUPACARS"]["L"..(startNo-i+1)]={"showmessage",i}
       line = line+2
@@ -481,10 +501,18 @@ acarsSystem.getMessageLog=function(pgNo)
       --print("M "..i.." "..messageLog[i]["ud"])
       local ln=""
       if messageLog[i]["ud"]=="U" then
-        if not messageLog[i]["read"] then
-          retVal.templateSmall[line]=" "..messageLog[i]["time"].."z               NEW"
+        if messageLog[i]["rr"]~="N" then
+          if not messageLog[i]["REPLIED"] then
+            retVal.templateSmall[line]=" "..messageLog[i]["time"].."z    REPLY REQUIRED"
+          else
+            retVal.templateSmall[line]=" "..messageLog[i]["time"].."z        REPLY SENT"
+          end
         else
-          retVal.templateSmall[line]=" "..messageLog[i]["time"].."z               OLD"
+          if not messageLog[i]["read"] then
+            retVal.templateSmall[line]=" "..messageLog[i]["time"].."z               NEW"
+          else
+            retVal.templateSmall[line]=" "..messageLog[i]["time"].."z               OLD"
+          end
         end
         ln="  "..messageLog[i]["title"]
         
