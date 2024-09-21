@@ -164,28 +164,37 @@ receive=function()
     if newMessage["type"]=="cpdlc" then
       
       newMessage["read"]=false
-
+      newLogon=""
       if newMessage["msg"]=="LOGON ACCEPTED" then
         newMessage["read"]=true
         autoATCState["online"]=true
+        newMessage["title"]="LOGON ACCEPTED"
+        newMessage["msg"]=newMessage["from"]
       elseif string.starts(newMessage["msg"],"NEXT CTR ") then 
         newMessage["read"]=true
         print("setting nextCTR "..fmsModules["data"]["nextCTR"])
         if string.len(newMessage["msg"])==13 then
+          setFMSData("curCTR",getFMSData("nextCTR"))
           setFMSData("nextCTR",string.sub(newMessage["msg"],10,13))
           print("nextCTR ("..fmsModules["data"]["nextCTR"]..")")
         end
       elseif newMessage["msg"]=="SERVICE TERMINATED" then
         newMessage["read"]=true
         autoATCState["online"]=false
-        if fmsModules["data"]["nextCTR"]~="****" and fmsModules["data"]["atc"]~=fmsModules["data"]["nextCTR"] then
-          fmsFunctions["acarsLogonATC"](fmsL,fmsModules["data"]["nextCTR"])--send any notifications to fmsL, shouldn't be any if we are here
+        if fmsModules["data"]["nextCTR"]~="****" and fmsModules["data"]["atc"]==newMessage["from"] and fmsModules["data"]["atc"]==fmsModules["data"]["curCTR"] and fmsModules["data"]["atc"]~=fmsModules["data"]["nextCTR"] then
+          setFMSData("atc","****")
+          newLogon=fmsModules["data"]["nextCTR"]
+        elseif fmsModules["data"]["curCTR"]~="****" and fmsModules["data"]["atc"]==newMessage["from"] and fmsModules["data"]["atc"]~=fmsModules["data"]["curCTR"] then
+          setFMSData("atc","****")
+          newLogon=fmsModules["data"]["curCTR"]
         end
+        newMessage["title"]="SERVICE TERMINATED"
+        newMessage["msg"]=newMessage["from"]
       end
 
       newMessage["time"]=string.format("%02d:%02d",hh,mm)
       if newMessage["title"]==nil then
-        newMessage["title"]=string.sub(newMessage["msg"],1,15) --newMessage["from"].." "..string.sub(newMessage["msg"],1,15)
+        newMessage["title"]=string.sub(newMessage["msg"],1,19) --newMessage["from"].." "..string.sub(newMessage["msg"],1,15)
       end
       if newMessage["RT"]~=nil then
         acarsSystem.provider.gotResponse(newMessage["RT"])
@@ -200,6 +209,9 @@ receive=function()
       newMessage["messageID"]=acarsSystem.provider.messageID
       acarsSystem.provider.messageID=acarsSystem.provider.messageID+1
       acarsSystem.messages[table.getn(acarsSystem.messages.values)+1]=newMessage
+      if string.len(newLogon)==4 then
+        fmsFunctions["acarsLogonATC"](fmsL,newLogon)--send any notifications to fmsL, shouldn't be any if we are here
+      end
     end
     acarsReceiveDataref=" "
     

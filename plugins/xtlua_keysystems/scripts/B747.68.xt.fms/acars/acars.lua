@@ -46,6 +46,7 @@ function fmsFunctions.acarsDataReady(fmsO)
 end
 function fmsFunctions.acarsLogonATC(fmsO,value)
   if not(fmsFunctions.acarsDataReady(fmsO)) then return end
+  if getFMSData("atc")==value then return end
   acarsSystem.provider.logoff()
   local atcLogon={}
   setFMSData("atc",value)
@@ -326,8 +327,10 @@ acarsSystem.getUpMessages=function(pgNo)
           retVal.template[line]=string.sub(ln,1,10) .. string.format("%"..padding.."s","").."     REPLY SENT"
         end
       else]]--
-        
-        if not acarsSystem.messages[i]["read"] then
+
+        if acarsSystem.messages[i]["rr"]~="N" and not acarsSystem.messages[i]["REPLIED"] then
+          retVal.template[line]=string.sub(ln,1,21) .. string.format("%"..padding.."s","").."  RR"
+        elseif not acarsSystem.messages[i]["read"] then
           retVal.template[line]=string.sub(ln,1,21) .. string.format("%"..padding.."s","").." NEW"
         else
           retVal.template[line]=string.sub(ln,1,21) .. string.format("%"..padding.."s","").." OLD"

@@ -1,17 +1,22 @@
 fmsPages["ATCLOGONSTATUS"]=createPage("ATCLOGONSTATUS")
+lastActive=0
 fmsPages["ATCLOGONSTATUS"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be this way
     local logon="   N/A  "
     local data= "OFFLINE"
-    if netstatusDataref>0 or string.len(acarsReceiveDataref)>1 then
+    local aDiff=simDRTime-lastActive
+    local isActive=(netstatusDataref>0 or string.len(acarsReceiveDataref)>1)
+    if isActive or aDiff<5 then
         data=" ACTIVE"
+        if isActive then
+            lastActive = simDRTime
+        end
+        logon=acarsSystem.provider.loggedOn()
     elseif acarsSystem.provider.online() then 
 	    logon=acarsSystem.provider.loggedOn()
-      data="  READY"
+        data="  READY"
     else
-      fmsModules["data"]["atc"]="****"
+        fmsModules["data"]["atc"]="****"
     end
-    
-
     return{
 
 "    ATC LOGON/STATUS    ",

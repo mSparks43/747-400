@@ -212,10 +212,13 @@ fmsPages["VIEWMISCACARS"].getSmallPage=function(self,pgNo,fmsID)
     local msg=acarsSystem.messages[currentMessage]
    -- local start=(pgNo-1)*168
     local lLine="<RETURN                 "
-    if string.find(msg["msg"], "@") then
+    --if string.find(msg["msg"], "@") then
+    if acarsSystem.messages[currentMessage]["rr"]~="N" and not acarsSystem.messages[currentMessage]["REPLIED"] then  
       --print (msg["msg"].." requiresRespond")
       lLine="<RETURN           REPLY>"
       fmsFunctionsDefs["VIEWACARSMSG"]["R6"]={"respondmessage",currentMessage}
+    else
+      fmsFunctionsDefs["VIEWACARSMSG"]["R6"]=nil
     end
     local msgLines=convertToFMSLines(msg["msg"])
     local start=(pgNo-1)*7
@@ -230,7 +233,7 @@ fmsPages["VIEWMISCACARS"].getSmallPage=function(self,pgNo,fmsID)
     fmsPages["VIEWACARSMSG"]["template"]={
   
     "     ACARS-MESSAGE      ",
-    "                        ",
+    "            "..msg["time"],
     msg["title"],
     "                        ",
     pageLines[1],--string.sub(msg["msg"],start+1,start+24),
