@@ -1,3 +1,14 @@
+print("hello")
+function split(s, delimiter)
+  result = {};
+  for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+      table.insert(result, match);
+  end
+  return result;
+end
+
+
+
 function convertToFMSLines(msg)
     local retVal={}
     local line=1

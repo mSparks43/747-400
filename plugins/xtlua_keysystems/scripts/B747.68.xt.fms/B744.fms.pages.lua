@@ -1091,15 +1091,18 @@ function fmsFunctions.setdata(fmsO,value)
   elseif value=="fltdate" then 
     setFMSData("fltdate",os.date("%Y%m%d"))
   elseif value=="crzalt" then
+	if IN_REPLAY then
+		fmsModules:setData("crzalt","FL350") -- if in replay just default to FL350 since we cant set the default FMS
+	else
+		simCMD_FMS_key[fmsO.id]["fpln"]:once()--make sure we arent on the vnav page
+		simCMD_FMS_key[fmsO.id]["clb"]:once()--go to the vnav page
+		simCMD_FMS_key[fmsO.id]["next"]:once() --go to the vnav page 2
 
-    simCMD_FMS_key[fmsO.id]["fpln"]:once()--make sure we arent on the vnav page
-    simCMD_FMS_key[fmsO.id]["clb"]:once()--go to the vnav page
-    simCMD_FMS_key[fmsO.id]["next"]:once() --go to the vnav page 2
-
-    fmsFunctions["custom2fmc"](fmsO,"R1")
-    updateFrom=fmsO.id
-    local toGet=B747DR_srcfms[updateFrom][3] --make sure we update it
-    run_after_time(updateCRZ,0.5)
+		fmsFunctions["custom2fmc"](fmsO,"R1")
+		updateFrom=fmsO.id
+		local toGet=B747DR_srcfms[updateFrom][3] --make sure we update it
+		run_after_time(updateCRZ,0.5)
+	end
 	--[[if string.len(fmsO["scratchpad"])>0 then
 		local alt=validAlt(fmsO["scratchpad"])
 		if alt~=nil then 

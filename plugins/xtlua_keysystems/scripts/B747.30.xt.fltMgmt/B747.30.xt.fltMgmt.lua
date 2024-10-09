@@ -86,9 +86,9 @@ B747DR_xpdr_code_12_dial_pos    = deferred_dataref("laminar/B747/flt_mgmt/transp
 B747DR_xpdr_code_34_dial_pos    = deferred_dataref("laminar/B747/flt_mgmt/transponder_code/digts_34_dial_pos", "number")
 
 B747DR_init_fltmgmt_CD          = deferred_dataref("laminar/B747/fltmgmt/init_CD", "number")
-B747DR_CAS_advisory_status          = find_dataref("laminar/B747/CAS/advisory_status")
-B747DR_radio_altitude                           = deferred_dataref("laminar/B747/efis/radio_altitude", "number")
-
+B747DR_CAS_advisory_status      = find_dataref("laminar/B747/CAS/advisory_status")
+B747DR_radio_altitude           = deferred_dataref("laminar/B747/efis/radio_altitude", "number")
+--simDR_flightID                  =find_dataref("sim/cockpit2/tcas/targets/modeS_id")
 --*************************************************************************************--
 --** 				       READ-WRITE CUSTOM DATAREF HANDLERS     	        	     **--
 --*************************************************************************************--
@@ -104,7 +104,17 @@ B747DR_radio_altitude                           = deferred_dataref("laminar/B747
 --*************************************************************************************--
 --** 				             X-PLANE COMMAND HANDLERS               	    	 **--
 --*************************************************************************************--
-
+local random = math.random
+math.randomseed(os.time())
+function uuid()
+    local template ='xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+    local ans = string.gsub(template, '[xy]', function (c)
+        local v = (c == 'x') and random(0, 0xf) or random(8, 0xb)
+        
+        return string.format('%x', v)
+    end)
+    return ans
+end
 function B747_xpdr_ident_CMDhandler_before(phase, duration) end
 function B747_xpdr_ident_CMDhandler_after(phase, duration)
     if phase == 0 then
@@ -399,6 +409,10 @@ end
 local flightInit=false
 function flight_start()
     flightInit=false
+    --[[if IN_REPLAY==0 then
+        local tuuid=uuid()
+        simDR_flightID=tuuid
+    end]]--
     do_flight_start()
 end
 function do_flight_start() 

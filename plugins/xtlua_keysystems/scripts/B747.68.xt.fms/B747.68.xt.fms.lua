@@ -43,6 +43,7 @@ simDR_autopilot_airspeed_is_mach	= find_dataref("sim/cockpit2/autopilot/airspeed
 simDR_autopilot_airspeed_kts_mach   	= find_dataref("sim/cockpit2/autopilot/airspeed_dial_kts_mach")
 simDR_autopilot_airspeed_kts   		= find_dataref("sim/cockpit2/autopilot/airspeed_dial_kts")
 B747DR_elec_ext_pwr1_available      = find_dataref("laminar/B747/electrical/ext_pwr1_avail")
+simDR_xpdr_code         = find_dataref("sim/cockpit2/radios/actuators/transponder_code")
 --Workaround for stack overflow in init.lua namespace_read
 
 

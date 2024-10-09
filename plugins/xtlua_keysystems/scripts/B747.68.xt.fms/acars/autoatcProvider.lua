@@ -53,6 +53,28 @@ end
 acarsSystem.setCurrentMessage=function(fmsID,messageID)
   acarsSystem.currentMessage[fmsID]=messageID
 end
+function doACARSData(key,value)
+  print("Key=("..key..") Value=("..value..")")
+  if key=="CUR CTR" then
+    setFMSData("curCTR",value)
+  elseif key=="NEXT CTR" then
+    setFMSData("nextCTR",value)
+  elseif key=="SQUAWK" then
+    simDR_xpdr_code=tonumber(value)
+    print("Set transponder to "..value)
+  end
+
+end
+
+function processACARSData(data)
+  print("Processing ACARS data:"..data)
+  local v=split(data,"@")
+  for n=1,table.getn(v),1 do
+    print(n.." = "..v[n])
+    print(n%2)
+    if (n%2)==0 then doACARSData(str_trim(v[n-1]),str_trim(v[n])) end
+  end
+end
 acarsSystem.provider={
   messageID=1,
   logoff=function()
@@ -170,14 +192,16 @@ receive=function()
         autoATCState["online"]=true
         newMessage["title"]="LOGON ACCEPTED"
         newMessage["msg"]=newMessage["from"]
-      elseif string.starts(newMessage["msg"],"NEXT CTR ") then 
+      elseif string.find(newMessage["msg"], "@") then 
+        processACARSData(newMessage["msg"])
+      --[[elseif string.starts(newMessage["msg"],"NEXT CTR ") then 
         newMessage["read"]=true
         print("setting nextCTR "..fmsModules["data"]["nextCTR"])
         if string.len(newMessage["msg"])==13 then
           setFMSData("curCTR",getFMSData("nextCTR"))
           setFMSData("nextCTR",string.sub(newMessage["msg"],10,13))
           print("nextCTR ("..fmsModules["data"]["nextCTR"]..")")
-        end
+        end]]--
       elseif newMessage["msg"]=="SERVICE TERMINATED" then
         newMessage["read"]=true
         autoATCState["online"]=false

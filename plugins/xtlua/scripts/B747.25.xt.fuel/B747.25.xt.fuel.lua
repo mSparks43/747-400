@@ -2156,7 +2156,7 @@ function B747_fuel_tank_levels()
     end
 
     
-    if simDR_all_wheels_on_ground == 0 and lastTotalFuel<simDR_fuel_tank_weight_total_kg and engineHasFuelProcessing==1 then
+    if simDR_all_wheels_on_ground == 0 and IN_REPLAY==0 and lastTotalFuel<simDR_fuel_tank_weight_total_kg and engineHasFuelProcessing==1 then
         print("reverted fuel levels")
         for i=0,7,1 do
             simDR_fuel_tank_weight_kg[i]=lastFuelLevels[i]

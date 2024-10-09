@@ -44,7 +44,7 @@ B747DR_thrust_ref						= deferred_dataref("laminar/B747/engines/thrust_ref", "nu
 B747DR_engineType						= deferred_dataref("laminar/B747/engines/type", "number") -- crazytimtimtim engine type DR
 B747DR_hideGE						= deferred_dataref("laminar/B747/engines/hideGE", "number") 
 B747DR_hideRR						= deferred_dataref("laminar/B747/engines/hideRR", "number") 
-
+B747DR_hidePW						= deferred_dataref("laminar/B747/engines/hidePW", "number") 
 B747DR_hideCabin						= deferred_dataref("laminar/B747/objects/hideCabin", "number")
 B747DR_hideGear						= deferred_dataref("laminar/B747/objects/hideGear", "number") 
 B747DR_hideHStab						= deferred_dataref("laminar/B747/objects/hideHStab", "number")   

@@ -620,7 +620,7 @@ function update_new_crzalt()
 			B747DR_ap_inVNAVdescent = 1
 			B747DR_ap_flightPhase = 3
 			setDescent(true)
-			print("Begin descent")
+			print("Begin descent 1")
 			getDescentTarget()
 		end
 	end
@@ -671,7 +671,7 @@ function B747_ap_switch_vnavalt_mode_CMDhandler(phase, duration)
 				B747DR_ap_inVNAVdescent = 1
 				B747DR_ap_flightPhase = 3
 				setDescent(true)
-				print("Begin descent")
+				print("Begin descent 2")
 				getDescentTarget()
 			end
 		end
