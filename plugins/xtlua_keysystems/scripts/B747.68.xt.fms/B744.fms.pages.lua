@@ -1091,7 +1091,7 @@ function fmsFunctions.setdata(fmsO,value)
   elseif value=="fltdate" then 
     setFMSData("fltdate",os.date("%Y%m%d"))
   elseif value=="crzalt" then
-	if IN_REPLAY then
+	if IN_REPLAY==1 then
 		fmsModules:setData("crzalt","FL350") -- if in replay just default to FL350 since we cant set the default FMS
 	else
 		simCMD_FMS_key[fmsO.id]["fpln"]:once()--make sure we arent on the vnav page
@@ -1266,11 +1266,11 @@ function fmsFunctions.setdata(fmsO,value)
 		fmsO["notify"]="INVALID ENTRY"
 		fmsO["scratchpad"] = ""
 		return
-  	elseif string.len(fmsO["scratchpad"]) > 0 and string.len(fmsO["scratchpad"]) <= 5 and string.match(fmsO["scratchpad"], "%d") then
+  	elseif string.len(fmsO["scratchpad"]) > 0 and string.len(fmsO["scratchpad"]) <= 5 and tonumber(fmsO["scratchpad"])~=nil then
 		if simConfigData["data"].SIM.weight_display_units == "LBS" then
-			grwt = fmsO["scratchpad"] / simConfigData["data"].SIM.kgs_to_lbs  --store LBS in KGS
+			grwt = tonumber(fmsO["scratchpad"]) / simConfigData["data"].SIM.kgs_to_lbs  --store LBS in KGS
 		else
-			grwt = fmsO["scratchpad"]
+			grwt = tonumber(fmsO["scratchpad"])
 		end
 	elseif fmsO["scratchpad"] == "" then
 		grwt = simDR_GRWT / 1000

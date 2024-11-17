@@ -243,7 +243,7 @@ function VNAV_DES(numAPengaged,fms)
             simDR_autopilot_alt_hold_status=0
             simCMD_autopilot_vert_speed_mode:once()
             B747DR_ap_lastCommand=simDRTime
-            
+            return
         else
             B747DR_mcp_hold=2
             print("set B747DR_mcp_hold")
@@ -276,6 +276,7 @@ function VNAV_DES(numAPengaged,fms)
             B747DR_ap_flightPhase=3
             setDescent(true)
             print("Resume descent")
+            return
         end
     end
     local spdval=tonumber(getFMSData("desspd"))
