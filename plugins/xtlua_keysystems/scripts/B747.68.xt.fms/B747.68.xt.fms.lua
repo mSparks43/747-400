@@ -740,7 +740,7 @@ function switchCustomMode()
   fmsModules["fmsL"]["pgNo"]=fmsModules["fmsL"]["targetpgNo"]
   fmsModules["fmsC"]["pgNo"]=fmsModules["fmsC"]["targetpgNo"]
   fmsModules["fmsR"]["pgNo"]=fmsModules["fmsR"]["targetpgNo"]
-  --print("left cdu blanking")
+  print("left cdu switchCustomMode")
 end
 function createPage(page)
   retVal={}

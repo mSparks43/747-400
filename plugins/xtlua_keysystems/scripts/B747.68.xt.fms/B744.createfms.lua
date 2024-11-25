@@ -499,6 +499,15 @@ end
 
 function fms:B747_fms_display()
     local thisID=self.id
+   -- local m="false"
+   -- if self.inCustomFMC then m="true" end
+    --print("B747_fms_display "..thisID.." "..m.." "..self.currentPage)
+    if self.currentPage=="FMC" then 
+      self.inCustomFMC = false 
+    end
+    if self.targetPage=="FMC" then
+      self.targetCustomFMC= false 
+    end
     if self.inCustomFMC~=self.targetCustomFMC or self.currentPage~=self.targetPage or self.pgNo~=self.targetpgNo then 
       for i=1,14,1 do
       B747DR_fms[thisID][i]="                        "
@@ -511,6 +520,8 @@ function fms:B747_fms_display()
     
     local inCustomFMC=self.inCustomFMC
     local page=self.currentPage
+    
+
     if B747DR_srcfms[thisID][14]=="[NAV DATA OUT OF DATE  ]" then simCMD_FMS_key[thisID]["clear"]:once() return end
     if not inCustomFMC then
       for i=1,13,1 do
@@ -525,9 +536,12 @@ function fms:B747_fms_display()
 	      B747DR_fms_s[thisID][14]="                        "
       end
     else
+      --print("getNumPages "..thisID)
       if self.pgNo>fmsPages[page]:getNumPages(thisID) then self.pgNo=fmsPages[page]:getNumPages(thisID) self.targetpgNo=fmsPages[page]:getNumPages(thisID) end
       if self.pgNo<1 then self.pgNo=1 self.targetpgNo=1 end
+      --print("getPage "..thisID)
       local fmsPage = fmsPages[page]:getPage(self.pgNo,thisID);
+      --print("getSmallPage "..thisID)
       local fmsPagesmall = fmsPages[page]:getSmallPage(self.pgNo,thisID);
       local tmpSRC
       for i=1,13,1 do

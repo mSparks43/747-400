@@ -62,6 +62,8 @@ function doACARSData(key,value)
   elseif key=="SQUAWK" then
     simDR_xpdr_code=tonumber(value)
     print("Set transponder to "..value)
+  else
+    print("ignored key "..key)
   end
 
 end
@@ -188,6 +190,7 @@ receive=function()
       newMessage["read"]=false
       newLogon=""
       if newMessage["msg"]=="LOGON ACCEPTED" then
+        lastSend=simDRTime
         newMessage["read"]=true
         autoATCState["online"]=true
         newMessage["title"]="LOGON ACCEPTED"
@@ -206,9 +209,11 @@ receive=function()
         newMessage["read"]=true
         autoATCState["online"]=false
         if fmsModules["data"]["nextCTR"]~="****" and fmsModules["data"]["atc"]==newMessage["from"] and fmsModules["data"]["atc"]==fmsModules["data"]["curCTR"] and fmsModules["data"]["atc"]~=fmsModules["data"]["nextCTR"] then
+          lastSend=simDRTime
           setFMSData("atc","****")
           newLogon=fmsModules["data"]["nextCTR"]
         elseif fmsModules["data"]["curCTR"]~="****" and fmsModules["data"]["atc"]==newMessage["from"] and fmsModules["data"]["atc"]~=fmsModules["data"]["curCTR"] then
+          lastSend=simDRTime
           setFMSData("atc","****")
           newLogon=fmsModules["data"]["curCTR"]
         end
@@ -238,7 +243,7 @@ receive=function()
       end
     end
     acarsReceiveDataref=" "
-    
+    lastSend=simDRTime
     print("ACARS did receive message:"..acarsReceiveDataref)
   end  
 end,

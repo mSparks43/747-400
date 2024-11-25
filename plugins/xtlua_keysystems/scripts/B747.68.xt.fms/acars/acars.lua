@@ -427,6 +427,7 @@ acarsSystem.getLogMessages=function(pgNo)
       local rID=0
       local sID=0
       --print("onRecieved "..onRecieved.." onSent "..onSent)
+      
       if onRecieved>0 then
         rID=acarsSystem.messages[onRecieved]["messageID"]
       end
@@ -434,7 +435,8 @@ acarsSystem.getLogMessages=function(pgNo)
         sMessage=json.decode(acarsSystem.messageSendQueue[onSent])
         sID=sMessage["messageID"]
       end
-      --print("rID "..rID.." sID "..sID)
+      if sID==nil then print("got bad sID!!") end
+      --print("rID "..rID.." sID "..sID.." "..acarsSystem.messageSendQueue[onSent])
       if rID>sID then
         retVal[rmID]=acarsSystem.messages[onRecieved]
         retVal[rmID]["ud"]="U"
