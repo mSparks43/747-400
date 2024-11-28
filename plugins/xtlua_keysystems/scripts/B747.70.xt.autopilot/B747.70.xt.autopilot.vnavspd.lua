@@ -71,14 +71,14 @@ end
 ]]
 function clb_nores_next()
     --return (tonumber(string.sub(getFMSData("crzalt"),3))*100)-1000
-    local tAlt=(tonumber(string.sub(getFMSData("crzalt"),3))*100)-100
-    if tAlt>simDR_pressureAlt1+1100 then
-        tAlt=math.min(simDR_pressureAlt1+1100,tAlt)
+    local tAlt=(tonumber(string.sub(getFMSData("crzalt"),3))*100)-500
+    if tAlt>simDR_pressureAlt1+500 then
+        tAlt=math.min(simDR_pressureAlt1+500,tAlt,B747BR_cruiseAlt-math.max(B747DR_alt_capture_window,500))
     end
     return tAlt
 end
 function clb_crz_next()
-    return 320000
+    return B747BR_cruiseAlt+1000
 end
 function des_src_next()
     --return tonumber(getFMSData("desspdtransalt"))
@@ -404,6 +404,7 @@ function B747_vnav_setClimbspeed()
         nextAlt=transalt
        -- print("prepped baro")
     end
+
     if vnavSPD_state["setBaro"]==false and simDR_pressureAlt1>=transalt then
         vnavSPD_state["setBaro"]=true
         B747DR_efis_baro_std_capt_switch_pos = 1

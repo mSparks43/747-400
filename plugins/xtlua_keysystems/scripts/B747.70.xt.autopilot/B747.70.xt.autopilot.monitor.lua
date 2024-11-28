@@ -74,6 +74,8 @@ function VNAV_CLB_ALT(numAPengaged,fms)
      and lastHold>30 and B747BR_cruiseAlt>B747DR_autopilot_altitude_ft-B747DR_alt_capture_window 
      and targetAlt~=B747BR_cruiseAlt then
         B747DR_mcp_hold=1
+        simDR_autopilot_vs_status=0
+        simDR_autopilot_flch_status=0
         print("set B747DR_mcp_hold in VNAV_CLB_ALT")
     end 
     if B747DR_mcp_hold==0 then simDR_autopilot_altitude_ft=targetAlt end
@@ -111,31 +113,37 @@ function VNAV_CLB(numAPengaged,fmsO)
     if B747DR_engine_TOGA_mode == 1 and simDR_radarAlt1>1500 then 
         B747DR_engine_TOGA_mode = 0 
     end
-    if (simDR_pressureAlt1 < B747BR_cruiseAlt-300 or simDR_pressureAlt1 > B747BR_cruiseAlt+300) and simDR_radarAlt1>400 then 
+    if (simDR_pressureAlt1 < B747BR_cruiseAlt-B747DR_alt_capture_window or simDR_pressureAlt1 > B747BR_cruiseAlt+B747DR_alt_capture_window) and simDR_radarAlt1>400 then 
         if simDR_autopilot_flch_status == 0 and 
         (simDR_autopilot_alt_hold_status == 0 or numAPengaged==0 or B747DR_ap_vnav_state == 1 or B747DR_ap_vnav_state == 3
            -- or (waypointDiff>1000 and (mcpDiff>1000 or mcpDiff<-1000))
         ) then
             --if (simDR_allThrottle>=0.94) then
                 simCMD_autopilot_flch_mode:once()
+                simDR_autopilot_flch_status=2
+                simDR_autopilot_vs_status=0
                 simDR_autopilot_alt_hold_status=0
-                if B747DR_ap_vnav_state==0 or simDR_pressureAlt1 < B747BR_cruiseAlt-300 then B747DR_ap_thrust_mode=2 end 
-                
+                --simDR_autopilot_alt_hold_status=0
                 B747DR_engine_TOGA_mode = 0 
                 B747DR_autopilot_TOGA_status=0 
                 B747DR_ap_autoland=-1
                 B747DR_ap_lastCommand = simDRTime
                 print("flch > 1000 feet climb ")  
+                B747DR_ap_vnav_state=2
+
             --end 
         end
         if simDR_autopilot_flch_status > 0 or simDR_autopilot_alt_hold_status > 0 then
             --print("VNAV_CLB simDR_autopilot_flch_status > 0")  
             B747DR_ap_vnav_state=2
+            if simDR_pressureAlt1 < B747BR_cruiseAlt-B747DR_alt_capture_window then B747DR_ap_thrust_mode=2 end
         end
-    elseif (simDR_pressureAlt1 >= B747BR_cruiseAlt-300 or simDR_pressureAlt1 <= B747BR_cruiseAlt+300) and simDR_radarAlt1>400 then 
-        if (simDR_autopilot_alt_hold_status == 0 and (numAPengaged==0 or B747DR_ap_vnav_state == 1 or B747DR_ap_vnav_state == 3)) then
+    else--if (simDR_pressureAlt1 >= B747BR_cruiseAlt-B747DR_alt_capture_window and simDR_pressureAlt1 <= B747BR_cruiseAlt+B747DR_alt_capture_window) and simDR_radarAlt1>400 then 
+        if (simDR_autopilot_alt_hold_status == 0) then
             --simCMD_autopilot_alt_hold_mode:once()
             simDR_autopilot_alt_hold_status=2
+            simDR_autopilot_vs_status=0
+            simDR_autopilot_flch_status=0
             simDR_autopilot_hold_altitude_ft=B747BR_cruiseAlt
             print("alt hold +/-300 feet cruise")
             B747DR_ap_lastCommand = simDRTime
@@ -150,10 +158,12 @@ function VNAV_CLB(numAPengaged,fmsO)
 end
 function VNAV_CRZ(numAPengaged,dist)
     --print("VNAV_CRZ alt hold") 
-    if simDR_autopilot_alt_hold_status == 0 and B747DR_ap_vnav_state == 1 then
+    if simDR_autopilot_alt_hold_status == 0 or simDR_autopilot_vs_status~=0 or simDR_autopilot_flch_status~=0 then
         --simCMD_autopilot_alt_hold_mode:once()
         simDR_autopilot_alt_hold_status=2
-        simDR_autopilot_hold_altitude_ft=simDR_pressureAlt1
+        simDR_autopilot_vs_status=0
+        simDR_autopilot_flch_status=0
+        simDR_autopilot_hold_altitude_ft=B747BR_cruiseAlt
         B747DR_ap_lastCommand = simDRTime
         print("alt hold < 50nm from TOD")
     end 
@@ -213,9 +223,11 @@ function VNAV_DES(numAPengaged,fms)
     
     
     if B747DR_mcp_hold>0 then return end --in an MCP hold, just stay there
-    if descentstatus == 0 then
+    if descentstatus == 0 and B747DR_ap_inVNAVdescent ~=0 then
         print("simDR_autopilot_vs_status  == 0 clear descent "..B747BR_fpe)
-        B747DR_ap_inVNAVdescent = 0   
+        B747DR_ap_inVNAVdescent = 0  
+        B747DR_ap_lastCommand=simDRTime
+        return 
     end
     --Past TOD and MCP ALT at current alt - activate VNAV ALT
 
@@ -242,7 +254,7 @@ function VNAV_DES(numAPengaged,fms)
             getDescentTarget()
             simDR_autopilot_alt_hold_status=0
             simCMD_autopilot_vert_speed_mode:once()
-            B747DR_ap_lastCommand=simDRTime
+            B747DR_ap_lastCommand=simDRTime+2
             return
         else
             B747DR_mcp_hold=2
@@ -258,6 +270,9 @@ function VNAV_DES(numAPengaged,fms)
             
             if simDR_pressureAlt1>upperAlt and B747DR_ap_ias_mach_window_open == 1 and simDR_autopilot_flch_status == 0 then
                 simCMD_autopilot_flch_mode:once()
+                simDR_autopilot_flch_status=2
+                simDR_autopilot_vs_status=0
+                simDR_autopilot_alt_hold_status=0
                 B747DR_ap_thrust_mode = 2
                 
                 B747DR_ap_lastCommand=simDRTime
@@ -444,7 +459,7 @@ function VNAV_modeSwitch(fmsO)
 
     --print("checkMCPAlt "..eta.. " "..dist.. " "..diff3)
 
-    if (dist>10 and simDR_pressureAlt1<B747BR_cruiseAlt) or (dist>0 and simDR_radarAlt1<5000 and B747DR_ap_inVNAVdescent==0) then
+    if (dist>10 and simDR_pressureAlt1<(B747BR_cruiseAlt-math.max(B747DR_alt_capture_window,500))) or (dist>0 and simDR_radarAlt1<5000 and B747DR_ap_inVNAVdescent==0) then
         VNAV_CLB(numAPengaged,fmsO) --climb to cruise
     elseif dist>0 and B747DR_ap_inVNAVdescent==0 and simDR_radarAlt1<3000 then  
         lastVNAVSwitch=simDRTime
@@ -560,14 +575,15 @@ function B747_monitorAT()
         if B747DR_ap_flightPhase<3 then
             B747DR_ap_flightPhase=2
         end
-        if simDR_autopilot_flch_status == 2 then
+        --[[if simDR_autopilot_flch_status == 2 then
             simCMD_autopilot_flch_mode:once()
+            --simDR_autopilot_flch_status=2
             B747DR_ap_lastCommand=simDRTime
         end
         if simDR_autopilot_vs_status == 2 then
             simCMD_autopilot_vert_speed_mode:once()
             B747DR_ap_lastCommand=simDRTime
-        end
+        end]]--
         if B747DR_autothrottle_active==0 then
             print("simDR_autopilot_alt_hold_status")
             --simDR_override_throttles=0

@@ -51,6 +51,8 @@ simDR_autopilot_servos_on = deferred_dataref("laminar/B747/autopilot/servos_on",
 --custom ALT HOLD
 simDR_autopilot_altitude_ft             = deferred_dataref("laminar/B747/autopilot/altitude_dial_ft", "number")
 simDR_autopilot_alt_hold_status         = deferred_dataref("laminar/B747/autopilot/altitude_hold_status", "number")
+simDR_autopilot_flch_status             = deferred_dataref("laminar/B747/autopilot/speed_status", "number")
+simDR_autopilot_vs_status               = deferred_dataref("laminar/B747/autopilot/vvi_status", "number")
 simDR_autopilot_hold_altitude_ft        = deferred_dataref("laminar/B747/autopilot/altitude_hold_ft", "number")
 
 B747DR_ap_button_switch_position    	= deferred_dataref("laminar/B747/autopilot/button_switch/position", "array[" .. tostring(NUM_AUTOPILOT_BUTTONS) .. "]")

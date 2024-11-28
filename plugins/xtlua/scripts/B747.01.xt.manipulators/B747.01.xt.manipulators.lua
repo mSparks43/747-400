@@ -206,7 +206,24 @@ B747CMD_ap_reset 					= find_command("laminar/B747/autopilot/mode_reset")
 --*************************************************************************************--
 --** 				             X-PLANE COMMAND HANDLERS               	    	 **--
 --*************************************************************************************--
-
+simDR_autopilot_alt_hold_status         = find_dataref("laminar/B747/autopilot/altitude_hold_status")
+simDR_autopilot_vs_status          = find_dataref("laminar/B747/autopilot/vvi_status")
+simDR_autopilot_flch_status         	= find_dataref("laminar/B747/autopilot/speed_status")
+function sim_flch_CMDhandler(phase, duration)
+    if phase == 0 then
+        simDR_autopilot_vs_status=0
+        simDR_autopilot_flch_status=2
+        simDR_autopilot_alt_hold_status=0
+        B747DR_ap_thrust_mode=2
+    end
+end
+function sim_vert_speed_CMDhandler(phase, duration)
+    if phase == 0 then
+        simDR_autopilot_vs_status=2
+        simDR_autopilot_flch_status=0
+        simDR_autopilot_alt_hold_status=0
+    end
+end
 -- BATTERY
 function sim_battery1_on_CMDhandler(phase, duration)
     if phase == 0 then
@@ -432,7 +449,6 @@ end
 --** 				                 FIND X-PLANE COMMANDS                   	     **--
 --*************************************************************************************--
 
-simCMD_autopilot_vert_speed_mode    = find_command("sim/autopilot/vertical_speed")
 simCMD_autopilot_heading_mode       = find_command("sim/autopilot/heading_hold")
 
 
@@ -440,7 +456,8 @@ simCMD_autopilot_heading_mode       = find_command("sim/autopilot/heading_hold")
 --*************************************************************************************--
 --** 				               REPLACE X-PLANE COMMANDS                   	     **--
 --*************************************************************************************--
-
+simCMD_autopilot_flch_mode = replace_command("sim/autopilot/level_change", sim_flch_CMDhandler)
+simCMD_autopilot_vert_speed_mode    = replace_command("sim/autopilot/vertical_speed", sim_vert_speed_CMDhandler)
 simCMD_battery1_on                  = replace_command("sim/electrical/battery_1_on", sim_battery1_on_CMDhandler)
 simCMD_battery1_off                 = replace_command("sim/electrical/battery_1_off", sim_battery1_off_CMDhandler)
 simCMD_battery_toggle               = replace_command("sim/electrical/batteries_toggle", sim_battery_toggle_CMDhandler)

@@ -180,8 +180,8 @@ simDR_hsi_nav2_vertical_signal           = find_dataref("sim/cockpit2/radios/ind
 
 
 simDR_autopilot_state = find_dataref("sim/cockpit/autopilot/autopilot_state")
-simDR_autopilot_vs_status = find_dataref("sim/cockpit2/autopilot/vvi_status")
-simDR_autopilot_flch_status = find_dataref("sim/cockpit2/autopilot/speed_status")
+simDR_autopilot_vs_status = find_dataref("laminar/B747/autopilot/vvi_status")
+simDR_autopilot_flch_status = find_dataref("laminar/B747/autopilot/speed_status")
 simDR_autopilot_TOGA_vert_status = find_dataref("sim/cockpit2/autopilot/TOGA_status")
 B747DR_autopilot_TOGA_status     	= deferred_dataref("laminar/B747/autopilot/TOGA_status","number")
 simDR_autopilot_TOGA_lat_status = find_dataref("sim/cockpit2/autopilot/TOGA_lateral_status")
@@ -316,9 +316,11 @@ simCMD_autopilot_nav_mode = find_command("sim/autopilot/NAV")
 simCMD_autopilot_wing_leveler = find_command("sim/autopilot/wing_leveler")
 simCMD_autopilot_heading_select = find_command("sim/autopilot/heading")
 simCMD_autopilot_vert_speed_mode = find_command("sim/autopilot/vertical_speed")
-simCMD_autopilot_alt_hold_mode = find_command("sim/autopilot/altitude_hold")
-simCMD_autopilot_glideslope_mode = find_command("sim/autopilot/glide_slope")
 simCMD_autopilot_flch_mode = find_command("sim/autopilot/level_change")
+
+--simCMD_autopilot_alt_hold_mode = find_command("sim/autopilot/altitude_hold")
+simCMD_autopilot_glideslope_mode = find_command("sim/autopilot/glide_slope")
+
 
 --*************************************************************************************--
 --** 				              FIND CUSTOM COMMANDS              			     **--
@@ -704,7 +706,10 @@ function B747_ap_switch_flch_mode_CMDhandler(phase, duration)
 		B747DR_autopilot_TOGA_status=0 
 		if B747DR_ap_vnav_state == 0 or (simDR_autopilot_flch_status == 0 and B747DR_ap_vnav_state > 0) then
 			simCMD_autopilot_flch_mode:once()
-			
+			simDR_autopilot_flch_status=2
+            simDR_autopilot_vs_status=0
+            simDR_autopilot_alt_hold_status=0
+			--simDR_autopilot_flch_status=2
 
 		end
 		simDR_autopilot_alt_hold_status=0
@@ -774,6 +779,8 @@ function B747_ap_alt_hold_mode_CMDhandler(phase, duration)
 		else
 			--simCMD_autopilot_alt_hold_mode:once()
 			simDR_autopilot_alt_hold_status = 2
+			simDR_autopilot_vs_status=0
+            simDR_autopilot_flch_status=0
 			simDR_autopilot_hold_altitude_ft=simDR_pressureAlt1
 		end
 		B747DR_ap_thrust_mode = 0
@@ -1005,6 +1012,8 @@ function B747_ap_VNAV_mode_CMDhandler(phase, duration)
 				print("had descent")
 				--simCMD_autopilot_alt_hold_mode:once()
 				simDR_autopilot_alt_hold_status = 2
+				simDR_autopilot_vs_status=0
+            	simDR_autopilot_flch_status=0
 				simDR_autopilot_hold_altitude_ft=simDR_pressureAlt1
 			elseif beganDescent() == true and simDR_autopilot_alt_hold_status == 2 then
 				print("had descent, in alt hold")
@@ -1933,7 +1942,7 @@ function B747_ap_ias_mach_mode()
 
 			if simDR_autopilot_airspeed_kts >= maxSafeSpeed - 10 then
 				if simDR_autopilot_airspeed_kts < maxSafeSpeed then
-					B747DR_ap_ias_bug_value = simDR_autopilot_airspeed_kts
+					B747DR_ap_ias_bug_value = maxSafeSpeed - 10 --simDR_autopilot_airspeed_kts
 				end
 
 				if
@@ -1952,7 +1961,6 @@ function B747_ap_ias_mach_mode()
 			end
 		end
 	end
-
 	if simDR_ind_airspeed_kts_pilot < B747DR_ap_ias_bug_value then
 		if B747DR_ap_ias_bug_value - simDR_ind_airspeed_kts_pilot > 60 then
 			B747DR_ap_ias_bug_value_pfd = simDR_ind_airspeed_kts_pilot + 60
@@ -3267,6 +3275,8 @@ function after_physics()
 	local vsi = B744_fpm
 	local isMachSpd = simDR_autopilot_airspeed_is_mach
 	local machSpd = simDR_autopilot_airspeed_kts_mach
+	local flch_status = simDR_autopilot_flch_status
+	local vs_status =simDR_autopilot_vs_status
 	local onGround = simDR_onGround
 	local cruiseAlt = B747BR_cruiseAlt
 	local tDist = B747BR_totalDistance 

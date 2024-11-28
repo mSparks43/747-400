@@ -199,8 +199,8 @@ function fmsFunctions.acarsSystemSendATC(fmsO,value)
     if string.len(msgToSend) <5 then fmsO["notify"]="EMPTY MESSAGE" return end
     print("sendATC "..value)
     acarsSystem.provider.sendATC(json.encode(tMSG))
-    fmsO["targetCustomFMC"]=true
-    run_after_time(switchCustomMode, 0.5)
+    --fmsO["targetCustomFMC"]=true
+    --run_after_time(switchCustomMode, 0.5)
     --fmsO["currentPage"]="ACARS" 
     --local tMSG=json.encode({type="msg",msg="Test Message",time="12:00 UTC"})
     --print(tMSG)
