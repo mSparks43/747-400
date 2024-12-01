@@ -7559,6 +7559,7 @@ BEGIN_SOUND_ATTACHMENT
         VEH_XYZ 0.5 5.2 -26
 	EVENT_START_COND laminar/B747/vsi/fpm > 150
 	EVENT_START_COND laminar/B747/actuator/gear_handle == 0
+    EVENT_START_COND sim/flightmodel/failures/onground_any == 0
 END_SOUND_ATTACHMENT
 
 BEGIN_SOUND_ATTACHMENT
