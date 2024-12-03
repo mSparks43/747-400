@@ -343,7 +343,7 @@ function B747_monitor_THR_REF_AT()
     local lastChange=simDRTime-last_THR_REF
     
     --print("THR REF B747_monitor_THR_REF_AT".." simDR_autopilot_autothrottle_on "..simDR_autopilot_autothrottle_on.." simDR_override_throttles "..simDR_override_throttles.." simDR_autopilot_altitude_ft "..simDR_autopilot_altitude_ft.." simDR_pressureAlt1 "..simDR_pressureAlt1)
-    if (B747DR_autothrottle_active == 0 or simDR_override_throttles==1) 
+   if (B747DR_autothrottle_active == 0 or simDR_override_throttles==1) 
     and (simDR_pressureAlt1< simDR_autopilot_altitude_ft+B747DR_alt_capture_window and simDR_pressureAlt1> simDR_autopilot_altitude_ft-B747DR_alt_capture_window) then
         B747DR_ap_flightPhase=2
 		print("B747DR_ap_thrust_mode " .. B747DR_ap_thrust_mode)

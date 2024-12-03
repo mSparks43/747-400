@@ -633,6 +633,7 @@ function B747_ap_switch_vnavalt_mode_CMDhandler(phase, duration)
 		B747CMD_fdr_log_altmod:once()
 		B747DR_ap_lastCommand = simDRTime
 		print("vnav alt button")
+
 		if B747_ap_button_switch_position_target[16] == 1 then
 			B747_ap_button_switch_position_target[16] = 0
 			return
@@ -652,13 +653,16 @@ function B747_ap_switch_vnavalt_mode_CMDhandler(phase, duration)
 		end
 
 		if simDR_autopilot_alt_hold_status==2 and B747DR_ap_vnav_state>1 then
-			B747DR_mcp_hold = 0
-			simDR_autopilot_alt_hold_status=0
+			simDR_autopilot_altitude_ft=B747DR_autopilot_altitude_ft
+			
 			if B747DR_autopilot_altitude_ft > simDR_pressureAlt1 then
+				
 				B747DR_ap_flightPhase = 1
 			else
 				B747DR_ap_flightPhase = 3
 			end
+			B747DR_mcp_hold = 0
+			simDR_autopilot_alt_hold_status=0
 			B747DR_mcp_hold_pressed = simDRTime
 			setVNAVState("vnavcalcwithTargetAlt", 0)
 			if getVNAVState("manualVNAVspd") == 0 then
