@@ -756,7 +756,7 @@ function B747_ap_switch_vs_mode_CMDhandler(phase, duration)
 		end
 		if B747DR_ap_vnav_state == 0 or (simDR_autopilot_vs_status == 0 and B747DR_ap_vnav_state > 0) then
 			simCMD_autopilot_vert_speed_mode:once()
-			
+			simDR_autopilot_vs_status=2
 			simDR_autopilot_vs_fpm = 0
 			B747DR_ap_vvi_fpm = 0
 			B747DR_autopilot_vs_fpm = 0

@@ -1,6 +1,7 @@
 options(scipen = 999)
+library(NHMStandardLib)
 tFlight<-"flight_tests/mSparks/flight_data.jdat"
-testsFrom<-"XP1209-2024/01/01 00:00" #only report flight tests after this OP Program
+testsFrom<-"XP12-10-2024/01/01 00:00" #only report flight tests after this OP Program
 #testsFrom<-"All"
 myFlights<-FALSE #Set to false to read from sent flight tests folder
 test_pilot<-"mSparks" #Set to test pilot name for myFlights
