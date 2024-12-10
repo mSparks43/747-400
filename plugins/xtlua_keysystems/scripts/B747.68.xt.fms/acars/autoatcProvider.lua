@@ -165,7 +165,12 @@ receive=function()
       io.close(file)
       newMessage["fp"]= nil
     end
-
+    if newMessage["RR"] ~= nil then
+      newMessage["rr"]=newMessage["RR"]
+    end
+    if newMessage["RT"] ~= nil and tonumber(newMessage["RT"])~=nil and tonumber(newMessage["RT"])>0 then
+      newMessage["rr"]=newMessage["RR"]
+    end
     if newMessage["initialised"]==true then
       autoATCState["initialised"]=true
     elseif newMessage["initialised"]==false then
@@ -186,7 +191,7 @@ receive=function()
       acarsSystem.messages[table.getn(acarsSystem.messages.values)+1]=newMessage
     end
     if newMessage["type"]=="cpdlc" then
-      
+      print("ACARS doing receive message:"..acarsReceiveDataref)
       newMessage["read"]=false
       newLogon=""
       if newMessage["msg"]=="LOGON ACCEPTED" then
@@ -195,6 +200,7 @@ receive=function()
         autoATCState["online"]=true
         newMessage["title"]="LOGON ACCEPTED"
         newMessage["msg"]=newMessage["from"]
+
       elseif string.find(newMessage["msg"], "@") then 
         processACARSData(newMessage["msg"])
       --[[elseif string.starts(newMessage["msg"],"NEXT CTR ") then 
@@ -225,10 +231,11 @@ receive=function()
       if newMessage["title"]==nil then
         newMessage["title"]=string.sub(newMessage["msg"],1,19) --newMessage["from"].." "..string.sub(newMessage["msg"],1,15)
       end
-      if newMessage["RT"]~=nil then
+    --[[  if newMessage["RT"]~=nil and tonumber(newMessage["RT"])~=nil and tonumber(newMessage["RT"])>0 then
         acarsSystem.provider.gotResponse(newMessage["RT"])
-      end
-      if newMessage["rt"]~=nil then
+        newMessage["rt"]=newMessage["RT"]
+      end]]--
+      if newMessage["rt"]~=nil and tonumber(newMessage["rt"])~=nil and tonumber(newMessage["rt"])>0 then
         acarsSystem.provider.gotResponse(newMessage["rt"])
       end
       if newMessage["messageID"]~=nil then
@@ -244,7 +251,7 @@ receive=function()
     end
     acarsReceiveDataref=" "
     lastSend=simDRTime
-    print("ACARS did receive message:"..acarsReceiveDataref)
+    
   end  
 end,
 

@@ -558,6 +558,12 @@ function B747_ap_switch_speed_mode_CMDhandler(phase, duration)
 		end
 		B747DR_ap_vnav_state = 0
 		B747DR_ap_inVNAVdescent = 0
+		if simDR_autopilot_flch_status~=0 then
+		 simDR_autopilot_flch_status=0
+		 if simDR_autopilot_vs_status==0 and  simDR_autopilot_alt_hold_status==0 then
+			simDR_autopilot_vs_status=2
+		 end
+		end
 		--B747DR_ap_flightPhase = 2
 		if B747DR_autopilot_altitude_ft > simDR_pressureAlt1 then
 			B747DR_ap_flightPhase = 1
