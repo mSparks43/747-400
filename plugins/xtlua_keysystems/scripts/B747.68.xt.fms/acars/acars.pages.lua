@@ -8,18 +8,31 @@ function convertToFMSLines(msg)
     local index = string.find(cLine, " [^ ]*$")
     if index~=nil and index > 10 then
       cLine=string.sub(msg,start,start+index-1)
-      retVal[line]=cLine
+      local atindex = string.find(cLine, "@")
+      if atindex~=nil then
+          cLine=string.sub(msg,start,start+atindex-2)
+          start=start+atindex
+      else
+          start=start+index
+      end
+      retVal[line]=str_trim(cLine)
       line=line+1
-      start=start+index
     else
-      retVal[line]=cLine
-      line=line+1
-      start=start+24
+      local atindex = string.find(cLine, "@")
+      if atindex~=nil then
+          cLine=string.sub(msg,start,start+atindex-2)
+          start=start+atindex
+      else
+          start=start+24
+      end    
+      retVal[line]=str_trim(cLine)
+      if string.len(retVal[line])>0 then
+          line=line+1
+      end
     end
   end
   return retVal
 end
-
 
 fmsPages["ACARS"]=createPage("ACARS")
 fmsPages["ACARS"]["template"]={
@@ -248,9 +261,20 @@ fmsPages["VIEWMISCACARS"].getSmallPage=function(self,pgNo,fmsID)
     }
     return fmsPages["VIEWACARSMSG"]["template"]
   end
+  fmsPages["VIEWACARSMSG"].getNumPages=function(self,fmsID)
+    local msg=acarsSystem.messages[acarsSystem.getCurrentMessage(fmsID)]
+    local msgLines=convertToFMSLines(msg["msg"])
+    --noPages=math.ceil(string.len(msg["msg"])/168)
+    noPages=math.ceil(table.getn(msgLines)/7)
+    if noPages<1 then noPages=1 end
+    return noPages 
+  end
+
   fmsPages["VIEWACARSMSG"].getSmallPage=function(self,pgNo,fmsID)--dynamic pages need to be this way
     local msg=acarsSystem.messages[acarsSystem.getCurrentMessage(fmsID)]
-    numPages=math.ceil(string.len(msg["msg"])/168)
+    local msgLines=convertToFMSLines(msg["msg"])
+    --noPages=math.ceil(string.len(msg["msg"])/168)
+    numPages=math.ceil(table.getn(msgLines)/7)
     if numPages<1 then numPages=1 end
     fmsPages["VIEWACARSMSG"]["templateSmall"]={
   
@@ -270,12 +294,7 @@ fmsPages["VIEWMISCACARS"].getSmallPage=function(self,pgNo,fmsID)
     }
     return fmsPages["VIEWACARSMSG"]["templateSmall"]
   end
-  fmsPages["VIEWACARSMSG"].getNumPages=function(self,fmsID)
-    local msg=acarsSystem.messages[acarsSystem.getCurrentMessage(fmsID)]
-    noPages=math.ceil(string.len(msg["msg"])/168)
-    if noPages<1 then noPages=1 end
-    return noPages 
-  end
+  
   fmsFunctionsDefs["VIEWACARSMSG"]["L6"]={"setpage","VIEWUPACARS"}
 
   
