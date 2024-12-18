@@ -199,8 +199,9 @@ receive=function()
         newMessage["read"]=true
         autoATCState["online"]=true
         newMessage["title"]="LOGON ACCEPTED"
-        newMessage["msg"]=newMessage["from"]
-
+        if newMessage["from"]~=nil then
+          newMessage["msg"]=newMessage["from"]
+        end
       elseif string.find(newMessage["msg"], "@") then 
         processACARSData(newMessage["msg"])
       --[[elseif string.starts(newMessage["msg"],"NEXT CTR ") then 

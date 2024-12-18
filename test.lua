@@ -40,8 +40,9 @@ function convertToFMSLines(msg)
     end
     return retVal
   end
-
-  local testMSG=convertToFMSLines("The quick brown @fo@x jumped over the lazy @dog@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+  --local testMSG=convertToFMSLines("The quick brown @fo@x jumped over the lazy @dog@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+  
+  local testMSG=convertToFMSLines(nil)
   for i=1,#testMSG,1 do
     print(testMSG[i])
   end

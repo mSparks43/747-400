@@ -263,9 +263,12 @@ fmsPages["VIEWMISCACARS"].getSmallPage=function(self,pgNo,fmsID)
   end
   fmsPages["VIEWACARSMSG"].getNumPages=function(self,fmsID)
     local msg=acarsSystem.messages[acarsSystem.getCurrentMessage(fmsID)]
-    local msgLines=convertToFMSLines(msg["msg"])
-    --noPages=math.ceil(string.len(msg["msg"])/168)
-    noPages=math.ceil(table.getn(msgLines)/7)
+    noPages=1
+    if msg["msg"]~=nil then
+      local msgLines=convertToFMSLines(msg["msg"])
+      --noPages=math.ceil(string.len(msg["msg"])/168)
+      noPages=math.ceil(table.getn(msgLines)/7)
+    end
     if noPages<1 then noPages=1 end
     return noPages 
   end
@@ -274,7 +277,12 @@ fmsPages["VIEWMISCACARS"].getSmallPage=function(self,pgNo,fmsID)
     local msg=acarsSystem.messages[acarsSystem.getCurrentMessage(fmsID)]
     local msgLines=convertToFMSLines(msg["msg"])
     --noPages=math.ceil(string.len(msg["msg"])/168)
-    numPages=math.ceil(table.getn(msgLines)/7)
+    noPages=1
+    if msg["msg"]~=nil then
+      local msgLines=convertToFMSLines(msg["msg"])
+      --noPages=math.ceil(string.len(msg["msg"])/168)
+      noPages=math.ceil(table.getn(msgLines)/7)
+    end
     if numPages<1 then numPages=1 end
     fmsPages["VIEWACARSMSG"]["templateSmall"]={
   

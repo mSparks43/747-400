@@ -212,9 +212,19 @@ function VNAV_DES(numAPengaged,fms)
     if B747DR_ap_ias_mach_window_open == 1 then
         
         if simDR_pressureAlt1>upperAlt and simDR_ind_airspeed_kts_pilot>=B747DR_airspeed_Vmc+15 then
-            descentstatus = simDR_autopilot_flch_status
+            --descentstatus = simDR_autopilot_flch_status
+            simDR_autopilot_vs_status=0
+            simDR_autopilot_flch_status=2
+            simDR_autopilot_alt_hold_status=0
+            B747DR_ap_thrust_mode=2
+            descentstatus = 2
         else
-            descentstatus = simDR_autopilot_vs_status
+            --descentstatus = simDR_autopilot_vs_status
+            simDR_autopilot_vs_status=2
+            simDR_autopilot_flch_status=0
+            simDR_autopilot_alt_hold_status=0
+            B747DR_ap_thrust_mode=0
+            descentstatus = 2
        end
     else
         descentstatus = simDR_autopilot_vs_status
@@ -252,6 +262,8 @@ function VNAV_DES(numAPengaged,fms)
             setDescent(true)
             print("Begin descent 3")
             getDescentTarget()
+            simDR_autopilot_vs_status=2
+            simDR_autopilot_flch_status=0
             simDR_autopilot_alt_hold_status=0
             simCMD_autopilot_vert_speed_mode:once()
             B747DR_ap_lastCommand=simDRTime+2
