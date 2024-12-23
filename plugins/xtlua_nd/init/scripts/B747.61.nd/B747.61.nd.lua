@@ -18,6 +18,8 @@ debug_nd     = deferred_dataref("laminar/B747/debug/nd", "number")
 B747DR_fdr_log_json     = deferred_dataref("laminar/B747/fdr/json", "string")
 -- Holds all SimConfig options workaround wierd bug with not reading from source module
 B747DR_simconfig_data					= deferred_dataref("laminar/B747/simconfig", "string")
+B747DR_nd_terr_weather_capt                  = deferred_dataref("laminar/B747/nd/terr_weather/capt", "number")
+B747DR_nd_terr_weather_fo                 = deferred_dataref("laminar/B747/nd/terr_weather/fo", "number")
 B747DR_nd_capt_up                  		= deferred_dataref("laminar/B747/nd/up/capt", "number")
 B747DR_nd_fo_up                  		= deferred_dataref("laminar/B747/nd/up/fo", "number")
 simDR_autopilot_altitude_ft             = deferred_dataref("laminar/B747/autopilot/altitude_dial_ft", "number")

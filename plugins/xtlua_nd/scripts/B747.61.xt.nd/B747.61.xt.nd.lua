@@ -61,6 +61,12 @@ simDR_true_heading			= find_dataref("sim/flightmodel/position/psi")
 simDR_mag_heading			= find_dataref("sim/cockpit/gyros/psi_ind_ahars_pilot_degm")
 simDR_ground_track			= find_dataref("sim/cockpit2/gauges/indicators/ground_track_mag_pilot")
 simDR_heading_track			= find_dataref("sim/cockpit2/gauges/indicators/heading_AHARS_deg_mag_pilot")
+B747DR_nd_terr_weather_capt                  		= find_dataref("laminar/B747/nd/terr_weather/capt")
+B747DR_nd_terr_weather_fo                  		= find_dataref("laminar/B747/nd/terr_weather/fo")
+B747DR_nd_capt_terr                          = find_dataref("laminar/B747/nd/data/capt/terr")
+B747DR_nd_fo_terr                          	= find_dataref("laminar/B747/nd/data/fo/terr")
+simDR_EFIS_wxr_on                   = find_dataref("sim/cockpit2/EFIS/EFIS_weather_on")
+simDR_EFIS_wxr_on_copilot           = find_dataref("sim/cockpit2/EFIS/EFIS_weather_on_copilot")
 B747DR_nd_capt_up                  		= find_dataref("laminar/B747/nd/up/capt")
 B747DR_nd_fo_up                  		= find_dataref("laminar/B747/nd/up/fo")
 
@@ -566,7 +572,16 @@ function after_physics()
     else
       B747DR_nd_fo_up = simDR_heading_track
     end
-
+    if B747DR_nd_capt_terr>0 or simDR_EFIS_wxr_on>0 then
+      B747DR_nd_terr_weather_capt=1
+    else
+      B747DR_nd_terr_weather_capt=0
+    end
+    if B747DR_nd_fo_terr>0 or simDR_EFIS_wxr_on_copilot>0 then
+      B747DR_nd_terr_weather_fo=1
+    else
+      B747DR_nd_terr_weather_fo=0
+    end
     if simDR_map_mode ==2 then
       B747DR_nd_capt_up = simDR_ground_track
     else

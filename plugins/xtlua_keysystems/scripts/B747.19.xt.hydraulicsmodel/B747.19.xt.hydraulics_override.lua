@@ -964,7 +964,8 @@ function ap_pitch_assist()
     local retval=B747_interpolate_value(B747DR_sim_pitch_ratio,0,-1,1,20)
     local refreshsimDR_electric_trim=simDR_electric_trim
     local refresh_trim=simDR_elevator_trim
-    B747DR_pidPitchP=B747_rescale(3000,B747DR_pidPitchPL,30000,B747DR_pidPitchPH,B747DR_autopilot_altitude_ft_pfd)
+    B747DR_pidPitchP=B747_rescale(3000,B747DR_pidPitchPL,40000,B747DR_pidPitchPH,B747DR_autopilot_altitude_ft_pfd)
+    B747DR_pidPitchI=B747DR_pidPitchP --scale this with P
     pitchPid.kp=B747DR_pidPitchP
     pitchPid.ki=B747DR_pidPitchI
     pitchPid.kd=B747DR_pidPitchD
