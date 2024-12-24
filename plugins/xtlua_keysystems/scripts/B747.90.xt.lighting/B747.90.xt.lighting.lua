@@ -1011,7 +1011,10 @@ function B747_spill_lights()
 
 		--SET THE OVERHEAD FLOOD BRIGHTNESS LEVEL
 		simDR_panel_brightness_switch[0]            = B747_ternary((B747DR_toggle_switch_position[0] <= 0.05), storm_light_level, B747DR_flood_light_rheo_overhead)
-
+        simDR_panel_brightness_switch[0]            = simDR_panel_brightness_switch[0]
+        simDR_panel_brightness_switch[1]            = simDR_panel_brightness_switch[1]
+        simDR_panel_brightness_switch[2]            = simDR_panel_brightness_switch[2]
+        simDR_panel_brightness_switch[3]            = simDR_panel_brightness_switch[3]
 		-- SET THE MAG COMPASS SPILL LIGHT LEVEL
 		B747DR_spill_light_mag_compass_flood[3]     = simDR_panel_brightness_ratio[3] * lightLevel
 

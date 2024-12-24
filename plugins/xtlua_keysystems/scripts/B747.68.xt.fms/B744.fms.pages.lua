@@ -648,7 +648,8 @@ function validAlt(value)
   
   if val==nil then return nil end
   if val<1000 then val=val*100 end
-  if val<2000 or val>40000 then return nil end
+  local maxA = 58.16363636 - 0.06154545  * (simDR_GRWT/1000) -- model derived fcom p. 1576, ISA+10 and below
+  if val<2000 or val>(maxA*1000) then return nil end
 
   return ""..val
 end
@@ -658,7 +659,8 @@ function validFL(value)
   
   if val==nil then return nil end
   if val<1000 then val=val*100 end
-  if val<10000 or val>40000 then return nil end
+  local maxA = 58.16363636 - 0.06154545  * (simDR_GRWT/1000) -- model derived fcom p. 1576, ISA+10 and below
+  if val<10000 or val>(maxA*1000) then return nil end
 
   return "FL".. (val/100)
 end
@@ -1094,14 +1096,24 @@ function fmsFunctions.setdata(fmsO,value)
 	if IN_REPLAY==1 then
 		fmsModules:setData("crzalt","FL350") -- if in replay just default to FL350 since we cant set the default FMS
 	else
-		simCMD_FMS_key[fmsO.id]["fpln"]:once()--make sure we arent on the vnav page
-		simCMD_FMS_key[fmsO.id]["clb"]:once()--go to the vnav page
-		simCMD_FMS_key[fmsO.id]["next"]:once() --go to the vnav page 2
+		if string.len(fmsO["scratchpad"])>0 then
+			local alt=validAlt(fmsO["scratchpad"])
+			if alt~=nil then 
+				simCMD_FMS_key[fmsO.id]["fpln"]:once()--make sure we arent on the vnav page
+				simCMD_FMS_key[fmsO.id]["clb"]:once()--go to the vnav page
+				simCMD_FMS_key[fmsO.id]["next"]:once() --go to the vnav page 2
 
-		fmsFunctions["custom2fmc"](fmsO,"R1")
-		updateFrom=fmsO.id
-		local toGet=B747DR_srcfms[updateFrom][3] --make sure we update it
-		run_after_time(updateCRZ,0.5)
+				fmsFunctions["custom2fmc"](fmsO,"R1")
+				updateFrom=fmsO.id
+				local toGet=B747DR_srcfms[updateFrom][3] --make sure we update it
+				run_after_time(updateCRZ,0.5)
+			else
+				fmsO["notify"]="INVALID CRZ ALT"
+			end
+		else
+			fmsModules:setData("crzalt","")
+			B747BR_cruiseAlt=0
+		end	
 	end
 	--[[if string.len(fmsO["scratchpad"])>0 then
 		local alt=validAlt(fmsO["scratchpad"])

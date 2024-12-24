@@ -93,6 +93,7 @@ acarsSystem.provider={
   end,
 sendATC=function(value)
   print("LUA send ACARS message:"..value)
+  
   local newMessage=json.decode(value)--check json value or fail
   newMessage["to"]=fmsModules["data"]["atc"]
   newMessage["from"]=getFMSData("fltno")
@@ -105,6 +106,7 @@ sendATC=function(value)
 end,
 sendCompany=function(value)
   print("LUA send ACARS message:"..value)
+  if not(fmsFunctions.acarsDataReady(fmsO)) then return end
   local newMessage=json.decode(value)--check json value or fail
   newMessage["to"]="company"
   newMessage["time"]=string.format("%02d:%02d",hh,mm)
