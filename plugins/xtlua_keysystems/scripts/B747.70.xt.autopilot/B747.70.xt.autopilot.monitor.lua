@@ -111,7 +111,7 @@ function VNAV_CLB(numAPengaged,fmsO)
         print("UPDATE VNAV_CLB "..waypointDiff .. " " .. mcpDiff.. " " .. waypointAlt .. " " .. start.. " " .. fmsO[start][9].. " " .. simDR_pressureAlt1) 
     end
     if B747DR_engine_TOGA_mode == 1 and simDR_radarAlt1>1500 then 
-        B747DR_engine_TOGA_mode = 0 
+        B747DR_engine_TOGA_mode = 0
     end
     if (simDR_pressureAlt1 < B747BR_cruiseAlt-B747DR_alt_capture_window or simDR_pressureAlt1 > B747BR_cruiseAlt+B747DR_alt_capture_window) and simDR_radarAlt1>400 then 
         if simDR_autopilot_flch_status == 0 and 
@@ -129,16 +129,16 @@ function VNAV_CLB(numAPengaged,fmsO)
                 B747DR_ap_autoland=-1
                 B747DR_ap_lastCommand = simDRTime
                 print("flch > 1000 feet climb ")  
-                B747DR_ap_vnav_state=2
+                --B747DR_ap_vnav_state=2
 
             --end 
         end
-        if simDR_autopilot_flch_status > 0 or simDR_autopilot_alt_hold_status > 0 then
+        if simDR_autopilot_flch_status > 0 or simDR_autopilot_alt_hold_status > 0  and B747DR_engine_TOGA_mode == 0 then
             --print("VNAV_CLB simDR_autopilot_flch_status > 0")  
             B747DR_ap_vnav_state=2
             if simDR_pressureAlt1 < B747BR_cruiseAlt-B747DR_alt_capture_window then B747DR_ap_thrust_mode=2 end
         end
-    else--if (simDR_pressureAlt1 >= B747BR_cruiseAlt-B747DR_alt_capture_window and simDR_pressureAlt1 <= B747BR_cruiseAlt+B747DR_alt_capture_window) and simDR_radarAlt1>400 then 
+    elseif (simDR_pressureAlt1 >= B747BR_cruiseAlt-B747DR_alt_capture_window and simDR_pressureAlt1 <= B747BR_cruiseAlt+B747DR_alt_capture_window) and simDR_radarAlt1>400 then 
         if (simDR_autopilot_alt_hold_status == 0) then
             --simCMD_autopilot_alt_hold_mode:once()
             simDR_autopilot_alt_hold_status=2
