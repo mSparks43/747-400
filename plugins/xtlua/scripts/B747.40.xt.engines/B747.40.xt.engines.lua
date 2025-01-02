@@ -197,6 +197,7 @@ B747DR_engine_apu_oil_qty_ratio      	= find_dataref("laminar/B747/apu/oil")
 B747DR_engine_apu_n2      	        = find_dataref("laminar/B747/apu/n2")
 B747DR_elec_apu_inlet_door_pos      = find_dataref("laminar/B747/electrical/apu_inlet_door")
 
+B747DR_CAS_warning_status           = find_dataref("laminar/B747/CAS/warning_status")
 B747DR_CAS_caution_status                   = find_dataref("laminar/B747/CAS/caution_status")
 B747DR_CAS_advisory_status                  = find_dataref("laminar/B747/CAS/advisory_status")
 B747DR_CAS_memo_status                      = find_dataref("laminar/B747/CAS/memo_status")
@@ -1386,6 +1387,16 @@ end
 ----- EICAS MESSAGES --------------------------------------------------------------------
 function B747_engines_EICAS_msg()
 
+    
+
+    -- ENG 1 FAIL
+    
+    if (B747DR_display_N1[0]<15.0) and simDR_all_wheels_on_ground == 0
+    then
+        B747DR_CAS_warning_status[28] = 1
+    else
+        B747DR_CAS_warning_status[28] = 0
+    end
 
     -- ENG 1 SHUTDOWN
     
@@ -1394,7 +1405,16 @@ function B747_engines_EICAS_msg()
     then
         B747DR_CAS_caution_status[23] = 1
     else
-      B747DR_CAS_caution_status[23] = 0
+        B747DR_CAS_caution_status[23] = 0
+    end
+
+    -- ENG 1 FAIL
+    
+    if (B747DR_display_N2[0]<15.0 and  B747DR_CAS_caution_status[23] == 0) and simDR_all_wheels_on_ground == 0
+    then
+        B747DR_CAS_warning_status[28] = 1
+    else
+        B747DR_CAS_warning_status[28] = 0
     end
 
     -- ENG 2 SHUTDOWN
@@ -1407,6 +1427,14 @@ function B747_engines_EICAS_msg()
       B747DR_CAS_caution_status[24] = 0
     end
 
+    -- ENG 2 FAIL
+    
+    if (B747DR_display_N2[1]<15.0 and  B747DR_CAS_caution_status[24] == 0) and simDR_all_wheels_on_ground == 0
+    then
+        B747DR_CAS_warning_status[29] = 1
+    else
+        B747DR_CAS_warning_status[29] = 0
+    end
     -- ENG 3 SHUTDOWN
     
     if (B747DR_engine03_fire_ext_switch_pos_disch > 0.95
@@ -1416,7 +1444,14 @@ function B747_engines_EICAS_msg()
     else
       B747DR_CAS_caution_status[25] = 0
     end
-
+    -- ENG 3 FAIL
+    
+    if (B747DR_display_N2[2]<15.0 and  B747DR_CAS_caution_status[25] == 0) and simDR_all_wheels_on_ground == 0
+    then
+        B747DR_CAS_warning_status[30] = 1
+    else
+        B747DR_CAS_warning_status[30] = 0
+    end
     -- ENG 4 SHUTDOWN
     
     if (B747DR_engine04_fire_ext_switch_pos_disch > 0.95
@@ -1426,7 +1461,14 @@ function B747_engines_EICAS_msg()
     else
       B747DR_CAS_caution_status[26] = 0
     end
-
+    -- ENG 3 FAIL
+    
+    if (B747DR_display_N2[3]<15.0 and  B747DR_CAS_caution_status[26] == 0) and simDR_all_wheels_on_ground == 0
+    then
+        B747DR_CAS_warning_status[31] = 1
+    else
+        B747DR_CAS_warning_status[31] = 0
+    end
     -- STARTER CUTOUT 1
     
     if B747DR_bleedAir_engine1_start_valve_pos > 0.05
