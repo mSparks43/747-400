@@ -519,10 +519,13 @@ function B747_animate_value(current_value, target, min, max, speed)
 		return current_value + ((target - current_value) * fps_factor)
 	end
 end
-
+function isATEnabled()
+	if B747DR_toggle_switch_position[29] == 1 and B747DR_autothrottle_fail == 0 then return true end
+	return false
+end
 dofile("B747.70.xt.autopilot.vnav.lua")
 function autothrottle_reengage()
-	if B747DR_autothrottle_active == 0 and B747DR_toggle_switch_position[29] == 1 and simDR_onGround == 0 then
+	if B747DR_autothrottle_active == 0 and isATEnabled() and simDR_onGround == 0 then
 		--simCMD_autopilot_autothrottle_on:once()
 		B747DR_autothrottle_active=1
 	end
@@ -548,7 +551,7 @@ function B747_ap_switch_speed_mode_CMDhandler(phase, duration)
 		B747_ap_button_switch_position_target[1] = 1 -- SET THE SPEED SWITCH ANIMATION TO "IN"
 		B747DR_ap_lastCommand = simDRTime
 
-		if B747DR_toggle_switch_position[29] == 1 and simDR_onGround == 0 then -- AUTOTHROTTLE ""ARM" SWITCH IS "ON"
+		if isATEnabled() and simDR_onGround == 0 then -- AUTOTHROTTLE ""ARM" SWITCH IS "ON"
 
 			B747DR_autothrottle_active=1
 
@@ -743,7 +746,7 @@ function B747_ap_switch_vs_mode_CMDhandler(phase, duration)
 		B747_ap_button_switch_position_target[6] = 1
 		--for animation
 
-		if B747DR_autothrottle_active == 0 and B747DR_toggle_switch_position[29] == 1 and simDR_onGround == 0 then -- AUTOTHROTTLE IS "OFF"
+		if B747DR_autothrottle_active == 0 and isATEnabled() and simDR_onGround == 0 then -- AUTOTHROTTLE IS "OFF"
 			--simCMD_autopilot_autothrottle_on:once() -- ACTIVATE THE AUTOTHROTTLE
 			B747DR_autothrottle_active=1
 			
@@ -777,7 +780,7 @@ function B747_ap_alt_hold_mode_CMDhandler(phase, duration)
 	if phase == 0 then
 		B747CMD_fdr_log_alt:once()
 		B747_ap_button_switch_position_target[7] = 1
-		if B747DR_autothrottle_active == 0 and B747DR_toggle_switch_position[29] == 1 then -- AUTOTHROTTLE IS "OFF"
+		if B747DR_autothrottle_active == 0 and isATEnabled() then -- AUTOTHROTTLE IS "OFF"
 			--simCMD_autopilot_autothrottle_on:once() -- ACTIVATE THE AUTOTHROTTLE
 			B747DR_autothrottle_active=1
 			B747DR_engine_TOGA_mode = 0
@@ -1010,7 +1013,7 @@ function B747_ap_VNAV_mode_CMDhandler(phase, duration)
 			B747DR_ap_inVNAVdescent = 0
 			B747DR_ap_thrust_mode = 0
 			B747DR_mcp_hold=0
-			if B747DR_autothrottle_active == 0 and B747DR_toggle_switch_position[29] == 1 and simDR_onGround == 0 then
+			if B747DR_autothrottle_active == 0 and isATEnabled() and simDR_onGround == 0 then
 				--simCMD_autopilot_autothrottle_on:once()
 				B747DR_autothrottle_active=1
 			end
@@ -1415,32 +1418,32 @@ function B747_ap_vertical_speed_down_CMDhandler(phase, duration)
 end
 
 function setSimAlt()
-	if B747DR_ap_vnav_state == 0 then
+	--if B747DR_ap_vnav_state == 0 then
 		simDR_autopilot_altitude_ft = B747DR_autopilot_altitude_ft
 		print("set sim alt")
-	end
+	--end
 end
 
 function B747_ap_altitude_up_CMDhandler(phase, duration)
 	if phase == 0 then
 		B747DR_autopilot_altitude_ft = math.min(50000.0, B747DR_autopilot_altitude_ft + 100)
 		B747DR_ap_lastCommand = simDRTime + 1
-		if B747DR_ap_vnav_state == 0 then
+		--if B747DR_ap_vnav_state == 0 then
 			if is_timer_scheduled(setSimAlt) then
 				stop_timer(setSimAlt)
 			end
 			run_after_time(setSimAlt, 3.0)
-		end
+		--end
 	elseif phase == 1 then
 		if duration > 0.5 then
 			B747DR_autopilot_altitude_ft = math.min(50000.0, B747DR_autopilot_altitude_ft + 100)
 			B747DR_ap_lastCommand = simDRTime + 1
-			if B747DR_ap_vnav_state == 0 then
+			--if B747DR_ap_vnav_state == 0 then
 				if is_timer_scheduled(setSimAlt) then
 					stop_timer(setSimAlt)
 				end
 				run_after_time(setSimAlt, 3.0)
-			end
+			--end
 		end
 	end
 end
@@ -1449,22 +1452,22 @@ function B747_ap_altitude_down_CMDhandler(phase, duration)
 	if phase == 0 then
 		B747DR_autopilot_altitude_ft = math.max(0.0, B747DR_autopilot_altitude_ft - 100)
 		B747DR_ap_lastCommand = simDRTime + 1
-		if B747DR_ap_vnav_state == 0 then
+		--if B747DR_ap_vnav_state == 0 then
 			if is_timer_scheduled(setSimAlt) then
 				stop_timer(setSimAlt)
 			end
 			run_after_time(setSimAlt, 3.0)
-		end
+		--end
 	elseif phase == 1 then
 		if duration > 0.5 then
 			B747DR_autopilot_altitude_ft = math.max(0.0, B747DR_autopilot_altitude_ft - 100)
 			B747DR_ap_lastCommand = simDRTime + 1
-			if B747DR_ap_vnav_state == 0 then
+			--if B747DR_ap_vnav_state == 0 then
 				if is_timer_scheduled(setSimAlt) then
 					stop_timer(setSimAlt)
 				end
 				run_after_time(setSimAlt, 3.0)
-			end
+			--end
 		end
 	end
 end
@@ -2661,7 +2664,7 @@ function B747_ap_fma()
 	else
 		if B747DR_ap_vnav_state > 0 and simDR_allThrottle < 0.1 and simDR_onGround == 0 then
 			B747DR_ap_FMA_autothrottle_mode = 2 --IDLE
-		elseif (B747DR_ap_vnav_state > 0 or B747DR_toggle_switch_position[29] > 0) and simDR_onGround == 0  and simDR_radarAlt1 < 50 then
+		elseif (B747DR_ap_vnav_state > 0 or isATEnabled()) and simDR_onGround == 0  and simDR_radarAlt1 < 50 then
 			B747DR_ap_FMA_autothrottle_mode = 1 --HOLD
 		else
 			B747DR_ap_FMA_autothrottle_mode = 0
@@ -3165,7 +3168,7 @@ function B747_ap_EICAS_msg()
 	else
 		B747DR_CAS_caution_status[5] = 0
 	end
-	--if B747DR_speedbrake_lever <0.3  and simDR_autopilot_vs_fpm<-2000 and simDR_autopilot_vs_status >= 1 and B747DR_ap_vnav_state>0 then
+	
 	if
 		B747DR_speedbrake_lever < 0.3 and simDR_ind_airspeed_kts_pilot > (simDR_autopilot_airspeed_kts + 10) and
 			simDR_ind_airspeed_kts_pilot > last_airspeed and

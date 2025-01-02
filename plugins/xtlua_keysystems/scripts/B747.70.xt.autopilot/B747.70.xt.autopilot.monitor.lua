@@ -316,7 +316,7 @@ function VNAV_DES(numAPengaged,fms)
         B747DR_ap_lastCommand=simDRTime
         print("fix idle throttle")
         return
-    elseif B747DR_autothrottle_active == 0 and (simDR_ind_airspeed_kts_pilot<B747DR_airspeed_Vmc+15 or forceOn==true) and B747DR_toggle_switch_position[29] == 1 then
+    elseif B747DR_autothrottle_active == 0 and (simDR_ind_airspeed_kts_pilot<B747DR_airspeed_Vmc+15 or forceOn==true) and isATEnabled() then
         --simCMD_autopilot_autothrottle_on:once()
         B747DR_autothrottle_active=1
         B747DR_ap_lastCommand=simDRTime
@@ -339,7 +339,7 @@ function B747_monitor_THR_REF_AT()
     local timediff=simDRTime-B747DR_ap_lastCommand
     
     if timediff<0.1 then return end
-    if B747DR_toggle_switch_position[29] ~= 1 then return end
+    if not(isATEnabled()) then return end
     if ((B747DR_ap_thrust_mode == 0 and simDR_autopilot_flch_status>0) or (simDR_radarAlt1>2000 and( simDR_pressureAlt1< simDR_autopilot_altitude_ft+B747DR_alt_capture_window and simDR_pressureAlt1> simDR_autopilot_altitude_ft-B747DR_alt_capture_window))) and B747DR_autothrottle_active == 0 then
         print("B747_monitor_THR_REF_AT B747DR_ap_thrust_mode " .. B747DR_ap_thrust_mode)
         --simDR_override_throttles=0
@@ -454,7 +454,7 @@ function VNAV_modeSwitch(fmsO)
     end --not requested 
     local dist=B747BR_totalDistance-B747BR_tod
     
-    if B747DR_ap_inVNAVdescent >0 and B747DR_autothrottle_active == 0 and B747DR_toggle_switch_position[29] == 1 and simDR_allThrottle>0 and simDR_radarAlt1>1000 and B747DR_ap_FMA_autothrottle_mode==5 then
+    if B747DR_ap_inVNAVdescent >0 and B747DR_autothrottle_active == 0 and isATEnabled() and simDR_allThrottle>0 and simDR_radarAlt1>1000 and B747DR_ap_FMA_autothrottle_mode==5 then
         simCMD_ThrottleDown:once()
     else
         B747_monitor_THR_REF_AT()
@@ -562,7 +562,7 @@ function B747_monitorAT()
     end
 
     --AT OFF
-    if B747DR_toggle_switch_position[29] == 0 then --or simDR_radarAlt1<25
+    if not(isATEnabled()) then --or simDR_radarAlt1<25
         if B747DR_autothrottle_active==1 then
             print("AT off")
             --simCMD_autopilot_autothrottle_off:once()
