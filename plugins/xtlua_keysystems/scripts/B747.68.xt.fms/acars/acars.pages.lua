@@ -277,7 +277,7 @@ fmsPages["VIEWMISCACARS"].getSmallPage=function(self,pgNo,fmsID)
     local msg=acarsSystem.messages[acarsSystem.getCurrentMessage(fmsID)]
     local msgLines=convertToFMSLines(msg["msg"])
     --noPages=math.ceil(string.len(msg["msg"])/168)
-    noPages=1
+    local noPages=1
     if msg["msg"]~=nil then
       local msgLines=convertToFMSLines(msg["msg"])
       --noPages=math.ceil(string.len(msg["msg"])/168)
@@ -286,7 +286,7 @@ fmsPages["VIEWMISCACARS"].getSmallPage=function(self,pgNo,fmsID)
     if numPages<1 then numPages=1 end
     fmsPages["VIEWACARSMSG"]["templateSmall"]={
   
-    "                    "..pgNo.."/"..numPages.."  ",
+    "                    "..pgNo.."/"..noPages.."  ",
     "                        ",
     "                        ",
     "                        ",

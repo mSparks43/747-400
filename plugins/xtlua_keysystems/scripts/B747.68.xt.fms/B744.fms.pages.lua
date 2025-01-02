@@ -2528,6 +2528,7 @@ function fmsFunctions.showmessage(fmsO,value)
   acarsSystem.setCurrentMessage(fmsO.id,value)
   fmsO["inCustomFMC"]=true
   fmsO["targetPage"]="VIEWACARSMSG"
+  fmsO["pgNo"]=1
   run_after_time(switchCustomMode, 0.5)
 end
 
