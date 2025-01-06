@@ -558,7 +558,7 @@ function B747_monitorAT()
         end
         B747DR_engine_TOGA_mode = 0 
         --simDR_override_throttles = 0
-        --return 
+        ----return 
     end
 
    --AT OFF
@@ -587,19 +587,9 @@ function B747_monitorAT()
         if B747DR_ap_flightPhase<3 then
             B747DR_ap_flightPhase=2
         end
-        --[[if simDR_autopilot_flch_status == 2 then
-            simCMD_autopilot_flch_mode:once()
-            --simDR_autopilot_flch_status=2
-            B747DR_ap_lastCommand=simDRTime
-        end
-        if simDR_autopilot_vs_status == 2 then
-            simCMD_autopilot_vert_speed_mode:once()
-            B747DR_ap_lastCommand=simDRTime
-        end]]--
+
         if B747DR_autothrottle_active==0 then
             print("simDR_autopilot_alt_hold_status")
-            --simDR_override_throttles=0
-            --simCMD_autopilot_autothrottle_on:once()
             B747DR_autothrottle_active=1
             B747DR_ap_lastCommand=simDRTime
         end
@@ -611,8 +601,6 @@ function B747_monitorAT()
     or B747DR_ap_FMA_active_pitch_mode == 2 then
         if B747DR_autothrottle_active==0 then
             print("B747DR_ap_FMA_active_pitch_mode")
-            --simDR_override_throttles=0
-            --simCMD_autopilot_autothrottle_on:once()
             B747DR_autothrottle_active=1
             if B747DR_engine_TOGA_mode ==1 then B747DR_engine_TOGA_mode = 0 end	-- CANX ENGINE TOGA IF ACTIVE
             B747DR_ap_lastCommand=simDRTime
@@ -627,18 +615,6 @@ function B747_monitorAT()
         B747DR_ap_FMA_autothrottle_mode=3
         return 
     end
-    --otherwise off  (VNAV ONLY)
-    --[[if B747DR_autothrottle_active==1 and B747DR_ap_inVNAVdescent == 0 and (B747DR_ap_vnav_state>0 or B747DR_ap_FMA_autothrottle_mode == 5) then
-        print("Off with B747DR_ap_FMA_active_pitch_mode="..B747DR_ap_FMA_active_pitch_mode)
-        --simCMD_autopilot_autothrottle_off:once()
-        B747DR_autothrottle_active=0
-        B747DR_ap_lastCommand=simDRTime
-    end]]
-    
-    
-    
-    
-
 end
 
 function getWCAforHeading(theading)

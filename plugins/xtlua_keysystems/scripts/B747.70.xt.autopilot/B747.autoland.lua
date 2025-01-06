@@ -203,7 +203,7 @@ function doThrottle()
   if pinThrottle<0 or simDR_radarAlt1<25 then pinThrottle=0 end
   if simDR_onGround==1 then
     B747DR_ap_FMA_autothrottle_mode = 0
-  elseif simDR_radarAlt1<25 then
+  elseif simDR_radarAlt1<25 and isATEnabled() then
     B747DR_ap_FMA_autothrottle_mode = 2
   end
   
