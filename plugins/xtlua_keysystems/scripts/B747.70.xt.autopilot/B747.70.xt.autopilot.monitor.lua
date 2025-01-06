@@ -558,10 +558,10 @@ function B747_monitorAT()
         end
         B747DR_engine_TOGA_mode = 0 
         --simDR_override_throttles = 0
-        return 
+        --return 
     end
 
-    --AT OFF
+   --AT OFF
     if not(isATEnabled()) then --or simDR_radarAlt1<25
         if B747DR_autothrottle_active==1 then
             print("AT off")
@@ -615,7 +615,7 @@ function B747_monitorAT()
             --simCMD_autopilot_autothrottle_on:once()
             B747DR_autothrottle_active=1
             if B747DR_engine_TOGA_mode ==1 then B747DR_engine_TOGA_mode = 0 end	-- CANX ENGINE TOGA IF ACTIVE
-            B747DR_ap_lastCommand=simDRTime
+            B747DR_ ap_lastCommand=simDRTime
         end
         B747DR_ap_thrust_mode=0
         
