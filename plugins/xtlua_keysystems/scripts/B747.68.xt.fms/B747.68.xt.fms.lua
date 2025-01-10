@@ -740,6 +740,9 @@ function switchCustomMode()
   fmsModules["fmsL"]["pgNo"]=fmsModules["fmsL"]["targetpgNo"]
   fmsModules["fmsC"]["pgNo"]=fmsModules["fmsC"]["targetpgNo"]
   fmsModules["fmsR"]["pgNo"]=fmsModules["fmsR"]["targetpgNo"]
+  print("targetCustomFMC"..tostring(fmsModules["fmsL"]["targetCustomFMC"]))
+  print("targetPage"..tostring(fmsModules["fmsL"]["targetPage"]))
+  print("targetpgNo"..tostring(fmsModules["fmsL"]["targetpgNo"]))
   print("left cdu switchCustomMode")
 end
 function createPage(page)

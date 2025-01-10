@@ -161,17 +161,18 @@ irsSystem.update=function()
   if B747DR_iru_status[0]==0 then 
     irsSystem["irsL"]["aligned"] = false 
   elseif B747DR_iru_status[0]==2 and irsSystem["motion"]["irsL"]==false and irsSystem["setPos"]==true then
-    irsSystem["irsL"]["aligned"] = true
+    --irsSystem["irsL"]["aligned"] = true
+    irsL.align(irsL)
   end
   if B747DR_iru_status[1]==0 then 
     irsSystem["irsC"]["aligned"] = false 
   elseif B747DR_iru_status[1]==2 and irsSystem["motion"]["irsC"]==false and irsSystem["setPos"]==true then
-    irsSystem["irsC"]["aligned"] = true
+    irsC.align(irsC)
   end
   if B747DR_iru_status[2]==0 then 
     irsSystem["irsR"]["aligned"] = false 
   elseif B747DR_iru_status[2]==2 and irsSystem["motion"]["irsR"]==false and irsSystem["setPos"]==true then
-    irsSystem["irsR"]["aligned"] = true
+    irsR.align(irsR)
   end
 
   --Marauder28
@@ -281,7 +282,7 @@ irsSystem.getLon=function(systemID)
  return irsSystem[systemID].getLon(irsSystem[systemID])
 end
 irsSystem.getInitLatPos=function()
- if B747DR_iru_status[0]==4 or B747DR_iru_status[1]==4 or B747DR_iru_status[2]==4 or irsSystem[5]==false then
+ if B747DR_iru_status[0]==4 or B747DR_iru_status[1]==4 or B747DR_iru_status[2]==4 or irsSystem["setPos"]==false then
   return fmsModules["data"]["initIRSLat"]
  end
  return "         " 
