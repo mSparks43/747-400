@@ -156,18 +156,36 @@ irsSystem.off=function()
 end
 
 irsSystem.update=function()
+  
+  
+  if B747DR_iru_status[0]==0 then 
+    irsSystem["irsL"]["aligned"] = false 
+  elseif B747DR_iru_status[0]==2 and irsSystem["motion"]["irsL"]==false and irsSystem["setPos"]==true then
+    irsSystem["irsL"]["aligned"] = true
+  end
+  if B747DR_iru_status[1]==0 then 
+    irsSystem["irsC"]["aligned"] = false 
+  elseif B747DR_iru_status[1]==2 and irsSystem["motion"]["irsC"]==false and irsSystem["setPos"]==true then
+    irsSystem["irsC"]["aligned"] = true
+  end
+  if B747DR_iru_status[2]==0 then 
+    irsSystem["irsR"]["aligned"] = false 
+  elseif B747DR_iru_status[2]==2 and irsSystem["motion"]["irsR"]==false and irsSystem["setPos"]==true then
+    irsSystem["irsR"]["aligned"] = true
+  end
+
   --Marauder28
   --GPS/IRS DISPLAY
-  B747DR_ND_GPS_Line = "GPS"
-  if B747DR_iru_status[0]==0 then irsSystem["irsL"]["aligned"] = false end
-  if B747DR_iru_status[1]==0 then irsSystem["irsC"]["aligned"] = false end
-  if B747DR_iru_status[2]==0 then irsSystem["irsR"]["aligned"] = false end
-  if irsSystem["irsL"]["aligned"] == true then
-	B747DR_ND_IRS_Line = "IRS (L)"
+  if irsSystem["irsL"]["aligned"] == true and irsSystem["irsC"]["aligned"] == true and irsSystem["irsR"]["aligned"] == true then
+    B747DR_ND_IRS_Line = "IRS (3)"
+  elseif irsSystem["irsL"]["aligned"] == true then
+	  B747DR_ND_IRS_Line = "IRS (L)"
   elseif irsSystem["irsC"]["aligned"] == true then
-	B747DR_ND_IRS_Line = "IRS (C)"
+	  B747DR_ND_IRS_Line = "IRS (C)"
   elseif irsSystem["irsR"]["aligned"] == true then
-	B747DR_ND_IRS_Line = "IRS (R)"
+	  B747DR_ND_IRS_Line = "IRS (R)"
+  else
+    B747DR_ND_GPS_Line = "GPS"
   end
 
   --Update Set Hdg on FMC
@@ -185,9 +203,7 @@ irsSystem.update=function()
   end
   --Marauder28
   
-  if irsSystem["irsL"]["aligned"] == true and irsSystem["irsC"]["aligned"] == true and irsSystem["irsR"]["aligned"] == true then
-	B747DR_ND_IRS_Line = "IRS (3)"
-  end
+  
   
     if irsSystem["setPos"]==true and irsSystem[irsFromNum(B747DR_irs_src_capt)]["aligned"]==true then B747DR_pfd_mode_capt=1 else B747DR_pfd_mode_capt=0 end
     if irsSystem["setPos"]==true and irsSystem[irsFromNum(B747DR_irs_src_fo)]["aligned"]==true then B747DR_pfd_mode_fo=1 else B747DR_pfd_mode_fo=0 end
@@ -216,7 +232,12 @@ irsSystem.update=function()
   if  B747DR_iru_status[0]==4 then B747DR_CAS_memo_status[14]=1 else B747DR_CAS_memo_status[14]=0 end
   if  B747DR_iru_status[1]==4 then B747DR_CAS_memo_status[15]=1 else B747DR_CAS_memo_status[15]=0 end
   if  B747DR_iru_status[2]==4 then B747DR_CAS_memo_status[16]=1 else B747DR_CAS_memo_status[16]=0 end 
-  if irsSystem["irsL"]["aligned"]==true and irsSystem["irsC"]["aligned"]==true and irsSystem["irsR"]["aligned"]==true then return end
+  
+  if irsSystem["irsL"]["aligned"]==true and 
+      irsSystem["irsC"]["aligned"]==true and 
+      irsSystem["irsR"]["aligned"]==true then 
+        return 
+  end
   
   if irsSystem["motion"]["irsL"]==true or irsSystem["motion"]["irsC"]==true or irsSystem["motion"]["irsR"]==true then 
     B747DR_CAS_advisory_status[233] = 1   
@@ -260,7 +281,7 @@ irsSystem.getLon=function(systemID)
  return irsSystem[systemID].getLon(irsSystem[systemID])
 end
 irsSystem.getInitLatPos=function()
- if B747DR_iru_status[0]==4 or B747DR_iru_status[1]==4 or B747DR_iru_status[2]==4 or irsSystem["setPos"]==false then
+ if B747DR_iru_status[0]==4 or B747DR_iru_status[1]==4 or B747DR_iru_status[2]==4 or irsSystem[5]==false then
   return fmsModules["data"]["initIRSLat"]
  end
  return "         " 
