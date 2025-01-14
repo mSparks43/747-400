@@ -55,13 +55,13 @@ acarsSystem.setCurrentMessage=function(fmsID,messageID)
 end
 function doACARSData(key,value)
   print("Key=("..key..") Value=("..value..")")
-  if key=="CUR CTR" then
+  if simDR_xpdr_code~=7600 and simDR_xpdr_code~=7500 and key=="SQUAWK" then
+    simDR_xpdr_code=tonumber(value)
+    print("Set transponder to "..value)
+  elseif key=="CUR CTR" then
     setFMSData("curCTR",value)
   elseif key=="NEXT CTR" then
     setFMSData("nextCTR",value)
-  elseif key=="SQUAWK" then
-    simDR_xpdr_code=tonumber(value)
-    print("Set transponder to "..value)
   else
     print("ignored key "..key)
   end

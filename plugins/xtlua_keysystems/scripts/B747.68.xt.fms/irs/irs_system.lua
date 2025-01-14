@@ -160,18 +160,18 @@ irsSystem.update=function()
   
   if B747DR_iru_status[0]==0 then 
     irsSystem["irsL"]["aligned"] = false 
-  elseif B747DR_iru_status[0]==2 and irsSystem["motion"]["irsL"]==false and irsSystem["setPos"]==true then
+  elseif B747DR_iru_status[0]==2 and irsSystem["motion"]["irsL"]==false and irsSystem["setPos"]==true and irsSystem["irsL"]["aligned"]==false then
     --irsSystem["irsL"]["aligned"] = true
     irsL.align(irsL)
   end
   if B747DR_iru_status[1]==0 then 
     irsSystem["irsC"]["aligned"] = false 
-  elseif B747DR_iru_status[1]==2 and irsSystem["motion"]["irsC"]==false and irsSystem["setPos"]==true then
+  elseif B747DR_iru_status[1]==2 and irsSystem["motion"]["irsC"]==false and irsSystem["setPos"]==true and irsSystem["irsC"]["aligned"]==false then
     irsC.align(irsC)
   end
   if B747DR_iru_status[2]==0 then 
     irsSystem["irsR"]["aligned"] = false 
-  elseif B747DR_iru_status[2]==2 and irsSystem["motion"]["irsR"]==false and irsSystem["setPos"]==true then
+  elseif B747DR_iru_status[2]==2 and irsSystem["motion"]["irsR"]==false and irsSystem["setPos"]==true and irsSystem["irsR"]["aligned"]==false then
     irsR.align(irsR)
   end
 
