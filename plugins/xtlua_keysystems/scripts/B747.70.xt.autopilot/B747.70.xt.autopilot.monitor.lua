@@ -30,8 +30,9 @@ function VNAV_NEXT_ALT(numAPengaged,fms)
     local currentIndex=0
     local dist_to_TOD=(B747BR_totalDistance-B747BR_tod)
     local lowerAlt=tonumber(getFMSData("desrestalt"))
+    print("FMS ="..fmsJSON)
     for i=1,table.getn(fms),1 do
-      --print("FMS j="..fmsJSON)
+      print("i="..i.." began="..tostring(began))
     if fms[i][10]==true then
         began=true
         currentIndex=i
@@ -55,9 +56,14 @@ function VNAV_NEXT_ALT(numAPengaged,fms)
         if dist_to_TOD<0 and fms[i][9]>0 and fms[i][9]<lowerAlt and fms[i][2] ~= 1 then targetAlt=fms[i][9] targetIndex=i break end
       end
     end
-
-    B747DR_fmstargetIndex=targetIndex
-    B747DR_ap_vnav_target_alt=targetAlt
+    if targetIndex==0 and dist_to_TOD<0 then
+        local endI = table.getn(fms)
+        B747DR_fmstargetIndex=endI
+        B747DR_ap_vnav_target_alt=fms[endI][9]
+    else
+        B747DR_fmstargetIndex=targetIndex
+        B747DR_ap_vnav_target_alt=targetAlt
+    end
     return targetAlt
 end
 
@@ -206,6 +212,8 @@ function VNAV_DES(numAPengaged,fms)
 	if diff < 0.2 then
 		return
 	end
+
+    
     if B747DR_switchingIASMode==1 then return end
     local upperAlt=math.max(tonumber(getFMSData("desspdtransalt")),tonumber(getFMSData("desrestalt")))
     --print("upperAlt "..upperAlt)
@@ -473,12 +481,15 @@ function VNAV_modeSwitch(fmsO)
 
     if (dist>10 and simDR_pressureAlt1<(B747BR_cruiseAlt-math.max(B747DR_alt_capture_window,500))) or (dist>0 and simDR_radarAlt1<5000 and B747DR_ap_inVNAVdescent==0) then
         VNAV_CLB(numAPengaged,fmsO) --climb to cruise
+        B747DR_ap_inDescent = 0
     elseif dist>0 and B747DR_ap_inVNAVdescent==0 and simDR_radarAlt1<3000 then  
         lastVNAVSwitch=simDRTime
     elseif dist>0 and B747DR_ap_inVNAVdescent==0 then
+        B747DR_ap_inDescent = 0
         VNAV_CRZ(numAPengaged,dist) --go to alt hold if not in descent
         checkMCPAlt(dist)
     else
+        B747DR_ap_inDescent = 1
         VNAV_DES(numAPengaged,fmsO)
         checkMCPAlt(dist)
     end

@@ -17,6 +17,8 @@
 --sim/flightmodel2/controls/slat1_deploy_ratio
 dofile("pid.lua")
 
+B747DR_ap_AFDS_mode_box_status_pilot = find_dataref("laminar/B747/autopilot/AFDS/mode_box_status_pilot")
+B747DR_ap_AFDS_mode_box_status_copilot =find_dataref("laminar/B747/autopilot/AFDS/mode_box_status_copilot")
 lastBraking=0
 lastPitch=0
 lastRoll=0
@@ -964,8 +966,15 @@ function ap_pitch_assist()
     local retval=B747_interpolate_value(B747DR_sim_pitch_ratio,0,-1,1,20)
     local refreshsimDR_electric_trim=simDR_electric_trim
     local refresh_trim=simDR_elevator_trim
+
     B747DR_pidPitchP=B747_rescale(3000,B747DR_pidPitchPL,40000,B747DR_pidPitchPH,B747DR_autopilot_altitude_ft_pfd)
-    B747DR_pidPitchI=B747DR_pidPitchP*0.05 --scale this with P
+    if B747DR_ap_AFDS_mode_box_status_pilot==1 or B747DR_ap_AFDS_mode_box_status_copilot==1 then
+        B747DR_pidPitchI=B747DR_pidPitchP*0.1
+        print("pitching for change")
+    else
+        B747DR_pidPitchI=B747DR_pidPitchP
+    end
+    B747DR_pidPitchI=B747DR_pidPitchP--*0.1 --scale this with P
     pitchPid.kp=B747DR_pidPitchP
     pitchPid.ki=B747DR_pidPitchI
     pitchPid.kd=B747DR_pidPitchD

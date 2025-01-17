@@ -370,6 +370,7 @@ B747DR_ap_vnav_target_alt = deferred_dataref("laminar/B747/autopilot/vnav_target
 B747DR_ap_vnav_state = deferred_dataref("laminar/B747/autopilot/vnav_state", "number")
 B747DR_ap_lnav_state = deferred_dataref("laminar/B747/autopilot/lnav_state", "number")
 B747DR_ap_inVNAVdescent = deferred_dataref("laminar/B747/autopilot/vnav_descent", "number")
+B747DR_ap_inDescent 		= deferred_dataref("laminar/B747/autopilot/vnav/after_tod", "number")
 B747DR_ap_flightPhase = deferred_dataref("laminar/B747/autopilot/flightPhase", "number")
 B747DR_ap_active_land = deferred_dataref("laminar/B747/autopilot/active_land", "number")
 -- 0 take off

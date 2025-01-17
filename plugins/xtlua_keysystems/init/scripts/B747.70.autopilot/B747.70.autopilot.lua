@@ -76,6 +76,7 @@ B747DR_ap_vnav_target_alt            	= deferred_dataref("laminar/B747/autopilot
 B747DR_ap_vnav_state            	= deferred_dataref("laminar/B747/autopilot/vnav_state", "number")
 B747DR_ap_lnav_state            	= deferred_dataref("laminar/B747/autopilot/lnav_state", "number")
 B747DR_ap_inVNAVdescent 		= deferred_dataref("laminar/B747/autopilot/vnav_descent", "number")
+B747DR_ap_inDescent 		= deferred_dataref("laminar/B747/autopilot/vnav/after_tod", "number")
 B747DR_ap_flightPhase 		= deferred_dataref("laminar/B747/autopilot/flightPhase", "number")
 B747BR_totalDistance 			= deferred_dataref("laminar/B747/autopilot/dist/remaining_distance", "number")
 B747BR_distance_to_dest 			= deferred_dataref("laminar/B747/autopilot/dist/distance_to_dest", "number")
