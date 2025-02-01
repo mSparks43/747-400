@@ -1087,7 +1087,7 @@ function throttle_management()
 	else
 		for i = 0, 3 do
 			if simDR_reverser_deploy_ratio[i]<0.01 then --reversers are not deployed
-				B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],simDR_engn_thro[i],0,1.00,1)
+				B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],simDR_throttle_ratio[i],0,1.00,1)
 			else
 			    B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],0,0,1.00,1)
 				--B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],simDR_engn_thro[i],0,1.00,1)
