@@ -201,6 +201,8 @@ simDR_N1_target_bug			= find_dataref("sim/cockpit2/engine/actuators/N1_target_bu
 simDR_N2					= find_dataref("sim/flightmodel/engine/ENGN_N2_")
 simDR_heating				= find_dataref("sim/flightmodel2/engines/engine_is_burning_fuel")
 simDR_throttle_ratio		= find_dataref("sim/cockpit2/engine/actuators/throttle_ratio")
+simDR_hardware_throttle_ratio	= find_dataref("sim/cockpit2/engine/actuators/hardware_throttle_ratio")
+simDR_has_hardware_throttle	= find_dataref("sim/joystick/has_throttle")
 simDR_override_throttles	= find_dataref("sim/operation/override/override_throttles")
 simDR_engn_thro				= find_dataref("sim/flightmodel/engine/ENGN_thro")
 simDR_engn_thro_use			= find_dataref("sim/flightmodel/engine/ENGN_thro_use")
@@ -981,6 +983,7 @@ function ecc_throttle()
 		end
 	else
 		--shouldn't get here!, done in throttle_management()
+		print("shouldn't get here!, done in throttle_management()")
 		for i = 0, 3 do
 			--refreshThro=simDR_engn_thro[i]
 			B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],simDR_engn_thro[i],0,1.00,1)
@@ -1087,7 +1090,11 @@ function throttle_management()
 	else
 		for i = 0, 3 do
 			if simDR_reverser_deploy_ratio[i]<0.01 then --reversers are not deployed
-				B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],simDR_throttle_ratio[i],0,1.00,1)
+				if simDR_has_hardware_throttle == 1 then
+					B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],simDR_hardware_throttle_ratio[i],0,1.00,1)
+				else
+					B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],simDR_throttle_ratio[i],0,1.00,1)
+				end
 			else
 			    B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],0,0,1.00,1)
 				--B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],simDR_engn_thro[i],0,1.00,1)
