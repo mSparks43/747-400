@@ -1097,20 +1097,9 @@ function throttle_management()
 				end
 			else
 			    B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],0,0,1.00,1)
-				--B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],simDR_engn_thro[i],0,1.00,1)
 			end
 		end
-		--spd_target_throttle=math.max(simDR_throttle_ratio[0],simDR_throttle_ratio[1],simDR_throttle_ratio[2],simDR_throttle_ratio[3])
-		
-		--simDR_engine_throttle_jet_all=spd_target_throttle
-		--for i = 0, 3 do
-			--refreshThro=simDR_engn_thro[i]
-		--	B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],simDR_engn_thro[i],0,1.00,1)
-		--end
 		B747DR_ref_line_magenta = 0
-		if B747DR_log_level >= 1 then
-			print("---Setting Back to Normal---")
-		end
 	end
 
 end
