@@ -200,7 +200,8 @@ simDR_N1					= find_dataref("sim/flightmodel/engine/ENGN_N1_")
 simDR_N1_target_bug			= find_dataref("sim/cockpit2/engine/actuators/N1_target_bug")
 simDR_N2					= find_dataref("sim/flightmodel/engine/ENGN_N2_")
 simDR_heating				= find_dataref("sim/flightmodel2/engines/engine_is_burning_fuel")
-simDR_throttle_ratio		= find_dataref("sim/cockpit2/engine/actuators/throttle_ratio")
+--simDR_throttle_ratio		= find_dataref("sim/cockpit2/engine/actuators/throttle_ratio")
+simDR_throttle_ratio	= find_dataref("sim/cockpit2/engine/actuators/hardware_throttle_ratio")
 simDR_hardware_throttle_ratio	= find_dataref("sim/cockpit2/engine/actuators/hardware_throttle_ratio")
 simDR_has_hardware_throttle	= find_dataref("sim/joystick/has_throttle")
 simDR_override_throttles	= find_dataref("sim/operation/override/override_throttles")
@@ -940,7 +941,6 @@ function ecc_throttle()
 		or (B747DR_ap_FMA_autothrottle_mode==2 and simDR_ind_airspeed_kts_pilot<minSafeSpeed) --IDLE need thrust
 		then
 				spd_throttle()
-				simDR_throttle_ratio		= find_dataref("sim/cockpit2/engine/actuators/throttle_ratio")
 				return
 
 		else
