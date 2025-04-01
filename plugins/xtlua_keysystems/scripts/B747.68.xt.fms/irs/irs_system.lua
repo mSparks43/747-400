@@ -32,7 +32,7 @@ irs={
   end,
   getLon=function(self)
    if self["aligned"] then return toDMS(simDR_longitude+self["longitude"],false) 
-   else return "***`**.*" end
+   else return "****`**.*" end
   end,
   getLatD=function(self)
    if self["aligned"] then return simDR_latitude+self["latitude"]

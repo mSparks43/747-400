@@ -124,7 +124,11 @@ function toDMS(value,isLat)
   elseif value<0 then
     p="W"
   end
-  retVal=string.format(p .. "%03d`%02d.%1d",degrees,minutes,seconds*10)
+  if isLat==true then
+  	retVal=string.format(p .. "%02d`%02d.%1d",degrees,minutes,seconds*10)
+  else
+	retVal=string.format(p .. "%03d`%02d.%1d",degrees,minutes,seconds*10)
+  end
   return retVal
 end
 
