@@ -588,6 +588,13 @@ function after_physics()
       B747DR_nd_capt_up = simDR_heading_track
     end
   else
+    if simDR_map_mode ==2 then
+      B747DR_nd_capt_up = simDR_ground_track
+      B747DR_nd_fo_up = simDR_ground_track
+    else
+      B747DR_nd_capt_up = simDR_heading_track
+      B747DR_nd_fo_up = simDR_heading_track
+    end
     backport_map_range_copilot=simDR_map_range
     backport_map_mode_copilot=simDR_map_mode
   end  
