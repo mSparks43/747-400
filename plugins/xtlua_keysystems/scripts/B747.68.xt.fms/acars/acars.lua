@@ -22,7 +22,7 @@ function fmsFunctions.initAcars(fmsO,value)
   initData["dst"]=getFMSData("fltdst")
   if initData["dst"]=="****" then fmsO["notify"]="DESTINATION NOT SET" return end
   initData["crzalt"]=getFMSData("crzalt")
-  
+  initData["pln"]=fmsJSON
   local newInit=json.encode(initData)
   if currentInit~= newInit then
     fmsModules["data"]["acarsInitString"]=newInit
