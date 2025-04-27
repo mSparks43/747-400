@@ -42,8 +42,6 @@ To install, extract the zip into your aircraft folder (delete any existing copy,
 
 Integration with [Terrain Radar](https://forums.x-plane.org/index.php?/files/file/37864-terrain-radar-vertical-situation-display/) and [AutoATC](https://autoatc.zem-solutions.com) is included which require installing separately. Make sure you are using the latest versions of both for the fullest experience.
 
-### X-Plane 11
-In addition to the main zip file, X-Plane 11 users should extract the "Sparky744.XP11.backport.zip", overwriting the files contained in the installation zip. This file contains older versions of certain objects where the new ones are not XP11 compatible. Please note, less and less testing and use is being conducted on XP11, specific issues will still be addressed if highlighted (contact us on the Go Ahead discord server), but as time progresses more and more features will either break or stop working on XP11. Please upgrade to XP12 as soon as possible. 
 
 ### Linux users (and all others)
 
@@ -130,6 +128,51 @@ You may be experiencing this if you have SAM v3. To fix, disable the "Jetway Ext
 See the [commit history](https://github.com/mSparks43/747-400/commits/master) for a detailed change log.
 
 _Thank you all for your support and contributions!_
+
+## Release XP12.2.0-2025/04/27 (OP Program XP12-10-2025/04/27):
+
+Culmination of fixes to date, put XP11 and XP12 versions into a single package. Focus on ACARs, Throttle and autopilot.
+
+### Bug fixes
+
+ - Overrides not cleared loading a different aircraft (#887)
+ - Various throttle and parking brake fixes (#892)
+ - Dont set throttle angle while reversers are deployed
+ - Update flap display
+ - Hide no v spd above 10 feet RA
+ - Handle NEXT CTR acars messages
+ - Cleanup ACARS page titles
+ - Fix vnav autodescend
+ - Fix FMS crashing when trying to switch to custom and not in custom
+ - VNAV and ACARS testing and fixes
+ - Dont call out positive rate if wheels still on ground
+ - Update target alt hold in VNAV resume
+ - Fix vs button
+ - Hoppie ACARS fixes
+ - Tidy ACARS message view page
+ - Impl range arc for terr/wxr, improve high alt pitch PID
+ - Check max cruise altitude, fix dome light, check acarsDataReady in sendCompany
+ - Reinstate cruise alt check for cruise alt mode switch
+ - Check for AT disconnect button state
+ - Fix ACARS message view page numbering
+ - Impliment engine fail warnings
+ - Set steer hi speed to 20 knots
+ - Check isATEnabled in vnav updates
+ - Fix AT disabled check
+ - Dont set AT FMA to IDLE if not AT enabled
+ - Update AP parameters
+ - Ensure irsSystem aligned gets set to true when alignment completes
+ - Fix typo in irs_system, better cduTarget page logging
+ - Make pitch integral less agressive, dont autoset squawk if squaking 7600 or 7500
+ - IRS tweeks
+ - Set VNAV target to airport for approach
+ - Fix VPI
+ - Remove spurious find_dataref
+ - XP11 sound and throttle fixes
+ - Fix line length of POS INIT
+ - Fix XP11 compass roses
+ - Send current plan with ACARS initialisation
+ - Extract arr and dep airports from flightplan for ACARS init
 
 ## Release XP12.1.0-2024/06/02 (OP Program XP12-10-2024/06/02 08:57):
 
