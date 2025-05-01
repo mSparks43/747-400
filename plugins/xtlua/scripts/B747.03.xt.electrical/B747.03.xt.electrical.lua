@@ -85,7 +85,8 @@ local B747_apu_inlet_door_target_pos = 0
 --*************************************************************************************--
 --** 				                X-PLANE DATAREFS            			    	 **--
 --*************************************************************************************--
-
+simDR_version=find_dataref("sim/version/xplane_internal_version")
+simDR_gpuvolts=find_dataref("sim/cockpit2/electrical/GPU_generator_volts")
 simDR_startup_running           = find_dataref("sim/operation/prefs/startup_running")
 
 simDR_engine_running            = find_dataref("sim/flightmodel/engine/ENGN_running")
@@ -453,12 +454,17 @@ function B747_external_power()
 --         B747DR_elec_ext_pwr1_available = 0
 -- 	B747DR_elec_ext_pwr2_available = 0
 --     end
+    
     if B747DR__gear_chocked == 0
     then
         --print("disabled ground power at ".. simDR_aircraft_groundspeed .. " "..simDR_aircraft_on_ground)
         B747DR_elec_ext_pwr1_available = 0
 	    B747DR_elec_ext_pwr2_available =0
     end
+    if simDR_version>=120012 and (simDR_gpuvolts<24) then
+		B747DR_elec_ext_pwr1_available = 0
+	    B747DR_elec_ext_pwr2_available =0 
+	end
     -- EXTERNAL POWER ON/OFF
     if (B747DR_elec_ext_pwr1_available == 1
         and B747DR_elec_ext_pwr_1_switch_mode == 1) or (B747DR_elec_ext_pwr2_available == 1

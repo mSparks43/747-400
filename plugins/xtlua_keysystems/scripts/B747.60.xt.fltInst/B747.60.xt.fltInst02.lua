@@ -77,7 +77,7 @@ end
 --*************************************************************************************--
 --** 				                X-PLANE DATAREFS            			    	 **--
 --*************************************************************************************--
-simDR_version=find_dataref("sim/version/xplane_internal_version")
+
 simDR_startup_running               = find_dataref("sim/operation/prefs/startup_running")
 simDR_version=find_dataref("sim/version/xplane_internal_version")
 simDR_all_wheels_on_ground          = find_dataref("sim/flightmodel/failures/onground_any")

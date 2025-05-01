@@ -22,12 +22,11 @@ REQUIRES_BANK ambience.bank
 REQUIRES_BANK apu.bank
 REQUIRES_BANK cabin.bank
 REQUIRES_BANK cockpit.bank
-REQUIRES_BANK engine_other.bank
 REQUIRES_BANK engineGE.bank
 REQUIRES_BANK enginePW.bank
 REQUIRES_BANK engineRR.bank
-REQUIRES_BANK engine_other.bank
 REQUIRES_BANK warnings.bank
+REQUIRES_BANK engine_other.bank
 
 DISABLE_LEGACY_ALERT_SOUNDS
 

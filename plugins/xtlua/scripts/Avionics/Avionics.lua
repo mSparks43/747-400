@@ -13,7 +13,8 @@ Generator_on_gpu = find_dataref("sim/cockpit/electrical/gpu_on")
 Pack1_Sw = find_dataref("laminar/B747/air/pack_ctrl/sel_dial_pos[0]")
 Pack2_Sw = find_dataref("laminar/B747/air/pack_ctrl/sel_dial_pos[1]")
 Pack3_Sw = find_dataref("laminar/B747/air/pack_ctrl/sel_dial_pos[2]")
-
+simDR_version=find_dataref("sim/version/xplane_internal_version")
+simDR_gpuvolts=find_dataref("sim/cockpit2/electrical/GPU_generator_volts")
 --*************************************************************************************--
 --** 				              CUSTOM COMMAND HANDLERS            			     **--
 --*************************************************************************************--
@@ -63,12 +64,18 @@ end
 
 
 function Ext_Power_Available(phase, duration)
+	local gpuOn=false
 
+	if simDR_version>=120012 then
+		puOn=(Generator_on_gpu == 1) and (simDR_gpuvolts>=24)
+	else
+		gpuOn=(Generator_on_gpu == 1)
+	end
    if Generator_on_apu == 1 or
-     Generator_on_gpu == 1 
+		gpuOn
      then Ext_Power_Av = 1 
    elseif Generator_on_apu == 0
-   	 and Generator_on_gpu == 0 
+   	 and not(gpuOn) 
 	 then Ext_Power_Av = 0 
 end
 end

@@ -22,12 +22,11 @@ REQUIRES_BANK ambience.bank
 REQUIRES_BANK apu.bank
 REQUIRES_BANK cabin.bank
 REQUIRES_BANK cockpit.bank
-REQUIRES_BANK engine_other.bank
 REQUIRES_BANK engineGE.bank
 REQUIRES_BANK enginePW.bank
 REQUIRES_BANK engineRR.bank
-REQUIRES_BANK engine_other.bank
 REQUIRES_BANK warnings.bank
+REQUIRES_BANK engine_other.bank
 
 DISABLE_LEGACY_ALERT_SOUNDS
 
@@ -7532,8 +7531,8 @@ END_SOUND_ATTACHMENT
 BEGIN_SOUND_ATTACHMENT
         EVENT_NAME /Boeing/747/-400/Ambience/Weather/rain
         VEH_XYZ 0 0 0
-	EVENT_START_COND sim/weather/precipitation_on_aircraft_ratio > 0
-	EVENT_START_END sim/weather/precipitation_on_aircraft_ratio == 0
+	EVENT_START_COND sim/weather/aircraft/precipitation_on_aircraft_ratio > 0
+	EVENT_START_END sim/weather/aircraft/precipitation_on_aircraft_ratio == 0
 END_SOUND_ATTACHMENT
 
 ####################
