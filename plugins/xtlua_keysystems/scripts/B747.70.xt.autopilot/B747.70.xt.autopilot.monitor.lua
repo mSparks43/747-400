@@ -30,9 +30,9 @@ function VNAV_NEXT_ALT(numAPengaged,fms)
     local currentIndex=0
     local dist_to_TOD=(B747BR_totalDistance-B747BR_tod)
     local lowerAlt=tonumber(getFMSData("desrestalt"))
-    print("FMS ="..fmsJSON)
+    --print("FMS ="..fmsJSON)
     for i=1,table.getn(fms),1 do
-      print("i="..i.." began="..tostring(began))
+      --print("i="..i.." began="..tostring(began))
     if fms[i][10]==true then
         began=true
         currentIndex=i
