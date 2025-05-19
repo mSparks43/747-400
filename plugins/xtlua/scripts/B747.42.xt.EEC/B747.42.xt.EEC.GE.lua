@@ -20,7 +20,7 @@ function throttle_resolver_angle_GE(engine_in)
 
   thrust_ratio_factor = B747DR_display_N1_max[engine_in] / 116.0  --117.5
 
-  local N1_target=B747_rescale(0.0, 31.0, 1.0, 116.0, B747DR_throttle[engine_in])
+  local N1_target=B747_rescale(0.0, 25.0, 1.0, 116.0, B747DR_throttle[engine_in])
   if B747DR_log_level == -1 then
     print("Thrust Factor = ", thrust_ratio_factor)
     print("TRA = ", throttle_angle)
@@ -30,7 +30,7 @@ function throttle_resolver_angle_GE(engine_in)
 end
 
 function engine_idle_control_GE(altitude_ft_in)
-  local N1_low_idle = 0.0
+  local N1_low_idle = 25.9
   local N1_high_idle_ratio = 2.625  --target ~42% N1 at SL / 15c
 
   --Information from FCOM
@@ -364,7 +364,7 @@ function N1_display_GE(altitude_ft_in, thrust_N_in, n1_factor_in, engine_in)
 
     --Engine Idle Logic (Minimum / Approach)
     N1_low_idle = engine_idle_control_GE(altitude_ft_in)
-    if tonumber(N1_actual) < tonumber(N1_low_idle) and simDR_engine_running[engine_in] == 1 then
+    if B747DR_throttle_resolver_angle[engine_in] < tonumber(N1_low_idle) and simDR_engine_running[engine_in] == 1 then
      -- N1_actual = N1_low_idle
       N1_actual = B747_animate_value(last_N1[engine_in],N1_low_idle,0,115,0.1) 
       --print(" pin N1_actual 2 "..N1_actual)
@@ -381,6 +381,7 @@ function N1_display_GE(altitude_ft_in, thrust_N_in, n1_factor_in, engine_in)
       print("Temperature K = ", temperature_K)
       print("Temperature Ratio = ", temperature_ratio)
       print("Mach = ", mach)
+      print("N1_low_idle = ", N1_low_idle)
       print("Corrected Thrust LBF = ", corrected_thrust_lbf)
       print("Actual Thrust LBF = ", actual_thrust_lbf)
       print("TO Factor = ", n1_factor_in)
