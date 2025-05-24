@@ -740,11 +740,15 @@ function B747_brake_temp()
         for i = 0, 17 do
             B747DR_brake_temp[i]=simDR_OAT_degC
         end
+        if simDR_parking_brake_ratio>0 then
+            simDR_parking_brake_ratio=0
+        end
         return
     end
     -- BODY RIGHT GEAR
     if tireSpeed[2] > 0 and brakingRatio_R > 0 then
         local rate = brakingRatio_R * tireSpeed[2] * SIM_PERIOD * 130.0
+        print("rate=",rate)
         B747DR_brake_temp[8] = B747DR_brake_temp[8] + rate
         B747DR_brake_temp[9] = B747DR_brake_temp[8]
         B747DR_brake_temp[10] = B747DR_brake_temp[8]
