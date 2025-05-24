@@ -364,7 +364,7 @@ function N1_display_GE(altitude_ft_in, thrust_N_in, n1_factor_in, engine_in)
 
     --Engine Idle Logic (Minimum / Approach)
     N1_low_idle = engine_idle_control_GE(altitude_ft_in)
-    if B747DR_throttle_resolver_angle[engine_in] < tonumber(N1_low_idle) and simDR_engine_running[engine_in] == 1 then
+    if simDR_reverser_on[engine_in] ==0 and B747DR_throttle_resolver_angle[engine_in] < tonumber(N1_low_idle) and simDR_engine_running[engine_in] == 1 then
      -- N1_actual = N1_low_idle
       N1_actual = B747_animate_value(last_N1[engine_in],N1_low_idle,0,115,0.1) 
       --print(" pin N1_actual 2 "..N1_actual)

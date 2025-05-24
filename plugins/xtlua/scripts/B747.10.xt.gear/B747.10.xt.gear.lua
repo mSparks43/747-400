@@ -735,7 +735,7 @@ function B747_brake_temp()
     end
 
 
-    --in a replay and no on the ground, quickly cool off the brakes to oat
+    -- anot on the ground and back in time, quickly cool off the brakes to oat in a replay
     if IN_REPLAY==1 and simDR_aircraft_on_ground==0 then
         for i = 0, 17 do
             B747DR_brake_temp[i]=simDR_OAT_degC
