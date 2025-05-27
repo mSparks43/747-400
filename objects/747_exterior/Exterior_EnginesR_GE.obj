@@ -3,7 +3,7 @@ I
 OBJ
 
 TEXTURE		../../objects/747_exterior/Exterior_WingsR_GE.png
-TEXTURE_NORMAL ../../objects/747_exterior/Exterior_Wings_NMLR.png
+TEXTURE_NORMAL ../../objects/747_exterior/Exterior_Wings_NML.png
 GLOBAL_specular 1.0
 NORMAL_METALNESS
 
