@@ -77,8 +77,8 @@ function B747_rescale(in1, out1, in2, out2, x)
 end
 
 function round_thrustcalc(x, input_type)
-    --print("x IN = "..x)  
-  
+    --print("x IN = "..x)
+
     if input_type == "ALT" then
       if x < -2000 then
         x = -2000
@@ -126,7 +126,7 @@ function round_thrustcalc(x, input_type)
 			last_difference = distance
 		end
 	end
-	
+
 	return closest_match
   end
 
@@ -335,7 +335,7 @@ B747DR_FMSdata						= deferred_dataref("laminar/B747/fms/data", "string")
 B747DR_autothrottle_fail			= deferred_dataref("laminar/B747/engines/autothrottle_fail", "number")
 B747DR_ap_vvi_fpm					= deferred_dataref("laminar/B747/autopilot/vvi_fpm")
 simDR_autopilot_airspeed_kts = find_dataref("sim/cockpit2/autopilot/airspeed_dial_kts")
-B747DR_airspeed_pilot				= deferred_dataref("laminar/B747/gauges/indicators/airspeed_kts_pilot")			
+B747DR_airspeed_pilot				= deferred_dataref("laminar/B747/gauges/indicators/airspeed_kts_pilot")
 
 --[[
 *************************************************************************************
@@ -546,7 +546,7 @@ end
 ]]
 function egt_thermal_profile(tempIn,engineid,current_value)
 	--B747DR_display_EGT[i]
-	
+
 	local thermalIn=tempIn
 	--[[if tempIn<320 and tempIn>120 then
 		thermalIn=320
@@ -568,7 +568,7 @@ function egt_thermal_profile(tempIn,engineid,current_value)
 
 	local rate = (thermalIn-current_value) /div
 	local tempOut=current_value+rate
-	--print(engineid.."="..tempIn.." to "..tempOut.." at ".. rate)	
+	--print(engineid.."="..tempIn.." to "..tempOut.." at ".. rate)
 	return math.max(simDR_temperature,tempOut)--current_value+rate
 end
 function clear_thrust_targets()
@@ -593,7 +593,7 @@ function take_off_thrust_corrected(altitude_ft_in, temperature_K_in)
 	--  PW4062 = 62000 lbf (Engine Max = 62000 lbf / 275800 Newtons)
 	--  RR RB211-524G = 56870 lbf (Engine Max = 58000 lbf / 258000 Newtons)
 	--  RR RB211-524H = 59450 lbf (Engine Max = 60600 lbf / 269600 Newtons)
-  
+
 	if string.match(simConfigData["data"].PLANE.engines, "B1F")  then
 		approximate_max_TO_thrust_lbf = 57160
 	elseif string.match(simConfigData["data"].PLANE.engines, "B5F")  then
@@ -619,16 +619,16 @@ function take_off_thrust_corrected(altitude_ft_in, temperature_K_in)
 	else
 		TOGA_corrected_thrust_lbf = (-0.0000546 * altitude_ft_in^2 + 1.37 * altitude_ft_in + approximate_max_TO_thrust_lbf)
 	end
-  
+
 	if B747DR_toderate == 1 then
 	  TOGA_corrected_thrust_lbf = TOGA_corrected_thrust_lbf * 0.9
 	elseif B747DR_toderate == 2 then
 	  TOGA_corrected_thrust_lbf = TOGA_corrected_thrust_lbf * 0.8
 	end
-  
+
 	TOGA_actual_thrust_lbf = TOGA_corrected_thrust_lbf * sigma_density_ratio  --pressure_ratio
 	TOGA_actual_thrust_N = TOGA_actual_thrust_lbf * lbf_to_N
-  
+
 	if B747DR_log_level >= 1 then
 	  print("\t\t\t\t\t<<<--- Takeoff Calcs --->>>")
 	  print("Altitude IN = ", altitude_ft_in)
@@ -638,10 +638,10 @@ function take_off_thrust_corrected(altitude_ft_in, temperature_K_in)
 	  print("TOGA Actual LBF = ", TOGA_actual_thrust_lbf)
 	  print("TOGA Actual N = ", TOGA_actual_thrust_N)
 	end
-  
+
 	return TOGA_corrected_thrust_lbf, TOGA_actual_thrust_lbf, TOGA_actual_thrust_N
 end
-  
+
 function in_flight_thrust(gw_kg_in, climb_angle_deg_in)
 	local total_thrust_required_N = 0.0
 	local thrust_per_engine_N = 0.0
@@ -684,7 +684,7 @@ function ecc_mode_set()
 	--Set Specific sub-mode for TO or CLB
 	--if (B747DR_ap_autoland==-2 or B747DR_ap_FMA_active_roll_mode ==3 ) and simDR_flap_ratio_control>0 then
 	--if simDR_altitude>32000 then
-	--	newTarget = "CRZ" 
+	--	newTarget = "CRZ"
 	--else
 	if B747DR_ap_autoland==-2 or (B747DR_ap_flightPhase >= 2 and simDR_flap_ratio > 0 and simDR_radarAlt1<1500) then
 		newTarget = "GA"
@@ -719,7 +719,7 @@ end
 function B747_interpolate_value(current_value, target, min, max, speed)--speed in sex min->max
 	local change = ((max-min)/speed)*(SIM_PERIOD)
 	newValue=current_value
-	
+
 	  if newValue<=target then
 	  newValue=newValue+change
 	  if newValue >= target then
@@ -745,7 +745,7 @@ function B747_interpolate_value(current_value, target, min, max, speed)--speed i
 
 function round(x)
 	return x>=0 and math.floor(x+0.5) or math.ceil(x-0.5)
-end  
+end
 local spd_target_throttle=0.5
 function ecc_spd()
 	--print("---ECC SPD---")
@@ -757,7 +757,7 @@ function ecc_spd()
 		local diffSpeed=2
 		--print("ecc spd")
 		for i = 0, 3 do
-			
+
 			if B747DR_display_N2[i]<60 and simDR_onGround == 1 then
 				eccPid[i].kp=0.06
 				eccPid[i].ki=0
@@ -773,20 +773,20 @@ function ecc_spd()
 				eccPid[i].target = B747DR_throttle_resolver_angle[i]
 			else --PW or RR, EPR target
 				if B747DR_display_N1[i]>110.1 then
-					eccPid[i].input = 50.0*B747DR_display_EPR[i] 
+					eccPid[i].input = 50.0*B747DR_display_EPR[i]
 					eccPid[i].target = 1.5 --cull fuel if exceeding N1 limit
 				else
 					eccPid[i].input = 50.0*B747DR_display_EPR[i]
 					eccPid[i].target = 50.0*B747DR_throttle_resolver_angle[i]
 				end
 				eccPid[i].kp=100*B747DR_pidepr_eccP
-				eccPid[i].ki=B747DR_pidepr_eccI 
-				eccPid[i].kd=50*B747DR_pidepr_eccD 
+				eccPid[i].ki=B747DR_pidepr_eccI
+				eccPid[i].kd=50*B747DR_pidepr_eccD
 				diffSpeed=4
 			end
 
 		end
-		
+
 		--local diffSpeed=30/(0.1+math.abs(input-target))
 		--print(diffSpeed)
         if (simDRTime-lastCompute)>computeRate then
@@ -794,7 +794,7 @@ function ecc_spd()
             	eccPid[i]:compute()
 			end
 			lastCompute=simDRTime
-			
+
         end
 		for i = 0, 3 do
 			if eccPid[i].output~=nil then
@@ -880,7 +880,7 @@ function spd_throttle()
 		lastModeChange=simDRTime
 	end
 
-	
+
 	input,target,rog = get_spd_input_target_rog()
 	local min_speedDelta=0
     local max_speedDelta=0
@@ -894,13 +894,13 @@ function spd_throttle()
 		--end
 		min_speedDelta=max_speedDelta/5
 	end
-	if ((target> input+0.5) and speed_delta<min_speedDelta 
+	if ((target> input+0.5) and speed_delta<min_speedDelta
             or (target< input-0.5) and speed_delta<-max_speedDelta)
         then
 
             spd_target_throttle= (spd_target_throttle+rog)
-        elseif ((target< input-0.5) and speed_delta>-min_speedDelta 
-            or (target> input+0.5) and speed_delta>max_speedDelta )  
+        elseif ((target< input-0.5) and speed_delta>-min_speedDelta
+            or (target> input+0.5) and speed_delta>max_speedDelta )
         then
 
             spd_target_throttle= (spd_target_throttle-rog)
@@ -921,7 +921,7 @@ function spd_throttle()
 		B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],spd_target_throttle,0,1.00,2)
 		--simDR_throttle_ratio[i]	= B747DR_throttle[i]
 	end
-	
+
 end
 local previous_throttleTime=0
 function ecc_throttle()
@@ -981,17 +981,22 @@ function ecc_throttle()
 			B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],spd_target_throttle,0,1.00,1)
 			--simDR_throttle_ratio[i]	= B747DR_throttle[i]
 		end
-	else
+	--[[else
 		--shouldn't get here!, done in throttle_management()
 		print("shouldn't get here!, done in throttle_management()")
 		for i = 0, 3 do
 			--refreshThro=simDR_engn_thro[i]
 			B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],simDR_engn_thro[i],0,1.00,1)
-		end
+		end]]--
 	end
 
 end
 local previous_altitude = 0
+local lastUserThrottleTargets={}
+lastUserThrottleTargets[0]=-2
+lastUserThrottleTargets[1]=-2
+lastUserThrottleTargets[2]=-2
+lastUserThrottleTargets[3]=-2
 function throttle_management()
 
 	--Get FMC data for CRZ ALT
@@ -1010,8 +1015,8 @@ function throttle_management()
 	elseif (B747DR_button_switch_position[7] == 1 and B747DR_button_switch_position[8] == 1 and B747DR_button_switch_position[9] == 1 and B747DR_button_switch_position[10] == 1) then
 		EEC_status = 0
 	end
-	
-	
+
+
 
 	ecc_mode_set()
 
@@ -1031,7 +1036,7 @@ function throttle_management()
 
 	--Determine FMA Mode
 	--THR REF Mode
-	if B747DR_ap_autothrottle_armed == 1 and B747DR_ap_FMA_autothrottle_mode == 5 
+	if B747DR_ap_autothrottle_armed == 1 and B747DR_ap_FMA_autothrottle_mode == 5
 	and B747DR_ap_flightPhase<2 and EEC_status == 0 then
 		--Take control of the throttles from the user and manage via Thrust Ref targets
 		--hold_mode = 0
@@ -1043,7 +1048,7 @@ function throttle_management()
 		else
 			B747DR_ref_line_magenta = 1
 		end
-		
+
 		if B747DR_log_level >= 1 then
 			print("THR REF MODE")
 			print("Override Throttles = ", simDR_override_throttles)
@@ -1082,19 +1087,18 @@ function throttle_management()
 	if B747DR_autothrottle_fail == 1 then
 		--Autothrottle has been disabled for some reason
 		B747DR_autothrottle_active = 0
-	end	
+	end
 	ecc_spd() --also handles reverse throttle
 	if B747DR_ap_autothrottle_armed == 1 and B747DR_ap_FMA_autothrottle_mode > 1 then --not none or HOLD
 		--new SPD
 		ecc_throttle()
+		for i = 0, 3 do
+			lastUserThrottleTargets[i]=getUserThrottleTarget(i)
+		end
 	else
 		for i = 0, 3 do
 			if simDR_reverser_deploy_ratio[i]<0.01 then --reversers are not deployed
-				if simDR_has_hardware_throttle == 1 then
-					B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],simDR_hardware_throttle_ratio[i],0,1.00,1)
-				else
-					B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],simDR_throttle_ratio[i],0,1.00,1)
-				end
+					manipulate_throttle_axis(i)
 			else
 			    B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],0,0,1.00,1)
 			end
@@ -1104,6 +1108,24 @@ function throttle_management()
 
 end
 
+
+
+function getUserThrottleTarget(engine_id)
+	if simDR_has_hardware_throttle == 1 then
+		return simDR_hardware_throttle_ratio[engine_id]
+	else
+		return simDR_throttle_ratio[engine_id]
+	end
+end
+
+function manipulate_throttle_axis(engine_id)
+	local throttleTarget=getUserThrottleTarget(engine_id)
+	if math.abs(lastUserThrottleTargets[engine_id]-throttleTarget)<0.01 then
+		return --no user movement since AT deactivated, just skip.
+	end
+	lastUserThrottleTargets[engine_id]=-2
+	B747DR_throttle[engine_id]=B747_interpolate_value(B747DR_throttle[engine_id],throttleTarget,0,1.00,1)
+end
 dofile("B747.42.xt.EEC.GE.lua")
 dofile("B747.42.xt.EEC.PW.lua")
 dofile("B747.42.xt.EEC.RR.lua")
@@ -1160,14 +1182,14 @@ function after_physics()
 	collectgarbage("collect")
 	if hasSimConfig()==false then return end
 	if debug_ecc>0 then return end
-    
+
 
     atmosphere(simDR_altitude, 0)
     flight_coefficients(simDR_acf_weight_total_kg, simDR_tas_pilot)
 
 	--fmsModules["data"] = json.decode(B747DR_FMSdata)
 	set_engines()
-	
+
 	--[[if string.len(B747DR_simconfig_data) > 1 then
 		set_engines()
 	end]]

@@ -438,9 +438,9 @@ end
 function B747_ap_TOGA_mode_beforeCMDhandler(phase, duration) end
 function B747_ap_TOGA_mode_afterCMDhandler(phase, duration)
 	if phase == 0 then
-		B747DR_ap_ias_mach_window_open = 1	
-        B747DR_autothrottle_active = 1	
-	end		
+		B747DR_ap_ias_mach_window_open = 1
+        B747DR_autothrottle_active = 1
+	end
 end
 
 
@@ -549,7 +549,7 @@ for i = 0, NUM_BTN_SW_COVERS-1 do
 end
 for i = 0, NUM_BTN_SW_COVERS-1 do
     run_after_time(B747_close_button_cover[i], 1.0)
-    
+
 end
 
 
@@ -608,8 +608,8 @@ function B747_elec_util_R_CMDhandler(phase, duration)
 end
 
 function B747_elec_battery_CMDhandler(phase, duration)
-    if phase == 0 then 
-        B747_button_switch_position_target[13] = 1.0 - B747_button_switch_position_target[13] 
+    if phase == 0 then
+        B747_button_switch_position_target[13] = 1.0 - B747_button_switch_position_target[13]
         simDR_radio_alt_DH_capt=-1
         simDR_radio_alt_DH_fo=-1
         B747DR_efis_baro_alt_ref_capt=-101
@@ -624,9 +624,9 @@ end
 function B747_elec_ext_pwr_1_CMDhandler(phase, duration)
     if phase == 0 then
         B747_button_switch_position_target[14] = 1
-	if B747DR_elec_ext_pwr1_available==1 then 
+	if B747DR_elec_ext_pwr1_available==1 then
 	  B747DR_elec_ext_pwr_1_switch_mode = 1.0 - B747DR_elec_ext_pwr_1_switch_mode
-	  
+
 	  B747DR_elec_apu_pwr_1_switch_mode = 0
 	end
     elseif phase == 1 then
@@ -640,7 +640,7 @@ end
 function B747_elec_ext_pwr_2_CMDhandler(phase, duration)
     if phase == 0 then
         B747_button_switch_position_target[15] = 1
-	if B747DR_elec_ext_pwr2_available==1 then 
+	if B747DR_elec_ext_pwr2_available==1 then
 	  B747DR_elec_ext_pwr_2_switch_mode = 1.0 - B747DR_elec_ext_pwr_2_switch_mode
 	  B747DR_elec_apu_pwr_2_switch_mode = 0
 	end
@@ -654,7 +654,7 @@ end
 function B747_elec_apu_gen_1_CMDhandler(phase, duration)
     if phase == 0 then
         B747_button_switch_position_target[16] = 1
-	if B747DR_elec_apu_pwr1_available==1 then 
+	if B747DR_elec_apu_pwr1_available==1 then
 	  B747DR_elec_apu_pwr_1_switch_mode = 1.0 - B747DR_elec_apu_pwr_1_switch_mode
 	  B747DR_elec_ext_pwr_1_switch_mode = 0
 	end
@@ -668,7 +668,7 @@ end
 function B747_elec_apu_gen_2_CMDhandler(phase, duration)
     if phase == 0 then
         B747_button_switch_position_target[17] = 1
-	if B747DR_elec_apu_pwr2_available==1 then 
+	if B747DR_elec_apu_pwr2_available==1 then
 	  B747DR_elec_apu_pwr_2_switch_mode = 1.0 - B747DR_elec_apu_pwr_2_switch_mode
 	  B747DR_elec_ext_pwr_2_switch_mode = 0
 	end
@@ -1240,19 +1240,19 @@ end
 
 function B747_flight_dir_switch_L_CMDhandler(phase, duration)
     if phase == 0 then
-	    
+
 	    ----- SWITCH IS SET TO "ON" POSITION
 		if simDR_all_wheels_on_ground == 1 then															-- ON THE GROUND
 			if simDR_autopilot_servos_on == 0 then														-- NO AUTOPIOT ENGAGED
 				if B747_toggle_switch_position_target[23] == 0.0 										-- LEFT FLIGHT DIRECTOR SWITCH IS OFF
 					and B747_toggle_switch_position_target[24] == 0.0 									-- RIGHT FLIGHT DIRECTOR SWITCH IS OFF
 				then
-					if B747DR_autopilot_TOGA_status == 0												-- TOGA LATERAL MODE IS OFF 
-					then										
+					if B747DR_autopilot_TOGA_status == 0												-- TOGA LATERAL MODE IS OFF
+					then
 						B747DR_autopilot_TOGA_status=1												-- ACTIVATE "TOGA" MODE
-					end		
+					end
 				end
-			end				
+			end
 		elseif simDR_all_wheels_on_ground == 0 then														-- IN FLIGHT
 			if simDR_autopilot_servos_on == 0 then														-- NO AUTOPIOT ENGAGED
 				if B747_toggle_switch_position_target[23] == 0.0 										-- LEFT FLIGHT DIRECTOR SWITCH IS OFF
@@ -1263,23 +1263,23 @@ function B747_flight_dir_switch_L_CMDhandler(phase, duration)
                     if math.abs(simDR_AHARS_roll_deg_pilot) < 5.0 then									-- BANK ANGLE LESS THAN 5 DEGREES
 						simCMD_autopilot_heading_mode:once()											-- ACTIVATE "HEADING HOLD" MODE
 					else
-					--	B747CMD_ap_att_mode:once()														-- ACTIVATE "ATT" MODE		
+					--	B747CMD_ap_att_mode:once()														-- ACTIVATE "ATT" MODE
                         B747DR_ap_ATT = simDR_AHARS_roll_deg_pilot
-					end		
+					end
 				end
-			end							
+			end
 		end
-		
-		
-		-- SET THE TOGGLE SWITCH ANIMATION POSITION		
+
+
+		-- SET THE TOGGLE SWITCH ANIMATION POSITION
 		B747_toggle_switch_position_target[23] = 1.0 - B747_toggle_switch_position_target[23]
 		if B747_toggle_switch_position_target[23] == 0.0 										-- LEFT FLIGHT DIRECTOR SWITCH IS OFF
 					and B747_toggle_switch_position_target[24] == 0.0 									-- RIGHT FLIGHT DIRECTOR SWITCH IS OFF
 				then
-                    B747DR_ap_lastCommand=simDRTime										
-                    B747DR_autopilot_TOGA_status=0   
+                    B747DR_ap_lastCommand=simDRTime
+                    B747DR_autopilot_TOGA_status=0
         end
-		
+
 		----- SWITCH IS SET TO "OFF" POSITION
 		--[[if B747_toggle_switch_position_target[23] == 0.0 												-- LEFT FLIGHT DIRECTOR SWITCH IS OFF
 			and B747_toggle_switch_position_target[24] == 0.0 											-- RIGHT FLIGHT DIRECTOR SWITCH IS OFF
@@ -1289,28 +1289,28 @@ function B747_flight_dir_switch_L_CMDhandler(phase, duration)
 				and B747DR_autopilot_cmd_R_mode == 0 													-- RIGHT CMD AP MODE IS "OFF"
 			then
             	B747CMD_ap_reset:once()
-            end			
+            end
 		end]]
-				
+
 	end
 end
 
 function B747_flight_dir_switch_R_CMDhandler(phase, duration)
     if phase == 0 then
-	    
+
 	    ----- SWITCH IS SET TO "ON" POSITION
 		if simDR_all_wheels_on_ground == 1 then															-- ON THE GROUND
 			if simDR_autopilot_servos_on == 0 then														-- NO AUTOPIOT ENGAGED
 				if B747_toggle_switch_position_target[23] == 0.0 										-- LEFT FLIGHT DIRECTOR SWITCH IS OFF
 					and B747_toggle_switch_position_target[24] == 0.0 									-- RIGHT FLIGHT DIRECTOR SWITCH IS OFF
 				then
-					if B747DR_autopilot_TOGA_status == 0										-- TOGA LATERAL MODE IS OFF 
-					then	
-                        B747DR_ap_lastCommand=simDRTime										
+					if B747DR_autopilot_TOGA_status == 0										-- TOGA LATERAL MODE IS OFF
+					then
+                        B747DR_ap_lastCommand=simDRTime
 						B747DR_autopilot_TOGA_status=1												-- ACTIVATE "TOGA" MODE
-					end		
+					end
 				end
-			end				
+			end
 		elseif simDR_all_wheels_on_ground == 0 then														-- IN FLIGHT
 			if simDR_autopilot_servos_on == 0 then														-- NO AUTOPIOT ENGAGED
 				if B747_toggle_switch_position_target[23] == 0.0 										-- LEFT FLIGHT DIRECTOR SWITCH IS OFF
@@ -1321,24 +1321,24 @@ function B747_flight_dir_switch_R_CMDhandler(phase, duration)
                     if math.abs(simDR_AHARS_roll_deg_pilot) < 5.0 then									-- BANK ANGLE LESS THAN 5 DEGREES
 						simCMD_autopilot_heading_mode:once()											-- ACTIVATE "HEADING HOLD" MODE
 					else
-						--B747CMD_ap_att_mode:once()														-- ACTIVATE "ATT" MODE		
+						--B747CMD_ap_att_mode:once()														-- ACTIVATE "ATT" MODE
                         B747DR_ap_ATT = simDR_AHARS_roll_deg_pilot
-					end		
+					end
 				end
-            
-			end							
+
+			end
 		end
-		
-		
+
+
 		-- SET THE TOGGLE SWITCH ANIMATION POSITION
 		B747_toggle_switch_position_target[24] = 1.0 - B747_toggle_switch_position_target[24]
 		if B747_toggle_switch_position_target[23] == 0.0 										-- LEFT FLIGHT DIRECTOR SWITCH IS OFF
 					and B747_toggle_switch_position_target[24] == 0.0 									-- RIGHT FLIGHT DIRECTOR SWITCH IS OFF
 				then
-                    B747DR_ap_lastCommand=simDRTime										
-                    B747DR_autopilot_TOGA_status=0   
+                    B747DR_ap_lastCommand=simDRTime
+                    B747DR_autopilot_TOGA_status=0
         end
-		
+
 		----- SWITCH IS SET TO "OFF" POSITION
 		--[[if B747_toggle_switch_position_target[23] == 0.0 												-- LEFT FLIGHT DIRECTOR SWITCH IS OFF
 			and B747_toggle_switch_position_target[24] == 0.0 											-- RIGHT FLIGHT DIRECTOR SWITCH IS OFF
@@ -1348,9 +1348,9 @@ function B747_flight_dir_switch_R_CMDhandler(phase, duration)
 				and B747DR_autopilot_cmd_R_mode == 0 													-- RIGHT CMD AP MODE IS "OFF"
 			then
             	B747CMD_ap_reset:once()
-            end			
+            end
 		end]]
-				
+
 	end
 end
 
@@ -1438,19 +1438,19 @@ function B747_autothrottle_arm_switch_CMDhandler(phase, duration)
     if phase == 0 then
         B747_toggle_switch_position_target[29] = 1.0 - B747_toggle_switch_position_target[29]
         B747DR_ap_autothrottle_armed = B747_toggle_switch_position_target[29]
-        
+
         if B747_toggle_switch_position_target[29] == 0 then
             if B747DR_ap_FMA_autothrottle_mode>0 then
                 print("B747_autothrottle_arm_switch_CMDhandler fail AT")
                 B747DR_autothrottle_fail=1
             end
 	     	if B747DR_autothrottle_active == 1 then
-	     		--simCMD_autopilot_autothrottle_off:once() 
+	     		--simCMD_autopilot_autothrottle_off:once()
                  B747DR_autothrottle_active=0
 	     	end
         else
             B747DR_autothrottle_fail=0
-	    end    
+	    end
     end
 end
 
@@ -1468,7 +1468,7 @@ function B747_autothrottle_disarm_CMDhandler(phase, duration)
         B747_toggle_switch_position_target[29] = 0.0
         B747DR_ap_autothrottle_armed = B747_toggle_switch_position_target[29]
          if B747DR_autothrottle_active == 1 then
-             --simCMD_autopilot_autothrottle_off:once() 
+             --simCMD_autopilot_autothrottle_off:once()
              B747DR_autothrottle_active=0
              B747DR_autothrottle_fail=1
          end
@@ -1484,18 +1484,18 @@ end
 
 
 function B747_sun_visor_up_down_capt_CMDhandler(phase, duration)
-    if phase == 0 then 
-        B747_toggle_switch_position_target[31] = 1.0 - B747_toggle_switch_position_target[31] 
+    if phase == 0 then
+        B747_toggle_switch_position_target[31] = 1.0 - B747_toggle_switch_position_target[31]
         if B747_toggle_switch_position_target[31]<0.1 then
             B747DR_sun_visor_left_right_capt_target=0.68
-        else  
+        else
             B747DR_sun_visor_left_right_capt_target=0.0
-        end    
+        end
 
     end
 end
 function B747_sun_visor_up_down_fo_CMDhandler(phase, duration)
-    if phase == 0 then 
+    if phase == 0 then
         B747_toggle_switch_position_target[32] = 1.0 - B747_toggle_switch_position_target[32]
         if B747_toggle_switch_position_target[32]<0.1 then
             B747DR_sun_visor_left_right_fo_target = 0.68
@@ -1536,12 +1536,12 @@ end
 
 
 function B747_ai_manip_quick_start_CMDhandler(phase, duration)
-	if phase == 0 then 
+	if phase == 0 then
 		B747_set_manip_CD()
 		B747_set_manip_ER()
 		B747_set_manip_all_modes()
-	end		
-end	
+	end
+end
 
 
 
@@ -1710,7 +1710,7 @@ B747CMD_engine_start_switch1 			= deferred_command("laminar/B747/toggle_switch/e
 B747CMD_engine_start_switch2 			= deferred_command("laminar/B747/toggle_switch/engine_start2", "Engine Start Switch 2", B747_engine_start_switch2_CMDhandler)
 B747CMD_engine_start_switch3 			= deferred_command("laminar/B747/toggle_switch/engine_start3", "Engine Start Switch 3", B747_engine_start_switch3_CMDhandler)
 B747CMD_engine_start_switch4 			= deferred_command("laminar/B747/toggle_switch/engine_start4", "Engine Start Switch 4", B747_engine_start_switch4_CMDhandler)
-		
+
 B747CMD_engine_start_switch1_off 		= deferred_command("laminar/B747/toggle_switch/engine_start1_off", "Engine Start Switch 1 Off", B747_engine_start_switch1_off_CMDhandler)
 B747CMD_engine_start_switch2_off 		= deferred_command("laminar/B747/toggle_switch/engine_start2_off", "Engine Start Switch 2 Off", B747_engine_start_switch2_off_CMDhandler)
 B747CMD_engine_start_switch3_off 		= deferred_command("laminar/B747/toggle_switch/engine_start3_off", "Engine Start Switch 3 Off", B747_engine_start_switch3_off_CMDhandler)
@@ -1789,14 +1789,14 @@ simCMDDClose[8]=find_command("sim/flight_controls/door_close_9")
 simCMDDClose[9]=find_command("sim/flight_controls/door_close_10")
 
 
--- function B747_open_door_CMDhandler(phase, duration) 
+-- function B747_open_door_CMDhandler(phase, duration)
 --   if phase==0 then
 --     for i = 0, 9 do
 --       simCMDDOpen[i]:once()
 --     end
 --   end
 -- end
--- 
+--
 -- function B747_close_door_CMDhandler (phase, duration)
 --   if phase==0 then
 --     for i = 0, 9 do
@@ -1837,7 +1837,7 @@ B747CMD_flight_dir_switch_R 			= deferred_command("laminar/B747/toggle_switch/fl
 B747CMD_autothrottle_arm_switch 		= deferred_command("laminar/B747/toggle_switch/autothrottle", "Autothrottle toggle Switch", B747_autothrottle_arm_switch_CMDhandler)
 B747CMD_autothrottle_arm            	= deferred_command("laminar/B747/authrottle_arm", "Autothrottle Arm", B747_autothrottle_arm_CMDhandler)
 B747CMD_autothrottle_disarm         	= deferred_command("laminar/B747/authrottle_disarm", "Autothrottle Disarm", B747_autothrottle_disarm_CMDhandler)
-    
+
 simCMD_autothrottle_on                  = replace_command("sim/autopilot/autothrottle_arm", B747_autothrottle_arm_CMDhandler)
 simCMD_autothrottle_off                 = wrap_command("sim/autopilot/autothrottle_off", B747_autothrottle_disarm_before_CMDhandler, B747_autothrottle_disarm_CMDhandler)
 simCMD_autothrottle_arm_switch 		= replace_command("sim/autopilot/autothrottle_toggle", B747_autothrottle_arm_switch_CMDhandler)
@@ -2002,7 +2002,7 @@ function B747_toggle_switch_animation()
         end
 
         B747DR_toggle_switch_position[i] = B747_set_animation_position(B747DR_toggle_switch_position[i], B747_toggle_switch_position_target[i], min, max, speed)
-        
+
     end
 
 end
@@ -2104,7 +2104,7 @@ function B747_set_manip_ER()
 	B747_button_switch_position_target[19] = 1
 	B747DR_button_switch_position[19] = 1
     B747_button_switch_position_target[20] = 1
-	B747DR_button_switch_position[20] = 1	
+	B747DR_button_switch_position[20] = 1
 	B747_button_switch_position_target[21] = 1
 	B747DR_button_switch_position[21] = 1
 	B747_button_switch_position_target[22] = 1
@@ -2166,15 +2166,15 @@ function B747_set_manip_ER()
 	B747_button_switch_position_target[67] = 1
 	B747DR_button_switch_position[67] = 1
 
-    -- YAW DAMPER    
+    -- YAW DAMPER
 	B747_button_switch_position_target[82] = 1
 	B747DR_button_switch_position[82] = 1
 	B747_button_switch_position_target[83] = 1
 	B747DR_button_switch_position[83] = 1
 
-     -- TEMPERATURE   
+     -- TEMPERATURE
  	B747_button_switch_position_target[37] = 1
-	B747DR_button_switch_position[83] = 1 
+	B747DR_button_switch_position[83] = 1
 
     -- BLEED AIR
 	B747_button_switch_position_target[75] = 1
@@ -2188,7 +2188,7 @@ function B747_set_manip_ER()
 	B747_button_switch_position_target[79] = 1
 	B747DR_button_switch_position[79] = 1
 	B747_button_switch_position_target[80] = 1
-	B747DR_button_switch_position[80] = 1   
+	B747DR_button_switch_position[80] = 1
 
     -- LIGHTS DIM
     if simDR_percent_lights_on > 0.1 then
@@ -2203,9 +2203,9 @@ end
 
 ----- SET STATE FOR ALL MODES -----------------------------------------------------------
 function B747_set_manip_all_modes()
-	
-	
-	
+
+
+
 	run_after_time(B747_flight_start_DeferredInit, 2.0)
 
     -- ELECTRONIC ENGINE CONTROL
@@ -2217,7 +2217,7 @@ function B747_set_manip_all_modes()
 	B747DR_button_switch_position[9] = 1
 	B747_button_switch_position_target[10] = 1
 	B747DR_button_switch_position[10] = 1
-	
+
     -- GENERATOR DRIVE DISC
 	B747_button_switch_position_target[26] = 0
 	B747DR_button_switch_position[26] = 1
@@ -2227,7 +2227,7 @@ function B747_set_manip_all_modes()
 	B747DR_button_switch_position[28] = 1
 	B747_button_switch_position_target[29] = 0
 	B747DR_button_switch_position[29] = 1
-	
+
 	B747DR_gen_drive_disc_status[0] = 0
 	B747DR_gen_drive_disc_status[1] = 0
 	B747DR_gen_drive_disc_status[2] = 0
@@ -2254,7 +2254,7 @@ function B747_flight_start_manip()
     if simDR_startup_running == 0 then
 	print("Cold and Dark Start")
         B747_set_manip_CD()
-        
+
 
     -- ENGINES RUNNING ------------------------------------------------------------------
     elseif simDR_startup_running == 1 then
@@ -2262,11 +2262,11 @@ function B747_flight_start_manip()
         B747_set_manip_ER()
 
     end
-    
+
 
     -- ALL MODES ------------------------------------------------------------------------
-    B747_set_manip_all_modes() 
-       
+    B747_set_manip_all_modes()
+
 
 end
 
@@ -2336,10 +2336,10 @@ function B747_interpolate_value(current_value, target, min, max, speed)--speed i
     --[[if math.abs(current_value-target) <0.01 then
       return target
     end]]
-  
+
     local change = ((max-min)/speed)*(SIM_PERIOD)
     newValue=current_value
-    
+
     if newValue<=target then
       newValue=newValue+change
       --print(current_value.." ->newValue<= "..newValue)
@@ -2370,8 +2370,8 @@ function B747_interpolate_value(current_value, target, min, max, speed)--speed i
       --else
       --  print(current_value.." ->newValue=== "..newValue)
       end
-  
-      
+
+
     end
     return newValue
   end
@@ -2389,10 +2389,8 @@ function B747_throttle_animation()
 
             B747DR_throttle_reversor[i]=B747_interpolate_value(B747DR_throttle_reversor[i],simDR_engine_throttle_rev[i],-1,0,1)
             B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],0,0,1,1)
-        else
+        elseif B747DR_throttle_reversor[i] < 0 then
             B747DR_throttle_reversor[i]=B747_interpolate_value(B747DR_throttle_reversor[i],0,-1,0,1)
-
-
             --B747DR_throttle[i]=simDR_engn_thro[i]--B747_interpolate_value(simDR_engn_thro[i],0,0,1,1)--simDR_engn_thro[i]
         end
     end
