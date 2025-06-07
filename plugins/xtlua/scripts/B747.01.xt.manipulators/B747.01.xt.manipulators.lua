@@ -128,7 +128,7 @@ B747DR_ap_autothrottle_armed        	= deferred_dataref("laminar/B747/autothrott
 --*************************************************************************************--
 --** 				            READ-ONLY CUSTOM DATAREFS               	         **--
 --*************************************************************************************--
-
+simDR_doors = find_dataref("sim/cockpit2/switches/door_open")
 B747DR_init_manip_CD                = deferred_dataref("laminar/B747/manip/init_CD", "number")
 simDR_percent_lights_on             = find_dataref("sim/graphics/scenery/percent_lights_on")
 B747DR_button_switch_cover_position = deferred_dataref("laminar/B747/button_switch_cover/position", "array[" .. tostring(NUM_BTN_SW_COVERS) .. "]")
@@ -2051,7 +2051,7 @@ function B747_set_manip_CD()
 		B747_button_switch_position_target[i] = 0
 		B747DR_button_switch_position[i] = 0
 	end
-
+	simDR_doors[9]=1.0
 	B747DR_elec_ext_pwr_1_switch_mode = 0
 	B747DR_elec_apu_pwr_1_switch_mode = 0
 

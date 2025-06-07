@@ -44,9 +44,9 @@ end
 function deferred_dataref(name,type,notifier)
 	--print("Deffereed dataref: "..name)
 	dref=XLuaCreateDataRef(name, type,"yes",notifier)
-	return wrap_dref_any(dref,type) 
+	return wrap_dref_any(dref,type)
 end
- 
+
 simDR_autopilot_servos_on = deferred_dataref("laminar/B747/autopilot/servos_on", "number")
 --custom ALT HOLD
 
@@ -256,17 +256,13 @@ B747CMD_ai_ap_quick_start				= deferred_command("laminar/B747/ai/autopilot_quick
 simDR_override_throttles = find_dataref("sim/operation/override/override_throttles")
 simDR_override_control_surfaces       = find_dataref("sim/operation/override/override_control_surfaces")
 simDR_override_steering               = find_dataref("sim/operation/override/override_wheel_steer")
+simDR_override_gpu               = find_dataref("sim/operation/override/override_GPU_volts")
+simDR_version=find_dataref("sim/version/xplane_internal_version")
 function aircraft_unload()
-    
+	if simDR_version>=120012 then
+    simDR_override_gpu = 0
+	end
     simDR_override_throttles = 0
     simDR_override_control_surfaces = 0
     simDR_override_steering=0
 end
-
-
-
-
-
-
-
-

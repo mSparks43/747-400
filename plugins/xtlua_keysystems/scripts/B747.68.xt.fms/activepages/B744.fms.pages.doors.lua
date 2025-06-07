@@ -5,6 +5,8 @@ registerFMCCommand("sim/flight_controls/door_open_1","OPEN DOOR 1")
 registerFMCCommand("sim/flight_controls/door_close_1","CLOSE DOOR 1")
 registerFMCCommand("sim/flight_controls/door_open_2","OPEN DOOR 2")
 registerFMCCommand("sim/flight_controls/door_close_2","CLOSE DOOR 2")
+registerFMCCommand("sim/flight_controls/door_open_10","OPEN DOOR 10")
+registerFMCCommand("sim/flight_controls/door_close_10","CLOSE DOOR 10")
 
 simDR_doors = find_dataref("sim/cockpit2/switches/door_open")
 
@@ -14,8 +16,8 @@ fmsPages["DOORS"].getPage=function(self,pgNo,fmsID)
 
     local lineA = "<OPEN                    "
     local lineB = "<OPEN                    "
-
-    if simDR_doors[1] == 1 then
+    local lineC = "<OPEN                    "
+    if simDR_doors[1] > 0 then
       lineA = "<CLOSE                   "
       fmsFunctionsDefs["DOORS"]["L1"]={"doCMD","sim/flight_controls/door_close_2"}
     else
@@ -23,14 +25,20 @@ fmsPages["DOORS"].getPage=function(self,pgNo,fmsID)
       fmsFunctionsDefs["DOORS"]["L1"]={"doCMD","sim/flight_controls/door_open_2"}
     end
 
-    if simDR_doors[0] == 1 then
+    if simDR_doors[0] > 0 then
       lineB = "<CLOSE                   "
       fmsFunctionsDefs["DOORS"]["L2"]={"doCMD","sim/flight_controls/door_close_1"}
       else
       lineB = "<OPEN                    "
       fmsFunctionsDefs["DOORS"]["L2"]={"doCMD","sim/flight_controls/door_open_1"}
     end
-
+    if simDR_doors[9] > 0  then
+      lineC = "<CLOSE                   "
+      fmsFunctionsDefs["DOORS"]["L3"]={"doCMD","sim/flight_controls/door_close_10"}
+      else
+      lineC = "<OPEN                    "
+      fmsFunctionsDefs["DOORS"]["L3"]={"doCMD","sim/flight_controls/door_open_10"}
+    end
     return {
       "     DOOR CONTROL       ",
       "                        ",
@@ -38,7 +46,7 @@ fmsPages["DOORS"].getPage=function(self,pgNo,fmsID)
       "                        ",
       lineB,
       "                        ",
-      "INOP                    ",
+      lineC,
       "                        ",
       "INOP                    ",
       "                        ",
@@ -48,10 +56,10 @@ fmsPages["DOORS"].getPage=function(self,pgNo,fmsID)
     }
 
   elseif pgNo == 2 then
-    
+
     fmsFunctionsDefs["DOORS"]["L1"]=nil
     fmsFunctionsDefs["DOORS"]["L2"]=nil
-    
+    fmsFunctionsDefs["DOORS"]["L3"]=nil
     return {
       "     Door Control       ",
       "                        ",
@@ -72,7 +80,7 @@ fmsPages["DOORS"].getPage=function(self,pgNo,fmsID)
 
     fmsFunctionsDefs["DOORS"]["L1"]=nil
     fmsFunctionsDefs["DOORS"]["L2"]=nil
-    
+    fmsFunctionsDefs["DOORS"]["L3"]=nil
     return {
       "     Door Control       ",
       "                        ",
@@ -88,7 +96,7 @@ fmsPages["DOORS"].getPage=function(self,pgNo,fmsID)
       "------------------------",
       "<INDEX       GND HANDLE>"
     }
-    
+
   end
 end
 
@@ -98,27 +106,31 @@ fmsPages["DOORS"].getSmallPage=function(self,pgNo,fmsID)
 
     local lineC = "                        "
     local lineD = "                        "
-
-    if simDR_doors[1] == 1 then
+    local lineE = "                        "
+    if simDR_doors[1] > 0 then
       lineC = "                 (OPENED)"
     else
       lineC = "                 (CLOSED)"
     end
 
-    if simDR_doors[0] == 1 then
+    if simDR_doors[0] > 0 then
       lineD = "                 (OPENED)"
     else
       lineD = "                 (CLOSED)"
     end
-
+    if simDR_doors[9] > 0 then
+      lineE = "                 (OPENED)"
+    else
+      lineE = "                 (CLOSED)"
+    end
     return{
       "                     1/3",
       "FWD L                   ",
       lineC,
       "Upper L                 ",
       lineD,
-      "FWD R                   ",
-      "                        ",
+      "Cockpit                 ",
+      lineE,
       "UPPER R                 ",
       "                        ",
       "FWD WING L              ",

@@ -156,8 +156,8 @@ function B747DR_gear_handle_DRhandler()
             B747DR_gear_handle = 2.0   -- DETENT (GEAR HANDLE "UP")
             simDR_gear_handle_down = 0
         end
-        
-        
+
+
     -- GEAR HANDLE LOCK IS ENGAGED
     else
 
@@ -169,8 +169,8 @@ function B747DR_gear_handle_DRhandler()
         end
 
     end
-    
-end    
+
+end
 
 
 
@@ -195,12 +195,12 @@ function B747CMD_gear_up_full_CMDhandler(phase, duration)
     if B747DR_gear_handle~=2 then
         runningGear=1 --up
     end
-end  
+end
 function B747CMD_gear_down_full_CMDhandler(phase, duration)
     if B747DR_gear_handle~=0 then
         runningGear=-1 --down
     end
-end  
+end
 function B747CMD_gear_off_CMDhandler(phase, duration)
     if B747DR_gear_handle~=1 then
         runningGear=2 --off
@@ -236,15 +236,15 @@ function runGear()
   --print("simDR_gear_handle_down "..simDR_gear_handle_down)
   if runningGear ==0 then return end
   if B747DR_gear_handle_detent < 0.037 then B747DR_gear_handle_detent=B747_animate_value(B747DR_gear_handle_detent,0.037,0,0.037,10) return end
-  if runningGear ==2 and (B747DR_gear_handle<1 or B747DR_gear_handle>1) then B747DR_gear_handle=B747_animate_value(B747DR_gear_handle,1,0,2,10) return end  
-  if runningGear ==1 and B747DR_gear_handle<2 then B747DR_gear_handle=B747_animate_value(B747DR_gear_handle,2,0,2,10) return end  
+  if runningGear ==2 and (B747DR_gear_handle<1 or B747DR_gear_handle>1) then B747DR_gear_handle=B747_animate_value(B747DR_gear_handle,1,0,2,10) return end
+  if runningGear ==1 and B747DR_gear_handle<2 then B747DR_gear_handle=B747_animate_value(B747DR_gear_handle,2,0,2,10) return end
   if runningGear ==-1 and B747DR_gear_handle>0 then B747DR_gear_handle=B747_animate_value(B747DR_gear_handle,0,0,2,10) return end
-  
+
   B747DR_gear_handle_detent=0
   runningGear=0
-  
-  
-end  
+
+
+end
 --*************************************************************************************--
 --** 				             X-PLANE COMMAND HANDLERS               	    	 **--
 --*************************************************************************************--
@@ -279,13 +279,13 @@ function sim_landing_gear_toggle_CMDhandler(phase, duration)
     if phase == 0 then
         if B747DR_gear_handle<1.5 and B747DR_gear_handle>0.5 then
             runningGear=-1
-        end 
+        end
         if B747DR_gear_handle<0.5 then
             runningGear=1
-        end  
+        end
         if B747DR_gear_handle>1.5 then
             runningGear=2
-        end  
+        end
     end
 end
 
@@ -293,7 +293,7 @@ end
     if phase == 0 then
         -- GEAR HANDLE LOCK IS DISENGAGED
         if B747_gear_handle_lock == 0 then
-	        
+
             if simDR_gear_deploy_ratio[0] >= 0.5
                     and simDR_gear_deploy_ratio[1] >= 0.5
                     and simDR_gear_deploy_ratio[2] >= 0.5
@@ -305,10 +305,10 @@ end
                 B747DR_gear_handle = 0.0
                 simDR_gear_handle_down = 1
             end
-            
+
         -- GEAR HANDLE LOCK IS ENGAGED
         else
-	        
+
             if simDR_gear_deploy_ratio[0] >= 0.5
                     and simDR_gear_deploy_ratio[1] >= 0.5
                     and simDR_gear_deploy_ratio[2] >= 0.5
@@ -319,7 +319,7 @@ end
                 B747DR_gear_handle = 0.0
                 simDR_gear_handle_down = 1
             end
-            
+
         end
     end
 end]]
@@ -371,7 +371,7 @@ function B747_autobrakes_sel_dial_up_CMDhandler(phase, duration)
         local simSwPos = 1
         if B747DR_autobrakes_sel_dial_pos == 0 then
             simSwPos = 0
-	    
+
         elseif B747DR_autobrakes_sel_dial_pos >= 3 then
             simSwPos = math.min(5, B747DR_autobrakes_sel_dial_pos - 1)
         end
@@ -382,10 +382,10 @@ function B747_autobrakes_sel_dial_up_CMDhandler(phase, duration)
 end
 function B747_autobrakes_sel_dial_dn_CMDhandler(phase, duration)
     if phase == 0 then
-      
-      
+
+
         B747DR_autobrakes_sel_dial_pos = math.max(B747DR_autobrakes_sel_dial_pos-1, 0)
-	
+
         local simSwPos = 1
         if B747DR_autobrakes_sel_dial_pos == 0 then
             simSwPos = 0
@@ -401,13 +401,13 @@ end
 local lastThrottle=0.0
 --Marauder28
 function autobrake_check()
-	
+
 	--TAKEOFF
 	if simDR_aircraft_on_ground == 0 and B747DR_autobrakes_sel_dial_pos == 0 then
 		print("TAKEOFF - Autobrakes OFF")
 		B747DR_autobrakes_sel_dial_pos = 1  --OFF
 	end
-	
+
 	--LANDING
     if simDR_aircraft_on_ground == 1 and B747DR_autobrakes_sel_dial_pos > 2 then
 --        print("simDR_autobrakes_switch is " .. simDR_autobrakes_switch .. "B747DR_autobrakes_sel_dial_pos is " ..B747DR_autobrakes_sel_dial_pos)
@@ -446,9 +446,9 @@ function B747_ai_gear_quick_start_CMDhandler(phase, duration)
     if phase == 0 then
 		B747_set_gear_all_modes()
 		B747_set_gear_CD()
-		B747_set_gear_ER()    
-	end    	
-end	
+		B747_set_gear_ER()
+	end
+end
 
 
 
@@ -793,14 +793,14 @@ function B747_brake_temp()
     end
 
     -- WING LEFT GEAR
-    
+
     if brakingRatio_L > 0 and tireSpeed[5] > 0 then
         local rate = brakingRatio_L * tireSpeed[5] * SIM_PERIOD * 130.0
         B747DR_brake_temp[0] = B747DR_brake_temp[0] + rate
         B747DR_brake_temp[1] = B747DR_brake_temp[0]
         B747DR_brake_temp[2] = B747DR_brake_temp[0]
         B747DR_brake_temp[3] = B747DR_brake_temp[0]
-        
+
     else
         local rate = 1.8 * SIM_PERIOD
         B747DR_brake_temp[0] = math.max(B747DR_brake_temp[0] - rate, simDR_OAT_degC)
@@ -847,66 +847,66 @@ end
 function B747_gear_EICAS_msg()
 
     -- AUTOBRAKES 1
-    if B747DR_autobrakes_sel_dial_pos == 2 then 
+    if B747DR_autobrakes_sel_dial_pos == 2 then
         B747DR_CAS_advisory_status[17] = 1
     else
         B747DR_CAS_advisory_status[17] = 0
     end
 
     --BRAKE TEMP
-    if excessiveBrakeTemp == 1 then 
+    if excessiveBrakeTemp == 1 then
         B747DR_CAS_advisory_status[46] = 1
     else
         B747DR_CAS_advisory_status[46] = 0
     end
 
-    if B747DR_autobrakes_sel_dial_pos == 3 then 
-        B747DR_CAS_memo_status[2] = 1 
+    if B747DR_autobrakes_sel_dial_pos == 3 then
+        B747DR_CAS_memo_status[2] = 1
     else
         B747DR_CAS_memo_status[2] = 0
     end
 
     -- AUTOBRAKES 2
-    
-    if B747DR_autobrakes_sel_dial_pos == 4 then 
+
+    if B747DR_autobrakes_sel_dial_pos == 4 then
         B747DR_CAS_memo_status[3] = 1
     else
         B747DR_CAS_memo_status[3] = 0
     end
 
     -- AUTOBRAKES 3
-   
-    if B747DR_autobrakes_sel_dial_pos == 5 then 
-        B747DR_CAS_memo_status[4] = 1 
+
+    if B747DR_autobrakes_sel_dial_pos == 5 then
+        B747DR_CAS_memo_status[4] = 1
     else
         B747DR_CAS_memo_status[4] = 0
     end
 
     -- AUTOBRAKES 4
-    
-    if B747DR_autobrakes_sel_dial_pos == 6 then 
-        B747DR_CAS_memo_status[5] = 1 
+
+    if B747DR_autobrakes_sel_dial_pos == 6 then
+        B747DR_CAS_memo_status[5] = 1
     else
         B747DR_CAS_memo_status[5] = 0
     end
 
     -- AUTOBRAKES MAX
-    
-    if B747DR_autobrakes_sel_dial_pos == 7 then 
+
+    if B747DR_autobrakes_sel_dial_pos == 7 then
         B747DR_CAS_memo_status[6] = 1
     else
         B747DR_CAS_memo_status[6] = 0
     end
 
     -- AUTOBRAKES RTO
-    
-    if B747DR_autobrakes_sel_dial_pos == 0 then 
+
+    if B747DR_autobrakes_sel_dial_pos == 0 and simDR_autobrakes_switch==0 then 
         B747DR_CAS_memo_status[7] = 1
     else
         B747DR_CAS_memo_status[7] = 0
     end
 
-    
+
 end
 
 
@@ -958,11 +958,11 @@ end
 
 ----- SET STATE TO ENGINES RUNNING ------------------------------------------------------
 function B747_set_gear_ER()
-  
+
 	simDR_gear_handle_down=1
 	B747DR_gear_handle = 0.0
 	--B747DR__gear_chocked=0.0
-	
+
 end
 
 
@@ -991,7 +991,7 @@ function B747_flight_start_gear()
     end
 
   if simDR_aircraft_on_ground==0 then runningGear=1 else runningGear=-1 end
-  
+
 
 end
 
@@ -1040,14 +1040,11 @@ function after_physics()
     B747_tire_pressures()
     runGear()
     B747_gear_monitor_AI()
-	
+
 	--Marauder28
 	--Set Autobrake status after takeoff & landing
 	autobrake_check()
-    
+
 end
 
 --function after_replay() end
-
-
-

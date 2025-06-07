@@ -57,7 +57,7 @@ function killMoves()
     if dX<-0.1 then simCMD_viewLEFT:stop() dX=0 end
     if dY>0.1 then simCMD_viewUP:stop() dY=0 end
     if dY<-0.1 then simCMD_viewDOWN:stop() dY=0 end
-    if dZ>0.1 then simCMD_viewBACK:stop() dZ=0 end 
+    if dZ>0.1 then simCMD_viewBACK:stop() dZ=0 end
     if dZ<-0.1 then simCMD_viewFWD:stop() dZ=0 end
 end
 function B747CMD_VR_stop_CMDhandler(phase, duration)
@@ -73,7 +73,7 @@ function B747CMD_VR_toPilot_CMDhandler(phase, duration)
   if phase ==0 then
     targetHotspot=pilotSeatHotspot
     movingtoTarget=true
-  elseif phase==2 then 
+  elseif phase==2 then
     --movingtoTarget=false
     --killMoves()
   end
@@ -82,7 +82,7 @@ function B747CMD_VR_toFMC_CMDhandler(phase, duration)
   if phase ==0 then
     targetHotspot=fmcLHotspot
     movingtoTarget=true
-  elseif phase==2 then 
+  elseif phase==2 then
     --movingtoTarget=false
     --killMoves()
   end
@@ -91,7 +91,7 @@ function B747CMD_VR_toMCP_CMDhandler(phase, duration)
   if phase ==0 then
     targetHotspot=mcpHotspot
     movingtoTarget=true
-  elseif phase==2 then 
+  elseif phase==2 then
     --movingtoTarget=false
     --killMoves()
   end
@@ -100,7 +100,7 @@ function B747CMD_VR_toOCP_CMDhandler(phase, duration)
   if phase ==0 then
     targetHotspot=ocpHotspot
     movingtoTarget=true
-  elseif phase==2 then 
+  elseif phase==2 then
     --movingtoTarget=false
     --killMoves()
   end
@@ -113,7 +113,7 @@ function B747CMD_VR_toDOC_CMDhandler(phase, duration)
     srcHotspot[2]=simDR_headZ
     targetHotspot=docHotspot
     movingtoTarget=true
-  elseif phase==2 then 
+  elseif phase==2 then
     --movingtoTarget=false
     --killMoves()
     targetHotspot=srcHotspot
@@ -134,14 +134,14 @@ prevCom=find_command("AutoATC/PrevCom")
 swapCom=find_command("AutoATC/swapFreq")
 
 function after_physics()
-  if movingtoTarget==false then 
-    
-    return 
+  if movingtoTarget==false then
+
+    return
   end
-  
+
   local diffX=targetHotspot[0]-simDR_headX
   nox=false
-  if diffX<-0.02 then 
+  if diffX<-0.02 then
     if dX>0.1 then dX=0 simCMD_viewRIGHT:stop()  end
     if dX>=0 then dX=-1 simCMD_viewLEFT:start()  end
   elseif diffX>0.02 then
@@ -157,7 +157,7 @@ function after_physics()
   if diffY<-0.02 then
     if dY>0.1 then dY=0 simCMD_viewUP:stop()  end
     if dY>=0 then dY=-1 simCMD_viewDOWN:start()  end
-  elseif diffY>0.02 then 
+  elseif diffY>0.02 then
      if dY<-0.1 then dY=0 simCMD_viewDOWN:stop()  end
      if dY<=0 then dY=1 simCMD_viewUP:start()  end
   else
@@ -167,10 +167,10 @@ function after_physics()
   end
   noz=false
   local diffZ=targetHotspot[2]-simDR_headZ
-  if diffZ<-0.02 then 
+  if diffZ<-0.02 then
     if dZ>0.1 then dZ=0 simCMD_viewBACK:stop()  end
     if dZ>=0 then dZ=-1 simCMD_viewFWD:start()  end
-  elseif diffZ>0.02 then 
+  elseif diffZ>0.02 then
     if dZ<-0.1 then dZ=0 simCMD_viewFWD:stop()  end
     if dZ<=0 then dZ=1 simCMD_viewBACK:start()  end
   else
@@ -187,9 +187,9 @@ function useNavCOM(direction,phase, duration)
   logPage=0
  --print(phase.." use COM "..direction)
  if phase==0 then
- if direction>0 then 
+ if direction>0 then
      nextCom:once()
-  elseif direction<0 then 
+  elseif direction<0 then
       prevCom:once()
   else
      swapCom:once()
@@ -216,23 +216,23 @@ simCMD_vs_press					= find_command("laminar/B747/autopilot/button_switch/vs_mode
 function useIAS(direction,phase, duration)
   --print(phase.." use useIAS "..direction)
   if phase==0 then
-    if direction<0 then 
+    if direction<0 then
       simCMD_airspeed_down:once()
-     elseif direction>0 then 
+     elseif direction>0 then
       simCMD_airspeed_up:once()
      else
       simCMD_airspeed_press:once()
      end
-    elseif phase==2 and direction==0 then 
+    elseif phase==2 and direction==0 then
       simCMD_airspeed_press:once()
     end
 end
 function useHDG(direction,phase, duration)
   --print(phase.." use useHDG "..direction)
   if phase==0 then
-    if direction<0 then 
+    if direction<0 then
       simCMD_heading_down:once()
-     elseif direction>0 then 
+     elseif direction>0 then
       simCMD_heading_up:once()
      else
       simCMD_heading_press:once()
@@ -243,32 +243,34 @@ end
 function useAlt(direction,phase, duration)
   --print(phase.." use useAlt "..direction)
   if phase==0 then
-    if direction<0 then 
+    if direction<0 then
       simCMD_altitude_down:once()
-     elseif direction>0 then 
+     elseif direction>0 then
       simCMD_altitude_up:once()
      else
       simCMD_altitude_press:once()
      end
-    elseif phase==2 and direction==0 then 
+    elseif phase==2 and direction==0 then
       simCMD_altitude_press:once()
     end
 end
 function useVS(direction,phase, duration)
   --print(phase.." use useAlt "..direction)
   if phase==0 then
-    if direction<0 then 
+    if direction<0 then
       simCMD_vs_down:once()
-     elseif direction>0 then 
+     elseif direction>0 then
       simCMD_vs_up:once()
      else
       simCMD_vs_press:once()
      end
     end
 end
-local hotspots={{-0.166,4.53,-26.1612,nil,useNavCOM,nil}
-,{-0.21,5.08,-26.38,useIAS,useHDG,nil}
-,{-0.02,5.08,-26.38,useVS,useAlt,nil}               
+local hotspots={{-0.166,4.53,-26.1612,useNavCOM,nil,nil}
+,{-0.21,5.08,-26.38,useIAS,nil,nil}
+,{-0.10,5.08,-26.38,useHDG,nil,nil}
+,{-0.03,5.08,-26.38,useVS,nil,nil}
+,{0.03,5.08,-26.38,useAlt,nil,nil}
 }
 --,{0.037,-0.201,-1.684,swapnav},{-0.037,-0.201,-1.684,swapcom}
 function closest_intercept(x1,y1,z1,x2,y2,z2,psi,pitch)
@@ -285,7 +287,7 @@ function closest_intercept(x1,y1,z1,x2,y2,z2,psi,pitch)
     px=(-math.sin(psiI*math.pi/180.0))*pdistance;
     pz=math.cos(psiI*math.pi/180.0)*pdistance;
     py=(-math.sin(pitchI*math.pi/180.0))*distance;
-    
+
     pdx=dx-px;
     pdy=dy-py;
     pdz=dz-pz;
@@ -301,14 +303,14 @@ function findHotSpot(dial)
   if is_vr==1 then pitch=pitch-20 end
   for i = 1, #hotspots do
       local thisHit=closest_intercept(simDR_headX,simDR_headY,simDR_headZ,hotspots[i][1],hotspots[i][2],hotspots[i][3],psi,pitch)
-      --print(i.."="..closest_intercept(simDR_headX,simDR_headY,simDR_headZ,hotspots[i][1],hotspots[i][2],hotspots[i][3],psi,pitch))
+      print(i.."="..closest_intercept(simDR_headX,simDR_headY,simDR_headZ,hotspots[i][1],hotspots[i][2],hotspots[i][3],psi,pitch))
       if thisHit< bestDist then
-          
+
           local reFunc=nil
           if dial==0 then
               reFunc=hotspots[i][4]
           elseif dial==1 then
-              reFunc=hotspots[i][5]    
+              reFunc=hotspots[i][5]
           else
               reFunc=hotspots[i][6]
           end
