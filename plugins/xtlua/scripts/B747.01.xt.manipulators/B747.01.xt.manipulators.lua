@@ -1435,6 +1435,7 @@ function B747_vor_adf_fo_switch_R_down_CMDhandler(phase, duration)
 end
 
 function B747_autothrottle_arm_switch_CMDhandler(phase, duration)
+    print("B747_autothrottle_arm_switch_CMDhandler phase"..phase)
     if phase == 0 then
         B747_toggle_switch_position_target[29] = 1.0 - B747_toggle_switch_position_target[29]
         B747DR_ap_autothrottle_armed = B747_toggle_switch_position_target[29]

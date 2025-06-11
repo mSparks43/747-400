@@ -207,10 +207,10 @@ fmsPages["VNAV"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be thi
 
       if(crzaltString ~= "*****" and crzaltString ~= nil and gwtk ~= nil) then
       
-        if(string.sub(fmsModules["data"]["crzalt"],1,2) == "FL") then
-          czak = string.sub(fmsModules["data"]["crzalt"],3)/10 --altitude in thousands of feet
+        if(string.sub(crzaltString,1,2) == "FL") then
+          czak = string.sub(crzaltString,3)/10 --altitude in thousands of feet
         else
-          czak = fmsModules["data"]["crzalt"]/1000 ----altitude in thousands of feet
+          czak = crzaltString/1000 ----altitude in thousands of feet
         end
         if((czak + 2) < maxA) then
           fmsModules["data"]["stepalt"] = "FL"..string.format("%03.0f",(czak+2)*10)
