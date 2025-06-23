@@ -970,7 +970,7 @@ function ap_pitch_assist()
     B747DR_pidPitchP=B747_rescale(3000,B747DR_pidPitchPL,40000,B747DR_pidPitchPH,B747DR_autopilot_altitude_ft_pfd)
     if B747DR_ap_AFDS_mode_box_status_pilot==1 or B747DR_ap_AFDS_mode_box_status_copilot==1 then
         B747DR_pidPitchI=B747DR_pidPitchP*0.1
-        print("pitching for change")
+        --print("pitching for change")
     else
         B747DR_pidPitchI=B747DR_pidPitchP
     end

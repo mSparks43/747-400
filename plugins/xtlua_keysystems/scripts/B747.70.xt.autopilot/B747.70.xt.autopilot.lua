@@ -1472,10 +1472,10 @@ function B747_ap_altitude_down_CMDhandler(phase, duration)
 		end
 	end
 end
-function B747CMD_ap_heading_up_CMDhandler(phase, duration)
+--[[function B747CMD_ap_heading_up_CMDhandler(phase, duration)
 end
 function B747CMD_ap_heading_down_CMDhandler(phase, duration)
-end
+end]]--
 
 --*************************************************************************************--
 --** 				            REPLACE X-PLANE COMMANDS                  	    	 **--
@@ -1494,8 +1494,8 @@ simCMD_ap_vertical_speed_down =
 	replace_command("sim/autopilot/vertical_speed_down", B747_ap_vertical_speed_down_CMDhandler)
 simCMD_ap_altitude_up = replace_command("sim/autopilot/altitude_up", B747_ap_altitude_up_CMDhandler)
 simCMD_ap_altitude_down = replace_command("sim/autopilot/altitude_down", B747_ap_altitude_down_CMDhandler)
-B747CMD_ap_heading_up = replace_command("laminar/B747/autopilot/heading_up", B747CMD_ap_heading_up_CMDhandler)
-B747CMD_ap_heading_down = replace_command("laminar/B747/autopilot/heading_down", B747CMD_ap_heading_down_CMDhandler)
+--B747CMD_ap_heading_up = replace_command("laminar/B747/autopilot/heading_up", B747CMD_ap_heading_up_CMDhandler)
+--B747CMD_ap_heading_down = replace_command("laminar/B747/autopilot/heading_down", B747CMD_ap_heading_down_CMDhandler)
 
 --*************************************************************************************--
 --** 				          WRAP X-PLANE COMMAND HANDLERS               	    	 **--
