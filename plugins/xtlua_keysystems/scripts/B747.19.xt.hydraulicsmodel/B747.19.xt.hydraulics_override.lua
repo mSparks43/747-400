@@ -928,7 +928,9 @@ function doTrim()
     if simDRTime-lastTrimmed<0.2 or simDR_radarAlt1<500 then return end
     lastTrimmed=simDRTime
     local ratioWindow=0.05
-    if B747DR_ap_FMA_active_pitch_mode==2 or simDR_autopilot_alt_hold_status==2 then
+    if simDR_autopilot_alt_hold_status==2 then
+        ratioWindow=0.005
+    elseif B747DR_ap_FMA_active_pitch_mode==2 then
         ratioWindow=0.01 --quick trim on glideslope and alt hold
     elseif B747DR_ap_FMA_active_pitch_mode==4 or B747DR_ap_FMA_active_pitch_mode==8 or (B747DR_ap_FMA_active_pitch_mode==6 and B747DR_ap_inVNAVdescent>0) then
         ratioWindow=0.2 --limit trim activity when pitching for speed
@@ -940,14 +942,16 @@ function doTrim()
     elseif simDR_ind_airspeed_kts_pilot<220 then
         trimrate=30
     end
-    if B747DR_sim_pitch_ratio>ratioWindow then
+    if B747DR_custom_pitch_ratio>ratioWindow then
         simDR_elevator_trim=B747_interpolate_value(simDR_elevator_trim,1.0,-1,1,trimrate)
         lastTrimmed=simDRTime+1 
         --print("up trim "..ratioWindow)
-    elseif B747DR_sim_pitch_ratio<-ratioWindow then
+    elseif B747DR_custom_pitch_ratio<-ratioWindow then
         simDR_elevator_trim=B747_interpolate_value(simDR_elevator_trim,-1.0,-1,1,trimrate) 
         lastTrimmed=simDRTime+1 
         --print("down trim "..ratioWindow)
+   -- else
+   --     print("no trim "..ratioWindow.." "..B747DR_sim_pitch_ratio)
     end
 
 end
