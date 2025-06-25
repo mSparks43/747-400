@@ -10,6 +10,21 @@ hasMobile=find_dataref("autoatc/hasMobile")
 cduDataref=find_dataref("autoatc/cdu")
 
 execLightDataref=find_dataref("sim/cockpit2/radios/indicators/fms_exec_light_copilot")
+
+com_freq_override = find_dataref ("autoatc/com_frequency_override")
+com_freq_hzRef = find_dataref ("autoatc/com_frequency_hz_833")
+com_stdby_freq_hz = find_dataref ("autoatc/com_standby_frequency_hz_833")
+simDR_com1_freq_hzRef = find_dataref ("sim/cockpit2/radios/actuators/com1_frequency_hz_833")
+simDR_com1_stdby_freq_hz = find_dataref ("sim/cockpit2/radios/actuators/com1_standby_frequency_hz_833")
+simDR_com2_freq_hzRef = find_dataref ("sim/cockpit2/radios/actuators/com2_frequency_hz_833")
+simDR_com2_stdby_freq_hz = find_dataref ("sim/cockpit2/radios/actuators/com2_standby_frequency_hz_833")
+B747DR_rtp_L_vhf_L_status           = find_dataref("laminar/B747/comm/rtp_L/vhf_L_status")
+B747DR_rtp_L_vhf_R_status           = find_dataref("laminar/B747/comm/rtp_L/vhf_R_status")
+B747DR_ap_L_vhf_L_xmt_status       = find_dataref("laminar/B747/ap_L/vhf_L/xmt_status")
+B747DR_ap_L_vhf_R_xmt_status       = find_dataref("laminar/B747/ap_L/vhf_R/xmt_status")
+B747DR_ap_L_flt_xmt_status         = find_dataref("laminar/B747/ap_L/flt/xmt_status")
+B747DR_ap_toggle_switch_pos         = find_dataref("laminar/B747/ap/toggle_sw_pos")
+comChannel = find_dataref("autoatc/comChannel")
 wasOnline=false
 local lastSend=0
 function getDefaultCycle()
@@ -291,10 +306,95 @@ function readyCDU()
   return
 end
 
+local last_sim_com=0
+local last_sim_com_stndby=0
+local last_autoatc_com=0
+local last_autoatc_com_stndby=0
+function checkFrequencies()
+
+  
+  local active_com_freq=simDR_com1_freq_hzRef
+  local active_com_stdby_freq=simDR_com1_stdby_freq_hz
+  local activecom1=true
+  if B747DR_rtp_L_vhf_L_status ==1 then 
+    activecom1=true
+  elseif B747DR_rtp_L_vhf_R_status==1 then
+    activecom1=false
+    active_com_freq=simDR_com2_freq_hzRef
+    active_com_stdby_freq=simDR_com2_stdby_freq_hz
+  else
+    return
+  end
+
+  if B747DR_ap_toggle_switch_pos[0]<-0.5 then
+    print("INT mic")
+    B747DR_ap_L_vhf_L_xmt_status       = 0
+    B747DR_ap_L_vhf_R_xmt_status       = 0
+    B747DR_ap_L_flt_xmt_status         = 1
+  elseif B747DR_ap_toggle_switch_pos[0]>0.5 then
+    print("RT mic")
+    if activecom1 then
+      B747DR_ap_L_vhf_L_xmt_status       = 1
+      B747DR_ap_L_vhf_R_xmt_status       = 0
+    else
+      B747DR_ap_L_vhf_L_xmt_status       = 0
+      B747DR_ap_L_vhf_R_xmt_status       = 1
+    end
+    B747DR_ap_L_flt_xmt_status         = 0
+  end
+  if B747DR_ap_L_vhf_L_xmt_status==1 or B747DR_ap_L_vhf_R_xmt_status==1 then
+    comChannel=0
+  elseif B747DR_ap_L_flt_xmt_status==1 then
+    comChannel=1
+  end
+
+  --active frequencies
+  if last_sim_com ~= active_com_freq then --sim freq changed
+    print("active sim freq changed")
+    com_freq_hzRef = active_com_freq
+    last_sim_com = active_com_freq
+    last_autoatc_com = active_com_freq
+  elseif last_autoatc_com ~= com_freq_hzRef then --autoatc freq changed
+     print("active autoatc freq changed")
+    if activecom1 then
+      simDR_com1_freq_hzRef = com_freq_hzRef
+      last_sim_com = simDR_com1_freq_hzRef
+      last_autoatc_com = simDR_com1_freq_hzRef
+    else
+      simDR_com2_freq_hzRef = com_freq_hzRef
+      last_sim_com = simDR_com2_freq_hzRef
+      last_autoatc_com = simDR_com2_freq_hzRef
+    end
+  end
+
+  --standby frequencies
+  if last_sim_com_stndby ~= active_com_stdby_freq then --sim freq changed
+    print("standby sim freq changed")
+    com_stdby_freq_hz = active_com_stdby_freq
+    last_sim_com_stndby = active_com_stdby_freq
+    last_autoatc_com_stndby = active_com_stdby_freq
+  elseif last_autoatc_com_stndby ~= com_stdby_freq_hz then --autoatc freq changed
+    print("standby autoatc freq changed")
+    if activecom1 then
+      simDR_com1_stdby_freq_hz = com_stdby_freq_hz
+      last_sim_com_stndby = simDR_com1_stdby_freq_hz
+      last_autoatc_com_stndby = simDR_com1_stdby_freq_hz
+    else
+      simDR_com2_stdby_freq_hz = com_stdby_freq_hz
+      last_sim_com_stndby = simDR_com2_stdby_freq_hz
+      last_autoatc_com_stndby = simDR_com2_stdby_freq_hz
+    end
+  end
+
+end
+
 function updateAutoATCCDU()
   
   if acarsSystem.provider.online()==false then return end
+  com_freq_override = 1
+  checkFrequencies()
   if hasMobile~=1 then wasOnline=false cduDataref="{}" return end
+  
   if wasOnline==false then
     if is_timer_scheduled(readyCDU)==false then run_after_time(readyCDU,5) end
     cduDataref="{}"

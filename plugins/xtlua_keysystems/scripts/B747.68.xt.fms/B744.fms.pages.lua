@@ -20,9 +20,9 @@ B747DR_fmc_spill_lights		= deferred_dataref("laminar/B747/fmc/spill_lights", "nu
 B747DR_fmc_cockpit_seats_hide	= deferred_dataref("laminar/B747/fmc/cockpit_seats_hide", "number")
 --silvereagle end
 
-acarsOnlineDataref=find_dataref("autoatc/acars/online")
-B747DR_acarsProvider						= deferred_dataref("laminar/B747/acars/systemProvider", "number")
-B747DR_acars=find_dataref("laminar/B747/comm/acars")
+acarsOnlineDataref = find_dataref("autoatc/acars/online")
+B747DR_acarsProvider = deferred_dataref("laminar/B747/acars/systemProvider", "number")
+B747DR_acars = find_dataref("laminar/B747/comm/acars")
 fmsFunctions={}
 dofile("acars/acars.lua")
 
