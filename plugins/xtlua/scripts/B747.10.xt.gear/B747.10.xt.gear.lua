@@ -90,8 +90,11 @@ simDR_OAT_degC              = find_dataref("sim/cockpit2/temperature/outside_air
 simDR_tire_rot_speed        = find_dataref("sim/flightmodel2/gear/tire_rotation_speed_rad_sec")
 B747DR_parking_brake_ratio  = find_dataref("laminar/B747/flt_ctrls/parking_brake_ratio")
 simDR_parking_brake_ratio   = find_dataref("sim/cockpit2/controls/parking_brake_ratio")
+simDR_brake_override= find_dataref("sim/operation/override/override_toe_brakes")
+simDR_brake_sweep= find_dataref("sim/cockpit2/controls/wingsweep_ratio")
 simDR_left_brake_ratio      = find_dataref("sim/cockpit2/controls/left_brake_ratio")
 simDR_right_brake_ratio     = find_dataref("sim/cockpit2/controls/right_brake_ratio")
+
 simDR_prop_mode                 = find_dataref("sim/cockpit2/engine/actuators/prop_mode")
 simDR_left_brake_fail     = find_dataref("sim/operation/failures/rel_lbrakes")--6 = inoperative
 simDR_right_brake_fail     = find_dataref("sim/operation/failures/rel_rbrakes")--6 = inoperative
@@ -722,6 +725,16 @@ end
 
 local excessiveBrakeTemp=0
 
+local lastWingsweep=0
+function B747_brakes_from_wingsweep()
+
+    if simDR_brake_sweep==lastWingsweep then return end
+    simDR_brake_override=1
+    lastWingsweep=simDR_brake_sweep
+    simDR_left_brake_ratio  = simDR_brake_sweep
+    simDR_right_brake_ratio = simDR_brake_sweep
+end
+
 function B747_brake_temp()
 
     -- DATAREF INDEXES SAME AS TIRE PRESSURE
@@ -1037,6 +1050,7 @@ function after_physics()
     B747_gear_EICAS_msg()
 
     B747_brake_temp()
+    B747_brakes_from_wingsweep()
     B747_tire_pressures()
     runGear()
     B747_gear_monitor_AI()
