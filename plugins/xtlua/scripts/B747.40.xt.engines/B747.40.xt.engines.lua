@@ -534,7 +534,8 @@ end
 
 
 
-function B747_engine_TOGA_power_CMDhandler(phase, duration) 
+function B747_engine_TOGA_power_CMDhandler(phase, duration)
+     
     callEngineReverse[0]=0
     callEngineReverse[1]=0
     callEngineReverse[2]=0

@@ -547,6 +547,7 @@ function B747_ap_thrust_mode_CMDhandler(phase, duration) -- INOP, NO CORRESPONDI
 end
 
 function B747_ap_switch_speed_mode_CMDhandler(phase, duration)
+	print("B747_ap_switch_speed_mode_CMDhandler "..phase.." "..duration)
 	if phase == 0 then
 		B747CMD_fdr_log_spd:once()
 		B747_ap_button_switch_position_target[1] = 1 -- SET THE SPEED SWITCH ANIMATION TO "IN"

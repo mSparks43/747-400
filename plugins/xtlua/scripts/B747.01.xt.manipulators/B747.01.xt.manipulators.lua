@@ -193,7 +193,6 @@ B747DR_ovhd_map_light_x_fo          = deferred_dataref("laminar/B747/misc/ovhd_m
 B747DR_ovhd_map_light_y_fo          = deferred_dataref("laminar/B747/misc/ovhd_map_light/y_axis/fo", "number", B747_ovhd_map_light_y_fo_DRhandler)
 
 
-
 --*************************************************************************************--
 --** 				              FIND CUSTOM COMMANDS                   	    	 **--
 --*************************************************************************************--
@@ -435,8 +434,11 @@ end
 
 
 
-function B747_ap_TOGA_mode_beforeCMDhandler(phase, duration) end
+function B747_ap_TOGA_mode_beforeCMDhandler(phase, duration)
+    print("B747_ap_TOGA_mode_beforeCMDhandler "..phase.." "..duration)
+end
 function B747_ap_TOGA_mode_afterCMDhandler(phase, duration)
+    print("B747_ap_TOGA_mode_afterCMDhandler "..phase.." "..duration)
 	if phase == 0 then
 		B747DR_ap_ias_mach_window_open = 1
         B747DR_autothrottle_active = 1

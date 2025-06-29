@@ -1144,13 +1144,19 @@ function B747_ap_L_app_mkr_audio_sel_switch_CMDhandler(phase, duration)
         end
     end
 end
-
+function clear_PTT()
+    B747_ap_toggle_switch_position_target[0] = 0
+end
 function B747_ap_L_ptt_sel_switch_up_CMDhandler(phase, duration)
     print("B747_ap_L_ptt_sel_switch_up_CMDhandler "..phase)
-    if phase == 0 then
+    if phase <= 1 then
         --if B747_ap_toggle_switch_position_target[0] == 0 then
             B747_ap_toggle_switch_position_target[0] = 1
        --end
+       if is_timer_scheduled(clear_PTT) then
+        stop_timer(clear_PTT)
+       end
+       run_after_time(clear_PTT,0.5)
     elseif phase == 2 then
         B747_ap_toggle_switch_position_target[0] = 0
     end
@@ -1158,10 +1164,14 @@ end
 
 function B747_ap_L_ptt_sel_switch_dn_CMDhandler(phase, duration)
     print("B747_ap_L_ptt_sel_switch_dn_CMDhandler "..phase)
-    if phase == 0 then
+    if phase <= 1 then
         --if B747_ap_toggle_switch_position_target[0] == 0 then
             B747_ap_toggle_switch_position_target[0] = -1
         --end
+       if is_timer_scheduled(clear_PTT) then
+        stop_timer(clear_PTT)
+       end
+       run_after_time(clear_PTT,0.5)
     elseif phase == 2 then
         B747_ap_toggle_switch_position_target[0] = 0
     end
