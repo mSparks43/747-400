@@ -2714,9 +2714,39 @@ function ToggleCrossFeedsOverrides()
     B747CMD_fuel_xfeed_vlv_1:once()
     B747CMD_fuel_xfeed_vlv_4:once()
 end
-
+local lastFuelHelper=0
 function tank_helper()
-    fob = simDR_fuel_tank_weight_kg[0] + simDR_fuel_tank_weight_kg[1] + simDR_fuel_tank_weight_kg[2] + simDR_fuel_tank_weight_kg[3] + simDR_fuel_tank_weight_kg[4] + simDR_fuel_tank_weight_kg[5] + simDR_fuel_tank_weight_kg[6] + simDR_fuel_tank_weight_kg[7]
+    --if simDR_all_wheels_on_ground == 1 then return end
+    local diff=simDR_time_now-lastFuelHelper
+    if diff<1 then return end
+    lastFuelHelper=simDR_time_now
+    local needsTankEng=false
+
+    if ((simDR_fuel_tank_weight_kg[2] <= simDR_fuel_tank_weight_kg[1]) or (simDR_fuel_tank_weight_kg[3] <= simDR_fuel_tank_weight_kg[4]))
+        then
+        needsTankEng=true
+    end
+
+    --if needsTankEng and fuel_tankToEngine==1 then return end
+    --if not needsTankEng and fuel_tankToEngine==0 then return end
+    
+    if needsTankEng then
+        if B747DR_button_switch_position[64] > 0.95 then B747CMD_fuel_overd_pump_fwd_2:once() return end
+        if B747DR_button_switch_position[65] > 0.95 then B747CMD_fuel_overd_pump_fwd_3:once() return end
+        if B747DR_button_switch_position[66] > 0.95 then B747CMD_fuel_overd_pump_aft_2:once() return end
+        if B747DR_button_switch_position[67] > 0.95 then B747CMD_fuel_overd_pump_aft_3:once() return end  
+        if B747DR_button_switch_position[48] > 0.95 then B747CMD_fuel_xfeed_vlv_1:once() return end
+        if B747DR_button_switch_position[51] > 0.95 then B747CMD_fuel_xfeed_vlv_4:once() return end
+    else
+        if B747DR_button_switch_position[64] < 0.05 then B747CMD_fuel_overd_pump_fwd_2:once() return end
+        if B747DR_button_switch_position[65] < 0.05 then B747CMD_fuel_overd_pump_fwd_3:once() return end
+        if B747DR_button_switch_position[66] < 0.05 then B747CMD_fuel_overd_pump_aft_2:once() return end
+        if B747DR_button_switch_position[67] < 0.05 then B747CMD_fuel_overd_pump_aft_3:once() return end
+        if B747DR_button_switch_position[48] < 0.05 then B747CMD_fuel_xfeed_vlv_1:once() return end
+        if B747DR_button_switch_position[51] < 0.05 then B747CMD_fuel_xfeed_vlv_4:once() return end
+        
+    end
+    --[[fob = simDR_fuel_tank_weight_kg[0] + simDR_fuel_tank_weight_kg[1] + simDR_fuel_tank_weight_kg[2] + simDR_fuel_tank_weight_kg[3] + simDR_fuel_tank_weight_kg[4] + simDR_fuel_tank_weight_kg[5] + simDR_fuel_tank_weight_kg[6] + simDR_fuel_tank_weight_kg[7]
     fob = math.floor(fob * 2.2046)
 
     -- if have fuel and all crossfeeds are off, then turn em om
@@ -2738,7 +2768,7 @@ function tank_helper()
                 ToggleCrossFeedsOverrides()
             end
         end
-    end
+    end]]--
 
 end
 
