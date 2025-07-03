@@ -10,8 +10,10 @@ hasMobile=find_dataref("autoatc/hasMobile")
 cduDataref=find_dataref("autoatc/cdu")
 
 execLightDataref=find_dataref("sim/cockpit2/radios/indicators/fms_exec_light_copilot")
-
+com_power = find_dataref ("autoatc/com_power")
 com_freq_override = find_dataref ("autoatc/com_frequency_override")
+simDR_com1_power = find_dataref ("sim/cockpit2/radios/actuators/com1_power")
+simDR_com2_power = find_dataref ("sim/cockpit2/radios/actuators/com2_power")
 com_freq_hzRef = find_dataref ("autoatc/com_frequency_hz_833")
 com_stdby_freq_hz = find_dataref ("autoatc/com_standby_frequency_hz_833")
 simDR_com1_freq_hzRef = find_dataref ("sim/cockpit2/radios/actuators/com1_frequency_hz_833")
@@ -325,7 +327,14 @@ function checkFrequencies()
   else
     return
   end
-
+  --power
+  if activecom1 and simDR_com1_power==1 then 
+    com_power=1
+  elseif not activecom1 and simDR_com2_power==1 then 
+    com_power=1
+  else
+    com_power=0
+  end
   if B747DR_ap_toggle_switch_pos[0]<-0.5 then
     print("INT mic")
     B747DR_ap_L_vhf_L_xmt_status       = 0
