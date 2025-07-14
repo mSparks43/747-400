@@ -289,6 +289,7 @@ B747DR_target_descentSpeed = deferred_dataref("laminar/B747/autopilot/ap_monitor
 B747DR_descentSpeedGradient = deferred_dataref("laminar/B747/autopilot/ap_monitor/descentSpeedGradient", "number")
 B747DR_switchingIASMode = deferred_dataref("laminar/B747/autopilot/ap_monitor/switchingIASMode", "number")
 B747DR_fmstargetIndex = deferred_dataref("laminar/B747/autopilot/ap_monitor/fmstargetIndex", "number")
+B747DR_fmstargetDistance           = deferred_dataref("laminar/B747/autopilot/ap_monitor/fmstargetDistance", "number")
 B747DR_fmscurrentIndex = deferred_dataref("laminar/B747/autopilot/ap_monitor/fmscurrentIndex", "number")
 B747DR_mcp_hold = deferred_dataref("laminar/B747/autopilot/ap_monitor/mcp_hold", "number")
 B747DR_mcp_hold_pressed = deferred_dataref("laminar/B747/autopilot/ap_monitor/mcp_hold_pressed", "number")
@@ -2074,6 +2075,7 @@ function setDistances(fmsO)
 				B747BR_tocLong = iLong + (eLong - iLong) * legFrac
 			end
 		end
+		
 		dtoAirport = getDistance(fmsO[i][5], fmsO[i][6], fmsO[endI][5], fmsO[endI][6])
 		--print("i=".. i .." B747DR_fmscurrentIndex="..B747DR_fmscurrentIndex .." speed="..simDR_groundspeed .. " distance="..totalDistance.." dtoAirport="..dtoAirport.. " ".. fmsO[i][5].." ".. fmsO[i][6].." ".. fmsO[i+1][5].." ".. fmsO[i+1][6])
 		if dtoAirport < 10 then
@@ -2090,8 +2092,7 @@ function setDistances(fmsO)
 	B747BR_nextDistanceInFeet = nextDistanceInFeet
 	local cruiseTOD = ((B747BR_cruiseAlt - fmsO[eod][3]) / 100) / 2.9
 	local currentTOD = ((simDR_pressureAlt1 - fmsO[eod][3]) / 100) / 2.9
-	local glideAlt= totalDistance*290 +fmsO[eod][3]
-	B747BR_fpe	= simDR_pressureAlt1-glideAlt
+	
 	B747BR_tod = cruiseTOD
 end
 
@@ -2308,7 +2309,7 @@ function B747_ap_appr_mode()
 
 			end
 		elseif B747DR_ap_approach_mode == 1 then --WANT APP
-			if simDR_autopilot_gs_status == 0 then
+			if simDR_autopilot_gs_status == 0 and simDR_radarAlt1 < 3500 then
 				print("simCMD_autopilot_appr_mode in B747DR_ap_approach_mode=1")
 				--simCMD_autopilot_appr_mode:once() --ACTIVATE APP
 				simDR_autopilot_nav_status=1

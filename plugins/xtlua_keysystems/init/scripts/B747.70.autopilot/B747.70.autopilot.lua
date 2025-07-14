@@ -209,6 +209,7 @@ B747DR_target_descentSpeed      = deferred_dataref("laminar/B747/autopilot/ap_mo
 B747DR_descentSpeedGradient     = deferred_dataref("laminar/B747/autopilot/ap_monitor/descentSpeedGradient", "number")
 B747DR_switchingIASMode         = deferred_dataref("laminar/B747/autopilot/ap_monitor/switchingIASMode", "number")
 B747DR_fmstargetIndex           = deferred_dataref("laminar/B747/autopilot/ap_monitor/fmstargetIndex", "number")
+B747DR_fmstargetDistance           = deferred_dataref("laminar/B747/autopilot/ap_monitor/fmstargetDistance", "number")
 B747DR_fmscurrentIndex          = deferred_dataref("laminar/B747/autopilot/ap_monitor/fmscurrentIndex", "number")
 B747DR_mcp_hold                 = deferred_dataref("laminar/B747/autopilot/ap_monitor/mcp_hold", "number")
 B747DR_mcp_hold_pressed                 = deferred_dataref("laminar/B747/autopilot/ap_monitor/mcp_hold_pressed", "number")

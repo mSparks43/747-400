@@ -47,14 +47,24 @@ function deceleratedDesent(targetvspeed)
 end
 function setDescentVSpeed()
 	local fmsO=getFMS()
+  if B747DR_ap_inVNAVdescent==0 then
+    B747DR_ap_inVNAVdescent=1
+  end
+  local glideAlt= B747DR_fmstargetDistance*290 +fmsO[B747DR_fmstargetIndex][3]
+	B747BR_fpe	= simDR_pressureAlt1-glideAlt
   if simDR_autopilot_altitude_ft+600 > simDR_pressureAlt1 then return end --dont set fpm near hold alt  
-  local distanceNM=getDistance(simDR_latitude,simDR_longitude,fmsO[B747DR_fmstargetIndex][5],fmsO[B747DR_fmstargetIndex][6]) --B747BR_nextDistanceInFeet/6076.12
+  local distanceNM=B747DR_fmstargetDistance--getDistance(simDR_latitude,simDR_longitude,fmsO[B747DR_fmstargetIndex][5],fmsO[B747DR_fmstargetIndex][6]) --B747BR_nextDistanceInFeet/6076.12
+  
+  
   local headingDiff=getHeadingDifference(getHeading(simDR_latitude,simDR_longitude,fmsO[B747DR_fmstargetIndex][5],fmsO[B747DR_fmstargetIndex][6]), simDR_AHARS_heading_deg_pilot)
   print("headingDiff="..headingDiff)
-  if distanceNM>20 or math.abs(
+  if distanceNM<1 then
+    distanceNM=1
+  end
+  --[[if distanceNM>20 or math.abs(
     getHeadingDifference(
       getHeading(simDR_latitude,simDR_longitude,fmsO[B747DR_fmstargetIndex][5],fmsO[B747DR_fmstargetIndex][6]), simDR_AHARS_heading_deg_pilot))>20 
-      then distanceNM=B747BR_totalDistance end
+      then distanceNM=B747BR_totalDistance end]]--
   local nextDistanceInFeet=distanceNM*6076.12
   local time=distanceNM*30.8666/(simDR_groundspeed) --time in minutes, gs in m/s....
   local early=100
@@ -65,7 +75,7 @@ function setDescentVSpeed()
   end
   local vdiff=B747DR_ap_vnav_target_alt-simDR_pressureAlt1-early --to be negative
   local vspeed=vdiff/time
-  print("speed=".. simDR_groundspeed .. " distance=".. distanceNM .. " vspeed=" .. vspeed .. " vdiff=" .. vdiff .. " time=" .. time)
+  print("speed=".. simDR_groundspeed .. " distance=".. distanceNM .. " vspeed=" .. vspeed .. " vdiff=" .. vdiff .. " time=" .. time.. " B747DR_ap_vnav_target_alt=" .. B747DR_ap_vnav_target_alt)
 		  --speed=89.32039642334 distance=2.9459299767094vspeed=-6559410.6729958
   B747DR_ap_vb = math.atan2(vdiff,nextDistanceInFeet)*-57.2958
   if vspeed<-2500 then vspeed=-2500 end

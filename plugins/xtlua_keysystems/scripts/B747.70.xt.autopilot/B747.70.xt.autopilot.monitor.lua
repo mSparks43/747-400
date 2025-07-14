@@ -33,28 +33,31 @@ function VNAV_NEXT_ALT(numAPengaged,fms)
     --print("FMS ="..fmsJSON)
     for i=1,table.getn(fms),1 do
       --print("i="..i.." began="..tostring(began))
-    if fms[i][10]==true then
-        began=true
-        currentIndex=i
-        local nextDistance=getDistance(simDR_latitude,simDR_longitude,fms[i][5],fms[i][6])
-        if nextDistance>dist_to_TOD and dist_to_TOD>0 and B747DR_ap_inVNAVdescent==0 and B747BR_cruiseAlt>0 then
-          targetAlt=B747BR_cruiseAlt
-          targetIndex=i
-          break
+        if fms[i][10]==true then
+            began=true
+            currentIndex=i
+            local nextDistance=getDistance(simDR_latitude,simDR_longitude,fms[i][5],fms[i][6])
+            B747DR_fmstargetDistance=nextDistance
+            if nextDistance>dist_to_TOD and dist_to_TOD>0 and B747DR_ap_inVNAVdescent==0 and B747BR_cruiseAlt>0 then
+            targetAlt=B747BR_cruiseAlt
+            targetIndex=i
+            break
+            end
+            if dist_to_TOD<0 and fms[i][9]>0 and fms[i][9]<lowerAlt and fms[i][2] ~= 1 and numAPengaged>0 then targetAlt=fms[i][9] targetIndex=i break end
+        elseif began==true then
+            local nextDistance=getDistance(simDR_latitude,simDR_longitude,fms[i][5],fms[i][6])
+            local thisDistance=getDistance(fms[i-1][5],fms[i-1][6],fms[i][5],fms[i][6])
+            B747DR_fmstargetDistance=B747DR_fmstargetDistance+thisDistance
+            if nextDistance>dist_to_TOD and dist_to_TOD>0 and B747DR_ap_inVNAVdescent==0 and B747BR_cruiseAlt>0 then
+            targetAlt=B747BR_cruiseAlt
+            targetIndex=i
+            break
+            end
+            if B747BR_totalDistance>0 and dist_to_TOD>0 and B747DR_ap_inVNAVdescent==0 and (nextDistance)>dist_to_TOD then
+            break
+            end
+            if dist_to_TOD<0 and fms[i][9]>0 and fms[i][9]<lowerAlt and fms[i][2] ~= 1 then targetAlt=fms[i][9] targetIndex=i break end
         end
-        if dist_to_TOD<0 and fms[i][9]>0 and fms[i][9]<lowerAlt and fms[i][2] ~= 1 and numAPengaged>0 then targetAlt=fms[i][9] targetIndex=i break end
-    elseif began==true then
-        local nextDistance=getDistance(simDR_latitude,simDR_longitude,fms[i][5],fms[i][6])
-        if nextDistance>dist_to_TOD and dist_to_TOD>0 and B747DR_ap_inVNAVdescent==0 and B747BR_cruiseAlt>0 then
-          targetAlt=B747BR_cruiseAlt
-          targetIndex=i
-          break
-        end
-        if B747BR_totalDistance>0 and dist_to_TOD>0 and B747DR_ap_inVNAVdescent==0 and (nextDistance)>dist_to_TOD then
-          break
-        end
-        if dist_to_TOD<0 and fms[i][9]>0 and fms[i][9]<lowerAlt and fms[i][2] ~= 1 then targetAlt=fms[i][9] targetIndex=i break end
-      end
     end
     if targetIndex==0 and dist_to_TOD<0 then
         local endI = table.getn(fms)
@@ -217,7 +220,7 @@ function VNAV_DES(numAPengaged,fms)
     if B747DR_switchingIASMode==1 then return end
     local upperAlt=math.max(tonumber(getFMSData("desspdtransalt")),tonumber(getFMSData("desrestalt")))
     --print("upperAlt "..upperAlt)
-    if B747DR_ap_ias_mach_window_open == 1 then
+    --if B747DR_ap_ias_mach_window_open == 1 then
 
         if simDR_pressureAlt1>upperAlt and simDR_ind_airspeed_kts_pilot>=B747DR_airspeed_Vmc+15 then
             --descentstatus = simDR_autopilot_flch_status
@@ -234,9 +237,9 @@ function VNAV_DES(numAPengaged,fms)
             B747DR_ap_thrust_mode=0
             descentstatus = 2
        end
-    else
-        descentstatus = simDR_autopilot_vs_status
-    end
+   -- else
+   --    descentstatus = simDR_autopilot_vs_status
+    --end
    -- print("VNAV_DES B747DR_ap_inVNAVdescent=" .. " "..B747DR_ap_inVNAVdescent.. " "..diff2.. " "..diff3.. " "..B747DR_ap_vnav_state.. " " .. B747DR_mcp_hold)
 
 

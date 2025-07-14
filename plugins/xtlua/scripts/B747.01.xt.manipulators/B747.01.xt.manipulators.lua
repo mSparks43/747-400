@@ -217,11 +217,11 @@ function sim_flch_CMDhandler(phase, duration)
     end
 end
 function sim_vert_speed_CMDhandler(phase, duration)
-    if phase == 0 then
-        simDR_autopilot_vs_status=2
-        simDR_autopilot_flch_status=0
-        simDR_autopilot_alt_hold_status=0
-    end
+    --if phase == 0 then
+    simDR_autopilot_vs_status=2
+    simDR_autopilot_flch_status=0
+    simDR_autopilot_alt_hold_status=0
+    --end
 end
 -- BATTERY
 function sim_battery1_on_CMDhandler(phase, duration)

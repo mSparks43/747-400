@@ -356,31 +356,44 @@ end
 function getVNAVState(name)
     return vnavSPD_state[name]
 end
+local lastVNAVSpeed=0
 function B747_update_vnav_speed()
     if simDR_onGround~=vnavSPD_conditions["onground"] then vnavSPD_state["gotVNAVSpeed"]=false end
     if vnavSPD_conditions["above"]>0 and vnavSPD_conditions["above"]<simDR_pressureAlt1 then
       print("above "..vnavSPD_conditions["above"].. " " ..vnavSPD_conditions["name"])
       vnavSPD_state["gotVNAVSpeed"]=false
+      lastVNAVSpeed=simDRTime
     end
     if vnavSPD_conditions["descent"]==(B747DR_ap_inVNAVdescent>0) then
        print("descent "..B747DR_ap_inVNAVdescent.. " " ..vnavSPD_conditions["name"])
        vnavSPD_state["gotVNAVSpeed"]=false
+       lastVNAVSpeed=simDRTime
     end
     if vnavSPD_conditions["below"]>0 and vnavSPD_conditions["below"]>simDR_pressureAlt1 then
        print("below "..vnavSPD_conditions["below"].. " " ..vnavSPD_conditions["name"])
        vnavSPD_state["gotVNAVSpeed"]=false
+       lastVNAVSpeed=simDRTime
     end
     if vnavSPD_conditions["crzAlt"]~=B747BR_cruiseAlt then
        print("new crzAlt")
        vnavSPD_state["gotVNAVSpeed"]=false
+       lastVNAVSpeed=simDRTime
     end
     if vnavSPD_conditions["crzSpd"]~=getFMSData("crzspd") then
        print("new crzSpd")
        vnavSPD_state["gotVNAVSpeed"]=false
+       lastVNAVSpeed=simDRTime
     end
     if vnavSPD_conditions["leg"]~=B747DR_fmscurrentIndex then
        print("new crzSpd leg")
        vnavSPD_state["gotVNAVSpeed"]=false
+       lastVNAVSpeed=simDRTime
+    end
+
+    local diff=simDRTime-lastVNAVSpeed
+    if diff>30 then
+       vnavSPD_state["gotVNAVSpeed"]=false
+       lastVNAVSpeed=simDRTime
     end
     --probably not needed?
     --[[if vnavSPD_conditions["mcpAlt"]~=B747DR_autopilot_altitude_ft then
