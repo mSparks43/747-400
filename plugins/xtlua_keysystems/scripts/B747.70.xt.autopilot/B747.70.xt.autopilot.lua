@@ -2088,7 +2088,10 @@ function setDistances(fmsO)
 	--simDR_autopilot_altitude_ft
 	B747BR_eod_index = eod
 	B747BR_totalDistance = totalDistance
-
+	if B747BR_totalDistance<15 then
+		local glideAlt= B747BR_totalDistance*290 +fmsO[endI][3]
+		B747BR_fpe	= simDR_pressureAlt1-glideAlt
+	end
 	B747BR_nextDistanceInFeet = nextDistanceInFeet
 	local cruiseTOD = ((B747BR_cruiseAlt - fmsO[eod][3]) / 100) / 2.9
 	local currentTOD = ((simDR_pressureAlt1 - fmsO[eod][3]) / 100) / 2.9

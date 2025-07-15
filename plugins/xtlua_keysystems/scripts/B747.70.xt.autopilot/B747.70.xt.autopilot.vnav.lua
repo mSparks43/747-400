@@ -47,17 +47,17 @@ function deceleratedDesent(targetvspeed)
 end
 function setDescentVSpeed()
 	local fmsO=getFMS()
-  if B747DR_ap_inVNAVdescent==0 then
-    B747DR_ap_inVNAVdescent=1
+  if B747BR_totalDistance>=15 then
+    --set in setDistances when < 15
+    local glideAlt= B747DR_fmstargetDistance*290 +fmsO[B747DR_fmstargetIndex][3]
+    B747BR_fpe	= simDR_pressureAlt1-glideAlt
   end
-  local glideAlt= B747DR_fmstargetDistance*290 +fmsO[B747DR_fmstargetIndex][3]
-	B747BR_fpe	= simDR_pressureAlt1-glideAlt
   if simDR_autopilot_altitude_ft+600 > simDR_pressureAlt1 then return end --dont set fpm near hold alt  
   local distanceNM=B747DR_fmstargetDistance--getDistance(simDR_latitude,simDR_longitude,fmsO[B747DR_fmstargetIndex][5],fmsO[B747DR_fmstargetIndex][6]) --B747BR_nextDistanceInFeet/6076.12
   
   
   local headingDiff=getHeadingDifference(getHeading(simDR_latitude,simDR_longitude,fmsO[B747DR_fmstargetIndex][5],fmsO[B747DR_fmstargetIndex][6]), simDR_AHARS_heading_deg_pilot)
-  print("headingDiff="..headingDiff)
+  --print("headingDiff="..headingDiff)
   if distanceNM<1 then
     distanceNM=1
   end
@@ -71,7 +71,7 @@ function setDescentVSpeed()
   if simDR_autopilot_altitude_ft>5000 then 
     early=250 
   else
-    early=-B747BR_fpe
+    early=B747BR_fpe
   end
   local vdiff=B747DR_ap_vnav_target_alt-simDR_pressureAlt1-early --to be negative
   local vspeed=vdiff/time
