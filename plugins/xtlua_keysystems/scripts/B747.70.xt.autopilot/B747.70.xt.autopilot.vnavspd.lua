@@ -71,7 +71,7 @@ end
 ]]
 function clb_nores_next()
     --return (tonumber(string.sub(getFMSData("crzalt"),3))*100)-1000
-    local tAlt=(tonumber(string.sub(getFMSData("crzalt"),3))*100)-500
+    local tAlt=(B747BR_cruiseAlt)-500
     if tAlt>simDR_pressureAlt1+500 then
         tAlt=math.min(simDR_pressureAlt1+500,tAlt,B747BR_cruiseAlt-math.max(B747DR_alt_capture_window,500))
     end
@@ -469,8 +469,12 @@ function B747_vnav_setDescendspeed()
     spd_states["des"][cState]["spdfunc"]()
 end
 function B747_vnav_speed()
-
+    
     if B747DR_ap_vnav_state==0 then return end
+    if getFMSData("crzalt")==nil then
+        print("B747_vnav_speed nil "..B747BR_cruiseAlt)
+        B747DR_ap_vnav_state=0 
+    end
     local radarAltRefresh=simDR_radarAlt1
     local pressureAltRefresh=simDR_pressureAlt1
     if getVNAVState("manualVNAVspd")==1 then return end
