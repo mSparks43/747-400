@@ -39864,6 +39864,7 @@ IDX	15415
 
 # Image: /Users/JGregory/Applications/X-Plane/XP11.00pb6/Aircraft/__Laminar Development/Desktop/Heavy Metal/B747-400 United/objects/747_cockpit/Cockpit_Pedestal1.png
 TRIS	0 9168
+
 ANIM_begin
 	ANIM_trans	  -0.1159    2.4552    5.4161	  -0.1159    2.4552    5.4161	0 0	no_ref
 	ANIM_rotate	   0.0000   -1.0000    0.0000	  0.00   1.00	0 1	laminar/B747/comm/rtp_L/freq_khz/sel_dial_pos
@@ -40250,7 +40251,7 @@ ANIM_begin
 	ANIM_rotate_end
 	TRIS	30564 372
 ANIM_end
-ATTR_light_level 0 1 laminar/B747/annunciator/brightness_ratio[126z
+ATTR_light_level 0 1 laminar/B747/annunciator/brightness_ratio[126] 2000
 TRIS	30936 9
 ATTR_light_level 0 1 laminar/B747/annunciator/brightness_ratio[127] 2000
 TRIS	30945 6
@@ -40669,7 +40670,58 @@ TRIS	48297 6
 ATTR_light_level 0 1 laminar/B747/annunciator/brightness_ratio[250] 2000
 TRIS	48303 6
 ATTR_light_level 0 1 sim/cockpit2/electrical/panel_brightness_ratio_manual[2] 300
-TRIS	48309 44844
+
+TRIS    50775 192
+TRIS	51147 16749
+TRIS	67902 1245
+TRIS	69147 315
+TRIS    69474 666
+TRIS    70266 22851
+
+#left gain
+TRIS    48309 675
+TRIS    49659 390
+TRIS    50097 264
+
+#right gain
+TRIS    48984 675
+TRIS    50049 48
+TRIS    50361 414
+TRIS    50973 126
+TRIS	67896 6
+TRIS	69462 12
+TRIS    70140 126
+
+#left GCS
+TRIS    50967 6
+#left TFR
+TRIS    51075 6
+#left WX
+TRIS    51081 6
+#left WX+T
+TRIS    51087 6
+#left MAP
+TRIS    51093 6
+
+#right TFR
+TRIS    51111 6
+#right WX
+TRIS    51117 6
+#right WX+T
+TRIS    51123 6
+#right map
+TRIS	51129 6
+#right GCS
+TRIS	51135 6
+
+#test
+TRIS	51141 6
+#RR/t
+TRIS    51105 6
+#LR/t
+TRIS    51099 6
+
+
 ANIM_begin
 	ANIM_trans_begin	sim/cockpit2/controls/rudder_trim
 		ANIM_trans_key	-1.0	  -0.0555    2.4336    5.6861
