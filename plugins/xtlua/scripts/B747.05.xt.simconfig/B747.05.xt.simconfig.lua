@@ -147,11 +147,42 @@ function simconfig_values()
 	}
 end
 
+local lastfo_baro=0;
+local lastcptbaro=0;
+local lastfo_barodial=0;
+local lastcptbarodial=0;
+local lastfo_baroswitch=0;
+local lastcptbaroswitch=0;
 function baro_sync()
 	if simConfigData["data"].SIM.baro_sync == "YES" then
-		simDR_baro_fo = simDR_baro_capt
-		B747DR_efis_baro_ref_fo_sel_dial_pos = B747DR_efis_baro_ref_capt_sel_dial_pos
-		B747DR_efis_baro_ref_fo_switch_pos = B747DR_efis_baro_ref_capt_switch_pos
+		if simDR_baro_capt~=lastcptbaro 
+		or lastcptbarodial~=B747DR_efis_baro_ref_capt_sel_dial_pos 
+		or lastcptbaroswitch~=B747DR_efis_baro_ref_capt_switch_pos 
+		then
+			simDR_baro_fo = simDR_baro_capt
+			B747DR_efis_baro_ref_fo_sel_dial_pos = B747DR_efis_baro_ref_capt_sel_dial_pos
+			B747DR_efis_baro_ref_fo_switch_pos = B747DR_efis_baro_ref_capt_switch_pos
+			lastfo_baro = simDR_baro_fo
+			lastfo_barodial=B747DR_efis_baro_ref_capt_sel_dial_pos
+			lastfo_baroswitch=B747DR_efis_baro_ref_capt_switch_pos
+			lastcptbaro = simDR_baro_capt
+			lastcptbarodial=B747DR_efis_baro_ref_capt_sel_dial_pos
+			lastcptbaroswitch=B747DR_efis_baro_ref_capt_switch_pos
+		end
+		if simDR_baro_fo~=lastfo_baro 
+		or lastfo_barodial~=B747DR_efis_baro_ref_fo_sel_dial_pos 
+		or lastfo_baroswitch~=B747DR_efis_baro_ref_fo_switch_pos 
+		then
+			simDR_baro_capt = simDR_baro_fo
+			B747DR_efis_baro_ref_capt_sel_dial_pos = B747DR_efis_baro_ref_fo_sel_dial_pos
+			B747DR_efis_baro_ref_capt_switch_pos = B747DR_efis_baro_ref_fo_switch_pos
+			lastfo_baro = simDR_baro_fo
+			lastfo_barodial=B747DR_efis_baro_ref_capt_sel_dial_pos
+			lastfo_baroswitch=B747DR_efis_baro_ref_capt_switch_pos
+			lastcptbaro = simDR_baro_capt
+			lastcptbarodial=B747DR_efis_baro_ref_capt_sel_dial_pos
+			lastcptbaroswitch=B747DR_efis_baro_ref_capt_switch_pos
+		end
 	end
 end
 
