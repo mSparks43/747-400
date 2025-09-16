@@ -61,6 +61,7 @@ B747DR_ap_vs_show_thousands         	= deferred_dataref("laminar/B747/autopilot/
 B747DR_autopilot_altitude_ft    	= deferred_dataref("laminar/B747/autopilot/heading/altitude_dial_ft", "number")
 B747DR_autopilot_altitude_ft_pfd    	= deferred_dataref("laminar/B747/autopilot/heading/altitude_dial_ft_pfd", "number")
 B747DR_ap_heading_deg               	= deferred_dataref("laminar/B747/autopilot/heading/degrees", "number")
+B747DR_ap_activate_target_heading_deg               	= deferred_dataref("laminar/B747/autopilot/heading/active_target", "number")
 B747DR_ap_target_heading_deg               	= deferred_dataref("laminar/B747/autopilot/heading/target", "number")
 B747DR_ap_target_altitude               	= deferred_dataref("laminar/B747/autopilot/altitude/target", "number")
 B747DR_ap_target_vertspeed               	= deferred_dataref("laminar/B747/autopilot/vertspeed/target", "number")

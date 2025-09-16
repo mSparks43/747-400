@@ -357,6 +357,7 @@ B747DR_autopilot_altitude_ft = find_dataref("laminar/B747/autopilot/heading/alti
 B747DR_autopilot_altitude_ft_pfd = deferred_dataref("laminar/B747/autopilot/heading/altitude_dial_ft_pfd", "number")
 B747DR_ap_heading_deg = deferred_dataref("laminar/B747/autopilot/heading/degrees", "number")
 B747DR_ap_target_heading_deg = deferred_dataref("laminar/B747/autopilot/heading/target", "number")
+B747DR_ap_activate_target_heading_deg   = deferred_dataref("laminar/B747/autopilot/heading/active_target", "number")
 B747DR_ap_target_speed               	= deferred_dataref("laminar/B747/autopilot/speed/target", "number")
 B747DR_ap_target_altitude               	= deferred_dataref("laminar/B747/autopilot/altitude/target", "number")
 B747DR_ap_target_vertspeed               	= deferred_dataref("laminar/B747/autopilot/vertspeed/target", "number")
@@ -1066,14 +1067,8 @@ end
 function B747_ap_switch_hdg_sel_mode_CMDhandler(phase, duration)
 	if phase == 0 then
 		B747CMD_fdr_log_headsel:once()
-		if simDR_autopilot_gpss > 0 then
-			simCMD_autopilot_gpss_mode:once()
-		end
-		simCMD_autopilot_heading_select:once()
-		B747DR_ap_ATT = 0.0
-		simDR_autopilot_heading_deg = B747DR_ap_heading_deg
-		B747DR_ap_lnav_state = 0
-		run_after_time(checkLNAV, 0.5)
+		B747DR_ap_activate_target_heading_deg = 1
+		
 	end
 end
 --*************************************************************************************--
@@ -3130,6 +3125,27 @@ function B474_ap_target_speed()
 	end
 end
 function B474_ap_target_heading()
+	local refreshsimDR_autopilot_gpss=simDR_autopilot_gpss
+	local simDR_autopilot_heading_status=simDR_autopilot_heading_status
+	if B747DR_ap_activate_target_heading_deg==1 then
+		local diff = simDRTime - B747DR_ap_lastCommand
+		if diff < 0.05 then
+			return
+		end
+		if simDR_autopilot_gpss > 0 then
+			simCMD_autopilot_gpss_mode:once()
+		end
+		if simDR_autopilot_heading_status == 0 then
+			simCMD_autopilot_heading_select:once()
+		end
+		B747DR_ap_ATT = 0.0
+		simDR_autopilot_heading_deg = B747DR_ap_heading_deg
+		B747DR_ap_lnav_state = 0
+		B747DR_ap_lastCommand=simDRTime
+		run_after_time(checkLNAV, 0.5)
+		B747DR_ap_activate_target_heading_deg=0
+		print("change to HDG SEL")
+	end
 	if B747DR_ap_target_heading_deg == -1 then
 		return
 	end
