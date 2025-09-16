@@ -40693,46 +40693,46 @@ TRIS	69462 12
 TRIS    70140 126
 
 #left GCS
-ATTR_light_level 0 1 laminar/B747/wxr/left/GCS 300
+ATTR_light_level 0 1 laminar/B747/wxr/left/GCS 2000
 TRIS    50967 6
 #left TFR
-ATTR_light_level 0 1 laminar/B747/wxr/left/TFR 300
+ATTR_light_level 0 1 laminar/B747/wxr/left/TFR 2000
 TRIS    51075 6
 #left WX
-ATTR_light_level 0 1 laminar/B747/wxr/left/WX 300
+ATTR_light_level 0 1 laminar/B747/wxr/left/WX 2000
 TRIS    51081 6
 
 #left WX+T
-ATTR_light_level 0 1 laminar/B747/wxr/left/WX_T 300
+ATTR_light_level 0 1 laminar/B747/wxr/left/WX_T 2000
 TRIS    51087 6
 #left MAP
-ATTR_light_level 0 1 laminar/B747/wxr/left/MAP 300
+ATTR_light_level 0 1 laminar/B747/wxr/left/MAP 2000
 TRIS    51093 6
 
 #right TFR
-ATTR_light_level 0 1 laminar/B747/wxr/right/TFR 300
+ATTR_light_level 0 1 laminar/B747/wxr/right/TFR 2000
 TRIS    51111 6
 #right WX
-ATTR_light_level 0 1 laminar/B747/wxr/right/WX 300
+ATTR_light_level 0 1 laminar/B747/wxr/right/WX 2000
 TRIS    51117 6
 #right WX+T
-ATTR_light_level 0 1 laminar/B747/wxr/right/WX_T 300
+ATTR_light_level 0 1 laminar/B747/wxr/right/WX_T 2000
 TRIS    51123 6
 #right map
-ATTR_light_level 0 1 laminar/B747/wxr/right/MAP 300
+ATTR_light_level 0 1 laminar/B747/wxr/right/MAP 2000
 TRIS	51129 6
 #right GCS
-ATTR_light_level 0 1 laminar/B747/wxr/right/GCS 300
+ATTR_light_level 0 1 laminar/B747/wxr/right/GCS 2000
 TRIS	51135 6
 
 #test
-ATTR_light_level 0 1 laminar/B747/wxr/test 300
+ATTR_light_level 0 1 laminar/B747/wxr/test 2000
 TRIS	51141 6
 #RR/t
-ATTR_light_level 0 1 laminar/B747/wxr/RR 300
+ATTR_light_level 0 1 laminar/B747/wxr/RR 2000
 TRIS    51105 6
 #LR/t
-ATTR_light_level 0 1 laminar/B747/wxr/LR 300
+ATTR_light_level 0 1 laminar/B747/wxr/LR 2000
 TRIS    51099 6
 
 ATTR_light_level 0 1 sim/cockpit2/electrical/panel_brightness_ratio_manual[2] 300

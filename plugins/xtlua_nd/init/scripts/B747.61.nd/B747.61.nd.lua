@@ -43,6 +43,11 @@ B747DR_text_capt_heading			= deferred_dataref("laminar/B747/nd/fo/text/heading",
 B747DR_text_capt_distance			= deferred_dataref("laminar/B747/nd/fo/text/distance","array[60]")
 B747DR_text_capt_icon				= deferred_dataref("laminar/B747/nd/fo/text/icon","array[60]")
 
+B747DR_text_capt_wxrtext			= deferred_dataref("laminar/B747/nd/capt/text/wxr","string")
+B747DR_text_fo_wxrtext			= deferred_dataref("laminar/B747/nd/fo/text/wxr","string")
+B747DR_text_capt_wxrtilt			= deferred_dataref("laminar/B747/nd/capt/text/tilt","string")
+B747DR_text_fo_wxrtilt			= deferred_dataref("laminar/B747/nd/fo/text/tilt","string")
+
 B747DR_text_capt_whitetext0			= deferred_dataref("laminar/B747/nd/capt/text/whitetext0","string")
 B747DR_text_capt_bluetext0			= deferred_dataref("laminar/B747/nd/capt/text/bluetext0","string")
 B747DR_text_capt_redtext0			= deferred_dataref("laminar/B747/nd/capt/text/redtext0","string")

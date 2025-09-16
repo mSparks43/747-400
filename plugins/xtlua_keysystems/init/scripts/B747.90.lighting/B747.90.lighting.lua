@@ -94,7 +94,21 @@ B747DR_spill_light_mag_compass_flood    = deferred_dataref("laminar/B747/light/s
 B747DR_instrument_brightness_ratio      = deferred_dataref("laminar/B747/switches/instrument_brightness_ratio", "array[32]")
 B747DR_init_lighting_CD                 = deferred_dataref("laminar/B747/lighting/init_CD", "number")
 
+--wxr lighting
+B747DR_wxr_left_GCS             = deferred_dataref("laminar/B747/wxr/left/GCS", "number")
+B747DR_wxr_left_TFR             = deferred_dataref("laminar/B747/wxr/left/TFR", "number")
+B747DR_wxr_left_WX             = deferred_dataref("laminar/B747/wxr/left/WX", "number")
+B747DR_wxr_left_WX_T            = deferred_dataref("laminar/B747/wxr/left/WX_T", "number")
+B747DR_wxr_left_MAP            = deferred_dataref("laminar/B747/wxr/left/MAP", "number")
+B747DR_wxr_right_GCS             = deferred_dataref("laminar/B747/wxr/right/GCS", "number")
+B747DR_wxr_right_TFR             = deferred_dataref("laminar/B747/wxr/right/TFR", "number")
+B747DR_wxr_right_WX             = deferred_dataref("laminar/B747/wxr/right/WX", "number")
+B747DR_wxr_right_WX_T            = deferred_dataref("laminar/B747/wxr/right/WX_T", "number")
+B747DR_wxr_right_MAP            = deferred_dataref("laminar/B747/wxr/right/MAP", "number")
 
+B747DR_wxr_test            = deferred_dataref("laminar/B747/wxr/test", "number")
+B747DR_wxr_RR            = deferred_dataref("laminar/B747/wxr/RR", "number")
+B747DR_wxr_LR            = deferred_dataref("laminar/B747/wxr/LR", "number")
 
 ----- LIT -------------------------------------------------------------------------------
 --B747DR_LIT_capt_panel_flood             = deferred_dataref("laminar/B747/light/LIT/capt_panel_flood", "number")

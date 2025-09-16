@@ -440,6 +440,26 @@ B747DR_simDR_fo_display             = deferred_dataref("laminar/B747/electrical/
 B747DR_elec_display_power               = find_dataref("laminar/B747/electrical/display_has_power")
 
 
+--wxr lighting
+B747DR_wxr_left_GCS             = deferred_dataref("laminar/B747/wxr/left/GCS", "number")
+B747DR_wxr_left_TFR             = deferred_dataref("laminar/B747/wxr/left/TFR", "number")
+B747DR_wxr_left_WX             = deferred_dataref("laminar/B747/wxr/left/WX", "number")
+B747DR_wxr_left_WX_T            = deferred_dataref("laminar/B747/wxr/left/WX_T", "number")
+B747DR_wxr_left_MAP            = deferred_dataref("laminar/B747/wxr/left/MAP", "number")
+B747DR_wxr_right_GCS             = deferred_dataref("laminar/B747/wxr/right/GCS", "number")
+B747DR_wxr_right_TFR             = deferred_dataref("laminar/B747/wxr/right/TFR", "number")
+B747DR_wxr_right_WX             = deferred_dataref("laminar/B747/wxr/right/WX", "number")
+B747DR_wxr_right_WX_T            = deferred_dataref("laminar/B747/wxr/right/WX_T", "number")
+B747DR_wxr_right_MAP            = deferred_dataref("laminar/B747/wxr/right/MAP", "number")
+
+B747DR_wxr_test            = deferred_dataref("laminar/B747/wxr/test", "number")
+B747DR_wxr_RR            = deferred_dataref("laminar/B747/wxr/RR", "number")
+B747DR_wxr_LR            = deferred_dataref("laminar/B747/wxr/LR", "number")
+
+simDR_wxrMode_cpt = find_dataref("sim/cockpit2/EFIS/EFIS_weather_mode")
+simDR_wxrMode_fo = find_dataref("sim/cockpit2/EFIS/EFIS_weather_mode_copilot")
+simDR_wxrgcs_cpt = find_dataref("sim/cockpit2/EFIS/EFIS_weather_gcs")
+simDR_wxrgcs_fo = find_dataref("sim/cockpit2/EFIS/EFIS_weather_gcs_copilot")
 --*************************************************************************************--
 --** 				        CREATE READ-ONLY CUSTOM DATAREFS               	         **--
 --*************************************************************************************--
@@ -2073,7 +2093,46 @@ function B747_ind_lights()
     B747DR_annun_brightness_ratio[268]  = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, (annun.b.ap_CMD_C * brightness_level))
     B747DR_annun_brightness_ratio[269]  = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, (annun.b.ap_CMD_R * brightness_level))
 
+    --wxr panel
+        --not XP12.3
+    if simDR_version<123004 then
+        B747DR_wxr_left_GCS             = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
+        B747DR_wxr_left_TFR             = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
+        B747DR_wxr_left_WX             = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
+        B747DR_wxr_left_WX_T            = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
+        B747DR_wxr_left_MAP            = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
 
+        B747DR_wxr_right_GCS             = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
+        B747DR_wxr_right_TFR             = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
+        B747DR_wxr_right_WX             = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
+        B747DR_wxr_right_WX_T            = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
+        B747DR_wxr_right_MAP            = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
+
+        B747DR_wxr_test            = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
+        B747DR_wxr_RR            = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
+        B747DR_wxr_LR            = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
+    else 
+        B747DR_wxr_left_GCS             = B747_ternary((B747DR_toggle_switch_position[13] == 1 or simDR_wxrgcs_cpt==1), brightness_level, 0)
+        B747DR_wxr_left_TFR             = B747_ternary((B747DR_toggle_switch_position[13] == 1 or (simDR_wxrMode_cpt==0 and simDR_wxrMode_fo==0)), brightness_level, 0)
+        B747DR_wxr_left_WX             = B747_ternary((B747DR_toggle_switch_position[13] == 1 or simDR_wxrMode_cpt==2), brightness_level, 0)
+        B747DR_wxr_left_WX_T            = B747_ternary((B747DR_toggle_switch_position[13] == 1 or simDR_wxrMode_cpt==3), brightness_level, 0)
+        B747DR_wxr_left_MAP            = B747_ternary((B747DR_toggle_switch_position[13] == 1 or simDR_wxrMode_cpt==4), brightness_level, 0)
+
+        B747DR_wxr_right_GCS             = B747_ternary((B747DR_toggle_switch_position[13] == 1 or simDR_wxrgcs_fo==1), brightness_level, 0)
+        B747DR_wxr_right_TFR             = B747_ternary((B747DR_toggle_switch_position[13] == 1 or (simDR_wxrMode_cpt==0 and simDR_wxrMode_fo==0)), brightness_level, 0)
+        B747DR_wxr_right_WX             = B747_ternary((B747DR_toggle_switch_position[13] == 1 or simDR_wxrMode_fo==2), brightness_level, 0)
+        B747DR_wxr_right_WX_T            = B747_ternary((B747DR_toggle_switch_position[13] == 1 or simDR_wxrMode_fo==3), brightness_level, 0)
+        B747DR_wxr_right_MAP            = B747_ternary((B747DR_toggle_switch_position[13] == 1 or simDR_wxrMode_fo==4), brightness_level, 0)
+
+        B747DR_wxr_test            = B747_ternary((B747DR_toggle_switch_position[13] == 1 or simDR_wxrMode_cpt==1 or simDR_wxrMode_fo==1), brightness_level, 0)
+        B747DR_wxr_RR            = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
+        B747DR_wxr_LR            = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0) 
+    end
+    --wxr lighting
+    
+
+   --[[simDR_wxrMode_cpt = find_dataref("sim/cockpit2/EFIS/EFIS_weather_mode")
+    simDR_wxrMode_fo = find_dataref("sim/cockpit2/EFIS/EFIS_weather_mode_copilot")]]--
 
 end
 
@@ -2213,8 +2272,6 @@ end
 
 
 
-
-
 --*************************************************************************************--
 --** 				                  EVENT CALLBACKS           	    			 **--
 --*************************************************************************************--
@@ -2340,7 +2397,7 @@ function after_physics()
     B747_lighting_EICAS_msg()
 
     B747_lighting_monitor_AI()
-    tone_mapping()
+    --tone_mapping()
 end
 
 --function after_replay() end

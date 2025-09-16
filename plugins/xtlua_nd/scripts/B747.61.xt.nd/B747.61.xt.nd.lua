@@ -32,6 +32,15 @@ B747BR_toc				= find_dataref("laminar/B747/autopilot/dist/distance_to_toc")
 B747DR_ap_FMA_active_pitch_mode     	= find_dataref("laminar/B747/autopilot/FMA/active_pitch_mode")
 simDR_autopilot_vs_fpm = find_dataref("sim/cockpit2/autopilot/vvi_dial_fpm")
 simDR_autopilot_alt_hold_status = find_dataref("laminar/B747/autopilot/altitude_hold_status")
+
+B747DR_text_capt_wxrtext			= find_dataref("laminar/B747/nd/capt/text/wxr")
+B747DR_text_fo_wxrtext			= find_dataref("laminar/B747/nd/fo/text/wxr")
+B747DR_text_capt_wxrtilt			= find_dataref("laminar/B747/nd/capt/text/tilt")
+B747DR_text_fo_wxrtilt			= find_dataref("laminar/B747/nd/fo/text/tilt")
+simDR_wxrMode_cpt = find_dataref("sim/cockpit2/EFIS/EFIS_weather_mode")
+simDR_wxrMode_fo = find_dataref("sim/cockpit2/EFIS/EFIS_weather_mode_copilot")
+simDR_wxrTilt_cpt = find_dataref("sim/cockpit2/EFIS/EFIS_weather_tilt")
+simDR_wxrTilt_fo = find_dataref("sim/cockpit2/EFIS/EFIS_weather_tilt_copilot")
 iconTextDataCapt={}
 iconTextDataCapt.icons=find_dataref("laminar/B747/nd/capt/text/icon")
 for n=0,59,1 do
@@ -321,6 +330,38 @@ function updateIcon(iconData,n,isCaptain)
   end
 end
 function updateIcons()
+  if simDR_version>123000 then
+    if simDR_wxrMode_cpt== 0 then
+      B747DR_text_capt_wxrtext			= "RT"
+    elseif simDR_wxrMode_cpt== 1 then
+      B747DR_text_capt_wxrtext			= "TEST"
+    elseif simDR_wxrMode_cpt== 2 then
+      B747DR_text_capt_wxrtext			= "WXR"
+    elseif simDR_wxrMode_cpt== 3 then
+      B747DR_text_capt_wxrtext			= "WX+T"
+    elseif simDR_wxrMode_cpt== 4 then
+      B747DR_text_capt_wxrtext			= "MAP"
+    end
+    
+    if simDR_wxrMode_fo== 0 then
+      B747DR_text_fo_wxrtext			= "RT"
+    elseif simDR_wxrMode_fo== 1 then
+      B747DR_text_fo_wxrtext			= "TEST"
+    elseif simDR_wxrMode_fo== 2 then
+      B747DR_text_fo_wxrtext			= "WXR"
+    elseif simDR_wxrMode_fo== 3 then
+      B747DR_text_fo_wxrtext			= "WX+T"
+    elseif simDR_wxrMode_fo== 4 then
+      B747DR_text_fo_wxrtext			= "MAP"
+    end
+    local p=""
+    local p_fo=""
+    if simDR_wxrTilt_cpt>0 then p="+" end
+    if simDR_wxrTilt_fo>0 then p_fo="+" end
+    B747DR_text_capt_wxrtilt			= p..string.format("%2.1f", simDR_wxrTilt_cpt)
+    B747DR_text_fo_wxrtilt			= p_fo..string.format("%2.1f", simDR_wxrTilt_fo)
+  end
+
   for n=0,lastCaptNavaid,1 do
     if B747DR_text_capt_show[n]==0 then break end
     updateIcon(iconTextDataCapt,n,1)
