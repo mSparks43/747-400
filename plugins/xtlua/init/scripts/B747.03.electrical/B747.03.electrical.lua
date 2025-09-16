@@ -98,6 +98,21 @@ B747DR_simDR_esys1              = deferred_dataref("laminar/B747/rel_esys2", "nu
 B747DR_simDR_esys2              = deferred_dataref("laminar/B747/rel_esys3", "number")
 B747DR_simDR_esys3              = deferred_dataref("laminar/B747/rel_esys4", "number")
 
+--wxr lighting
+B747DR_wxr_left_GCS             = deferred_dataref("laminar/B747/wxr/left/GCS", "number")
+B747DR_wxr_left_TFR             = deferred_dataref("laminar/B747/wxr/left/TFR", "number")
+B747DR_wxr_left_WX             = deferred_dataref("laminar/B747/wxr/left/WX", "number")
+B747DR_wxr_left_WX_T            = deferred_dataref("laminar/B747/wxr/left/WX_T", "number")
+B747DR_wxr_left_MAP            = deferred_dataref("laminar/B747/wxr/left/MAP", "number")
+B747DR_wxr_right_GCS             = deferred_dataref("laminar/B747/wxr/right/GCS", "number")
+B747DR_wxr_right_TFR             = deferred_dataref("laminar/B747/wxr/right/TFR", "number")
+B747DR_wxr_right_WX             = deferred_dataref("laminar/B747/wxr/right/WX", "number")
+B747DR_wxr_right_WX_T            = deferred_dataref("laminar/B747/wxr/right/WX_T", "number")
+B747DR_wxr_right_MAP            = deferred_dataref("laminar/B747/wxr/right/MAP", "number")
+
+B747DR_wxr_test            = deferred_dataref("laminar/B747/wxr/test", "number")
+B747DR_wxr_RR            = deferred_dataref("laminar/B747/wxr/RR", "number")
+B747DR_wxr_LR            = deferred_dataref("laminar/B747/wxr/LR", "number")
 
 -- STANDBY POWER
 B747CMD_connect_power          = deferred_command("laminar/B747/electrical/connect_power", "Toggle external power", B747_connect_power_CMDhandler)
