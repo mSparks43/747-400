@@ -960,13 +960,15 @@ function ecc_throttle()
 				--print("throttle target="..target.. " current "..input.." targetBug "..targetBug.." inputBug "..inputBug)
 			end
 		end
-	local rog=0.0001+0.0001*math.abs(input-target)
+	local rog=0.0001+(math.abs(input-target))*time*0.0005
+	
+	print("rog"..rog.." B747DR_throttle_resolver_angle[0] "..B747DR_throttle_resolver_angle[0].." spd_target_throttle "..spd_target_throttle.. " simDR_N1_target_bug[0] "..simDR_N1_target_bug[0])
 	--[[if(rog>0.005) then
 		rog=0.005
 	end]]--
-	if (target> input+1) then
+	if (target> input+1) and math.abs(simDR_engine_throttle_jet_all-spd_target_throttle)<0.02 then
 		spd_target_throttle= (spd_target_throttle+rog)
-	elseif target< input-1 then
+	elseif target< input-1 and math.abs(simDR_engine_throttle_jet_all-spd_target_throttle)<0.02 then
 		spd_target_throttle= (spd_target_throttle-rog)
 	end
 	if spd_target_throttle<0 or B747DR_ap_FMA_autothrottle_mode==2 then
@@ -978,15 +980,20 @@ function ecc_throttle()
 	local refreshThro=0
 	if B747DR_ap_FMA_autothrottle_mode>1 --AT active
 		then
-		local average_throttle=0	
+		local average_throttle=0
+		local animTime=1
+		if simDR_onGround == 1 and simDR_ias_pilot<30 then
+			animTime=5
+		end	
 		for i = 0, 3 do
 			--simDR_engn_thro[i]=B747_interpolate_value(simDR_engn_thro[i],spd_target_throttle,0,1.00,2)
-			B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],spd_target_throttle,0,1.00,1)
+			B747DR_throttle[i]=B747_interpolate_value(B747DR_throttle[i],spd_target_throttle,0,1.00,animTime)
 			average_throttle=average_throttle+B747DR_throttle[i]
 			--simDR_throttle_ratio[i]	= B747DR_throttle[i]
 		end
 		simDR_engine_throttle_jet_all = average_throttle / 4
-		
+	else
+		spd_target_throttle=simDR_engine_throttle_jet_all	
 	--[[else
 		--shouldn't get here!, done in throttle_management()
 		print("shouldn't get here!, done in throttle_management()")
