@@ -3017,13 +3017,40 @@ function B747_ai_com_quick_start_CMDhandler(phase, duration)
 	  	B747_set_com_ER()
 	end    	
 end	
+simDR_wxrMode_cpt = find_dataref("sim/cockpit2/EFIS/EFIS_weather_mode")
+simDR_wxrMode_fo = find_dataref("sim/cockpit2/EFIS/EFIS_weather_mode_copilot")
+simDR_wxrGain_cpt = find_dataref("sim/cockpit2/EFIS/EFIS_weather_gain")
+simDR_wxrGain_fo = find_dataref("sim/cockpit2/EFIS/EFIS_weather_gain_copilot")
+function B747_wxr_test_CMDhandler(phase, duration)
+    local refreshsimDR_wxrMode_cpt=simDR_wxrMode_cpt
+    local refreshsimDR_wxrMode_fo=simDR_wxrMode_fo
+    if phase == 0 then
+        simDR_wxrMode_cpt=1
+        simDR_wxrMode_fo=1
+    end
+end
 
+function B747_wxr_rr_CMDhandler(phase, duration)
+end
 
+function B747_wxr_lr_CMDhandler(phase, duration)
+end
 
+function B747_wxr_cpt_ftr_CMDhandler(phase, duration)
+end
 
+function B747_wxr_fo_ftr_CMDhandler(phase, duration)
+end
 --*************************************************************************************--
 --** 				              CREATE CUSTOM COMMANDS              			     **--
 --*************************************************************************************--
+--WXR PANEL
+B747CMD_wxr_test  = deferred_command("laminar/B747/wxr/buttons/test", "WXR Test", B747_wxr_test_CMDhandler)
+B747CMD_wxr_rr  = deferred_command("laminar/B747/wxr/buttons/rr", "WXR RR", B747_wxr_rr_CMDhandler)
+B747CMD_wxr_lr  = deferred_command("laminar/B747/wxr/buttons/lr", "WXR LR", B747_wxr_lr_CMDhandler)
+B747CMD_wxr_cpt_ftr  = deferred_command("laminar/B747/wxr/buttons/cpt_ftr", "WXR CPT TFR", B747_wxr_cpt_ftr_CMDhandler)
+B747CMD_wxr_fo_ftr  = deferred_command("laminar/B747/wxr/buttons/fo_ftr", "WXR FO TFR", B747_wxr_fo_ftr_CMDhandler)
+
 
 -- RADIO TUNING PANEL LEFT
 B747CMD_rtp_L_off_switch            = deferred_command("laminar/B747/rtp_L/off_switch", "Radio Tuning Panel Left OFF Switch", B747_rtp_L_off_switch_CMDhandler)
@@ -3571,7 +3598,15 @@ end
 
 ----- AUDIO STATUS ----------------------------------------------------------------------
 function B747_radio_audio_status()
+    local refreshsimDR_wxrMode_cpt=simDR_wxrMode_cpt
+    local refreshsimDR_wxrMode_fo=simDR_wxrMode_fo
 
+    if simDR_wxrGain_cpt == 2 then
+        simDR_wxrGain_cpt=1
+    end
+    if simDR_wxrGain_fo == 2 then
+        simDR_wxrGain_fo=1
+    end
     -- COM1
     
     if B747DR_ap_L_vhf_L_audio_status == 1 or

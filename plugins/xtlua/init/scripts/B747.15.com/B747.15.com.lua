@@ -557,5 +557,11 @@ B747DR_ap_R_app_mkr_audio_vol_dn    = deferred_command("laminar/B747/comm/ap_R/a
 B747CMD_ai_elec_quick_start			= deferred_command("laminar/B747/ai/com_quick_start", "number", B747_ai_com_quick_start_CMDhandler)
 
 
+-- WXR panel
 
+B747CMD_wxr_test  = deferred_command("laminar/B747/wxr/buttons/test", "WXR Test", B747_wxr_test_CMDhandler)
+B747CMD_wxr_rr  = deferred_command("laminar/B747/wxr/buttons/rr", "WXR RR", B747_wxr_rr_CMDhandler)
+B747CMD_wxr_lr  = deferred_command("laminar/B747/wxr/buttons/lr", "WXR LR", B747_wxr_lr_CMDhandler)
+B747CMD_wxr_cpt_ftr  = deferred_command("laminar/B747/wxr/buttons/cpt_ftr", "WXR CPT TFR", B747_wxr_cpt_ftr_CMDhandler)
+B747CMD_wxr_fo_ftr  = deferred_command("laminar/B747/wxr/buttons/fo_ftr", "WXR FO TFR", B747_wxr_fo_ftr_CMDhandler)
 

@@ -2098,13 +2098,13 @@ function B747_ind_lights()
     if simDR_version<123004 then
         B747DR_wxr_left_GCS             = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
         B747DR_wxr_left_TFR             = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
-        B747DR_wxr_left_WX             = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
+        B747DR_wxr_left_WX             = B747_ternary((B747DR_toggle_switch_position[13] == 1 or true), brightness_level, 0)
         B747DR_wxr_left_WX_T            = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
         B747DR_wxr_left_MAP            = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
 
         B747DR_wxr_right_GCS             = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
         B747DR_wxr_right_TFR             = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
-        B747DR_wxr_right_WX             = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
+        B747DR_wxr_right_WX             = B747_ternary((B747DR_toggle_switch_position[13] == 1 or true), brightness_level, 0)
         B747DR_wxr_right_WX_T            = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
         B747DR_wxr_right_MAP            = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
 
@@ -2125,8 +2125,8 @@ function B747_ind_lights()
         B747DR_wxr_right_MAP            = B747_ternary((B747DR_toggle_switch_position[13] == 1 or simDR_wxrMode_fo==4), brightness_level, 0)
 
         B747DR_wxr_test            = B747_ternary((B747DR_toggle_switch_position[13] == 1 or simDR_wxrMode_cpt==1 or simDR_wxrMode_fo==1), brightness_level, 0)
-        B747DR_wxr_RR            = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0)
-        B747DR_wxr_LR            = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, 0) 
+        B747DR_wxr_RR            = B747_ternary((B747DR_toggle_switch_position[13] == 1 ), brightness_level, 0)
+        B747DR_wxr_LR            = B747_ternary((B747DR_toggle_switch_position[13] == 1 or true), brightness_level, 0) 
     end
     --wxr lighting
     

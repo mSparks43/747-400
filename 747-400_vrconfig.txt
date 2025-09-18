@@ -299,6 +299,18 @@ END_MANIP
 BEGIN_MANIP command_knob laminar/B747/rtp_C/freq_MHz/sel_dial_up laminar/B747/rtp_C/freq_MHz/sel_dial_dn
 	DEG_PER_ACTION 5
 END_MANIP
+BEGIN_MANIP command_knob sim/instruments/EFIS_wxr_gain_up sim/instruments/EFIS_wxr_gain_down
+	DEG_PER_ACTION 2
+END_MANIP
+BEGIN_MANIP command_knob sim/instruments/EFIS_wxr_gain_up_copilot sim/instruments/EFIS_wxr_gain_down_copilot
+	DEG_PER_ACTION 2
+END_MANIP
+BEGIN_MANIP command_knob sim/instruments/EFIS_wxr_tilt_up sim/instruments/EFIS_wxr_tilt_down
+	DEG_PER_ACTION 1
+END_MANIP
+BEGIN_MANIP command_knob sim/instruments/EFIS_wxr_tilt_up_copilot sim/instruments/EFIS_wxr_tilt_down_copilot
+	DEG_PER_ACTION 1
+END_MANIP
 BEGIN_MANIP command_knob laminar/B747/ap_L/app_rcvr/sel_dial_up laminar/B747/ap_L/app_rcvr/sel_dial_dn
 	DEG_PER_ACTION 20
 END_MANIP

@@ -22314,6 +22314,93 @@ ATTR_manip_command_knob	rotate_large	laminar/B747/gear/autobrakes/sel_dial_up	la
 TRIS	16554 30
 ATTR_manip_command_knob	rotate_large	laminar/B747/rtp_C/freq_MHz/sel_dial_up	laminar/B747/rtp_C/freq_MHz/sel_dial_dn	Frequency MHz Selector
 TRIS	16584 30
+ATTR_manip_command_knob	rotate_large	sim/instruments/EFIS_wxr_tilt_up	sim/instruments/EFIS_wxr_tilt_down 	Pilot WXR Tilt
+ANIM_begin
+	ANIM_trans	  0.0580   0.000    -0.182	  0.0580   0.000    -0.182	0 0	no_ref
+    TRIS	16584 30
+ANIM_end
+ATTR_manip_command_knob	rotate_small	sim/instruments/EFIS_wxr_gain_up	sim/instruments/EFIS_wxr_gain_down	Pilot WXR Gain
+ANIM_begin
+	ANIM_trans	  0.0580   0.000    -0.182	  0.0580   0.000    -0.182	0 0	no_ref
+    TRIS	19836 30
+ANIM_end
+ATTR_manip_command_knob	rotate_large	sim/instruments/EFIS_wxr_tilt_up_copilot	sim/instruments/EFIS_wxr_tilt_down_copilot 	FO WXR Tilt
+ANIM_begin
+	ANIM_trans	  0.150   0.000    -0.182	  0.150   0.000    -0.182	0 0	no_ref
+    TRIS	16584 30
+ANIM_end
+ATTR_manip_command_knob	rotate_small	sim/instruments/EFIS_wxr_gain_up_copilot	sim/instruments/EFIS_wxr_gain_down_copilot	FO WXR Gain
+ANIM_begin
+	ANIM_trans	  0.150   0.000    -0.182	  0.150   0.000    -0.182	0 0	no_ref
+    TRIS	19836 30
+ANIM_end
+ATTR_manip_command	button	sim/instruments/EFIS_wxr_gcs_tog	Pilot GCS
+ANIM_begin
+	ANIM_trans	  -0.010   0.000    -0.185	  -0.010   0.000    -0.185	0 0	no_ref
+    TRIS	14052 30
+ANIM_end
+ATTR_manip_command	button	sim/instruments/EFIS_wxr_radar_map	Pilot MAP
+ANIM_begin
+	ANIM_trans	  -0.030   0.000    -0.185	  -0.030   0.000    -0.185	0 0	no_ref
+    TRIS	14052 30
+ANIM_end
+ATTR_manip_command	button	sim/instruments/EFIS_wxr_radar_wxt	Pilot WX+T
+ANIM_begin
+	ANIM_trans	  -0.050   0.000    -0.185	  -0.050   0.000    -0.185	0 0	no_ref
+    TRIS	14052 30
+ANIM_end
+ATTR_manip_command	button	sim/instruments/EFIS_wxr_radar_wx	Pilot WX
+ANIM_begin
+	ANIM_trans	  -0.070   0.000    -0.185	  -0.070   0.000    -0.185	0 0	no_ref
+    TRIS	14052 30
+ANIM_end
+ATTR_manip_command	button	laminar/B747/wxr/buttons/cpt_ftr	Pilot TFR
+ANIM_begin
+	ANIM_trans	  -0.090   0.000    -0.185	  -0.090   0.000    -0.185	0 0	no_ref
+    TRIS	14052 30
+ANIM_end
+
+ATTR_manip_command	button	laminar/B747/wxr/buttons/test	WXR TEST
+ANIM_begin
+	ANIM_trans	  -0.030   0.000    -0.165	  -0.030   0.000    -0.165	0 0	no_ref
+    TRIS	14052 30
+ANIM_end
+ATTR_manip_command	button	laminar/B747/wxr/buttons/rr	WXR RR/T
+ANIM_begin
+	ANIM_trans	  -0.050   0.000    -0.165	  -0.050   0.000    -0.165	0 0	no_ref
+    TRIS	14052 30
+ANIM_end
+ATTR_manip_command	button	laminar/B747/wxr/buttons/lr	WXR LR/T
+ANIM_begin
+	ANIM_trans	  -0.070   0.000    -0.165	  -0.070   0.000    -0.165	0 0	no_ref
+    TRIS	14052 30
+ANIM_end
+
+ATTR_manip_command	button	sim/instruments/EFIS_wxr_gcs_tog_copilot	Pilot GCS
+ANIM_begin
+	ANIM_trans	  -0.010   0.000    -0.145	  -0.010   0.000    -0.145	0 0	no_ref
+    TRIS	14052 30
+ANIM_end
+ATTR_manip_command	button	sim/instruments/EFIS_wxr_radar_map_copilot	Pilot MAP
+ANIM_begin
+	ANIM_trans	  -0.030   0.000    -0.145	  -0.030   0.000    -0.145	0 0	no_ref
+    TRIS	14052 30
+ANIM_end
+ATTR_manip_command	button	sim/instruments/EFIS_wxr_radar_wxt_copilot	Pilot WX+T
+ANIM_begin
+	ANIM_trans	  -0.050   0.000    -0.145	  -0.050   0.000    -0.145	0 0	no_ref
+    TRIS	14052 30
+ANIM_end
+ATTR_manip_command	button	sim/instruments/EFIS_wxr_radar_wx_copilot	Pilot WX
+ANIM_begin
+	ANIM_trans	  -0.070   0.000    -0.145	  -0.070   0.000    -0.145	0 0	no_ref
+    TRIS	14052 30
+ANIM_end
+ATTR_manip_command	button	laminar/B747/wxr/buttons/fo_ftr	Pilot TFR
+ANIM_begin
+	ANIM_trans	  -0.090   0.000    -0.145	  -0.090   0.000    -0.145	0 0	no_ref
+    TRIS	14052 30
+ANIM_end
 ATTR_manip_command_knob	rotate_large	laminar/B747/rtp_L/freq_MHz/sel_dial_up	laminar/B747/rtp_L/freq_MHz/sel_dial_dn	MHz Frequency Selector
 TRIS	16614 30
 ATTR_manip_command_knob	rotate_large	laminar/B747/rtp_R/freq_MHz/sel_dial_up	laminar/B747/rtp_R/freq_MHz/sel_dial_dn	Freqency MHz Selector
