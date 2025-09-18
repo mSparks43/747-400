@@ -544,7 +544,6 @@ function B747_monitorAT()
     local diff=simDRTime-B747DR_ap_lastCommand
     if diff<0.5 then return end --mode switch at 0.5 second intervals
     if simDR_autopilot_autothrottle_enabled~=0 then
-
         simDR_autopilot_autothrottle_enabled=0
     end
     --make sure autothrottle is in the correct mode for the FMA

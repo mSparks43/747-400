@@ -453,8 +453,8 @@ end
 function B747CMD_fdr_log_headhold_CMDhandler(phase, duration)
   do_log_commmand("HEADING HOLD")
 end
-B747CMD_fdr_log_lnav           = deferred_command("laminar/B747/fdr/vnav", "", B747CMD_fdr_log_lnav_CMDhandler) --autopilot
-B747CMD_fdr_log_vnav           = deferred_command("laminar/B747/fdr/lnav", "", B747CMD_fdr_log_vnav_CMDhandler) --autopilot
+B747CMD_fdr_log_lnav           = deferred_command("laminar/B747/fdr/lnav", "", B747CMD_fdr_log_lnav_CMDhandler) --autopilot
+B747CMD_fdr_log_vnav           = deferred_command("laminar/B747/fdr/vnav", "", B747CMD_fdr_log_vnav_CMDhandler) --autopilot
 B747CMD_fdr_log_apon           = deferred_command("laminar/B747/fdr/apon", "", B747CMD_fdr_log_apon_CMDhandler) --autopilot
 B747CMD_fdr_log_apdisconnect           = deferred_command("laminar/B747/fdr/apdisconnect", "", B747CMD_fdr_log_apdisconnect_CMDhandler) --autopilot
 B747CMD_fdr_log_flch           = deferred_command("laminar/B747/fdr/flch", "", B747CMD_fdr_log_flch_CMDhandler) --autopilot

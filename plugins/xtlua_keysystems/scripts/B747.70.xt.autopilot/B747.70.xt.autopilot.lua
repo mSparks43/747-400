@@ -2427,7 +2427,7 @@ function fma_rollModes()
 
 		local diff = simDRTime - B747DR_ap_lastCommand
 		--reactivate LNAV if required
-		if diff > 0.5 and simDR_autopilot_gpss == 0 and B747DR_ap_approach_mode == 0 then
+		if diff > 0.5 and 2 == 0 and B747DR_ap_approach_mode == 0 then
 			print("simDR_autopilot_gpss == 2 or B747DR_ap_lnav_state==2")
 			simCMD_autopilot_gpss_mode:once()
 			B747DR_ap_lnav_state = 2
@@ -3138,6 +3138,8 @@ function B474_ap_target_heading()
 		if simDR_autopilot_heading_status == 0 then
 			simCMD_autopilot_heading_select:once()
 		end
+		simDR_autopilot_gpss=0
+		--simDR_autopilot_heading_status=0
 		B747DR_ap_ATT = 0.0
 		simDR_autopilot_heading_deg = B747DR_ap_heading_deg
 		B747DR_ap_lnav_state = 0
