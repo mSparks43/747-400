@@ -565,7 +565,9 @@ function B747_engine_TOGA_power_CMDhandler(phase, duration)
         
         end	
         if B747DR_toggle_switch_position[29] == 1 then
-            B747DR_autothrottle_active=0
+            B747DR_autothrottle_fail = 0
+            B747DR_autothrottle_active=1
+            
         end		
 	end	
 end

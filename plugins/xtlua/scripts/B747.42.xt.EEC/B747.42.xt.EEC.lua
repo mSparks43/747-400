@@ -962,7 +962,7 @@ function ecc_throttle()
 		end
 	local rog=0.0001+(math.abs(input-target))*time*0.0005
 	
-	print("rog"..rog.." B747DR_throttle_resolver_angle[0] "..B747DR_throttle_resolver_angle[0].." spd_target_throttle "..spd_target_throttle.. " simDR_N1_target_bug[0] "..simDR_N1_target_bug[0])
+	--print("rog"..rog.." B747DR_throttle_resolver_angle[0] "..B747DR_throttle_resolver_angle[0].." spd_target_throttle "..spd_target_throttle.. " simDR_N1_target_bug[0] "..simDR_N1_target_bug[0])
 	--[[if(rog>0.005) then
 		rog=0.005
 	end]]--
