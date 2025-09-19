@@ -82,7 +82,7 @@ function setDescentVSpeed()
   local nextDistanceInFeet=distanceNM*6076.12
   local time=distanceNM*30.8666/(simDR_groundspeed) --time in minutes, gs in m/s....
   local early=100
-  if simDR_autopilot_altitude_ft>5000 then 
+  if simDR_autopilot_altitude_ft>5000 then
     early=250 
   else
     early=B747BR_fpe
