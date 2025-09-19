@@ -4,6 +4,7 @@
 simDR_version=find_dataref("sim/version/xplane_internal_version")
 simDR_tcas_lat                = find_dataref("sim/cockpit2/tcas/targets/position/lat")
 simDR_tcas_lon                = find_dataref("sim/cockpit2/tcas/targets/position/lon")
+simDR_tcas_alt                = find_dataref("sim/cockpit2/tcas/targets/position/ele")
 simDR_radarAlt1 = find_dataref("sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot")
 simDR_tcas_vs                = find_dataref("sim/cockpit2/tcas/targets/position/vertical_speed")
 simDR_radio_nav03_ID                = find_dataref("sim/cockpit2/radios/indicators/nav3_nav_id")
@@ -443,12 +444,15 @@ function newIcons()
   end
   --TCAS
   for n=1,64,1 do
-    local distance = getDistance(simDR_latitude,simDR_longitude,simDR_tcas_lat[n],simDR_tcas_lon[n])
-    if B747DR_nd_capt_tfc>0 and distance < ranges[simDR_range_dial_capt + 1] then 
-      makeIcon(iconTextDataCapt,3006,nil,simDR_tcas_lat[n],simDR_tcas_lon[n],distance)
-    end
-    if B747DR_nd_fo_tfc>0 and distance < ranges[simDR_range_dial_fo + 1] then 
-      makeIcon(iconTextDataFO,3006,nil,simDR_tcas_lat[n],simDR_tcas_lon[n],distance)
+    local thisELE=math.abs(simDR_tcas_alt[0]-simDR_tcas_alt[n])
+    if thisELE < 2000 then
+      local distance = getDistance(simDR_latitude,simDR_longitude,simDR_tcas_lat[n],simDR_tcas_lon[n])
+      if B747DR_nd_capt_tfc>0 and distance < ranges[simDR_range_dial_capt + 1] then 
+        makeIcon(iconTextDataCapt,3006,nil,simDR_tcas_lat[n],simDR_tcas_lon[n],distance)
+      end
+      if B747DR_nd_fo_tfc>0 and distance < ranges[simDR_range_dial_fo + 1] then 
+        makeIcon(iconTextDataFO,3006,nil,simDR_tcas_lat[n],simDR_tcas_lon[n],distance)
+      end
     end
   end  
 

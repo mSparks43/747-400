@@ -103,7 +103,9 @@ function setDescentVSpeed()
     print("End Descent")
     return
   end
-  simDR_autopilot_vs_fpm = deceleratedDesent(vspeed)
+  if B747DR_ap_vnav_state > 0 then
+    simDR_autopilot_vs_fpm = deceleratedDesent(vspeed)
+  end
   B747DR_ap_fpa=math.atan2(vspeed,simDR_groundspeed*196.85)*-57.2958
   
   --[[if B747DR_descentSpeedGradient>0 and simDR_pressureAlt1>B747DR_target_descentAlt then
