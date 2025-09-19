@@ -205,6 +205,7 @@ function makeIcon(iconTextData,navtype,text,latitude,longitude,distance)
     if captIRS==0 then return end
     range=ranges[simDR_range_dial_capt + 1]
     displayDistance=distance*(640/ranges[simDR_range_dial_capt + 1])
+    if (heading_diff < -90 or heading_diff > 90) and B747_nd_map_center_capt<1 then return end
     if (heading_diff < -135 or heading_diff > 135) and displayDistance> 160 and B747_nd_map_center_capt<1 then return end
     if displayDistance> 250 and B747_nd_map_center_capt>0 then return end
     if (heading_diff < -45 or heading_diff > 45) and displayDistance> 480 and B747_nd_map_center_capt<1 then return end
@@ -217,6 +218,7 @@ function makeIcon(iconTextData,navtype,text,latitude,longitude,distance)
     if foIRS==0 then return end
     range=ranges[simDR_range_dial_fo + 1]
     displayDistance=distance*(640/ranges[simDR_range_dial_fo + 1])
+    if (heading_diff < -90 or heading_diff > 90) and B747_nd_map_center_fo<1 then return end 
     if (heading_diff < -135 or heading_diff > 135) and displayDistance> 160 and B747_nd_map_center_fo<1 then return end 
      if displayDistance> 250 and B747_nd_map_center_fo>0 then return end
      if (heading_diff < -45 or heading_diff > 45) and displayDistance> 480 and B747_nd_map_center_fo<1 then return end
