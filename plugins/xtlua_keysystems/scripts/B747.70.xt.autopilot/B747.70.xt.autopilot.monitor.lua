@@ -29,7 +29,8 @@ function VNAV_NEXT_ALT(numAPengaged,fms)
     local targetIndex=0
     local currentIndex=0
     local dist_to_TOD=(B747BR_totalDistance-B747BR_tod)
-    local lowerAlt=tonumber(getFMSData("desrestalt"))
+    local lowerAlt=tonumber(getFMSData("transalt"))
+
     local endI = table.getn(fms)
     --print("FMS ="..fmsJSON)
     for i=1,endI,1 do

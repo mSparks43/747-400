@@ -49,7 +49,21 @@ function setDescentVSpeed()
 	local fmsO=getFMS()
   if B747BR_totalDistance>=15 then
     --set in setDistances when < 15
-    local glideAlt= B747DR_fmstargetDistance*290 +fmsO[B747DR_fmstargetIndex][3]
+    local glideAlt= B747DR_fmstargetDistance*290 +fmsO[B747DR_fmstargetIndex][9]
+    if string.len(B747BR_vnavProfile)>2 then
+      local vnavData=json.decode(B747BR_vnavProfile)
+      local endI = table.getn(vnavData)
+      for i = 1, endI, 1 do
+        if vnavData[i][4] then
+          if i==1 then break end
+          --local altDiff=vnavData[i-1][3]-vnavData[i][3]
+
+          local legDist = getDistance(simDR_latitude, simDR_longitude, vnavData[i][1], vnavData[i][2])
+          glideAlt= legDist*vnavData[i][5] +vnavData[i][3]
+          print("setDescentVSpeed "..glideAlt)
+        end
+      end
+    end
     B747BR_fpe	= simDR_pressureAlt1-glideAlt
   end
   if simDR_autopilot_altitude_ft+600 > simDR_pressureAlt1 then return end --dont set fpm near hold alt  

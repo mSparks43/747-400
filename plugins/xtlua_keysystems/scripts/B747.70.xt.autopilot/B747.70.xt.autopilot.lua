@@ -147,6 +147,7 @@ B747DR_fmc_notifications = find_dataref("laminar/B747/fms/notification")
 B747BR_distance_to_dest  = deferred_dataref("laminar/B747/autopilot/dist/distance_to_dest", "number")
 B747BR_toc				= deferred_dataref("laminar/B747/autopilot/dist/distance_to_toc", "number")
 B747DR_ils_dots = deferred_dataref("laminar/B747/autopilot/ils_dots", "number") --display only
+B747BR_vnavProfile 	= find_dataref("laminar/B747/autopilot/dist/vnavProfile")
 B747BR_totalDistance = find_dataref("laminar/B747/autopilot/dist/remaining_distance")
 B747BR_eod_index = deferred_dataref("laminar/B747/autopilot/dist/eod_index", "number")
 B747BR_nextDistanceInFeet = find_dataref("laminar/B747/autopilot/dist/next_distance_feet")
@@ -2041,6 +2042,10 @@ function setDistances(fmsO)
 	local setTOD = false
 	local setTOC = false
 	local todDist = B747BR_totalDistance - B747BR_tod
+	local vnavData={}
+	local vnavI=1
+	local lastVnavAlt=-9999
+	--print("setDistances")
 	for i = 1, endI - 1, 1 do
 		if i >= start then
 			iLat = fmsO[i][5]
@@ -2070,7 +2075,7 @@ function setDistances(fmsO)
 				B747BR_tocLong = iLong + (eLong - iLong) * legFrac
 			end
 		end
-		
+		--print("setVNAV "..i.." "..fmsO[i][5]..":"..fmsO[i][6].."/"..fmsO[i][9])
 		dtoAirport = getDistance(fmsO[i][5], fmsO[i][6], fmsO[endI][5], fmsO[endI][6])
 		--print("i=".. i .." B747DR_fmscurrentIndex="..B747DR_fmscurrentIndex .." speed="..simDR_groundspeed .. " distance="..totalDistance.." dtoAirport="..dtoAirport.. " ".. fmsO[i][5].." ".. fmsO[i][6].." ".. fmsO[i+1][5].." ".. fmsO[i+1][6])
 		if dtoAirport < 10 then
@@ -2078,13 +2083,41 @@ function setDistances(fmsO)
 			--print("end fms"..i.."=at alt "..fms[i][3])
 			break
 		end
+		if fms[i][9]>0 then
+			--construct vnav profile
+			local isNext="false"
+			if i==start then
+				isNext="true"
+			end
+			if fmsO[i][9]~=lastVnavAlt or i==start then
+				local vAlt=0
+				if i>1 then
+					local distance=getDistance(fmsO[i-1][5],fmsO[i-1][6], fmsO[i][5],fmsO[i][6])
+					vAlt=(lastVnavAlt-fmsO[i][9])/distance
+				end
+				local vNavdataI={fmsO[i][5],fmsO[i][6],fmsO[i][9],i==start,vAlt}
+				vnavData[vnavI]=vNavdataI
+				vnavI=vnavI+1
+				lastVnavAlt=fmsO[i][9]
+				--print("setVNAV "..i.." "..fmsO[i][5]..":"..fmsO[i][6].."/"..fmsO[i][9].." "..vAlt)
+			end
+		end
 	end
+	local vAlt=0
+	if lastVnavAlt>0 then
+		local distance=getDistance(vnavData[vnavI-1][1],vnavData[vnavI-1][2], fmsO[endI][5],fmsO[endI][6])
+		vAlt=(lastVnavAlt-fmsO[endI][9])/distance
+	end
+	local vNavdataI={fmsO[endI][5],fmsO[endI][6],fmsO[endI][9],endI==start,vAlt}
+	vnavData[vnavI]=vNavdataI
+	B747BR_vnavProfile = json.encode(vnavData)
+	--print("setVNAV "..B747BR_vnavProfile)
 	totalDistance = totalDistance + getDistance(fmsO[eod][5], fmsO[eod][6], fmsO[endI][5], fmsO[endI][6])
 	--simDR_autopilot_altitude_ft
 	B747BR_eod_index = eod
 	B747BR_totalDistance = totalDistance
 	if B747BR_totalDistance<15 then
-		local glideAlt= B747BR_totalDistance*290 +fmsO[endI][3]
+		local glideAlt= B747BR_totalDistance*290 +fmsO[endI][9]
 		B747BR_fpe	= simDR_pressureAlt1-glideAlt
 	end
 	B747BR_nextDistanceInFeet = nextDistanceInFeet
@@ -3271,6 +3304,7 @@ function flight_start()
 	simDR_pitch = 0
 	B747DR_ap_vnav_system = 2
 	simDR_disabled_autopilot_altitude_ft=150000
+	B747BR_vnavProfile="[]"
 end
 
 --function flight_crash() end
