@@ -125,6 +125,7 @@ simDR_autopilot_flight_dir_active = find_dataref("sim/cockpit2/annunciators/flig
 simDR_autopilot_flight_dir_mode = find_dataref("sim/cockpit2/autopilot/flight_director_mode")
 B747DR_autothrottle_active = find_dataref("laminar/B747/engines/autothrottle_active")
 --simDR_autopilot_autothrottle_on = find_dataref("sim/cockpit2/autopilot/autothrottle_on")
+simCMD_ATOff = find_command("sim/autopilot/autothrottle_hard_off")
 simCMD_ThrottleDown = find_command("sim/engines/throttle_down")
 simCMD_ThrottleUp = find_command("sim/engines/throttle_up")
 B747DR_ap_vnav_pause = find_dataref("laminar/B747/autopilot/vnav_pause")
