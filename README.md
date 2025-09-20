@@ -129,6 +129,36 @@ See the [commit history](https://github.com/mSparks43/747-400/commits/master) fo
 
 _Thank you all for your support and contributions!_
 
+## Release XP12.3.0-2025/09/20 (OP Program XP12-30-2025/09/20):
+
+Culmination of fixes to date, Focus on XP12.3 weather radar
+
+### Enhancements
+
+ - XP12.3 Weather Radar support
+ - Weather Radar Panel interactions and lighting
+ - VNAV profile following
+ - Sync baro from either side
+ - Improve THR REF animations and targeting
+
+### Bug fixes
+
+ - Throttle becoming unresponsive
+ - XP12 ground power unit fixes
+ - GE engine fixes
+ - dont run parking brake in replay 
+ - Added visual enhancements to PW4000 & CF6 (rossf93)
+ - Wait for user throttle input before moving throttle lever
+ - Fix systems crash reading cruise altitude 
+ - VR button fixes for Linux and Windows
+ - Wing sweep option for toe brakes (e.g. single VR axis)
+ - Fix auto fuel management
+ - Fix com power notification when using com 2
+ - Optimize all png images using pngquant (ErgerSusha)
+ - HDG SEL shouldn't toggle
+ - hard off XP AT
+ - WXR dont draw over text
+
 ## Release XP12.2.0-2025/04/27 (OP Program XP12-10-2025/04/27):
 
 Culmination of fixes to date, put XP11 and XP12 versions into a single package. Focus on ACARs, Throttle and autopilot.
