@@ -561,6 +561,7 @@ function B747_monitorAT()
     if simDR_autopilot_autothrottle_enabled~=0 then
         --simDR_autopilot_autothrottle_enabled=0
         simCMD_ATOff:once()
+        B747DR_ap_lastCommand=simDRTime
     end
     --make sure autothrottle is in the correct mode for the FMA
     --[[local ap_state=toBits(simDR_autopilot_state)
