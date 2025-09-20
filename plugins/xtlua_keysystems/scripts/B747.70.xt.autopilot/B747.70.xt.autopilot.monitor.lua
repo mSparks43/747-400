@@ -69,10 +69,11 @@ function VNAV_NEXT_ALT(numAPengaged,fms)
         end
     end
     local dtoAirport = getDistance(simDR_latitude,simDR_longitude, fms[endI][5], fms[endI][6])
-    if (targetIndex==0 and dist_to_TOD<0) or (targetIndex>0 and fms[targetIndex][9]==0) or dtoAirport<5 then
+    local altFromairport = simDR_pressureAlt1-fms[endI][9]
+    if (targetIndex==0 and dist_to_TOD<0) or (targetIndex>0 and fms[targetIndex][9]==0) or altFromairport<2500 or (dtoAirport<8 and dtoAirport>3) then
         B747DR_fmstargetIndex=endI
         B747DR_ap_vnav_target_alt=fms[endI][9]
-        if dtoAirport<5 then
+        if altFromairport<2500 or (dtoAirport<8) then
              B747DR_fmstargetDistance=dtoAirport
         end
     else
