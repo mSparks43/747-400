@@ -93,7 +93,7 @@ function setDescentVSpeed()
 		  --speed=89.32039642334 distance=2.9459299767094vspeed=-6559410.6729958
   B747DR_ap_vb = math.atan2(vdiff,nextDistanceInFeet)*-57.2958
   if vspeed<-2500 then vspeed=-2500 end
-  
+  if vspeed>100 then vspeed=100 end
   if simDR_radarAlt1<=10 then
     simDR_autopilot_vs_fpm = -250 -- slow descent, reduces AoA which if it goes to high spoils the landing
     B747DR_ap_inVNAVdescent=0

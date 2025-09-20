@@ -57,7 +57,7 @@ function VNAV_NEXT_ALT(numAPengaged,fms)
                 end
             if B747BR_totalDistance>0 and dist_to_TOD>0 and B747DR_ap_inVNAVdescent==0 and (nextDistance)>dist_to_TOD then break end
             if dist_to_TOD<0 and fms[i][9]>0 and fms[i][9]<lowerAlt and fms[i][2] ~= 1 then targetAlt=fms[i][9] targetIndex=i break end
-            dtoAirport = getDistance(fms[i][5], fms[i][6], fms[endI][5], fms[endI][6])
+            local dtoAirport = getDistance(fms[i][5], fms[i][6], fms[endI][5], fms[endI][6])
 		--print("i=".. i .." B747DR_fmscurrentIndex="..B747DR_fmscurrentIndex .." speed="..simDR_groundspeed .. " distance="..totalDistance.." dtoAirport="..dtoAirport.. " ".. fmsO[i][5].." ".. fmsO[i][6].." ".. fmsO[i+1][5].." ".. fmsO[i+1][6])
             if dtoAirport < 10 or fms[i][9]>0 then
                 targetIndex = i
@@ -68,10 +68,13 @@ function VNAV_NEXT_ALT(numAPengaged,fms)
             end    
         end
     end
-    if (targetIndex==0 and dist_to_TOD<0) or (targetIndex>0 and fms[targetIndex][9]==0) then
-        
+    local dtoAirport = getDistance(simDR_latitude,simDR_longitude, fms[endI][5], fms[endI][6])
+    if (targetIndex==0 and dist_to_TOD<0) or (targetIndex>0 and fms[targetIndex][9]==0) or dtoAirport<5 then
         B747DR_fmstargetIndex=endI
         B747DR_ap_vnav_target_alt=fms[endI][9]
+        if dtoAirport<5 then
+             B747DR_fmstargetDistance=dtoAirport
+        end
     else
         B747DR_fmstargetIndex=targetIndex
         B747DR_ap_vnav_target_alt=targetAlt
@@ -470,13 +473,12 @@ function VNAV_modeSwitch(fmsO)
     --if B747BR_cruiseAlt < 10 then return end --no cruise alt set, not needed because cant set to 1 without this
     local numAPengaged = B747DR_ap_cmd_L_mode + B747DR_ap_cmd_C_mode + B747DR_ap_cmd_R_mode
     if B747DR_ap_vnav_state == 0 then
-        if B747DR_ap_inDescent ==1 then
+        if B747DR_ap_inDescent ==1  and fmsO~=nil then
             local diff = simDRTime - lastVNAVSwitch
 
             if diff > 0.2 then
                 setDescentVSpeed()
                 lastVNAVSwitch=simDRTime
-                return
             end
             
         end

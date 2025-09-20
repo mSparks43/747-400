@@ -2009,10 +2009,12 @@ function setDistances(fmsO)
 	end
 	if (fmsO) == nil then
 		B747BR_distance_to_dest=-1
+		B747BR_totalDistance = 0
 		return
 	end
 	if table.getn(fmsO) == 0 then
 		B747BR_distance_to_dest=-1
+		B747BR_totalDistance = 0
 		return
 	end
 
@@ -2025,9 +2027,11 @@ function setDistances(fmsO)
 	local endI = table.getn(fmsO)
 	B747BR_distance_to_dest= getDistance(iLat, iLong, fmsO[endI][5], fmsO[endI][6])
 	if table.getn(fmsO) <= 2 then
+		B747BR_totalDistance = 0
 		return
 	end
 	if fmsO[start] == nil then
+		B747BR_totalDistance = 0
 		print("empty data")
 		return
 	end
