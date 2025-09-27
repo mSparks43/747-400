@@ -766,7 +766,7 @@ function B747_prop_mode()
     end
     lastThrottleAll=simDR_engine_throttle_jet_all
     for i = 0, 3 do
-       print("in clear prop mode "..i.." with "..callEngineReverse[i])
+       --print("in clear prop mode "..i.." with "..callEngineReverse[i])
        if clearingReverse then
         simDR_prop_mode[i] = 1
         callEngineReverse[i]=0
