@@ -276,7 +276,8 @@ function B747_thrust_rev_toggle_1_CMDhandler(phase, duration)
 		if callEngineReverse[0]<=0 then 
             callEngineReverse[0]=1
         else
-            callEngineReverse[0]=0
+            callEngineReverse[0]=-1
+            run_after_time(canx_revHold, 0.5)
         end					
 	end	
 end	
@@ -287,7 +288,8 @@ function B747_thrust_rev_toggle_2_CMDhandler(phase, duration)
 		if callEngineReverse[1]<=0 then 
             callEngineReverse[1]=1
         else
-            callEngineReverse[1]=0
+            callEngineReverse[1]=-1
+            run_after_time(canx_revHold, 0.5)
         end						
 	end		
 end	
@@ -298,7 +300,8 @@ function B747_thrust_rev_toggle_3_CMDhandler(phase, duration)
 		if callEngineReverse[2]<=0 then 
             callEngineReverse[2]=1
         else
-            callEngineReverse[2]=0
+            callEngineReverse[2]=-1
+            run_after_time(canx_revHold, 0.5)
         end						
 	end		
 end
@@ -309,7 +312,8 @@ function B747_thrust_rev_toggle_4_CMDhandler(phase, duration)
 		if callEngineReverse[3]<=0 then 
             callEngineReverse[3]=1
         else
-            callEngineReverse[3]=0
+            callEngineReverse[3]=-1
+            run_after_time(canx_revHold, 0.5)
         end					
 	end	
 end
@@ -320,13 +324,16 @@ function B747_thrust_rev_toggle_all_CMDhandler(phase, duration)
 		-- AIRCRAFT MUST BE ON THE GROUND
 		-- PREVENTS USER TOGGLING "REVERSE" MODE WHEN ENGINE 4 THROTTLE LEVER IS NOT AT IDLE
 		print("toggle reverse")
+        local canc=false
         for i = 0, 3 do
             if callEngineReverse[i]<=0 then 
                 callEngineReverse[i]=1
             else
-                callEngineReverse[i]=0
+                callEngineReverse[i]=-1
+                canc=true
             end
         end
+        if canc then run_after_time(canx_revHold, 0.5) end
 	end
 end	
 
@@ -754,12 +761,12 @@ function B747_prop_mode()
         (simDR_thrust_rev_deploy_ratio[0]<0.01 and simDR_thrust_rev_deploy_ratio[1]<0.01 and simDR_thrust_rev_deploy_ratio[2]<0.01 and simDR_thrust_rev_deploy_ratio[3]<0.01)
         then
         clearingReverse=false
-    elseif simDR_engine_throttle_jet_all==0 and lastThrottleAll<0 then
+    elseif simDR_engine_throttle_jet_all>-0.0001 and simDR_engine_throttle_jet_all>lastThrottleAll then
         clearingReverse=true
     end
     lastThrottleAll=simDR_engine_throttle_jet_all
     for i = 0, 3 do
-       --print("in clear prop mode "..i.." with "..B747DR_display_N1[i])
+       print("in clear prop mode "..i.." with "..callEngineReverse[i])
        if clearingReverse then
         simDR_prop_mode[i] = 1
         callEngineReverse[i]=0
