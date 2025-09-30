@@ -2088,7 +2088,7 @@ function setDistances(fmsO)
 			--print("end fms"..i.."=at alt "..fms[i][3])
 			break
 		end
-		if fms[i][9]>0 then
+		if fmsO[i][9]>0 then
 			--construct vnav profile
 			local isNext="false"
 			if i==start then
@@ -2649,7 +2649,7 @@ function fma_PitchModes()
 	end
 end
 
-function B747_ap_fma()
+function B747_ap_fma(fms)
 	B747DR_capt_ap_roll = B747_animate_value(B747DR_capt_ap_roll, B747DR_ap_target_roll - simDR_capt_roll, -25, 25, 10)
 	B747DR_fo_ap_roll = B747_animate_value(B747DR_fo_ap_roll, B747DR_ap_target_roll - simDR_fo_roll, -25, 25, 10)
 	--B747DR_capt_ap_roll=B747DR_ap_target_roll-simDR_capt_roll
@@ -2662,6 +2662,15 @@ function B747_ap_fma()
 			B747DR_ap_FMA_autothrottle_mode=3
 	end
 	if (B747DR_ap_AFDS_status_annun_pilot == 3 or B747DR_ap_AFDS_status_annun_pilot == 4) and runAutoland() then
+		if fms~=nil then
+			local endI = table.getn(fms)
+			if endI>0 then
+				local dtoAirport = getDistance(simDR_latitude,simDR_longitude, fms[endI][5], fms[endI][6])
+				B747DR_fmstargetDistance=dtoAirport
+				B747DR_fmstargetIndex=endI
+				B747DR_ap_vnav_target_alt=fms[endI][9]
+			end
+		end
 		return
 	end
 	local numAPengaged = B747DR_ap_cmd_L_mode + B747DR_ap_cmd_C_mode + B747DR_ap_cmd_R_mode
@@ -3367,7 +3376,7 @@ function after_physics()
 	local fms = json.decode(fmsSTR)
 	B747_getCurrentWayPoint(fms)
 	B747_monitorAP(fms)
-	B747_ap_fma()
+	B747_ap_fma(fms)
 	B747_ap_button_switch_animation()
 	B747_fltmgmt_setILS(fms)
 	B747_ap_vs_mode()

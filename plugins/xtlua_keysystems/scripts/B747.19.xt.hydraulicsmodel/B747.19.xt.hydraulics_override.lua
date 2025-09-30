@@ -505,8 +505,8 @@ function ap_director_pitch(pitchMode)
     time=simDRTime-previous_pitchTime
     previous_pitchTime=simDRTime
     --print("ap_director_pitch" ..time.. " "..directorSampleRate)
-    if time>5 or time==0 then
-        return last_simDR_AHARS_pitch_heading_deg_pilot
+    if time>5 or time==0 or B747DR_ap_pitch_mode_box_status==1 then
+        return simDR_AHARS_pitch_heading_deg_pilot
     end
    -- print("ap_director_pitc go")
     local alt_delta=simDR_pressureAlt1-last_altitude
