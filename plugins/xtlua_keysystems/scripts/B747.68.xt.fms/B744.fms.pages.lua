@@ -1092,6 +1092,39 @@ function fmsFunctions.setdata(fmsO,value)
     setFMSData("rpttimemm",mmV)
   elseif value=="fltdate" then 
     setFMSData("fltdate",os.date("%Y%m%d"))
+  elseif value=="drtto" then
+	local wpt=fmsO["scratchpad"]
+	if string.len(wpt)==0 then
+		wpt=string.sub(B747DR_srcfms[fmsO.id][14],2,-2)
+		wpt=str_trim(wpt)
+	end
+	simCMD_FMS_key[fmsO["id"]]["del"]:once()
+  	simCMD_FMS_key[fmsO["id"]]["clear"]:once()
+	if string.len(wpt)>0 and (string.len(fmsJson) > 2) then
+		
+    	local fms2 = json.decode(fmsJson)
+		local found=false
+		if fms2 ~= nil then
+			for i=1,table.getn(fms2),1 do
+              if fms2[i][8]==wpt then
+				print(wpt .." found at "..i)
+				found=true
+			  else
+				print(wpt .." not found at "..i)
+			  end
+          end
+		end
+		if found then
+			B747DR_fms_setCurrent=wpt
+		else
+			print("INVALID ENTRY 1 "..wpt.." 1")
+			fmsO["notify"]="INVALID ENTRY"	
+		end
+
+	else
+		print("INVALID ENTRY 2 "..fmsO["scratchpad"].." 2")
+		fmsO["notify"]="INVALID ENTRY"
+	end	
   elseif value=="crzalt" then
 	if IN_REPLAY==1 then
 		fmsModules:setData("crzalt","FL350") -- if in replay just default to FL350 since we cant set the default FMS

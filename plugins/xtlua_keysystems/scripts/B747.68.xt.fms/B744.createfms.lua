@@ -149,11 +149,6 @@ function keyDown(fmsModule,key)
 	end
        return
      end
-     
-     --if string.len(fmsModules[fmsModule].notify)>0 and (hasChild(fmsFunctionsDefs[page],key)==false or fmsFunctionsDefs[page][key][1]~="key2fmc") then print("reject "..fmsFunctionsDefs[page][key][1].. " for "..key) return end -- require notification clear
-     
-     
-     
      if hasChild(fmsFunctionsDefs[page],key) then
       print(fmsModule.. " found " .. fmsFunctionsDefs[page][key][1] .. " for " .. key)
       fmsFunctions[ fmsFunctionsDefs[page][key][1] ](fmsModules[fmsModule],fmsFunctionsDefs[page][key][2])

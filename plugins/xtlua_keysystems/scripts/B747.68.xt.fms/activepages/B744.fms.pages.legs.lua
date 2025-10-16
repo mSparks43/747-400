@@ -9,7 +9,9 @@ fmsPages["LEGS"].getPage=function(self,pgNo,fmsID)
     l2=cleanFMSLine(B747DR_srcfms[fmsID][2])
     l3=cleanFMSLine(B747DR_srcfms[fmsID][3])
     fmsFunctionsDefs["LEGS"]["R1"]={"key2fmc","R1"}
+    fmsFunctionsDefs["LEGS"]["L2"]={"key2fmc","L2"}
   else
+    fmsFunctionsDefs["LEGS"]["L2"]={"setdata","drtto"}
     fmsFunctionsDefs["LEGS"]["R1"]=nil
   end
   
@@ -33,7 +35,7 @@ fmsPages["LEGS"].getPage=function(self,pgNo,fmsID)
 end
 
 fmsFunctionsDefs["LEGS"]["L1"]={"key2fmc","L1"}
-fmsFunctionsDefs["LEGS"]["L2"]={"key2fmc","L2"}
+
 fmsFunctionsDefs["LEGS"]["L3"]={"key2fmc","L3"}
 fmsFunctionsDefs["LEGS"]["L4"]={"key2fmc","L4"}
 fmsFunctionsDefs["LEGS"]["L5"]={"key2fmc","L5"}

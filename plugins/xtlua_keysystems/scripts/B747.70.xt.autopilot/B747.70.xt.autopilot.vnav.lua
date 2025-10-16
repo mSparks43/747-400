@@ -47,7 +47,7 @@ function deceleratedDesent(targetvspeed)
 end
 function setDescentVSpeed()
 	local fmsO=getFMS()
-  if B747BR_totalDistance>=15 then
+  if B747BR_totalDistance>=15 and fmsO[B747DR_fmstargetIndex]~= nil then
     --set in setDistances when < 15
     local glideAlt= B747DR_fmstargetDistance*290 +fmsO[B747DR_fmstargetIndex][9]
     if string.len(B747BR_vnavProfile)>2 then
