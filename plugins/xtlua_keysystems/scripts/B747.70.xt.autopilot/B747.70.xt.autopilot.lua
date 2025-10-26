@@ -2096,11 +2096,17 @@ function setDistances(fmsO)
 			end
 			if fmsO[i][9]~=lastVnavAlt or i==start then
 				local vAlt=0
+				local tAlt=fmsO[i][9]
 				if i>1 then
 					local distance=getDistance(fmsO[i-1][5],fmsO[i-1][6], fmsO[i][5],fmsO[i][6])
-					vAlt=(lastVnavAlt-fmsO[i][9])/distance
+					if distance>0.1 then
+					  vAlt=(lastVnavAlt-fmsO[i][9])/distance
+					else
+						vAlt=0
+						tAlt=lastVnavAlt
+					end
 				end
-				local vNavdataI={fmsO[i][5],fmsO[i][6],fmsO[i][9],i==start,vAlt}
+				local vNavdataI={fmsO[i][5],fmsO[i][6],tAlt,i==start,vAlt}
 				vnavData[vnavI]=vNavdataI
 				vnavI=vnavI+1
 				lastVnavAlt=fmsO[i][9]
@@ -2111,7 +2117,11 @@ function setDistances(fmsO)
 	local vAlt=0
 	if lastVnavAlt>0 then
 		local distance=getDistance(vnavData[vnavI-1][1],vnavData[vnavI-1][2], fmsO[endI][5],fmsO[endI][6])
-		vAlt=(lastVnavAlt-fmsO[endI][9])/distance
+		if distance>0.1 then
+			vAlt=(lastVnavAlt-fmsO[i][9])/distance
+        else
+            vAlt=0
+          end
 	end
 	local vNavdataI={fmsO[endI][5],fmsO[endI][6],fmsO[endI][9],endI==start,vAlt}
 	vnavData[vnavI]=vNavdataI
