@@ -2118,7 +2118,7 @@ function setDistances(fmsO)
 	if lastVnavAlt>0 then
 		local distance=getDistance(vnavData[vnavI-1][1],vnavData[vnavI-1][2], fmsO[endI][5],fmsO[endI][6])
 		if distance>0.1 then
-			vAlt=(lastVnavAlt-fmsO[i][9])/distance
+			vAlt=(lastVnavAlt-fmsO[endI][9])/distance
         else
             vAlt=0
           end
