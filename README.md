@@ -129,6 +129,12 @@ See the [commit history](https://github.com/mSparks43/747-400/commits/master) fo
 
 _Thank you all for your support and contributions!_
 
+## Release XP12.3.0-2025/10/27 (OP Program XP12-30-2025/10/27):
+
+### Bug fixes
+
+ - fix systems crashes caused by VNAV profile calculations
+
 ## Release XP12.3.0-2025/09/20 (OP Program XP12-30-2025/09/20):
 
 Culmination of fixes to date, Focus on XP12.3 weather radar
