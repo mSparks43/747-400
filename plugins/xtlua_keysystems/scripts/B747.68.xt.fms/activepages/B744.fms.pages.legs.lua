@@ -11,7 +11,8 @@ fmsPages["LEGS"].getPage=function(self,pgNo,fmsID)
     fmsFunctionsDefs["LEGS"]["R1"]={"key2fmc","R1"}
     fmsFunctionsDefs["LEGS"]["L2"]={"key2fmc","L2"}
   else
-    fmsFunctionsDefs["LEGS"]["L2"]={"setdata","drtto"}
+    --fmsFunctionsDefs["LEGS"]["L2"]={"setdata","drtto"}
+    fmsFunctionsDefs["LEGS"]["L2"]={"key2fmc","L2"}
     fmsFunctionsDefs["LEGS"]["R1"]=nil
   end
   
