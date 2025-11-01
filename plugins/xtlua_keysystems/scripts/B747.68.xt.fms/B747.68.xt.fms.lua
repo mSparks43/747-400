@@ -34,6 +34,7 @@ B747DR_irs_src_capt		 = find_dataref("laminar/B747/flt_inst/irs_src/capt/sel_dia
 B747DR_ap_fpa	    = find_dataref("laminar/B747/autopilot/navadata/fpa")
 B747DR_ap_vb	    = find_dataref("laminar/B747/autopilot/navadata/vb")
 simDR_autopilot_vs_fpm         			= find_dataref("sim/cockpit2/autopilot/vvi_dial_fpm")
+B747DR_ap_lnav_xtk_error           	= find_dataref("laminar/B747/autopilot/lnav/xtk_error")
 B747DR_fmc_notifications            = find_dataref("laminar/B747/fms/notification")
 B747DR_airspeed_Vref                          = find_dataref("laminar/B747/airspeed/Vref")
 B747DR_airspeed_VrefFlap                          = find_dataref("laminar/B747/airspeed/VrefFlap")

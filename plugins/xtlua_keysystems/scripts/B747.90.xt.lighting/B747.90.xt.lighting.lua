@@ -2071,7 +2071,7 @@ function B747_ind_lights()
     B747DR_annun_brightness_ratio[254]  = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, brightness_level * (1.0 - B747DR_rtp_C_off_status))            -- CENTER RADIO PANEL GLASS (GLOW)
     B747DR_annun_brightness_ratio[255]  = B747_ternary((B747DR_toggle_switch_position[13] == 1), brightness_level, brightness_level * (1.0 - B747DR_rtp_R_off_status))            -- RIGHT RADIO PANEL GLASS (GLOW)
     B747DR_annun_brightness_ratio[256]  = brightness_level                                              -- TRANSPONDER RADIO PANEL GLASS (GLOW)
-    simDR_instrument_brightness_switch[15] = brightness_level                                           -- RADIO LCDs
+    simDR_instrument_brightness_switch[15] = B747_ternary((brightness_level>0), 1.0, 0)                                           -- RADIO LCDs
 
 
 

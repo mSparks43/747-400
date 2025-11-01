@@ -102,6 +102,12 @@ function setFMSData(id, value)
 	B747DR_FMSdata = json.encode(fmsData)
 end
 
+function getTriSpaceSolver(ab,ac,cb)
+	local ac2=(ac*ac)
+	local retVal=((ab*ab)-(cb*cb)+ac2)/(2*ab);
+	return {retVal,math.sqrt(ac2-(retVal*retVal))};
+end
+
 local beganDescentAny = false
 function beganDescent()
 	return beganDescentAny
@@ -373,6 +379,7 @@ B747DR_ap_vnav_system = deferred_dataref("laminar/B747/autopilot/vnav_system", "
 B747DR_ap_vnav_target_alt = deferred_dataref("laminar/B747/autopilot/vnav_target_alt", "number")
 B747DR_ap_vnav_state = deferred_dataref("laminar/B747/autopilot/vnav_state", "number")
 B747DR_ap_lnav_state = deferred_dataref("laminar/B747/autopilot/lnav_state", "number")
+B747DR_ap_lnav_xtk_error           	= deferred_dataref("laminar/B747/autopilot/lnav/xtk_error", "number")
 B747DR_ap_inVNAVdescent = deferred_dataref("laminar/B747/autopilot/vnav_descent", "number")
 B747DR_ap_inDescent 		= deferred_dataref("laminar/B747/autopilot/vnav/after_tod", "number")
 B747DR_ap_flightPhase = deferred_dataref("laminar/B747/autopilot/flightPhase", "number")
@@ -2144,19 +2151,26 @@ end
 
 ----- ALTITUDE SELECTED -----------------------------------------------------------------
 
-function B747_getCurrentWayPoint(fms)
+function B747_getCurrentWayPoint(fmsO)
 	--[[ for i=1,table.getn(fms),1 do
     if fms[i][10]==true and i<=getVNAVState("recalcAfter") then
       --print("simDR_autopilot_altitude_ft=".. simDR_autopilot_altitude_ft)
       return
     end
   end]]
-	for i = 1, table.getn(fms), 1 do
+	for i = 1, table.getn(fmsO), 1 do
 		--print("FMS j="..fmsJSON)
 
-		if fms[i][10] == true then
+		if fmsO[i][10] == true then
 			B747DR_fmscurrentIndex = i
-
+			if i>1 then
+				local dFromLast=getDistance(simDR_latitude,simDR_longitude,fmsO[i-1][5],fmsO[i-1][6])
+				local dToNext=getDistance(simDR_latitude,simDR_longitude,fmsO[i][5],fmsO[i][6])
+				local trackLength=getDistance(fmsO[i-1][5],fmsO[i-1][6],fmsO[i][5],fmsO[i][6])
+				local track=getTriSpaceSolver(trackLength,dFromLast,dToNext)
+				B747DR_ap_lnav_xtk_error=track[2]
+				print("Track Data "..track[1].." "..track[2].." "..dFromLast.." "..dToNext.." "..trackLength)
+			end
 			setVNAVState("recalcAfter", i)
 			break
 		end
