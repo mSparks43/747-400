@@ -98,7 +98,7 @@ function doPitch()
      else
       targetPitch=progressPitch
     end]]--
-    flareRate=B747_rescale(130,2,170,0.5,simDR_ind_airspeed_kts_pilot)
+    flareRate=B747_rescale(130,3,180,1.5,simDR_ind_airspeed_kts_pilot)
 
     targetPitch=zeroRatePitch+flareRate --0.5
     print("flareRate "..flareRate.." targetPitch "..targetPitch.." flareAt "..flareAt.." simDR_AHARS_pitch_heading_deg_pilot "..simDR_AHARS_pitch_heading_deg_pilot)
@@ -140,7 +140,7 @@ function doYaw()
   if tRoll>0.5 then tRoll=0.5 end
   if tRoll<-0.5 then tRoll=-0.5 end
 
-  simDR_roll=B747_set_ap_animation_position(simDR_roll,tRoll,-1,1,5)
+  --simDR_roll=B747_set_ap_animation_position(simDR_roll,tRoll,-1,1,5)
 
 
 

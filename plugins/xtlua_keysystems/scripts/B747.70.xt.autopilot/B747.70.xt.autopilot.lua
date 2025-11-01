@@ -173,6 +173,7 @@ simDR_autopilot_destination_type = find_dataref("sim/cockpit/gps/destination_typ
 simDR_autopilot_destination_index = find_dataref("sim/cockpit/gps/destination_index")
 simDR_autopilot_airspeed_kts = find_dataref("sim/cockpit2/autopilot/airspeed_dial_kts")
 simDR_autopilot_airspeed_kts_mach = find_dataref("sim/cockpit2/autopilot/airspeed_dial_kts_mach")
+B747DR_fms_setCurrent = find_dataref("xtlua/currentFMSID")
 --simDR_autopilot_heading_deg         	= find_dataref("sim/cockpit2/autopilot/heading_dial_deg_mag_pilot")
 simDR_autopilot_heading_deg = find_dataref("sim/cockpit/autopilot/heading_mag")
 simDR_autopilot_vs_fpm = find_dataref("sim/cockpit2/autopilot/vvi_dial_fpm")
@@ -241,6 +242,7 @@ simDR_radarAlt1 = find_dataref("sim/cockpit2/gauges/indicators/radio_altimeter_h
 simDR_radarAlt2 = find_dataref("sim/cockpit2/guages/indicators/radio_altimeter_height_ft_copilot")
 simDR_allThrottle = 0 --find_dataref("sim/cockpit2/engine/actuators/throttle_ratio_all")
 simDR_override_throttles = find_dataref("sim/operation/override/override_throttles")
+simDR_override_fms_progress = find_dataref("sim/operation/override/override_fms_advance")
 simDR_descent = find_dataref("sim/cockpit2/autopilot/des_adjust")
 simDR_pitch = find_dataref("sim/cockpit2/autopilot/sync_hold_pitch_deg")
 simDR_touchGround = find_dataref("sim/flightmodel/failures/onground_any")
@@ -296,7 +298,7 @@ B747DR_target_descentAlt = deferred_dataref("laminar/B747/autopilot/ap_monitor/t
 B747DR_target_descentSpeed = deferred_dataref("laminar/B747/autopilot/ap_monitor/target_descentSpeed", "number")
 B747DR_descentSpeedGradient = deferred_dataref("laminar/B747/autopilot/ap_monitor/descentSpeedGradient", "number")
 B747DR_switchingIASMode = deferred_dataref("laminar/B747/autopilot/ap_monitor/switchingIASMode", "number")
-B747DR_fmstargetIndex = deferred_dataref("laminar/B747/autopilot/ap_monitor/fmstargetIndex", "number")
+--B747DR_fmstargetIndex = deferred_dataref("laminar/B747/autopilot/ap_monitor/fmstargetIndex", "number")
 B747DR_fmstargetDistance           = deferred_dataref("laminar/B747/autopilot/ap_monitor/fmstargetDistance", "number")
 B747DR_fmscurrentIndex = deferred_dataref("laminar/B747/autopilot/ap_monitor/fmscurrentIndex", "number")
 B747DR_mcp_hold = deferred_dataref("laminar/B747/autopilot/ap_monitor/mcp_hold", "number")
@@ -1034,7 +1036,9 @@ function B747_ap_VNAV_mode_CMDhandler(phase, duration)
 			B747DR_ap_vnav_state = 1
 			B747DR_ap_thrust_mode = 0
 			B747DR_mcp_hold=0
-			if beganDescent() == true and simDR_autopilot_alt_hold_status < 2 then
+			B747DR_ap_inVNAVdescent = 0
+			setDescent(false)
+			--[[if beganDescent() == true and simDR_autopilot_alt_hold_status < 2 then
 				print("had descent")
 				--simCMD_autopilot_alt_hold_mode:once()
 				simDR_autopilot_alt_hold_status = 2
@@ -1045,7 +1049,7 @@ function B747_ap_VNAV_mode_CMDhandler(phase, duration)
 				print("had descent, in alt hold")
 			else
 				print("no previous descent")
-			end
+			end]]--
 			setVNAVState("gotVNAVSpeed", false)
 			B747_vnav_speed()
 		end
@@ -1996,10 +2000,7 @@ function B747_ap_ias_mach_mode()
 	end
 end
 
-local fms
-function getFMS()
-	return fms
-end
+
 function setDistances(fmsO)
 	--print("set distances")
 	if B747BR_cruiseAlt>0 and B747DR_ap_flightPhase<2 then
@@ -2097,10 +2098,10 @@ function setDistances(fmsO)
 		end
 		if fmsO[i][9]>0 then
 			--construct vnav profile
-			local isNext="false"
+			--[[local isNext="false"
 			if i==start then
 				isNext="true"
-			end
+			end]]--
 			if fmsO[i][9]~=lastVnavAlt or i==start then
 				local vAlt=0
 				local tAlt=fmsO[i][9]
@@ -2113,7 +2114,7 @@ function setDistances(fmsO)
 						tAlt=lastVnavAlt
 					end
 				end
-				local vNavdataI={fmsO[i][5],fmsO[i][6],tAlt,i==start,vAlt}
+				local vNavdataI={fmsO[i][5],fmsO[i][6],tAlt,i>=start,vAlt}
 				vnavData[vnavI]=vNavdataI
 				vnavI=vnavI+1
 				lastVnavAlt=fmsO[i][9]
@@ -2130,7 +2131,7 @@ function setDistances(fmsO)
             vAlt=0
           end
 	end
-	local vNavdataI={fmsO[endI][5],fmsO[endI][6],fmsO[endI][9],endI==start,vAlt}
+	local vNavdataI={fmsO[endI][5],fmsO[endI][6],fmsO[endI][9],(endI>=start),vAlt}
 	vnavData[vnavI]=vNavdataI
 	B747BR_vnavProfile = json.encode(vnavData)
 	--print("setVNAV "..B747BR_vnavProfile)
@@ -2139,7 +2140,8 @@ function setDistances(fmsO)
 	B747BR_eod_index = eod
 	B747BR_totalDistance = totalDistance
 	if B747BR_totalDistance<15 then
-		local glideAlt= B747BR_totalDistance*290 +fmsO[endI][9]
+		local dtoAirport = getDistance(simDR_latitude, simDR_longitude, fmsO[endI][5], fmsO[endI][6])
+		local glideAlt= dtoAirport*290 +fmsO[endI][9]
 		B747BR_fpe	= simDR_pressureAlt1-glideAlt
 	end
 	B747BR_nextDistanceInFeet = nextDistanceInFeet
@@ -2150,14 +2152,70 @@ function setDistances(fmsO)
 end
 
 ----- ALTITUDE SELECTED -----------------------------------------------------------------
-
 function B747_getCurrentWayPoint(fmsO)
-	--[[ for i=1,table.getn(fms),1 do
-    if fms[i][10]==true and i<=getVNAVState("recalcAfter") then
-      --print("simDR_autopilot_altitude_ft=".. simDR_autopilot_altitude_ft)
-      return
-    end
-  end]]
+	--B747_getCurrentWayPoint_default(fmsO)
+	B747_getCurrentWayPoint_function(fmsO)
+end
+
+function B747_getCurrentWayPoint_function(fmsO)
+	if simDR_radarAlt1<1000 then return end --surpress during final
+	simDR_override_fms_progress=1
+	best=0
+	bestOffTrack=15
+	local minPhaseLeg=2
+	local maxPhaseLeg=(table.getn(fmsO)-2)
+	if maxPhaseLeg>3 and fmsO[table.getn(fmsO)][2] == 1 then
+		local dToAP=getDistance(simDR_latitude,simDR_longitude,fmsO[table.getn(fmsO)][5],fmsO[table.getn(fmsO)][6])
+
+		if dToAP<40 then
+			minPhaseLeg=math.max(B747DR_fmscurrentIndex-1,2)
+			maxPhaseLeg=math.min(minPhaseLeg+3,(table.getn(fmsO)-2))
+		end
+	end
+
+	--print("Start Track Data "..minPhaseLeg.."->"..maxPhaseLeg)
+	for i = minPhaseLeg, maxPhaseLeg, 1 do --last is always the airport, never go past last track
+
+		local dFromLast=getDistance(simDR_latitude,simDR_longitude,fmsO[i-1][5],fmsO[i-1][6])
+		local dToNext=getDistance(simDR_latitude,simDR_longitude,fmsO[i][5],fmsO[i][6])
+		local trackLength=getDistance(fmsO[i-1][5],fmsO[i-1][6],fmsO[i][5],fmsO[i][6])
+		if trackLength>0.1 then
+			local track=getTriSpaceSolver(trackLength,dFromLast,dToNext)
+			B747DR_ap_lnav_xtk_error=track[2]
+			--print("Track Data "..track[1].." "..track[2].." "..dFromLast.." "..dToNext.." "..trackLength)
+			if track[1]>0 and track[1]<trackLength and track[2]<10 then
+				--print("In Track to waypoint="..i)
+				if track[2]<bestOffTrack then
+					bestOffTrack=track[2]
+					local thisHeading=getHeading(fmsO[i-1][5],fmsO[i-1][6],fmsO[i][5],fmsO[i][6])
+					local nextHeading=getHeading(fmsO[i][5],fmsO[i][6],fmsO[i+1][5],fmsO[i+1][6])
+					local headingChange=math.abs(getHeadingDifference(nextHeading,thisHeading))
+					local pemptNext=B747_rescale(0,0,160,3.5,headingChange)
+					if track[1]>(trackLength-pemptNext) then
+						--print("End of Track to waypoint "..headingChange.." "..pemptNext)
+						best=i+1
+					else
+						--print("End of Track to waypoint "..headingChange.." "..pemptNext)
+						best=i
+					end
+				end
+			end
+		end
+	end
+	--print("best Track to waypoint="..best.." / "..bestOffTrack)
+	if best>0 and B747DR_fmscurrentIndex ~=best then
+		B747DR_fms_setCurrent = best
+		B747DR_fmscurrentIndex = best
+		--print("B747DR_fmscurrentIndex="..best)
+		setVNAVState("recalcAfter", best)
+	elseif B747DR_fmscurrentIndex == 0 then
+		B747DR_fmscurrentIndex = 1
+		--print("B747DR_fmscurrentIndex="..1)
+		setVNAVState("recalcAfter", 1)
+	end
+end
+
+function B747_getCurrentWayPoint_default(fmsO)
 	for i = 1, table.getn(fmsO), 1 do
 		--print("FMS j="..fmsJSON)
 
@@ -2169,7 +2227,7 @@ function B747_getCurrentWayPoint(fmsO)
 				local trackLength=getDistance(fmsO[i-1][5],fmsO[i-1][6],fmsO[i][5],fmsO[i][6])
 				local track=getTriSpaceSolver(trackLength,dFromLast,dToNext)
 				B747DR_ap_lnav_xtk_error=track[2]
-				print("Track Data "..track[1].." "..track[2].." "..dFromLast.." "..dToNext.." "..trackLength)
+				--print("Track Data "..track[1].." "..track[2].." "..dFromLast.." "..dToNext.." "..trackLength)
 			end
 			setVNAVState("recalcAfter", i)
 			break
@@ -2177,7 +2235,7 @@ function B747_getCurrentWayPoint(fmsO)
 	end
 end
 
-function B747_ap_altitude()
+function B747_ap_altitude(fms)
 	local currentapAlt = simDR_autopilot_altitude_ft
 	B747DR_ap_alt_show_thousands = B747_ternary(B747DR_autopilot_altitude_ft > 999.9, 1.0, 0.0)
 	B747DR_ap_alt_show_tenThousands = B747_ternary(B747DR_autopilot_altitude_ft > 9999.99, 1.0, 0.0)
@@ -2201,7 +2259,7 @@ function B747_ap_altitude()
 	end
 
 	--print("B747_ap_altitude")
-	fms = json.decode(fmsJSON)
+	--local fms = json.decode(fmsJSON)
 	-- 	if table.getn(fms)<2 or fms[table.getn(fms)][2] ~= 1 then
 	-- 	  B747DR_ap_vnav_state=0
 	-- 	  return
@@ -2691,7 +2749,7 @@ function B747_ap_fma(fms)
 			if endI>0 then
 				local dtoAirport = getDistance(simDR_latitude,simDR_longitude, fms[endI][5], fms[endI][6])
 				B747DR_fmstargetDistance=dtoAirport
-				B747DR_fmstargetIndex=endI
+				--B747DR_fmstargetIndex=endI
 				B747DR_ap_vnav_target_alt=fms[endI][9]
 			end
 		end
@@ -3343,6 +3401,7 @@ function flight_start()
 	B747DR_ap_vnav_system = 2
 	simDR_disabled_autopilot_altitude_ft=150000
 	B747BR_vnavProfile="[]"
+	
 end
 
 --function flight_crash() end
@@ -3405,7 +3464,7 @@ function after_physics()
 	B747_fltmgmt_setILS(fms)
 	B747_ap_vs_mode()
 	B747_ap_ias_mach_mode()
-	B747_ap_altitude()
+	B747_ap_altitude(fms)
 	B747_vnav_speed()
 	B747_ap_appr_mode()
 	B747_ap_afds()

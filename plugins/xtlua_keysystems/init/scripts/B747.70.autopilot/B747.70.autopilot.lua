@@ -75,6 +75,7 @@ B747DR_ils_dots           	= deferred_dataref("laminar/B747/autopilot/ils_dots",
 B747DR_ap_vnav_system            	= deferred_dataref("laminar/B747/autopilot/vnav_system", "number")
 B747DR_ap_vnav_target_alt            	= deferred_dataref("laminar/B747/autopilot/vnav_target_alt", "number")
 B747DR_ap_lnav_xtk_error           	= deferred_dataref("laminar/B747/autopilot/lnav/xtk_error", "number")
+B747DR_fms_setCurrent = find_dataref("xtlua/currentFMS")
 B747DR_ap_vnav_state            	= deferred_dataref("laminar/B747/autopilot/vnav_state", "number")
 B747DR_ap_lnav_state            	= deferred_dataref("laminar/B747/autopilot/lnav_state", "number")
 B747DR_ap_inVNAVdescent 		= deferred_dataref("laminar/B747/autopilot/vnav_descent", "number")
@@ -211,7 +212,7 @@ B747DR_switching_servos_on      = deferred_dataref("laminar/B747/autopilot/ap_mo
 B747DR_target_descentSpeed      = deferred_dataref("laminar/B747/autopilot/ap_monitor/target_descentSpeed", "number")
 B747DR_descentSpeedGradient     = deferred_dataref("laminar/B747/autopilot/ap_monitor/descentSpeedGradient", "number")
 B747DR_switchingIASMode         = deferred_dataref("laminar/B747/autopilot/ap_monitor/switchingIASMode", "number")
-B747DR_fmstargetIndex           = deferred_dataref("laminar/B747/autopilot/ap_monitor/fmstargetIndex", "number")
+--           = deferred_dataref("laminar/B747/autopilot/ap_monitor/fmstargetIndex", "number")
 B747DR_fmstargetDistance           = deferred_dataref("laminar/B747/autopilot/ap_monitor/fmstargetDistance", "number")
 B747DR_fmscurrentIndex          = deferred_dataref("laminar/B747/autopilot/ap_monitor/fmscurrentIndex", "number")
 B747DR_mcp_hold                 = deferred_dataref("laminar/B747/autopilot/ap_monitor/mcp_hold", "number")
@@ -261,6 +262,7 @@ simDR_override_throttles = find_dataref("sim/operation/override/override_throttl
 simDR_override_control_surfaces       = find_dataref("sim/operation/override/override_control_surfaces")
 simDR_override_steering               = find_dataref("sim/operation/override/override_wheel_steer")
 simDR_override_gpu               = find_dataref("sim/operation/override/override_GPU_volts")
+simDR_override_fms_progress = find_dataref("sim/operation/override/override_fms_advance")
 simDR_version=find_dataref("sim/version/xplane_internal_version")
 function aircraft_unload()
 	if simDR_version>=120012 then
@@ -269,4 +271,5 @@ function aircraft_unload()
     simDR_override_throttles = 0
     simDR_override_control_surfaces = 0
     simDR_override_steering=0
+    simDR_override_fms_progress=0
 end
