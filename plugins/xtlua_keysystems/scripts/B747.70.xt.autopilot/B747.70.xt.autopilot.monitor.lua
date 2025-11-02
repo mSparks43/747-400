@@ -110,6 +110,9 @@ function VNAV_CLB(numAPengaged,fmsO)
 
 
     local start=B747DR_fmscurrentIndex
+    if start == 0 then
+		start = 1
+	end
     local waypointAlt=fmsO[start][9]
     if waypointAlt==0 or simDR_radarAlt1<3000 then waypointAlt=B747DR_autopilot_altitude_ft end
     local waypointDiff=waypointAlt-simDR_pressureAlt1
@@ -740,6 +743,9 @@ function B747_updateApproachHeading(fmsO)
     end
 
     local start=B747DR_fmscurrentIndex
+    if start == 0 then
+		start = 1
+	end
     if fmsO[start]==nil then
         --print("empty data "..start)
         return
