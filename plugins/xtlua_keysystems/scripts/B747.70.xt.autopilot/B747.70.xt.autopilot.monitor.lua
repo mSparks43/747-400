@@ -30,7 +30,7 @@ function VNAV_NEXT_ALT(numAPengaged,fms)
     local currentIndex=0
     local dist_to_TOD=(B747BR_totalDistance-B747BR_tod)
     local lowerAlt=tonumber(getFMSData("transalt"))
-    print("setVNAV "..B747BR_vnavProfile)
+    --print("setVNAV "..B747BR_vnavProfile)
     local endI = table.getn(fms)
     --print("FMS ="..fmsJSON)
     for i=1,endI,1 do
@@ -496,7 +496,17 @@ function VNAV_modeSwitch(fmsO)
     local diff2=simDRTime-lastVNAVSwitch
     if diff<0.5 or diff2<0.1 then return end --mode switch at 0.1 second intervals
 
-    
+    if B747DR_ap_vnav_state == 1 then --check if we need to enter as VNAV ALT
+        local mcpDiff=simDR_pressureAlt1-B747DR_autopilot_altitude_ft
+        if math.abs(mcpDiff)<1000 then
+            B747DR_mcp_hold=1
+            B747DR_ap_vnav_state=2
+            simDR_autopilot_alt_hold_status = 2
+            simDR_autopilot_vs_status=0
+            simDR_autopilot_flch_status=0
+            print("set B747DR_mcp_hold in VNAV_modeSwitch")
+        end
+    end
 
 
     --print("checkMCPAlt "..eta.. " "..dist.. " "..diff3)

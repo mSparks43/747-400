@@ -91,7 +91,7 @@ function setDescentVSpeed(fmsO)
   if B747DR_ap_vnav_target_alt>simDR_pressureAlt1 then
     vspeed=0
   end
-  print("setDescentVSpeed speed=".. simDR_groundspeed .. " distance=".. distanceNM .. " vspeed=" .. vspeed .. " vdiff=" .. vdiff .. " time=" .. time.. " B747DR_ap_vnav_target_alt=" .. B747DR_ap_vnav_target_alt)
+  --print("setDescentVSpeed speed=".. simDR_groundspeed .. " distance=".. distanceNM .. " vspeed=" .. vspeed .. " vdiff=" .. vdiff .. " time=" .. time.. " B747DR_ap_vnav_target_alt=" .. B747DR_ap_vnav_target_alt)
 		  --speed=89.32039642334 distance=2.9459299767094vspeed=-6559410.6729958
   B747DR_ap_vb = math.atan2(vdiff,nextDistanceInFeet)*-57.2958
   if vspeed<-2500 then vspeed=-2500 end
