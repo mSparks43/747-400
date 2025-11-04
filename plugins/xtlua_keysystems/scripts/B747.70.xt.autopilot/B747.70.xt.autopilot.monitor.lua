@@ -209,7 +209,7 @@ function VNAV_DES_ALT(numAPengaged,fms)
     local mcpDiff=simDR_pressureAlt1-B747DR_autopilot_altitude_ft
     if simDR_autopilot_alt_hold_status==2 and targetAlt==B747DR_autopilot_altitude_ft   and (mcpDiff<B747DR_alt_capture_window and mcpDiff>-B747DR_alt_capture_window) and lastHold>30 and B747BR_cruiseAlt>B747DR_autopilot_altitude_ft-B747DR_alt_capture_window then
         B747DR_mcp_hold=1
-        print("set B747DR_mcp_hold in VNAV_DES_ALT")
+        --print("set B747DR_mcp_hold in VNAV_DES_ALT")
     end
     if B747DR_mcp_hold==0 then simDR_autopilot_altitude_ft=targetAlt end
 end

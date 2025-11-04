@@ -52,7 +52,7 @@ function setDescentVSpeed(fmsO)
     local glideAlt= B747DR_fmstargetDistance*290 +B747DR_ap_vnav_target_alt
     if string.len(B747BR_vnavProfile)>2 then
       local vnavData=json.decode(B747BR_vnavProfile)
-      print("B747BR_vnavProfile in setDescentVSpeed="..B747BR_vnavProfile)
+      --print("B747BR_vnavProfile in setDescentVSpeed="..B747BR_vnavProfile)
       local endI = table.getn(vnavData)
       for i = 1, endI, 1 do
         if vnavData[i][4] then
@@ -63,7 +63,7 @@ function setDescentVSpeed(fmsO)
           glideAlt= legDist*vnavData[i][5] +vnavData[i][3]
           B747DR_ap_vnav_target_alt=vnavData[i][3]
           B747DR_fmstargetDistance=legDist
-          print("setDescentVSpeed "..glideAlt)
+          --print("setDescentVSpeed "..glideAlt)
           break
         end
       end

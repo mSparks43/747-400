@@ -967,7 +967,7 @@ pitchPid:compute()
 function ap_pitch_assist()
     local flight_director_pitch=ap_director_pitch_integral()
     local target=0
-    local retval=B747_interpolate_value(B747DR_sim_pitch_ratio,0,-1,1,20)
+    local retval=B747DR_sim_pitch_ratio--B747_interpolate_value(B747DR_sim_pitch_ratio,0,-1,1,20)
     local refreshsimDR_electric_trim=simDR_electric_trim
     local refresh_trim=simDR_elevator_trim
 
@@ -990,7 +990,11 @@ function ap_pitch_assist()
         if doCompute==1 then
             pitchPid:compute()
         end
-        retval=pitchPid.output
+        local speed=B747_rescale(1,3,10,10,math.abs(flight_director_pitch-simDR_AHARS_pitch_heading_deg_pilot))
+        if pitchPid.output==nil then return 0 end
+        retval=B747_interpolate_value(B747DR_sim_pitch_ratio,pitchPid.output,-1,1,speed) 
+        
+        --retval=pitchPid.output
 
        -- print("elevatorRequest "..elevatorRequest .." pitchChange "..pitchChange .." targetElevator "..targetElevator .." elevatorRate "..elevatorRate)
         doTrim()
@@ -1013,7 +1017,7 @@ rollPid.input = 0
 rollPid:compute()
 
 function ap_roll_assist()
-    local retval=B747_interpolate_value(B747DR_sim_roll_ratio,0,-1,1,20)
+    local retval=B747DR_sim_roll_ratio--B747_interpolate_value(B747DR_sim_roll_ratio,0,-1,1,20)
     local flight_director_roll=ap_director_roll_integral()
     rollPid.kp=B747DR_pidRollP
     rollPid.ki=B747DR_pidRollI
@@ -1025,7 +1029,7 @@ function ap_roll_assist()
         if doCompute==1 then
             rollPid:compute()
         end
-        local speed=B747_rescale(0.5,2,4,0.4,math.abs(flight_director_roll-simDR_AHARS_roll_heading_deg_pilot))
+        local speed=B747_rescale(0.1,3,10,5,math.abs(flight_director_roll-simDR_AHARS_roll_heading_deg_pilot))
         if rollPid.output==nil then return 0 end
         retval=B747_interpolate_value(B747DR_sim_roll_ratio,rollPid.output,-1,1,speed) 
         --print("flight_director_roll "..flight_director_roll.." speed "..speed .." simDR_AHARS_roll_heading_deg_pilot "..simDR_AHARS_roll_heading_deg_pilot .." retval "..retval)
