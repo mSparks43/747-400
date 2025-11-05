@@ -669,7 +669,7 @@ B747CMD_thrust_rev_hold_max_all     = replace_command("sim/engines/thrust_revers
 
 
 B747CMD_TOGA_power					= replace_command("sim/engines/TOGA_power", B747_engine_TOGA_power_CMDhandler)		
-
+B747CMD_TOGA_power2					= replace_command("sim/autopilot/take_off_go_around", B747_engine_TOGA_power_CMDhandler)	
 
 -- AI
 B747CMD_ai_engines_quick_start		= deferred_command("laminar/B747/ai/engines_quick_start", "number", B747_ai_engines_quick_start_CMDhandler)
