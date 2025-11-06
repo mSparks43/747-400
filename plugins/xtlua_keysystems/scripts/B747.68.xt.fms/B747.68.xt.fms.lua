@@ -13,7 +13,7 @@ simDR_eng_fuel_flow_kg_sec = find_dataref("sim/cockpit2/engine/indicators/fuel_f
 B747DR_ap_flightPhase = find_dataref("laminar/B747/autopilot/flightPhase")
 
 B747DR_fms_setCurrent = find_dataref("xtlua/currentFMS")
-
+B747DR_ap_lnavHeading_mode     	= find_dataref("laminar/B747/autopilot/lnavHeading_mode")
 B747DR_acfType               = find_dataref("laminar/B747/acfType")
 B747DR_payload_weight               = find_dataref("sim/flightmodel/weight/m_fixed")
 simDR_acf_m_jettison  		=find_dataref("sim/aircraft/weight/acf_m_jettison")

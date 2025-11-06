@@ -761,7 +761,7 @@ function B747_updateApproachHeading(fmsO)
         return
     end
 
-    if B747DR_ap_approach_mode~=0 and simDR_autopilot_nav_status==0 and B747DR_ap_lnav_state>0 and diff>0.5 then
+    if (B747DR_ap_approach_mode~=0 or B747DR_ap_lnavHeading_mode~=0) and simDR_autopilot_nav_status==0 and B747DR_ap_lnav_state>0 and diff>0.5 then
         if simDR_autopilot_heading_status == 0 then
             simCMD_autopilot_heading_select:once()
             B747DR_ap_ATT = 0.0

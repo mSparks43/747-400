@@ -31,7 +31,7 @@ B747DR_nd_toc_distance_fo                  		= deferred_dataref("laminar/B747/nd
 B747DR_nd_toc_distance_capt                  		= deferred_dataref("laminar/B747/nd/toc/distance/capt", "number")
 B747DR_nd_toc_fo_active			                = deferred_dataref("laminar/B747/nd/toc/fo_active", "number")
 B747DR_nd_toc_capt_active			                = deferred_dataref("laminar/B747/nd/toc/capt_active", "number")
-
+B747DR_ap_lnavHeading_mode     	= deferred_dataref("laminar/B747/autopilot/lnavHeading_mode", "number")
 -- CAPT ND
 B747DR_text_capt_show 				= deferred_dataref("laminar/B747/nd/capt/text/show","array[60]")
 B747DR_text_capt_heading			= deferred_dataref("laminar/B747/nd/capt/text/heading","array[60]")

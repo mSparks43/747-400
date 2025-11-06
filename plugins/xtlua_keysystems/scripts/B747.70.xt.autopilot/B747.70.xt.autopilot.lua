@@ -203,7 +203,7 @@ simDR_autopilot_heading_status = find_dataref("sim/cockpit2/autopilot/heading_st
 simDR_autopilot_heading_hold_status = find_dataref("sim/cockpit2/autopilot/heading_hold_status")
 simDR_autopilot_alt_hold_status = find_dataref("laminar/B747/autopilot/altitude_hold_status")
 B747DR_ap_approach_mode = find_dataref("laminar/B747/autopilot/approach_mode")
-
+B747DR_ap_lnavHeading_mode     	= deferred_dataref("laminar/B747/autopilot/lnavHeading_mode", "number")
 --simDR_autopilot_nav_status = find_dataref("sim/cockpit2/autopilot/nav_status")
 --simDR_autopilot_gs_status = find_dataref("sim/cockpit2/autopilot/glideslope_status")
 simDR_autopilot_nav_status = find_dataref("laminar/B747/autopilot/actual_nav_status")
@@ -2168,27 +2168,31 @@ function B747_getCurrentWayPoint_function(fmsO)
 	local best=0
 	local bestOffTrack=15
 	local bestheadingDiff=180
-	local minPhaseLeg=3
+	local minPhaseLeg=2
 	local maxPhaseLeg=(table.getn(fmsO)-2)
-	if B747DR_fmscurrentIndex<3 then bestheadingDiff=90 end
+	if B747DR_fmscurrentIndex<3 then bestheadingDiff=110 end
+	local dToAP=100
 	if maxPhaseLeg>3 and fmsO[table.getn(fmsO)][2] == 1 then
-		local dToAP=getDistance(simDR_latitude,simDR_longitude,fmsO[table.getn(fmsO)][5],fmsO[table.getn(fmsO)][6])
+		dToAP=getDistance(simDR_latitude,simDR_longitude,fmsO[table.getn(fmsO)][5],fmsO[table.getn(fmsO)][6])
 
 		if dToAP<40 then
-			print("dToAP "..dToAP)
+			--print("dToAP "..dToAP)
 			minPhaseLeg=math.max(B747DR_fmscurrentIndex-1,3)
 			maxPhaseLeg=math.min(minPhaseLeg+4,(table.getn(fmsO)-2))
 			bestheadingDiff=120
 		end
 	end
 
-	print("Start Track Data "..minPhaseLeg.."->"..maxPhaseLeg)
+	--print("Start Track Data "..minPhaseLeg.."->"..maxPhaseLeg)
 	for i = minPhaseLeg, maxPhaseLeg, 1 do --last is always the airport, never go past last track
 
 		local dFromLast=0.1
 		local trackLength=1
 		local dToNext=getDistance(simDR_latitude,simDR_longitude,fmsO[i][5],fmsO[i][6])
-		if i>2 then
+		if B747DR_ap_lnavHeading_mode~=0 and dToNext<5 and dToAP>40 then
+			B747DR_ap_lnavHeading_mode=0
+		end
+		if i>1 then
 			dFromLast=getDistance(simDR_latitude,simDR_longitude,fmsO[i-1][5],fmsO[i-1][6])
 			trackLength=getDistance(fmsO[i-1][5],fmsO[i-1][6],fmsO[i][5],fmsO[i][6])
 		else
@@ -2201,7 +2205,7 @@ function B747_getCurrentWayPoint_function(fmsO)
 			local track=getTriSpaceSolver(trackLength,dFromLast,dToNext)
 			B747DR_ap_lnav_xtk_error=track[2]
 			local thisHeading=0
-			if i>2 then
+			if i>1 then
 				thisHeading=getHeading(fmsO[i-1][5],fmsO[i-1][6],fmsO[i][5],fmsO[i][6])
 			else
 				thisHeading=getHeading(simDR_latitude,simDR_longitude,fmsO[i][5],fmsO[i][6])
@@ -2211,7 +2215,7 @@ function B747_getCurrentWayPoint_function(fmsO)
 			--[[if headingmatch>45 then
 				track[1]=track[1]-3
 			end]]--
-			print("Track Data "..fmsO[i][8].." "..track[1].." "..track[2].." "..dFromLast.." "..dToNext.." "..trackLength.." "..headingmatch)
+			--print("Track Data "..fmsO[i][8].." "..track[1].." "..track[2].." "..dFromLast.." "..dToNext.." "..trackLength.." "..headingmatch)
 			if track[1]>0 and track[1]<trackLength and track[2]<10 and (headingmatch<bestheadingDiff) then
 				--print("In Track to waypoint="..i)
 				if track[2]<bestOffTrack then
@@ -2221,11 +2225,11 @@ function B747_getCurrentWayPoint_function(fmsO)
 					local headingChange=math.abs(getHeadingDifference(nextHeading,thisHeading))
 					local pemptNext=B747_rescale(0,0.5,160,3.5,headingChange)
 					if track[1]>math.max((trackLength-pemptNext),0.5) then
-						print("End of Track to waypoint "..headingChange.." "..pemptNext)
+						--print("End of Track to waypoint "..headingChange.." "..pemptNext)
 						best=i+1
 						bestheadingDiff=headingmatch
 					else
-						print("End of Track to waypoint "..headingChange.." "..pemptNext)
+						--print("End of Track to waypoint "..headingChange.." "..pemptNext)
 						best=i
 						bestheadingDiff=headingmatch
 					end
@@ -2234,14 +2238,17 @@ function B747_getCurrentWayPoint_function(fmsO)
 		end
 	end
 	--if best==1 then best=2 end
-	print("best Track to waypoint="..best.." / "..bestOffTrack)
-	if best>1 and B747DR_fmscurrentIndex ~=best then
+	if B747DR_ap_lnavHeading_mode>0 and best<B747DR_ap_lnavHeading_mode then
+		best=B747DR_ap_lnavHeading_mode
+	end
+	--print("best Track to waypoint="..best.." / "..bestOffTrack)
+	if best>0 and B747DR_fmscurrentIndex ~=best then
 		B747DR_fms_setCurrent = best
 		B747DR_fmscurrentIndex = best
-		--print("B747DR_fmscurrentIndex="..best)
+		print("B747DR_fmscurrentIndex="..best)
 		setVNAVState("recalcAfter", best)
 	elseif B747DR_fmscurrentIndex == 0 and maxPhaseLeg>2 then
-		--B747DR_fmscurrentIndex = 2
+		B747DR_fmscurrentIndex = 2
 		B747DR_fms_setCurrent = 2
 		--print("B747DR_fmscurrentIndex="..1)
 		setVNAVState("recalcAfter", 1)
@@ -2580,7 +2587,7 @@ function fma_rollModes()
 
 		local diff = simDRTime - B747DR_ap_lastCommand
 		--reactivate LNAV if required
-		if diff > 0.5 and 2 == 0 and B747DR_ap_approach_mode == 0 then
+		if diff > 0.5 and simDR_autopilot_gpss == 0 and B747DR_ap_lnavHeading_mode==0 and B747DR_ap_approach_mode == 0 then
 			print("simDR_autopilot_gpss == 2 or B747DR_ap_lnav_state==2")
 			simCMD_autopilot_gpss_mode:once()
 			B747DR_ap_lnav_state = 2
