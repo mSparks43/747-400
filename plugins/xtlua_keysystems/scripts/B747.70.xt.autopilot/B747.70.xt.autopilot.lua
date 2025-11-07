@@ -2243,7 +2243,7 @@ function B747_getCurrentWayPoint_function(fmsO)
 		best=B747DR_ap_lnavHeading_mode
 	end
 	--print("best Track to waypoint="..best.." / "..bestOffTrack)
-	if best>0 and B747DR_fmscurrentIndex ~=best then
+	if (best>B747DR_fmscurrentIndex or best<B747DR_fmscurrentIndex-1) and B747DR_fmscurrentIndex ~=best then
 		B747DR_fms_setCurrent = best
 		B747DR_fmscurrentIndex = best
 		print("B747DR_fmscurrentIndex="..best)
