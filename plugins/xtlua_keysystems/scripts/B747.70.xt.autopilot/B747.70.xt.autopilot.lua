@@ -313,7 +313,8 @@ B747DR_mcp_hold_pressed = deferred_dataref("laminar/B747/autopilot/ap_monitor/mc
 --*************************************************************************************--
 
 --simCMD_autopilot_autothrottle_on = find_command("sim/autopilot/autothrottle_on")
---simCMD_autopilot_autothrottle_off = find_command("sim/autopilot/autothrottle_off")
+simCMD_autopilot_autothrottle_off = find_command("sim/autopilot/autothrottle_off")
+simDR_version=find_dataref("sim/version/xplane_internal_version")
 --simCMD_autopilot_toggle_knots_mach  	= find_command("sim/autopilot/knots_mach_toggle")
 simCMD_autopilot_roll_center_sync_mode = find_command("sim/autopilot/override_center")
 simCMD_autopilot_roll_right_sync_mode = find_command("sim/autopilot/override_right")
