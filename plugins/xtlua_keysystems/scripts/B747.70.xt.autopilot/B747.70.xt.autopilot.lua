@@ -2190,9 +2190,9 @@ function B747_getCurrentWayPoint_function(fmsO)
 		local dFromLast=0.1
 		local trackLength=1
 		local dToNext=getDistance(simDR_latitude,simDR_longitude,fmsO[i][5],fmsO[i][6])
-		if B747DR_ap_lnavHeading_mode~=0 and dToNext<5 and dToAP>40 then
+		--[[if B747DR_ap_lnavHeading_mode~=0 and dToNext<5 and dToAP>40 then
 			B747DR_ap_lnavHeading_mode=0
-		end
+		end]]--
 		if i>1 then
 			dFromLast=getDistance(simDR_latitude,simDR_longitude,fmsO[i-1][5],fmsO[i-1][6])
 			trackLength=getDistance(fmsO[i-1][5],fmsO[i-1][6],fmsO[i][5],fmsO[i][6])
@@ -2243,9 +2243,12 @@ function B747_getCurrentWayPoint_function(fmsO)
 		best=B747DR_ap_lnavHeading_mode
 	end
 	--print("best Track to waypoint="..best.." / "..bestOffTrack)
-	if (best>B747DR_fmscurrentIndex or best<B747DR_fmscurrentIndex-1) and B747DR_fmscurrentIndex ~=best then
+	if best>0 and (best>B747DR_fmscurrentIndex or best<B747DR_fmscurrentIndex-1) and B747DR_fmscurrentIndex ~=best then
 		B747DR_fms_setCurrent = best
 		B747DR_fmscurrentIndex = best
+		if simDR_autopilot_gpss == 2 or B747DR_ap_lnav_state == 2 then
+			B747DR_ap_lnavHeading_mode = best
+		end
 		print("B747DR_fmscurrentIndex="..best)
 		setVNAVState("recalcAfter", best)
 	elseif B747DR_fmscurrentIndex == 0 and maxPhaseLeg>2 then
