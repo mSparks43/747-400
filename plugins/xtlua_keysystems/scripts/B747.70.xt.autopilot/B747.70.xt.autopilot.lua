@@ -2081,6 +2081,7 @@ function setDistances(fmsO)
 	local vnavI=1
 	local lastVnavAlt=-9999
 	--print("setDistances")
+	local usedToD=false
 	for i = 1, endI - 1, 1 do
 		if i >= start then
 			iLat = fmsO[i][5]
@@ -2129,6 +2130,10 @@ function setDistances(fmsO)
 				local tAlt=fmsO[i][9]
 				if i>1 then
 					local distance=getDistance(fmsO[i-1][5],fmsO[i-1][6], fmsO[i][5],fmsO[i][6])
+					if fmsO[i][9]<lastVnavAlt and not(usedToD) and B747BR_totalDistance > 0 and B747BR_todLat ~=0 and B747BR_todLong ~=0 then
+						distance=getDistance(B747BR_todLat,B747BR_todLong, fmsO[i][5],fmsO[i][6])
+						usedToD=true
+					end
 					if distance>0.1 then
 					  vAlt=(lastVnavAlt-fmsO[i][9])/distance
 					else
@@ -2153,10 +2158,14 @@ function setDistances(fmsO)
             vAlt=0
           end
 	end
+	if vnavI==1 and vAlt==0 then
+		-- we dont have any altitude data, just make a glideslope to the airport
+		vAlt=257
+	end
 	local vNavdataI={fmsO[endI][5],fmsO[endI][6],fmsO[endI][9],(endI>=start),vAlt}
 	vnavData[vnavI]=vNavdataI
 	B747BR_vnavProfile = json.encode(vnavData)
-	--print("setVNAV "..B747BR_vnavProfile)
+	print("setVNAV "..B747BR_vnavProfile)
 	totalDistance = totalDistance + getDistance(fmsO[eod][5], fmsO[eod][6], fmsO[endI][5], fmsO[endI][6])
 	--simDR_autopilot_altitude_ft
 	B747BR_eod_index = eod
@@ -2867,10 +2876,10 @@ function B747_ap_fma(fms)
 	if simDR_radarAlt1 > 50 and B747DR_ap_lnav_state == 1 then
 		B747DR_ap_lnav_state = 2
 		print("simDR_radarAlt1>50 and B747DR_ap_lnav_state==1")
-		if simDR_autopilot_gpss == 0 then
+		--[[if simDR_autopilot_gpss == 0 then
 			simCMD_autopilot_gpss_mode:once()
 		end
-		simDR_autopilot_gpss = 2
+		simDR_autopilot_gpss = 2]]--
 		-- simCMD_autopilot_gpss_mode:once()
 		run_after_time(checkLNAV, 0.5)
 	end

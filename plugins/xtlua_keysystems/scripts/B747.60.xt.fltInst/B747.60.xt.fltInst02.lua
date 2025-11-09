@@ -133,6 +133,8 @@ simDR_vvi_fpm_pilot                 = find_dataref("sim/cockpit2/gauges/indicato
 
 simDR_EFIS_wxr_on                   = find_dataref("sim/cockpit2/EFIS/EFIS_weather_on")
 simDR_EFIS_tcas_on                  = find_dataref("sim/cockpit2/EFIS/EFIS_tcas_on")
+simDR_EFIS_terr_on_capt                  = find_dataref("sim/cockpit2/EFIS/EFIS_terrain_on")
+simDR_EFIS_terr_on_fo                  = find_dataref("sim/cockpit2/EFIS/EFIS_terrain_on_copilot")
 B747DR_nd_capt_tfc	                = find_dataref("laminar/B747/nd/capt/tfc")
 B747DR_nd_fo_tfc	                = find_dataref("laminar/B747/nd/fo/tfc")
 B747DR_nd_capt_tcas_off             = find_dataref("laminar/B747/nd/capt/tcas_off")
@@ -3483,7 +3485,8 @@ end
 function B747_set_inst_CD()
   simDR_EFIS_tcas_on=0
   B747DR_nd_capt_tfc=0
-
+    simDR_EFIS_terr_on_fo=0
+    simDR_EFIS_terr_on_capt=0
 
 end
 
@@ -3494,6 +3497,8 @@ end
 ----- SET STATE TO ENGINES RUNNING ------------------------------------------------------
 function B747_set_inst_ER()
     simDR_EFIS_tcas_on=0
+    simDR_EFIS_terr_on_fo=0
+    simDR_EFIS_terr_on_capt=0
     B747DR_nd_capt_tfc=0
 
 	
