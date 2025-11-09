@@ -2165,7 +2165,7 @@ function setDistances(fmsO)
 	local vNavdataI={fmsO[endI][5],fmsO[endI][6],fmsO[endI][9],(endI>=start),vAlt}
 	vnavData[vnavI]=vNavdataI
 	B747BR_vnavProfile = json.encode(vnavData)
-	print("setVNAV "..B747BR_vnavProfile)
+	--print("setVNAV "..B747BR_vnavProfile)
 	totalDistance = totalDistance + getDistance(fmsO[eod][5], fmsO[eod][6], fmsO[endI][5], fmsO[endI][6])
 	--simDR_autopilot_altitude_ft
 	B747BR_eod_index = eod

@@ -52,7 +52,7 @@ B747BR_cruiseAlt 			= find_dataref("laminar/B747/autopilot/dist/cruise_alt")
 B747BR_tod				= find_dataref("laminar/B747/autopilot/dist/top_of_descent")
 B747BR_todLat				= find_dataref("laminar/B747/autopilot/dist/top_of_descent_lat", "number")
 B747BR_todLong				= find_dataref("laminar/B747/autopilot/dist/top_of_descent_long", "number")
-
+B747BR_vnavProfile 			= find_dataref("laminar/B747/autopilot/dist/vnavProfile")
 fmsJson = find_dataref("xtlua/fms")
 
 B747DR_fdr_log_json     = find_dataref("laminar/B747/fdr/json")
@@ -221,7 +221,9 @@ function updateFMSdata()
     local diff=simDRTime-lastPlanUpdate
     if diff>10 then 
       fdr_data_file:write(fmsJson.."\n") 
+      fdr_data_file:write(B747BR_vnavProfile.."\n") 
       fdr_data_file:flush()
+      
       print("Wrote FMS plan")
       lastPlanUpdate=simDRTime
     end
