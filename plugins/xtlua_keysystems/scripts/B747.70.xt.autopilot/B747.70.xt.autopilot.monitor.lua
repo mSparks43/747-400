@@ -724,6 +724,7 @@ function B747_updateApproachHeading(fmsO)
     if simDR_autopilot_nav_status==2 then
         if simDR_hsi_nav1_horizontal_signal==1 and simDR_hsi_nav2_horizontal_signal==1 then
             if simDR_autopilot_heading_status == 0 and diff>0.5 then
+                print("simCMD_autopilot_heading_select in simDR_autopilot_nav_status==2")
                 simCMD_autopilot_heading_select:once()
                 B747DR_ap_ATT = 0.0
                 B747DR_ap_lastCommand = simDRTime
@@ -768,11 +769,43 @@ function B747_updateApproachHeading(fmsO)
 
     if (B747DR_ap_approach_mode~=0 or B747DR_ap_lnavHeading_mode~=0) and simDR_autopilot_nav_status==0 and B747DR_ap_lnav_state>0 and diff>0.5 then
         if simDR_autopilot_heading_status == 0 then
+            print("simCMD_autopilot_heading_select in B747DR_ap_approach_mode~=0")
             simCMD_autopilot_heading_select:once()
             B747DR_ap_ATT = 0.0
             B747DR_ap_lastCommand = simDRTime
         end
-        local ap2Heading=getHeading(simDR_latitude,simDR_longitude,fmsO[start][5],fmsO[start][6])
+        local targetLat=fmsO[start][5]
+        local targetLong=fmsO[start][6]
+        local distanceToTarget=getDistance(simDR_latitude,simDR_longitude,targetLat,targetLong)
+        if B747DR_ap_lnav_xtk_target==0 and start>1 then -- -99 direct to, 
+            
+            --we are more than 10 miles away from the target, and we want 0 track error
+            -- find a correction target to put us back on track
+            if distanceToTarget>10 then
+                dFromLast=getDistance(simDR_latitude,simDR_longitude,fmsO[start-1][5],fmsO[start-1][6])
+			    trackLength=getDistance(fmsO[start-1][5],fmsO[start-1][6],fmsO[start][5],fmsO[start][6])
+                local track=getTriSpaceSolver(trackLength,dFromLast,distanceToTarget)
+                --we still have more than 10 miles of this leg to complete
+                local remainingLegLength=trackLength-track[1]
+                if  remainingLegLength>10 and track[1]>0 then
+                    --print("error correct track with "..remainingLegLength)
+                    local thisHeading=getHeading(fmsO[start-1][5],fmsO[start-1][6],fmsO[start][5],fmsO[start][6])
+                    if thisHeading<0 then
+                        thisHeading=thisHeading+360
+                    end
+                    targetLat,targetLong = movePoint(fmsO[start-1][5],fmsO[start-1][6],track[1]+5,thisHeading)
+                    --print("was "..fmsO[start][5].." "..fmsO[start][6].." now "..targetLat.." "..targetLong.. " using "..thisHeading)
+                    thisHeading=getHeading(simDR_latitude,simDR_longitude,targetLat,targetLong)
+                    --print("on ".. thisHeading)
+                end
+            end
+        elseif B747DR_ap_lnav_xtk_target>=-20 then
+            --(TODO:) +/- 20 track offset via fmc
+        elseif distanceToTarget<10 then
+            B747DR_ap_lnav_xtk_target=0 --target no track offset
+        end
+
+        local ap2Heading=getHeading(simDR_latitude,simDR_longitude,targetLat,targetLong)
         local hV=getWCAforHeading(ap2Heading+simDR_variation)
         --print("B747_updateApproachHeading hV="..hV.." wca="..wca.." wca_deg="..wca.." simDR_wind_speed_kts="..simDR_wind_speed_kts.." ap2Heading="..ap2Heading )
         simDR_autopilot_heading_deg =	 hV

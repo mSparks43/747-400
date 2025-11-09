@@ -388,6 +388,7 @@ B747DR_ap_vnav_target_alt = deferred_dataref("laminar/B747/autopilot/vnav_target
 B747DR_ap_vnav_state = deferred_dataref("laminar/B747/autopilot/vnav_state", "number")
 B747DR_ap_lnav_state = deferred_dataref("laminar/B747/autopilot/lnav_state", "number")
 B747DR_ap_lnav_xtk_error           	= deferred_dataref("laminar/B747/autopilot/lnav/xtk_error", "number")
+B747DR_ap_lnav_xtk_target           	= deferred_dataref("laminar/B747/autopilot/lnav/xtk_target", "number")
 B747DR_ap_inVNAVdescent = deferred_dataref("laminar/B747/autopilot/vnav_descent", "number")
 B747DR_ap_inDescent 		= deferred_dataref("laminar/B747/autopilot/vnav/after_tod", "number")
 B747DR_ap_flightPhase = deferred_dataref("laminar/B747/autopilot/flightPhase", "number")
@@ -1606,6 +1607,21 @@ function getDistance(lat1, lon1, lat2, lon2)
 	retVal = math.acos(av) * 3440
 	return retVal
 end
+
+function movePoint(lat1,lon1,distanceInNM,bearing)
+	local brngRad = math.rad(bearing)
+	local latRad = math.rad(lat1)
+	local lonRad = math.rad(lon1)
+	local distFrac = distanceInNM / 3440;
+	local latitudeResult = math.asin(math.sin(latRad) * math.cos(distFrac) + math.cos(latRad) * math.sin(distFrac) * math.cos(brngRad))
+	local a = math.atan2(math.sin(brngRad) * math.sin(distFrac) * math.cos(latRad), math.cos(distFrac) - math.sin(latRad) * math.sin(latitudeResult))
+	local longitudeResult = (lonRad + a + 3 * math.pi) % (2 * math.pi) - math.pi;
+	lat2 = math.deg(latitudeResult)
+    lon2 = math.deg(longitudeResult)
+
+    return lat2, lon2							   
+end
+
 local lastILSUpdate = 0
 original_distance = -1
 function round(x)
@@ -2204,7 +2220,7 @@ function B747_getCurrentWayPoint_function(fmsO)
 		
 		if trackLength>0.1 then
 			local track=getTriSpaceSolver(trackLength,dFromLast,dToNext)
-			B747DR_ap_lnav_xtk_error=track[2]
+			
 			local thisHeading=0
 			if i>1 then
 				thisHeading=getHeading(fmsO[i-1][5],fmsO[i-1][6],fmsO[i][5],fmsO[i][6])
@@ -2242,6 +2258,7 @@ function B747_getCurrentWayPoint_function(fmsO)
 	if B747DR_ap_lnavHeading_mode>0 and best<B747DR_ap_lnavHeading_mode then
 		best=B747DR_ap_lnavHeading_mode
 	end
+	B747DR_ap_lnav_xtk_error=bestOffTrack
 	--print("best Track to waypoint="..best.." / "..bestOffTrack)
 	if best>0 and (best>B747DR_fmscurrentIndex or best<B747DR_fmscurrentIndex-1) and B747DR_fmscurrentIndex ~=best then
 		B747DR_fms_setCurrent = best
@@ -2249,11 +2266,13 @@ function B747_getCurrentWayPoint_function(fmsO)
 		if simDR_autopilot_gpss == 2 or B747DR_ap_lnav_state == 2 then
 			B747DR_ap_lnavHeading_mode = best
 		end
+		
 		print("B747DR_fmscurrentIndex="..best)
 		setVNAVState("recalcAfter", best)
 	elseif B747DR_fmscurrentIndex == 0 and maxPhaseLeg>2 then
 		B747DR_fmscurrentIndex = 2
 		B747DR_fms_setCurrent = 2
+		B747DR_ap_lnav_xtk_target=0 --target no track offset
 		--print("B747DR_fmscurrentIndex="..1)
 		setVNAVState("recalcAfter", 1)
 	end
@@ -2503,6 +2522,7 @@ function B747_ap_appr_mode()
 	end
 
 	if B747DR_ap_lnav_state > 0 and simDR_autopilot_heading_status == 0 and simDR_autopilot_nav_status == 0 then
+		print("simCMD_autopilot_heading_select in appr_mode")
 		simCMD_autopilot_heading_select:once()
 		B747DR_ap_ATT = 0.0
 		B747DR_ap_lastCommand = simDRTime
@@ -2510,7 +2530,7 @@ function B747_ap_appr_mode()
 end
 
 function checkLNAV()
-	if simDR_autopilot_gpss ~= 2 and B747DR_ap_approach_mode == 0 then
+	if (simDR_autopilot_gpss ~= 2 or B747DR_ap_lnav_state ~= 2) and B747DR_ap_approach_mode == 0 then
 		B747DR_ap_lnav_state = 0
 	end
 end
@@ -3309,6 +3329,7 @@ function B474_ap_target_heading()
 			simCMD_autopilot_gpss_mode:once()
 		end
 		if simDR_autopilot_heading_status == 0 then
+			print("simCMD_autopilot_heading_select in B474_ap_target_heading")
 			simCMD_autopilot_heading_select:once()
 		end
 		simDR_autopilot_gpss=0
