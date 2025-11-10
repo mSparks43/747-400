@@ -777,13 +777,13 @@ function B747_updateApproachHeading(fmsO)
         local targetLat=fmsO[start][5]
         local targetLong=fmsO[start][6]
         local distanceToTarget=getDistance(simDR_latitude,simDR_longitude,targetLat,targetLong)
-        if B747DR_ap_lnav_xtk_target==0 and start>1 then -- -99 direct to, 
+        if B747DR_ap_lnav_xtk_target==0 and start>1 then -- -100 direct to, 
             
             --we are more than 10 miles away from the target, and we want 0 track error
             -- find a correction target to put us back on track
             if distanceToTarget>10 then
-                dFromLast=getDistance(simDR_latitude,simDR_longitude,fmsO[start-1][5],fmsO[start-1][6])
-			    trackLength=getDistance(fmsO[start-1][5],fmsO[start-1][6],fmsO[start][5],fmsO[start][6])
+                local dFromLast=getDistance(simDR_latitude,simDR_longitude,fmsO[start-1][5],fmsO[start-1][6])
+			    local trackLength=getDistance(fmsO[start-1][5],fmsO[start-1][6],fmsO[start][5],fmsO[start][6])
                 local track=getTriSpaceSolver(trackLength,dFromLast,distanceToTarget)
                 --we still have more than 10 miles of this leg to complete
                 local remainingLegLength=trackLength-track[1]
@@ -795,14 +795,42 @@ function B747_updateApproachHeading(fmsO)
                     end
                     targetLat,targetLong = movePoint(fmsO[start-1][5],fmsO[start-1][6],track[1]+5,thisHeading)
                     --print("was "..fmsO[start][5].." "..fmsO[start][6].." now "..targetLat.." "..targetLong.. " using "..thisHeading)
-                    thisHeading=getHeading(simDR_latitude,simDR_longitude,targetLat,targetLong)
-                    --print("on ".. thisHeading)
+                    --thisHeading=getHeading(simDR_latitude,simDR_longitude,targetLat,targetLong)
+                   --print("B747DR_ap_lnav_xtk_target==0 on ".. thisHeading)
                 end
             end
-        elseif B747DR_ap_lnav_xtk_target>=-20 then
-            --(TODO:) +/- 20 track offset via fmc
-        elseif distanceToTarget<10 then
-            B747DR_ap_lnav_xtk_target=0 --target no track offset
+        elseif B747DR_ap_lnav_xtk_target>=-99 and start>1 then
+            --(TODO:) +/- 99 track offset via fmc
+            local thisHeading=getHeading(fmsO[start-1][5],fmsO[start-1][6],fmsO[start][5],fmsO[start][6])
+            local oHeading=thisHeading
+            if B747DR_ap_lnav_xtk_target<0 then --left
+                oHeading=oHeading-90
+            else
+                oHeading=oHeading+90
+            end
+            -- offset track
+            local startLat,startLong = movePoint(fmsO[start-1][5],fmsO[start-1][6],math.abs(B747DR_ap_lnav_xtk_target),oHeading)
+            local endLat,endLong = movePoint(fmsO[start][5],fmsO[start][6],math.abs(B747DR_ap_lnav_xtk_target),oHeading)
+            local dFromLast=getDistance(simDR_latitude,simDR_longitude,fmsO[start-1][5],fmsO[start-1][6])
+			local trackLength=getDistance(startLat,startLong,endLat,endLong)
+            distanceToTarget=getDistance(simDR_latitude,simDR_longitude,endLat,endLong)
+            local track=getTriSpaceSolver(trackLength,dFromLast,distanceToTarget)
+            local remainingLegLength=trackLength-track[1]
+            if  remainingLegLength>10 then
+                    --print("error correct track with "..remainingLegLength)
+                   -- local thisHeading=getHeading(fmsO[start-1][5],fmsO[start-1][6],fmsO[start][5],fmsO[start][6])
+                    if thisHeading<0 then
+                        thisHeading=thisHeading+360
+                    end
+                    targetLat,targetLong = movePoint(startLat,startLong,track[1]+5,thisHeading)
+            else
+                targetLat=endLat
+                targetLong=endLong
+            end
+            --print("was "..fmsO[start][5].." "..fmsO[start][6].." now "..targetLat.." "..targetLong.. " using "..thisHeading)
+            --print("on ".. thisHeading)
+        elseif distanceToTarget<10 and B747DR_ap_lnav_xtk_target<=-99 then
+            B747DR_ap_lnav_xtk_target=0 --target no track offset after direct to
         end
 
         local ap2Heading=getHeading(simDR_latitude,simDR_longitude,targetLat,targetLong)

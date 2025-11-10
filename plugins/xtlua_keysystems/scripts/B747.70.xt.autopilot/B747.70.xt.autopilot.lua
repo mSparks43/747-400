@@ -2192,7 +2192,7 @@ function B747_getCurrentWayPoint_function(fmsO)
 	if simDR_radarAlt1<1000 and simDR_onGround == 0 then return end --surpress during final
 	simDR_override_fms_progress=1
 	local best=0
-	local bestOffTrack=15
+	local bestOffTrack=100 --can offset 99 miles
 	local bestheadingDiff=180
 	local minPhaseLeg=2
 	local maxPhaseLeg=(table.getn(fmsO)-2)
@@ -2215,9 +2215,7 @@ function B747_getCurrentWayPoint_function(fmsO)
 		local dFromLast=0.1
 		local trackLength=1
 		local dToNext=getDistance(simDR_latitude,simDR_longitude,fmsO[i][5],fmsO[i][6])
-		--[[if B747DR_ap_lnavHeading_mode~=0 and dToNext<5 and dToAP>40 then
-			B747DR_ap_lnavHeading_mode=0
-		end]]--
+
 		if i>1 then
 			dFromLast=getDistance(simDR_latitude,simDR_longitude,fmsO[i-1][5],fmsO[i-1][6])
 			trackLength=getDistance(fmsO[i-1][5],fmsO[i-1][6],fmsO[i][5],fmsO[i][6])
@@ -2266,6 +2264,8 @@ function B747_getCurrentWayPoint_function(fmsO)
 	--if best==1 then best=2 end
 	if B747DR_ap_lnavHeading_mode>0 and best<B747DR_ap_lnavHeading_mode then
 		best=B747DR_ap_lnavHeading_mode
+	elseif B747DR_ap_lnavHeading_mode ~=B747DR_fmscurrentIndex and B747DR_fmscurrentIndex>1 and B747DR_ap_lnav_state == 2 then
+		B747DR_ap_lnavHeading_mode = B747DR_fmscurrentIndex
 	end
 	B747DR_ap_lnav_xtk_error=bestOffTrack
 	--print("best Track to waypoint="..best.." / "..bestOffTrack)

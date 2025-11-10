@@ -1122,7 +1122,7 @@ function fmsFunctions.setdata(fmsO,value)
 			if found>0 then
 				--B747DR_fms_setCurrent=wpt
 				B747DR_ap_lnavHeading_mode = found 
-				B747DR_ap_lnav_xtk_target=-99 --direct to
+				B747DR_ap_lnav_xtk_target=-100 --direct to
 			else
 				print("INVALID ENTRY 1 "..wpt.." 1")
 				fmsO["notify"]="INVALID ENTRY"	
