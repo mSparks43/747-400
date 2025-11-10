@@ -96,14 +96,32 @@ fmsPages["RTE1"]=createPage("RTE1")
 fmsPages["RTE1"].getPage=function(self,pgNo,fmsID)
   local l1=cleanFMSLine(B747DR_srcfms[fmsID][1])
   local pageNo=tonumber(string.sub(l1,21,22))
-
-  local lastLine="<RTE 2             PERF>"
+  local lastLine1=cleanFMSLine(B747DR_srcfms[fmsID][12])
+  local lastLine2="<RTE 2             PERF>"
   if simDR_onGround ==1 then
     fmsFunctionsDefs["RTE1"]["L6"]=nil
-    lastLine="                   PERF>"
+	fmsFunctionsDefs["RTE1"]["R6"]=nil
+    lastLine2="                   PERF>"
   else
     --fmsFunctionsDefs["RTE1"]["L6"]={"setpage","RTE2"}
+	local offsetT="---"
+	if pageNo~=1 then
+		offsetT="   "
+		fmsFunctionsDefs["RTE1"]["R6"]=nil
+	else
+		fmsFunctionsDefs["RTE1"]["R6"]={"setdata","lnoffs"}
+		if B747DR_ap_lnav_xtk_target~=0 and B747DR_ap_lnav_xtk_target~=-100 then
+			if B747DR_ap_lnav_xtk_target<0 then
+				offsetT="L"..string.format("%02d", math.abs(B747DR_ap_lnav_xtk_target))
+			else
+				offsetT="R"..string.format("%02d", B747DR_ap_lnav_xtk_target)
+			end
+		end
+		lastLine1="                       "
+	end
     fmsFunctionsDefs["RTE1"]["L6"]={"setpage","LEGS"}
+	
+    lastLine2="<RTE 2                "..offsetT
   end
 
   if pageNo~=1 then
@@ -124,8 +142,8 @@ fmsPages["RTE1"].getPage=function(self,pgNo,fmsID)
 		cleanFMSLine(B747DR_srcfms[fmsID][9]),
 		cleanFMSLine(B747DR_srcfms[fmsID][10]),
 		cleanFMSLine(B747DR_srcfms[fmsID][11]),
-		cleanFMSLine(B747DR_srcfms[fmsID][12]),
-		lastLine,
+		lastLine1,
+		lastLine2,
 		}
   end
   fmsFunctionsDefs["RTE1"]["L1"]={"setdata","fltdep"}
@@ -148,8 +166,8 @@ fmsPages["RTE1"].getPage=function(self,pgNo,fmsID)
   cleanFMSLine(B747DR_srcfms[fmsID][9]),
   cleanFMSLine(B747DR_srcfms[fmsID][10]),
   cleanFMSLine(B747DR_srcfms[fmsID][11]),
-  cleanFMSLine(B747DR_srcfms[fmsID][12]),
-  lastLine,
+  lastLine1,
+  lastLine2,
   }
   return page 
 end
@@ -157,6 +175,8 @@ fmsPages["RTE1"].getSmallPage=function(self,pgNo,fmsID)
 	local l1=cleanFMSLine(B747DR_srcfms[fmsID][1])
   local pageNo=tonumber(string.sub(l1,21,22))
   if pageNo~=1 then
+	
+
 	return {
 		"                        ",
 		"                        ",
@@ -174,6 +194,11 @@ fmsPages["RTE1"].getSmallPage=function(self,pgNo,fmsID)
 		}
   end
 	local line4 = "               CO ROUTE "
+	tLine="                        "
+	
+	if simDR_onGround ==0 then
+		tLine="                 OFFSET "
+	end
 	if acarsSystem.provider.online() then line4=" REQUEST       CO ROUTE " end
 	local page={
 		"                        ",
@@ -187,7 +212,7 @@ fmsPages["RTE1"].getSmallPage=function(self,pgNo,fmsID)
 		"                        ",
 		"                        ",
 		"                        ",
-		"                        ",
+		tLine,
 		"                        ",
 		"                        ",
 		}
@@ -1092,6 +1117,28 @@ function fmsFunctions.setdata(fmsO,value)
     setFMSData("rpttimemm",mmV)
   elseif value=="fltdate" then 
     setFMSData("fltdate",os.date("%Y%m%d"))
+  elseif value=="lnoffs" then	
+	if del then
+		B747DR_ap_lnav_xtk_target=0
+	else
+		local invalid=false
+		if string.len(fmsO["scratchpad"])>3 or string.len(fmsO["scratchpad"])<2 
+			or (string.sub(fmsO["scratchpad"],1,1)~="R" and string.sub(fmsO["scratchpad"],1,1)~="L") then
+			invalid=true
+		end
+		local newOffset=0
+		if not(invalid) then
+			newOffset=tonumber(string.sub(fmsO["scratchpad"],2))
+		end
+		if newOffset==nil then
+			invalid=true
+		elseif not(invalid) then
+			if string.sub(fmsO["scratchpad"],1,1)=="L" and newOffset>0 then newOffset=newOffset*-1 end
+			B747DR_ap_lnav_xtk_target=newOffset
+		end
+		if invalid then fmsO["notify"]="INVALID ENTRY" end
+		
+	end
   elseif value=="drtto" then
 	if del then
 		B747DR_ap_lnavHeading_mode=0

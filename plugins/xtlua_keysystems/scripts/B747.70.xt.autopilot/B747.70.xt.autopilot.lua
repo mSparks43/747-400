@@ -2240,7 +2240,7 @@ function B747_getCurrentWayPoint_function(fmsO)
 				track[1]=track[1]-3
 			end]]--
 			--print("Track Data "..fmsO[i][8].." "..track[1].." "..track[2].." "..dFromLast.." "..dToNext.." "..trackLength.." "..headingmatch)
-			if track[1]>0 and track[1]<trackLength and track[2]<10 and (headingmatch<bestheadingDiff) then
+			if track[1]>0 and track[1]<trackLength and track[2]<100 and (headingmatch<bestheadingDiff) then
 				--print("In Track to waypoint="..i)
 				if track[2]<bestOffTrack then
 					bestOffTrack=track[2]
