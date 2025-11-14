@@ -220,7 +220,6 @@ simDR_autopilot_roll_status = find_dataref("sim/cockpit2/autopilot/roll_status")
 simDR_autopilot_servos_on = find_dataref("laminar/B747/autopilot/servos_on")
 
 simDR_autopilot_fms_vnav = find_dataref("sim/cockpit2/autopilot/fms_vnav")
-simDR_autopilot_gpss = find_dataref("sim/cockpit2/autopilot/gpss_status")
 simDR_autopilot_pitch = find_dataref("sim/cockpit2/autopilot/pitch_status")
 B747DR_capt_ap_roll = find_dataref("laminar/B747/autopilot/capt_roll_ref")
 B747DR_fo_ap_roll = find_dataref("laminar/B747/autopilot/fo_roll_ref")
@@ -1072,10 +1071,7 @@ function B747_ap_LNAV_mode_afterCMDhandler(phase, duration)
 		--simCMD_autopilot_gpss_mode:once()
 		if B747DR_ap_lnav_state > 0 then
 			B747DR_ap_lnav_state = 0
-			if simDR_autopilot_gpss > 0 then
-				simCMD_autopilot_gpss_mode:once()
-			end
-			run_after_time(checkLNAV, 0.5)
+
 		else
 			print("arm LNAV")
 			B747DR_ap_lnav_state = 1
@@ -2272,7 +2268,7 @@ function B747_getCurrentWayPoint_function(fmsO)
 	if best>0 and (best>B747DR_fmscurrentIndex or best<B747DR_fmscurrentIndex-1) and B747DR_fmscurrentIndex ~=best then
 		B747DR_fms_setCurrent = best
 		B747DR_fmscurrentIndex = best
-		if simDR_autopilot_gpss == 2 or B747DR_ap_lnav_state == 2 then
+		if B747DR_ap_lnav_state == 2 then
 			B747DR_ap_lnavHeading_mode = best
 		end
 		
@@ -2343,14 +2339,13 @@ function B747_ap_altitude(fms)
 		B747DR_ap_vnav_pause = 0
 		simCMD_pause:once()
 	end
-	if B747DR_ap_vnav_state > 0 then
+	if B747DR_ap_vnav_state > 0 or B747DR_ap_lnav_state>0 then
 		if table.getn(fms) < 2 or fms[table.getn(fms)][2] ~= 1 then
-			print("Cancel VNAV " .. table.getn(fms))
-
+			print("Cancel LNAV/VNAV " .. table.getn(fms))
 			B747DR_fmc_notifications[54] = 1
 			B747DR_ap_vnav_state = 0
 			B747DR_ap_lnav_state = 0
-			B747DR_ap_thrust_mode = 0
+			--B747DR_ap_thrust_mode = 0
 		end --no vnav
 
 	--computeVNAVAlt(fms)
@@ -2538,11 +2533,7 @@ function B747_ap_appr_mode()
 	end
 end
 
-function checkLNAV()
-	if (simDR_autopilot_gpss ~= 2 or B747DR_ap_lnav_state ~= 2) and B747DR_ap_approach_mode == 0 then
-		B747DR_ap_lnav_state = 0
-	end
-end
+
 
 ----- FLIGHT MODE ANNUNCIATORS ----------------------------------------------------------
 
@@ -2569,16 +2560,14 @@ function fma_rollModes()
 		B747BR_showFMA=0
 	end
 	if B747DR_toggle_switch_position[23] == 0.0 and B747DR_toggle_switch_position[24] == 0.0  and numAPengaged == 0 and apWasOn==1 then
-		-- (LNAV) --
+		
 		B747DR_ap_FMA_armed_roll_mode = 0
-	elseif simDR_autopilot_gpss == 1 or B747DR_ap_lnav_state == 1 then
-		B747DR_ap_FMA_armed_roll_mode = 2
+	elseif B747DR_ap_lnav_state == 1 then
+		B747DR_ap_FMA_armed_roll_mode = 2 -- (LNAV) --
 	elseif B747DR_autopilot_nav_status == 1 or (B747DR_ap_approach_mode ~= 0 and B747DR_autopilot_nav_status ~= 2) then
-		-- (LOC) --
-		B747DR_ap_FMA_armed_roll_mode = 3
-	elseif simDR_radarAlt1 > 200 and (B747DR_ap_AFDS_status_annun_pilot == 3 or B747DR_ap_AFDS_status_annun_pilot == 4) then
-		-- ROLLOUT and FLARE ARMED
-		B747DR_ap_FMA_armed_roll_mode = 4
+		B747DR_ap_FMA_armed_roll_mode = 3 -- (LOC) --
+	elseif simDR_radarAlt1 > 200 and (B747DR_ap_AFDS_status_annun_pilot == 3 or B747DR_ap_AFDS_status_annun_pilot == 4) then -- LAND 2/LAND 3
+		B747DR_ap_FMA_armed_roll_mode = 4 -- ROLLOUT and FLARE ARMED
 	else
 		B747DR_ap_FMA_armed_roll_mode = 0
 	end
@@ -2594,52 +2583,30 @@ function fma_rollModes()
 	--print("navcrz "..navcrz)
 	local numAPengaged = B747DR_ap_cmd_L_mode + B747DR_ap_cmd_C_mode + B747DR_ap_cmd_R_mode
 	if B747DR_toggle_switch_position[23] == 0.0 and B747DR_toggle_switch_position[24] == 0.0  and numAPengaged == 0 and apWasOn==1 then
-		-- (TOGA) --
-		B747DR_ap_FMA_active_roll_mode = 0
-	elseif
-	--simDR_autopilot_roll_status == 2 and simDR_autopilot_flight_dir_mode > 0 and
-		math.abs(B747DR_ap_ATT) >= 5.0
- 	then
+		B747DR_ap_FMA_active_roll_mode = 0 -- (NONE) --
+	elseif math.abs(B747DR_ap_ATT) >= 5.0 then
 		B747DR_ap_FMA_active_roll_mode = 5
-	elseif B747DR_autopilot_TOGA_status~=0 then --simDR_autopilot_TOGA_lat_status == 2 then
-		B747DR_ap_FMA_active_roll_mode = 1
+	elseif B747DR_autopilot_TOGA_status~=0 and B747DR_ap_lnav_state ~= 2 then --simDR_autopilot_TOGA_lat_status == 2 then
+		B747DR_ap_FMA_active_roll_mode = 1 -- (TOGA) --
 	elseif simDR_onGround == 1 then
-		-- (LOC) --
-		B747DR_ap_FMA_active_roll_mode = 0
+		B747DR_ap_FMA_active_roll_mode = 0 -- (NONE) --
 		B747DR_ap_thrust_mode = 0
 	elseif B747DR_autopilot_nav_status == 2 then
-		-- (LNAV) --
-		B747DR_ap_FMA_active_roll_mode = 3
+		
+		B747DR_ap_FMA_active_roll_mode = 3 -- (LOC) --
 		--simDR_autopilot_heading_deg = roundToIncrement(simDR_radio_nav_obs_deg[0], 1) -- SET THE SELECTED HEADING VALUE TO THE LOC COURSE
 		B747DR_ap_lnav_state = 0
-	elseif simDR_autopilot_gpss == 2 or B747DR_ap_lnav_state == 2 then
-		-- (ROLLOUT) --
-		-- TODO: AUTOLAND LOGIC
-
-		B747DR_ap_FMA_active_roll_mode = 2
-
-		local diff = simDRTime - B747DR_ap_lastCommand
-		--reactivate LNAV if required
-		if diff > 0.5 and simDR_autopilot_gpss == 0 and B747DR_ap_lnavHeading_mode==0 and B747DR_ap_approach_mode == 0 then
-			print("simDR_autopilot_gpss == 2 or B747DR_ap_lnav_state==2")
-			simCMD_autopilot_gpss_mode:once()
-			B747DR_ap_lnav_state = 2
-			run_after_time(checkLNAV, 0.5)
-			B747DR_ap_lastCommand = simDRTime
-		end
+	elseif B747DR_ap_lnav_state == 2 and simDR_autopilot_heading_hold_status ~= 2 then
+		B747DR_ap_FMA_active_roll_mode = 2 -- (LNAV) --
 	elseif simDR_autopilot_heading_status == 2 and B747DR_ap_lnav_state == 0 then
 		-- (HDG SEL) --
 		simDR_autopilot_heading_deg = B747DR_ap_heading_deg
-		B747DR_ap_FMA_active_roll_mode = 6
+		B747DR_ap_FMA_active_roll_mode = 6 -- (HDG SEL) --
 	elseif simDR_autopilot_heading_hold_status == 2 then
-		-- (HDG HLD) --
-		B747DR_ap_FMA_active_roll_mode = 7
+		B747DR_ap_FMA_active_roll_mode = 7 -- (HDG HLD) --
 		B747DR_ap_lnav_state = 0
 	else
-		B747DR_ap_FMA_active_roll_mode = 0
-		if B747DR_ap_lnav_state == 2 then
-			B747DR_ap_lnav_state = 0
-		end
+		B747DR_ap_FMA_active_roll_mode = 0 -- (NONE) --
 	end
 end
 local restoreAlt=0
@@ -2876,12 +2843,7 @@ function B747_ap_fma(fms)
 	if simDR_radarAlt1 > 50 and B747DR_ap_lnav_state == 1 then
 		B747DR_ap_lnav_state = 2
 		print("simDR_radarAlt1>50 and B747DR_ap_lnav_state==1")
-		--[[if simDR_autopilot_gpss == 0 then
-			simCMD_autopilot_gpss_mode:once()
-		end
-		simDR_autopilot_gpss = 2]]--
-		-- simCMD_autopilot_gpss_mode:once()
-		run_after_time(checkLNAV, 0.5)
+
 	end
 
 	if B747DR_toggle_switch_position[23] == 0.0 and B747DR_toggle_switch_position[24] == 0.0  and numAPengaged == 0 then
@@ -3327,27 +3289,25 @@ function B474_ap_target_speed()
 	end
 end
 function B474_ap_target_heading()
-	local refreshsimDR_autopilot_gpss=simDR_autopilot_gpss
+
 	local simDR_autopilot_heading_status=simDR_autopilot_heading_status
 	if B747DR_ap_activate_target_heading_deg==1 then
 		local diff = simDRTime - B747DR_ap_lastCommand
 		if diff < 0.05 then
 			return
 		end
-		if simDR_autopilot_gpss > 0 then
-			simCMD_autopilot_gpss_mode:once()
+		if B747DR_ap_lnav_state > 0 then
+			B747DR_ap_lnav_state=0
 		end
 		if simDR_autopilot_heading_status == 0 then
 			print("simCMD_autopilot_heading_select in B474_ap_target_heading")
 			simCMD_autopilot_heading_select:once()
 		end
-		simDR_autopilot_gpss=0
 		--simDR_autopilot_heading_status=0
 		B747DR_ap_ATT = 0.0
 		simDR_autopilot_heading_deg = B747DR_ap_heading_deg
 		B747DR_ap_lnav_state = 0
 		B747DR_ap_lastCommand=simDRTime
-		run_after_time(checkLNAV, 0.5)
 		B747DR_ap_activate_target_heading_deg=0
 		print("change to HDG SEL")
 	end
