@@ -2722,7 +2722,7 @@ function tank_helper()
     lastFuelHelper=simDR_time_now
     local needsTankEng=false
 
-    if ((simDR_fuel_tank_weight_kg[2] <= simDR_fuel_tank_weight_kg[1]) or (simDR_fuel_tank_weight_kg[3] <= simDR_fuel_tank_weight_kg[4]))
+    if ((simDR_fuel_tank_weight_kg[2] <= simDR_fuel_tank_weight_kg[1]) and (simDR_fuel_tank_weight_kg[3] <= simDR_fuel_tank_weight_kg[4]))
         then
         needsTankEng=true
     end
