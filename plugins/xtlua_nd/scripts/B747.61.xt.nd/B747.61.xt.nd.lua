@@ -226,7 +226,7 @@ function makeIcon(iconTextData,navtype,text,latitude,longitude,distance)
     if (heading_diff < -90 or heading_diff > 90) and B747_nd_map_center_capt<1 then return end
     if (heading_diff < -135 or heading_diff > 135) and displayDistance> 160 and B747_nd_map_center_capt<1 then return end
     if displayDistance> 250 and B747_nd_map_center_capt>0 and simDR_map_mode~=4 then return end
-    if displayDistance > 600 and simDR_map_mode==4 then return end
+    if displayDistance > 450 and simDR_map_mode==4 then return end
     if (heading_diff < -45 or heading_diff > 45) and displayDistance> 480 and B747_nd_map_center_capt<1 then return end
     if (heading_diff < -55 or heading_diff > 55) and displayDistance> 400 and B747_nd_map_center_capt<1 then return end
     lastNavaid=lastCaptNavaid
@@ -240,7 +240,7 @@ function makeIcon(iconTextData,navtype,text,latitude,longitude,distance)
     if (heading_diff < -90 or heading_diff > 90) and B747_nd_map_center_fo<1 then return end 
     if (heading_diff < -135 or heading_diff > 135) and displayDistance> 160 and B747_nd_map_center_fo<1 then return end 
      if displayDistance> 250 and B747_nd_map_center_fo>0 and backport_map_mode_copilot~=4 then return end
-     if displayDistance > 600 and backport_map_mode_copilot==4 then return end
+     if displayDistance > 450 and backport_map_mode_copilot==4 then return end
      if (heading_diff < -45 or heading_diff > 45) and displayDistance> 480 and B747_nd_map_center_fo<1 then return end
      if (heading_diff < -55 or heading_diff > 55) and displayDistance> 400 and B747_nd_map_center_fo<1 then return end
     lastNavaid=lastFONavaid
@@ -660,7 +660,7 @@ function updateNDLatLong()
   --print("displayJSON="..displayJSON[1])
   local dV=displayJSON[1]
   if dV<table.getn(fmsTable) then
-    print("display Lat Long="..fmsTable[dV][5].." "..fmsTable[dV][6])
+    --print("display Lat Long="..fmsTable[dV][5].." "..fmsTable[dV][6])
     if simDR_map_mode==4 then
       display_latitude_cpt=fmsTable[dV][5]
       display_longitude_cpt=fmsTable[dV][6]
