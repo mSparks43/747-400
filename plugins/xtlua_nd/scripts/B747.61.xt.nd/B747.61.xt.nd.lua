@@ -2,6 +2,8 @@
 -- (C) Mark 'mSparks' Parker 2020 CCBYNC4 release
 -- Small changes by Matt726
 simDR_version=find_dataref("sim/version/xplane_internal_version")
+B747DR_nd_pln_capt                 = find_dataref("laminar/B747/nd/pln/capt")
+B747DR_nd_pln_fo                 = find_dataref("laminar/B747/nd/pln/fo")
 simDR_variation = find_dataref("sim/flightmodel/position/magnetic_variation")
 simDR_tcas_lat                = find_dataref("sim/cockpit2/tcas/targets/position/lat")
 simDR_tcas_lon                = find_dataref("sim/cockpit2/tcas/targets/position/lon")
@@ -405,8 +407,21 @@ end
 function newIcons()
   lastCaptNavaid=0
   lastFONavaid=0
-  captIRS=B747DR_pfd_mode_capt
-  foIRS=B747DR_pfd_mode_fo
+  if B747DR_pfd_mode_capt>0 or simDR_map_mode==4 then
+    B747DR_nd_pln_capt=1
+    captIRS=1
+  else
+    B747DR_nd_pln_capt=0
+    captIRS=0
+  end
+  if B747DR_pfd_mode_fo>0 or simDR_map_mode==4 then
+    B747DR_nd_pln_fo=1
+    foIRS=1
+  else
+    B747DR_nd_pln_fo=0
+    foIRS=0
+  end
+  
   --[[if simDR_map_mode==4 then
     for n=0,59,1 do
     B747DR_text_capt_show[n]=0
