@@ -2231,13 +2231,15 @@ function B747_getCurrentWayPoint_function(fmsO)
 					
 					local nextHeading=getHeading(fmsO[i][5],fmsO[i][6],fmsO[i+1][5],fmsO[i+1][6])
 					local headingChange=math.abs(getHeadingDifference(nextHeading,thisHeading))
-					local pemptNext=B747_rescale(0,0.5,160,3.5,headingChange)
+					local pemptNext=B747_rescale(0,1,160,20,headingChange)
+					pemptNext=math.min( pemptNext,8)
+					pemptNext=B747_rescale(120,pemptNext/5,320,pemptNext,simDR_groundspeed)
 					if track[1]>math.max((trackLength-pemptNext),0.5) then
-						--print("End of Track to waypoint "..headingChange.." "..pemptNext)
+						print("End of Track to waypoint "..headingChange.." "..pemptNext)
 						best=i+1
 						bestheadingDiff=headingmatch
 					else
-						--print("End of Track to waypoint "..headingChange.." "..pemptNext)
+						print("End of Track to waypoint "..headingChange.." "..pemptNext)
 						best=i
 						bestheadingDiff=headingmatch
 					end
