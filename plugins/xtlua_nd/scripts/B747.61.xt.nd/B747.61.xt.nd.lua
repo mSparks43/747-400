@@ -2,6 +2,7 @@
 -- (C) Mark 'mSparks' Parker 2020 CCBYNC4 release
 -- Small changes by Matt726
 simDR_version=find_dataref("sim/version/xplane_internal_version")
+simDR_variation = find_dataref("sim/flightmodel/position/magnetic_variation")
 simDR_tcas_lat                = find_dataref("sim/cockpit2/tcas/targets/position/lat")
 simDR_tcas_lon                = find_dataref("sim/cockpit2/tcas/targets/position/lon")
 simDR_tcas_alt                = find_dataref("sim/cockpit2/tcas/targets/position/ele")
@@ -64,6 +65,7 @@ end
 
 navAidsJSON   = find_dataref("xtlua/navaids")
 fmsJSON = find_dataref("xtlua/fms")
+xpFMSDataJSON = find_dataref("xtlua/xpFMSData")
 simDRTime=find_dataref("sim/time/total_running_time_sec")
 simDR_latitude				= find_dataref("sim/flightmodel/position/latitude")
 simDR_longitude				= find_dataref("sim/flightmodel/position/longitude")
@@ -111,6 +113,10 @@ B747DR_nd_alt_distance_capt                  		= find_dataref("laminar/B747/nd/t
 B747DR_nd_alt_fo_active			                = find_dataref("laminar/B747/nd/toc/fo_active")
 B747DR_nd_alt_capt_active			              = find_dataref("laminar/B747/nd/toc/capt_active")
 
+local display_latitude_cpt=0
+local display_latitude_fo=0
+local display_longitude_cpt=0
+local display_longitude_fo=0
 local captIRS=0
 local foIRS=0
 local ranges = {10, 20, 40, 80, 160, 320, 640}
@@ -178,12 +184,21 @@ function makeIcon(iconTextData,navtype,text,latitude,longitude,distance)
   if text~=nil and string.lower(text)~="latlong" and iconTextData==iconTextDataFO and usedNaviadsTableFO[text]~=nil then return end
   if text~=nil and string.lower(text)=="latlong" then text=" " end
   if text~=nil and string.lower(text)=="latlon" then text=" " end
-  local abs_heading=getHeading(simDR_latitude,simDR_longitude,latitude,longitude)
+  local cLat=display_latitude_cpt
+  local cLon=display_longitude_cpt
+  if iconTextData~=iconTextDataCapt then
+    cLat=display_latitude_fo
+    cLon=display_longitude_fo
+  end
+
+  local abs_heading=getHeading(cLat,cLon,latitude,longitude)
   local heading_diff=0
   if iconTextData==iconTextDataCapt then
     if simDR_map_mode==2 then
       mag_diff=getHeadingDifference(simDR_true_heading,simDR_mag_heading)
       heading_diff=getHeadingDifference(simDR_ground_track-mag_diff,abs_heading)
+    elseif simDR_map_mode==4 then  
+      heading_diff=abs_heading+simDR_variation
     else
       heading_diff=getHeadingDifference(simDR_true_heading,abs_heading)
     end
@@ -191,6 +206,8 @@ function makeIcon(iconTextData,navtype,text,latitude,longitude,distance)
     if backport_map_mode_copilot==2 then
       mag_diff=getHeadingDifference(simDR_true_heading,simDR_mag_heading)
       heading_diff=getHeadingDifference(simDR_ground_track-mag_diff,abs_heading)
+    elseif backport_map_mode_copilot==4 then  
+      heading_diff=abs_heading+simDR_variation  
     else
       heading_diff=getHeadingDifference(simDR_true_heading,abs_heading)
     end
@@ -208,7 +225,8 @@ function makeIcon(iconTextData,navtype,text,latitude,longitude,distance)
     displayDistance=distance*(640/ranges[simDR_range_dial_capt + 1])
     if (heading_diff < -90 or heading_diff > 90) and B747_nd_map_center_capt<1 then return end
     if (heading_diff < -135 or heading_diff > 135) and displayDistance> 160 and B747_nd_map_center_capt<1 then return end
-    if displayDistance> 250 and B747_nd_map_center_capt>0 then return end
+    if displayDistance> 250 and B747_nd_map_center_capt>0 and simDR_map_mode~=4 then return end
+    if displayDistance > 600 and simDR_map_mode==4 then return end
     if (heading_diff < -45 or heading_diff > 45) and displayDistance> 480 and B747_nd_map_center_capt<1 then return end
     if (heading_diff < -55 or heading_diff > 55) and displayDistance> 400 and B747_nd_map_center_capt<1 then return end
     lastNavaid=lastCaptNavaid
@@ -221,7 +239,8 @@ function makeIcon(iconTextData,navtype,text,latitude,longitude,distance)
     displayDistance=distance*(640/ranges[simDR_range_dial_fo + 1])
     if (heading_diff < -90 or heading_diff > 90) and B747_nd_map_center_fo<1 then return end 
     if (heading_diff < -135 or heading_diff > 135) and displayDistance> 160 and B747_nd_map_center_fo<1 then return end 
-     if displayDistance> 250 and B747_nd_map_center_fo>0 then return end
+     if displayDistance> 250 and B747_nd_map_center_fo>0 and backport_map_mode_copilot~=4 then return end
+     if displayDistance > 600 and backport_map_mode_copilot==4 then return end
      if (heading_diff < -45 or heading_diff > 45) and displayDistance> 480 and B747_nd_map_center_fo<1 then return end
      if (heading_diff < -55 or heading_diff > 55) and displayDistance> 400 and B747_nd_map_center_fo<1 then return end
     lastNavaid=lastFONavaid
@@ -312,12 +331,20 @@ function makeIcon(iconTextData,navtype,text,latitude,longitude,distance)
 end
 
 function updateIcon(iconData,n,isCaptain)
-   local distance = getDistance(simDR_latitude,simDR_longitude,iconData[n].latitude,iconData[n].longitude)
-  local abs_heading=getHeading(simDR_latitude,simDR_longitude,iconData[n].latitude,iconData[n].longitude)
+  local cLat=display_latitude_cpt
+  local cLon=display_longitude_cpt
+  if isCaptain~=1 then
+    cLat=display_latitude_fo
+    cLon=display_longitude_fo
+  end
+   local distance = getDistance(cLat,cLon,iconData[n].latitude,iconData[n].longitude)
+  local abs_heading=getHeading(cLat,cLon,iconData[n].latitude,iconData[n].longitude)
   local heading_diff=0
   if (simDR_map_mode==2 and isCaptain==1) or (backport_map_mode_copilot==2 and isCaptain==0) then
     mag_diff=getHeadingDifference(simDR_true_heading,simDR_mag_heading)
     heading_diff=getHeadingDifference(simDR_ground_track-mag_diff,abs_heading)
+  elseif (simDR_map_mode==4 and isCaptain==1) or (backport_map_mode_copilot==4 and isCaptain==0) then
+    heading_diff=abs_heading+simDR_variation
   else
     heading_diff=getHeadingDifference(simDR_true_heading,abs_heading)
   end
@@ -380,12 +407,18 @@ function newIcons()
   lastFONavaid=0
   captIRS=B747DR_pfd_mode_capt
   foIRS=B747DR_pfd_mode_fo
-  if simDR_map_mode==4 then
+  --[[if simDR_map_mode==4 then
     for n=0,59,1 do
     B747DR_text_capt_show[n]=0
     B747DR_text_fo_show[n]=0
     end
     return
+  end]]--
+  local cLat=display_latitude_cpt
+  local cLon=display_longitude_cpt
+  if isCaptain~=1 then
+    cLat=display_latitude_fo
+    cLon=display_longitude_fo
   end
   usedNaviadsTableCapt={}
   usedNaviadsTableFO={}
@@ -394,9 +427,9 @@ function newIcons()
   if start<1 then start=1 end
 
   for n=start,table.getn(fmsTable),1 do
-    local distance = getDistance(simDR_latitude,simDR_longitude,fmsTable[n][5],fmsTable[n][6])
+    local distance = getDistance(display_latitude_cpt,display_longitude_cpt,fmsTable[n][5],fmsTable[n][6])
     --Captain flightplan
-    if distance < ranges[simDR_range_dial_capt + 1] and simDR_map_mode==2 then 
+    if distance < ranges[simDR_range_dial_capt + 1] and (simDR_map_mode==2 or simDR_map_mode==4) then 
 
       if fmsTable[n][10]==true then
 	      makeIcon(iconTextDataCapt,3003,fmsTable[n][8],fmsTable[n][5],fmsTable[n][6],distance)
@@ -405,7 +438,8 @@ function newIcons()
       end
     end
     --FO flightplan
-    if distance < ranges[simDR_range_dial_fo + 1] and backport_map_mode_copilot==2 then 
+    distance = getDistance(display_latitude_fo,display_longitude_fo,fmsTable[n][5],fmsTable[n][6])
+    if distance < ranges[simDR_range_dial_fo + 1] and (backport_map_mode_copilot==2 or backport_map_mode_copilot==4) then 
 
       if fmsTable[n][10]==true then
 	      makeIcon(iconTextDataFO,3003,fmsTable[n][8],fmsTable[n][5],fmsTable[n][6],distance)
@@ -416,12 +450,13 @@ function newIcons()
   end
   --TODs
   if B747BR_cruiseAlt>0 and B747BR_totalDistance-B747BR_tod>-3 then
-    local toddist=getDistance(simDR_latitude,simDR_longitude,B747BR_todLat,B747BR_todLong)
+    local toddist=getDistance(display_latitude_cpt,display_longitude_cpt,B747BR_todLat,B747BR_todLong)
     if B747DR_nd_mode_capt_sel_dial_pos==2 then
       if toddist < ranges[simDR_range_dial_capt + 1] and simDR_radarAlt1>5000 then 
         makeIcon(iconTextDataCapt,3008,"T/D",B747BR_todLat,B747BR_todLong,toddist)
       end
     end
+    toddist=getDistance(display_latitude_fo,display_longitude_fo,B747BR_todLat,B747BR_todLong)
     if B747DR_nd_mode_fo_sel_dial_pos==2 then
       if toddist < ranges[simDR_range_dial_fo + 1] and simDR_radarAlt1>5000 then 
         makeIcon(iconTextDataFO,3008,"T/D",B747BR_todLat,B747BR_todLong,toddist)
@@ -430,12 +465,13 @@ function newIcons()
   end
   --TOCs
   if B747BR_cruiseAlt>0 and B747BR_toc>0 then
-    local tocdist=getDistance(simDR_latitude,simDR_longitude,B747BR_tocLat,B747BR_tocLong)
+    local tocdist=getDistance(display_latitude_cpt,display_longitude_cpt,B747BR_tocLat,B747BR_tocLong)
     if B747DR_nd_mode_capt_sel_dial_pos==2 then
       if tocdist < ranges[simDR_range_dial_capt + 1] and simDR_radarAlt1>-5000 then 
         makeIcon(iconTextDataCapt,3008,"T/C",B747BR_tocLat,B747BR_tocLong,tocdist)
       end
     end
+    tocdist=getDistance(display_latitude_fo,display_longitude_fo,B747BR_tocLat,B747BR_tocLong)
     if B747DR_nd_mode_fo_sel_dial_pos==2 then
       if tocdist < ranges[simDR_range_dial_fo + 1] and simDR_radarAlt1>-5000 then 
         makeIcon(iconTextDataFO,3008,"T/C",B747BR_tocLat,B747BR_tocLong,tocdist)
@@ -446,10 +482,11 @@ function newIcons()
   for n=1,64,1 do
     local thisELE=math.abs(simDR_tcas_alt[0]-simDR_tcas_alt[n])
     if thisELE < 2000 then
-      local distance = getDistance(simDR_latitude,simDR_longitude,simDR_tcas_lat[n],simDR_tcas_lon[n])
+      local distance = getDistance(display_latitude_cpt,display_longitude_cpt,simDR_tcas_lat[n],simDR_tcas_lon[n])
       if B747DR_nd_capt_tfc>0 and distance < ranges[simDR_range_dial_capt + 1] then 
         makeIcon(iconTextDataCapt,3006,nil,simDR_tcas_lat[n],simDR_tcas_lon[n],distance)
       end
+      distance = getDistance(display_latitude_fo,display_longitude_fo,simDR_tcas_lat[n],simDR_tcas_lon[n])
       if B747DR_nd_fo_tfc>0 and distance < ranges[simDR_range_dial_fo + 1] then 
         makeIcon(iconTextDataFO,3006,nil,simDR_tcas_lat[n],simDR_tcas_lon[n],distance)
       end
@@ -458,20 +495,22 @@ function newIcons()
 
   --NAVAIDS
   for n=table.getn(currentNaviadsTable),1,-1 do
-    local distance = getDistance(simDR_latitude,simDR_longitude,currentNaviadsTable[n][5],currentNaviadsTable[n][6])
+    local distance = getDistance(display_latitude_cpt,display_longitude_cpt,currentNaviadsTable[n][5],currentNaviadsTable[n][6])
     if distance < ranges[simDR_range_dial_capt + 1] then 
       makeIcon(iconTextDataCapt,currentNaviadsTable[n][2],currentNaviadsTable[n][8],currentNaviadsTable[n][5],currentNaviadsTable[n][6],distance)
     end
+    distance = getDistance(display_latitude_fo,display_longitude_fo,currentNaviadsTable[n][5],currentNaviadsTable[n][6])
     if distance < ranges[simDR_range_dial_fo + 1] then 
       makeIcon(iconTextDataFO,currentNaviadsTable[n][2],currentNaviadsTable[n][8],currentNaviadsTable[n][5],currentNaviadsTable[n][6],distance)
     end
   end
   --FIXES
   for n=1,numFixes do
-    local distance = getDistance(simDR_latitude,simDR_longitude,localFixes[n]["lat"],localFixes[n]["long"])
+    local distance = getDistance(display_latitude_cpt,display_longitude_cpt,localFixes[n]["lat"],localFixes[n]["long"])
     if distance < ranges[simDR_range_dial_capt + 1] then 
       makeIcon(iconTextDataCapt,3007,localFixes[n]["name"],localFixes[n]["lat"],localFixes[n]["long"],distance)
     end
+    local distance = getDistance(display_latitude_fo,display_longitude_fo,localFixes[n]["lat"],localFixes[n]["long"])
     if distance < ranges[simDR_range_dial_fo + 1] then 
       makeIcon(iconTextDataFO,3007,localFixes[n]["name"],localFixes[n]["lat"],localFixes[n]["long"],distance)
     end
@@ -606,9 +645,36 @@ function aircraft_unload()
     fix_data_file=nil
   end
 end
+
+function updateNDLatLong()
+  display_latitude_cpt=simDR_latitude
+  display_longitude_cpt=simDR_longitude
+  display_latitude_fo=simDR_latitude
+  display_longitude_fo=simDR_longitude
+  if string.len(xpFMSDataJSON) <3 then
+    return
+  end
+  --simDR_latitude, simDR_longitude
+  --print("xpFMSDataJSON"..xpFMSDataJSON)
+  local displayJSON=json.decode(xpFMSDataJSON)
+  --print("displayJSON="..displayJSON[1])
+  local dV=displayJSON[1]
+  if dV<table.getn(fmsTable) then
+    print("display Lat Long="..fmsTable[dV][5].." "..fmsTable[dV][6])
+    if simDR_map_mode==4 then
+      display_latitude_cpt=fmsTable[dV][5]
+      display_longitude_cpt=fmsTable[dV][6]
+    end
+    if backport_map_mode_copilot==4 then
+      display_latitude_fo=fmsTable[dV][5]
+      display_longitude_fo=fmsTable[dV][6]
+    end
+  end
+end
+
 function after_physics()
   collectgarbage("collect")
-
+  
   if debug_nd>0 then return end
   local diff=simDRTime-lastUpdate
   if simDR_version>=120012 then
@@ -616,6 +682,8 @@ function after_physics()
   --print("simDR_ground_track="..simDR_ground_track)
     if simDR_map_mode_copilot ==2 then
       B747DR_nd_fo_up = simDR_ground_track
+    elseif simDR_map_mode_copilot ==4 then
+      B747DR_nd_fo_up = 0  
     else
       B747DR_nd_fo_up = simDR_heading_track
     end
@@ -631,6 +699,8 @@ function after_physics()
     end
     if simDR_map_mode ==2 then
       B747DR_nd_capt_up = simDR_ground_track
+    elseif simDR_map_mode ==4 then
+      B747DR_nd_capt_up = 0  
     else
       B747DR_nd_capt_up = simDR_heading_track
     end
@@ -638,14 +708,19 @@ function after_physics()
     if simDR_map_mode ==2 then
       B747DR_nd_capt_up = simDR_ground_track
       B747DR_nd_fo_up = simDR_ground_track
+    elseif simDR_map_mode ==4 then
+      B747DR_nd_capt_up = 0
+      B747DR_nd_fo_up = 0  
     else
       B747DR_nd_capt_up = simDR_heading_track
       B747DR_nd_fo_up = simDR_heading_track
     end
     backport_map_range_copilot=simDR_map_range
     backport_map_mode_copilot=simDR_map_mode
-  end  
-  
+  end
+
+  updateNDLatLong()
+
   --force new icons if range dial changes (stop bleed into other displays)
   if simDR_range_dial_capt~=last_range_dial then
     last_range_dial=simDR_range_dial_capt
@@ -656,7 +731,7 @@ function after_physics()
   compute_and_show_alt_range_arc()
   if debug_nd<-2 then return end
   local diff2=simDRTime-lastUpdateIcon
-  if diff>0.5 then 
+  if diff>0.2 then 
     newIcons()
     lastUpdateIcon=simDRTime
   end
