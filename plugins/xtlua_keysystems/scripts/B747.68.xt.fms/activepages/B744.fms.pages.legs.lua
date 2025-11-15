@@ -5,7 +5,8 @@ fmsPages["LEGS"].getPage=function(self,pgNo,fmsID)
   local l1=" ACT RTE 1 LEGS     "..string.sub(l1,21,24)
   local l2="                        "
   local l3=string.sub(cleanFMSLine(B747DR_srcfms[fmsID][3]),1,10).."              "
-  if pageNo~=nil and pageNo~=1 then
+  local l5=cleanFMSLine(B747DR_srcfms[fmsID][5])
+  if (pageNo~=nil and pageNo~=1) or string.starts(l5,"***") then
     l2=cleanFMSLine(B747DR_srcfms[fmsID][2])
     l3=cleanFMSLine(B747DR_srcfms[fmsID][3])
     fmsFunctionsDefs["LEGS"]["R1"]={"key2fmc","R1"}
@@ -15,13 +16,12 @@ fmsPages["LEGS"].getPage=function(self,pgNo,fmsID)
     --fmsFunctionsDefs["LEGS"]["L2"]={"key2fmc","L2"}
     fmsFunctionsDefs["LEGS"]["R1"]=nil
   end
-  
   local page={
     l1,
     l2,
     l3,
     cleanFMSLine(B747DR_srcfms[fmsID][4]),
-    cleanFMSLine(B747DR_srcfms[fmsID][5]),
+    l5,
     cleanFMSLine(B747DR_srcfms[fmsID][6]),
     cleanFMSLine(B747DR_srcfms[fmsID][7]),
     cleanFMSLine(B747DR_srcfms[fmsID][8]),

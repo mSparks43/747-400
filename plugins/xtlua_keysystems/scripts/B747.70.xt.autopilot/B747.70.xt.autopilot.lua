@@ -1027,9 +1027,7 @@ function B747_ap_VNAV_mode_CMDhandler(phase, duration)
 			B747DR_fmc_notifications[30] = 1
 			return
 		end
-		if B747DR_ap_vnav_system == 1 then
-			simCMD_autopilot_FMS_mode:once()
-		elseif B747DR_ap_vnav_state > 0 then
+		if B747DR_ap_vnav_state > 0 then
 			B747DR_ap_vnav_state = 0
 			B747DR_ap_inVNAVdescent = 0
 			B747DR_ap_thrust_mode = 0
@@ -1038,24 +1036,14 @@ function B747_ap_VNAV_mode_CMDhandler(phase, duration)
 				--simCMD_autopilot_autothrottle_on:once()
 				B747DR_autothrottle_active=1
 			end
-		elseif B747DR_ap_vnav_system == 2 then
+		else
 			B747DR_ap_vnav_state = 1
+			simDR_autopilot_alt_hold_status = 2
+			simDR_autopilot_vs_status=0
 			B747DR_ap_thrust_mode = 0
 			B747DR_mcp_hold=0
 			B747DR_ap_inVNAVdescent = 0
 			setDescent(false)
-			--[[if beganDescent() == true and simDR_autopilot_alt_hold_status < 2 then
-				print("had descent")
-				--simCMD_autopilot_alt_hold_mode:once()
-				simDR_autopilot_alt_hold_status = 2
-				simDR_autopilot_vs_status=0
-            	simDR_autopilot_flch_status=0
-				simDR_autopilot_hold_altitude_ft=simDR_pressureAlt1
-			elseif beganDescent() == true and simDR_autopilot_alt_hold_status == 2 then
-				print("had descent, in alt hold")
-			else
-				print("no previous descent")
-			end]]--
 			setVNAVState("gotVNAVSpeed", false)
 			B747_vnav_speed()
 		end
@@ -2274,7 +2262,7 @@ function B747_getCurrentWayPoint_function(fmsO)
 		
 		print("B747DR_fmscurrentIndex="..best)
 		setVNAVState("recalcAfter", best)
-	elseif B747DR_fmscurrentIndex == 0 and maxPhaseLeg>2 then
+	elseif B747DR_fmscurrentIndex == 0 and maxPhaseLeg>2 and fmsO[2][2]~=2048 then
 		B747DR_fmscurrentIndex = 2
 		B747DR_fms_setCurrent = 2
 		B747DR_ap_lnav_xtk_target=0 --target no track offset
@@ -2596,7 +2584,7 @@ function fma_rollModes()
 		B747DR_ap_FMA_active_roll_mode = 3 -- (LOC) --
 		--simDR_autopilot_heading_deg = roundToIncrement(simDR_radio_nav_obs_deg[0], 1) -- SET THE SELECTED HEADING VALUE TO THE LOC COURSE
 		B747DR_ap_lnav_state = 0
-	elseif B747DR_ap_lnav_state == 2 and simDR_autopilot_heading_hold_status ~= 2 then
+	elseif B747DR_ap_lnav_state == 2 then
 		B747DR_ap_FMA_active_roll_mode = 2 -- (LNAV) --
 	elseif simDR_autopilot_heading_status == 2 and B747DR_ap_lnav_state == 0 then
 		-- (HDG SEL) --
@@ -3289,13 +3277,14 @@ function B474_ap_target_speed()
 	end
 end
 function B474_ap_target_heading()
-
+	local diff = simDRTime - B747DR_ap_lastCommand
+		
 	local simDR_autopilot_heading_status=simDR_autopilot_heading_status
 	if B747DR_ap_activate_target_heading_deg==1 then
-		local diff = simDRTime - B747DR_ap_lastCommand
 		if diff < 0.05 then
 			return
-		end
+		end	
+		
 		if B747DR_ap_lnav_state > 0 then
 			B747DR_ap_lnav_state=0
 		end
@@ -3310,6 +3299,14 @@ function B474_ap_target_heading()
 		B747DR_ap_lastCommand=simDRTime
 		B747DR_ap_activate_target_heading_deg=0
 		print("change to HDG SEL")
+	end
+	if simDR_autopilot_heading_status == 0 and simDR_autopilot_nav_status == 0 and B747DR_ap_lnav_state > 0 then
+		if diff < 0.05 then
+			return
+		end	
+		print("simCMD_autopilot_heading_select in B747DR_ap_lnav_state")
+		simCMD_autopilot_heading_select:once()
+		B747DR_ap_lastCommand=simDRTime
 	end
 	if B747DR_ap_target_heading_deg == -1 then
 		return
