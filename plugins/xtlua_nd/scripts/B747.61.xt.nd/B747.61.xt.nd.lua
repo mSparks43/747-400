@@ -414,7 +414,7 @@ function newIcons()
     B747DR_nd_pln_capt=0
     captIRS=0
   end
-  if B747DR_pfd_mode_fo>0 or simDR_map_mode==4 then
+  if B747DR_pfd_mode_fo>0 or backport_map_mode_copilot==4 then
     B747DR_nd_pln_fo=1
     foIRS=1
   else
