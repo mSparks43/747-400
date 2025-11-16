@@ -129,6 +129,33 @@ See the [commit history](https://github.com/mSparks43/747-400/commits/master) fo
 
 _Thank you all for your support and contributions!_
 
+## Release XP12.3.0-2025/11/16 (OP Program XP12-30-2025/11/16):
+
+### Enhancements
+
+ - Working PLN page for pilot and copilot
+ - New LNAV and VNAV systems
+ - Offset track support from RTE page
+ - VNAV profile logging added to flight data recorder
+ - PLN with no IRS
+
+### Bug fixes
+
+ - Fix radio LED lighting and XTK error implimentation
+ - Implement missing VNAV ALT entry logic
+ - AP tuning (pitch, roll and LNAV)
+ - replace new XP12 TOGA command
+ - XP11 fixes (Gear and AT)
+ - LNAV dont backtrack last waypoint
+ - Updated LNAV track correction and direct to handling
+ - Create VNAV profile as glideslope when only have destination altitude
+ - Remove references to simDR gpss
+ - Autofuel management, require both wings to need x feed off
+ - New XTLua builds (lin/mac/win)
+ - Fix icon bleed in PLN mode
+ - Fix copilot PLN
+ - Rough speed based turn preemption
+
 ## Release XP12.3.0-2025/10/27 (OP Program XP12-30-2025/10/27):
 
 ### Bug fixes
