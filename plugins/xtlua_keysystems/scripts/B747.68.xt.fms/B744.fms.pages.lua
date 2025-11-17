@@ -100,7 +100,7 @@ fmsPages["RTE1"].getPage=function(self,pgNo,fmsID)
   local lastLine2="<RTE 2             PERF>"
   if simDR_onGround ==1 then
     fmsFunctionsDefs["RTE1"]["L6"]=nil
-	fmsFunctionsDefs["RTE1"]["R6"]=nil
+	fmsFunctionsDefs["RTE1"]["R6"]={"setpage","PERFINIT"}
     lastLine2="                   PERF>"
   else
     --fmsFunctionsDefs["RTE1"]["L6"]={"setpage","RTE2"}
