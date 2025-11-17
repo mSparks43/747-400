@@ -2235,11 +2235,11 @@ function B747_getCurrentWayPoint_function(fmsO)
 					pemptNext=math.min( pemptNext,8)
 					pemptNext=B747_rescale(120,pemptNext/5,320,pemptNext,simDR_groundspeed)
 					if track[1]>math.max((trackLength-pemptNext),0.5) then
-						print("End of Track to waypoint "..headingChange.." "..pemptNext)
+						--print("End of Track to waypoint "..headingChange.." "..pemptNext)
 						best=i+1
 						bestheadingDiff=headingmatch
 					else
-						print("End of Track to waypoint "..headingChange.." "..pemptNext)
+						--print("End of Track to waypoint "..headingChange.." "..pemptNext)
 						best=i
 						bestheadingDiff=headingmatch
 					end
