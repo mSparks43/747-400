@@ -98,7 +98,7 @@ function doPitch()
      else
       targetPitch=progressPitch
     end]]--
-    flareRate=B747_rescale(130,3,180,1.5,simDR_ind_airspeed_kts_pilot)
+    flareRate=B747_rescale(130,2.5,180,1.0,simDR_ind_airspeed_kts_pilot)
 
     targetPitch=zeroRatePitch+flareRate --0.5
     print("flareRate "..flareRate.." targetPitch "..targetPitch.." flareAt "..flareAt.." simDR_AHARS_pitch_heading_deg_pilot "..simDR_AHARS_pitch_heading_deg_pilot)

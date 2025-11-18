@@ -81,21 +81,23 @@ function setDescentVSpeed(fmsO)
   local nextDistanceInFeet=distanceNM*6076.12
   local time=distanceNM*30.8666/(simDR_groundspeed) --time in minutes, gs in m/s....
   local early=100
-  if simDR_autopilot_altitude_ft>5000 then
+  if B747DR_ap_vnav_target_alt>simDR_pressureAlt1 then
+    early=0
+  elseif simDR_autopilot_altitude_ft>5000 then
     early=250 
   else
     early=B747BR_fpe
   end
   local vdiff=B747DR_ap_vnav_target_alt-simDR_pressureAlt1-early --to be negative
   local vspeed=vdiff/time
-  if B747DR_ap_vnav_target_alt>simDR_pressureAlt1 then
+  --[[if B747DR_ap_vnav_target_alt>simDR_pressureAlt1 then
     vspeed=0
-  end
+  end]]--
   --print("setDescentVSpeed speed=".. simDR_groundspeed .. " distance=".. distanceNM .. " vspeed=" .. vspeed .. " vdiff=" .. vdiff .. " time=" .. time.. " B747DR_ap_vnav_target_alt=" .. B747DR_ap_vnav_target_alt)
 		  --speed=89.32039642334 distance=2.9459299767094vspeed=-6559410.6729958
   B747DR_ap_vb = math.atan2(vdiff,nextDistanceInFeet)*-57.2958
   if vspeed<-2500 then vspeed=-2500 end
-  if vspeed>100 then vspeed=100 end
+  if vspeed>1500 then vspeed=1500 end
   if simDR_radarAlt1<=10 then
     simDR_autopilot_vs_fpm = -250 -- slow descent, reduces AoA which if it goes to high spoils the landing
     B747DR_ap_inVNAVdescent=0
