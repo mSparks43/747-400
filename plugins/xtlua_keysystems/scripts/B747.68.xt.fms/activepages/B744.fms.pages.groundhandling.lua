@@ -62,7 +62,7 @@ fmsPages["GNDSRV"]=createPage("GNDSRV")
 fmsPages["GNDSRV"].getPage=function(self,pgNo,fmsID)
   local lineA=string.format("%03d",B747DR_fuel_add)
   local lineB="<GROUND POWER           "
-  if simDR_version>=120012 and (simDR_gpuvolts>=24) then
+  if simDR_version>=120012 then
     lineB="                        "
   elseif B747DR_elec_ext_pwr1_available==1 then
         lineB="<DISCONNECT GROUND POWER"
