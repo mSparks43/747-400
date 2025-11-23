@@ -759,6 +759,8 @@ function B747_updateApproachHeading(fmsO)
     end
 
     local start=B747DR_fmscurrentIndex
+
+    
     if start == 0 then
 		start = 1
 	end
@@ -774,6 +776,7 @@ function B747_updateApproachHeading(fmsO)
             B747DR_ap_ATT = 0.0
             B747DR_ap_lastCommand = simDRTime
         end
+        --print("B747DR_ap_lnavHeading_mode "..B747DR_ap_lnavHeading_mode)
         local targetLat=fmsO[start][5]
         local targetLong=fmsO[start][6]
         local distanceToTarget=getDistance(simDR_latitude,simDR_longitude,targetLat,targetLong)
@@ -835,7 +838,7 @@ function B747_updateApproachHeading(fmsO)
 
         local ap2Heading=getHeading(simDR_latitude,simDR_longitude,targetLat,targetLong)
         local hV=getWCAforHeading(ap2Heading+simDR_variation)
-        --print("B747_updateApproachHeading hV="..hV.." wca="..wca.." wca_deg="..wca.." simDR_wind_speed_kts="..simDR_wind_speed_kts.." ap2Heading="..ap2Heading )
+        --print("B747_ set Heading hV="..hV.." wca="..wca.." wca_deg="..wca.." simDR_wind_speed_kts="..simDR_wind_speed_kts.." ap2Heading="..ap2Heading )
         simDR_autopilot_heading_deg =	 hV
     end
 end

@@ -65,7 +65,7 @@ fmsPages["GNDSRV"].getPage=function(self,pgNo,fmsID)
   if simDR_version>=120012 then
     lineB="                        "
   elseif B747DR_elec_ext_pwr1_available==1 then
-        lineB="<DISCONNECT GROUND POWER"
+    lineB="<DISCONNECT GROUND POWER"
   end
   local lineC = "                        "
   if simDR_acf_m_jettison>0 then
