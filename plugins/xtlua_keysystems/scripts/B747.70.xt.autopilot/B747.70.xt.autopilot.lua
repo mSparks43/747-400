@@ -2182,11 +2182,11 @@ function B747_getCurrentWayPoint_function(fmsO)
 	local maxPhaseLeg=(table.getn(fmsO)-2)
 	if B747DR_fmscurrentIndex<3 then bestheadingDiff=110 end
 	local dToAP=100
-	if maxPhaseLeg>3 and fmsO[table.getn(fmsO)][2] == 1 then
+	if maxPhaseLeg>3 and fmsO[table.getn(fmsO)][2] == 1 and B747DR_fmscurrentIndex>1 then
 		dToAP=getDistance(simDR_latitude,simDR_longitude,fmsO[table.getn(fmsO)][5],fmsO[table.getn(fmsO)][6])
-
-		if dToAP<40 then
-			--print("dToAP "..dToAP)
+		local dToAP2=getDistance(fmsO[B747DR_fmscurrentIndex][5],fmsO[B747DR_fmscurrentIndex][6],fmsO[table.getn(fmsO)][5],fmsO[table.getn(fmsO)][6])
+		if dToAP<40 and dToAP2<40 then
+			print("dToAP "..dToAP)
 			minPhaseLeg=math.max(B747DR_fmscurrentIndex-1,3)
 			maxPhaseLeg=math.min(minPhaseLeg+4,(table.getn(fmsO)-2))
 			bestheadingDiff=120
@@ -2200,10 +2200,24 @@ function B747_getCurrentWayPoint_function(fmsO)
 		local track=getTriSpaceSolver(trackLength,dFromLast,dToNext)
 		if track[1]<math.max(trackLength-5,trackLength*2/3) then
 			canNew=false
-			--print("In current track "..B747DR_fmscurrentIndex.." "..minPhaseLeg.."->"..maxPhaseLeg)
+			print("In current track "..B747DR_fmscurrentIndex.." "..minPhaseLeg.."->"..maxPhaseLeg)
 		end
+		local maxError=5
+		if dToAP<40 then
+			if B747DR_ap_approach_mode~=0 then
+				maxError=0.3
+			else
+				maxError=1
+			end
+			if B747DR_ap_lnav_xtk_target>=-99 and track[2]>maxError and track[1]>math.min(5,trackLength/5) then
+				B747DR_CAS_caution_status[66]=1 --its an advisory when > 40
+			else
+				B747DR_CAS_caution_status[66]=0
+			end
+		end
+		
 	end
-	--print("Start Track Data "..minPhaseLeg.."->"..maxPhaseLeg)
+	print("Start Track Data "..minPhaseLeg.."->"..maxPhaseLeg)
 	if canNew then
 		for i = minPhaseLeg, maxPhaseLeg, 1 do --last is always the airport, never go past last track
 
