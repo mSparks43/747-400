@@ -2173,7 +2173,7 @@ function B747_getCurrentWayPoint(fmsO)
 end
 
 function B747_getCurrentWayPoint_function(fmsO)
-	if simDR_radarAlt1<1000 and simDR_onGround == 0 then return end --surpress during final
+	if simDR_radarAlt1<1000 then return end --surpress during final/on ground
 	simDR_override_fms_progress=1
 	local best=0
 	local bestOffTrack=100 --can offset 99 miles
@@ -2186,7 +2186,7 @@ function B747_getCurrentWayPoint_function(fmsO)
 		dToAP=getDistance(simDR_latitude,simDR_longitude,fmsO[table.getn(fmsO)][5],fmsO[table.getn(fmsO)][6])
 		local dToAP2=getDistance(fmsO[B747DR_fmscurrentIndex][5],fmsO[B747DR_fmscurrentIndex][6],fmsO[table.getn(fmsO)][5],fmsO[table.getn(fmsO)][6])
 		if dToAP<40 and dToAP2<40 then
-			print("dToAP "..dToAP)
+			--print("dToAP "..dToAP)
 			minPhaseLeg=math.max(B747DR_fmscurrentIndex-1,3)
 			maxPhaseLeg=math.min(minPhaseLeg+4,(table.getn(fmsO)-2))
 			bestheadingDiff=120
@@ -2200,7 +2200,7 @@ function B747_getCurrentWayPoint_function(fmsO)
 		local track=getTriSpaceSolver(trackLength,dFromLast,dToNext)
 		if track[1]<math.max(trackLength-5,trackLength*2/3) then
 			canNew=false
-			print("In current track "..B747DR_fmscurrentIndex.." "..minPhaseLeg.."->"..maxPhaseLeg)
+			--print("In current track "..B747DR_fmscurrentIndex.." "..minPhaseLeg.."->"..maxPhaseLeg)
 		end
 		local maxError=5
 		if dToAP<40 then
@@ -2217,7 +2217,7 @@ function B747_getCurrentWayPoint_function(fmsO)
 		end
 		
 	end
-	print("Start Track Data "..minPhaseLeg.."->"..maxPhaseLeg)
+	--print("Start Track Data "..minPhaseLeg.."->"..maxPhaseLeg)
 	if canNew then
 		for i = minPhaseLeg, maxPhaseLeg, 1 do --last is always the airport, never go past last track
 
