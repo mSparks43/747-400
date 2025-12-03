@@ -2173,7 +2173,7 @@ function B747_getCurrentWayPoint(fmsO)
 end
 
 function B747_getCurrentWayPoint_function(fmsO)
-	if simDR_radarAlt1<1000 then return end --surpress during final/on ground
+	if simDR_radarAlt1<1000 and simDR_vvi_fpm_pilot < 500.0 then return end --surpress during final/on ground
 	simDR_override_fms_progress=1
 	local best=0
 	local bestOffTrack=100 --can offset 99 miles
