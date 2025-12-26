@@ -3,7 +3,7 @@
 *        COPYRIGHT � 2020 Mark Parker/mSparks CC-BY-NC4
 *****************************************************************************************
 ]]
-
+fmsLoadDref=find_dataref("xtlua/loadtoFMS")
 B747DR_fdr_log_json     = find_dataref("laminar/B747/fdr/json")
 simDRTime=find_dataref("sim/time/total_running_time_sec")
 simDR_onGround=find_dataref("sim/flightmodel/failures/onground_any")
@@ -11,7 +11,6 @@ simDR_vvi_fpm_pilot = find_dataref("sim/cockpit2/gauges/indicators/vvi_fpm_pilot
 simDR_pressureAlt1	= find_dataref("sim/cockpit2/gauges/indicators/altitude_ft_pilot")
 simDR_eng_fuel_flow_kg_sec = find_dataref("sim/cockpit2/engine/indicators/fuel_flow_kg_sec")
 B747DR_ap_flightPhase = find_dataref("laminar/B747/autopilot/flightPhase")
-B747DR_ap_lnav_xtk_target  = find_dataref("laminar/B747/autopilot/lnav/xtk_target")
 B747DR_fms_setCurrent = find_dataref("xtlua/currentFMS")
 B747DR_ap_lnavHeading_mode     	= find_dataref("laminar/B747/autopilot/lnavHeading_mode")
 B747DR_acfType               = find_dataref("laminar/B747/acfType")

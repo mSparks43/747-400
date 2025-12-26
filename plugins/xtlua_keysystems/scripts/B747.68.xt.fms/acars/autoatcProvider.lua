@@ -182,6 +182,7 @@ receive=function()
       io.write("I\n1100 Version\nCYCLE "..getCycle())
       io.write(newMessage["fp"])
       io.close(file)
+      
       newMessage["fp"]= nil
     end
     if newMessage["RR"] ~= nil then
