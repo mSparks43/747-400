@@ -1181,7 +1181,7 @@ function fmsFunctions.setdata(fmsO,value)
 		end	
 	end
   elseif value=="crzalt" then
-	if IN_REPLAY==1 then
+	if simDR_inReplay==1 then
 		fmsModules:setData("crzalt","FL350") -- if in replay just default to FL350 since we cant set the default FMS
 	else
 		if string.len(fmsO["scratchpad"])>0 then

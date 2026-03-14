@@ -26,8 +26,6 @@ SIM_PERIOD - this contains the duration of the current frame in seconds (so it i
 fraction).  Use this to normalize rates,  e.g. to add 3 units of fuel per second in a
 per-frame callback you’d do fuel = fuel + 3 * SIM_PERIOD.
 
-IN_REPLAY - evaluates to 0 if replay is off, 1 if replay mode is on
-
 --]]
 
 
@@ -94,7 +92,7 @@ simDR_brake_override= find_dataref("sim/operation/override/override_toe_brakes")
 simDR_brake_sweep= find_dataref("sim/cockpit2/controls/wingsweep_ratio")
 simDR_left_brake_ratio      = find_dataref("sim/cockpit2/controls/left_brake_ratio")
 simDR_right_brake_ratio     = find_dataref("sim/cockpit2/controls/right_brake_ratio")
-
+simDR_inReplay              = find_dataref("sim/time/is_in_replay")
 simDR_prop_mode                 = find_dataref("sim/cockpit2/engine/actuators/prop_mode")
 simDR_left_brake_fail     = find_dataref("sim/operation/failures/rel_lbrakes")--6 = inoperative
 simDR_right_brake_fail     = find_dataref("sim/operation/failures/rel_rbrakes")--6 = inoperative
@@ -738,7 +736,6 @@ end
 function B747_brake_temp()
 
     -- DATAREF INDEXES SAME AS TIRE PRESSURE
-    --print("simDR on ground"..simDR_aircraft_on_ground.. " IN_REPLAY"..IN_REPLAY)
     local brakingRatio_N = math.max(simDR_left_brake_ratio, simDR_right_brake_ratio, simDR_parking_brake_ratio)
     local brakingRatio_L = math.max(simDR_left_brake_ratio, simDR_parking_brake_ratio)
     local brakingRatio_R = math.max(simDR_right_brake_ratio, simDR_parking_brake_ratio)
@@ -749,7 +746,7 @@ function B747_brake_temp()
 
 
     -- anot on the ground and back in time, quickly cool off the brakes to oat in a replay
-    if IN_REPLAY==1 and simDR_aircraft_on_ground==0 then
+    if simDR_inReplay==1 and simDR_aircraft_on_ground==0 then
         for i = 0, 17 do
             B747DR_brake_temp[i]=simDR_OAT_degC
         end

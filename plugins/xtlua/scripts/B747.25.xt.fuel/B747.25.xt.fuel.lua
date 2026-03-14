@@ -26,8 +26,6 @@ SIM_PERIOD - this contains the duration of the current frame in seconds (so it i
 fraction).  Use this to normalize rates,  e.g. to add 3 units of fuel per second in a
 per-frame callback you’d do fuel = fuel + 3 * SIM_PERIOD.
 
-IN_REPLAY - evaluates to 0 if replay is off, 1 if replay mode is on
-
 --]]
 
 
@@ -36,7 +34,7 @@ IN_REPLAY - evaluates to 0 if replay is off, 1 if replay mode is on
 --*************************************************************************************--
 
 NUM_FUEL_TOGGLE_SW = 4
-
+simDR_inReplay              = find_dataref("sim/time/is_in_replay")
 --replace create_command
 function deferred_command(name,desc,realFunc)
   return replace_command(name,realFunc)
@@ -2156,7 +2154,7 @@ function B747_fuel_tank_levels()
     end
 
     
-    if simDR_all_wheels_on_ground == 0 and IN_REPLAY==0 and lastTotalFuel<simDR_fuel_tank_weight_total_kg and engineHasFuelProcessing==1 then
+    if simDR_all_wheels_on_ground == 0 and simDR_inReplay==0 and lastTotalFuel<simDR_fuel_tank_weight_total_kg and engineHasFuelProcessing==1 then
         print("reverted fuel levels")
         for i=0,7,1 do
             simDR_fuel_tank_weight_kg[i]=lastFuelLevels[i]

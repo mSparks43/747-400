@@ -4,6 +4,7 @@
 *****************************************************************************************
 ]]
 fmsLoadDref=find_dataref("xtlua/loadtoFMS")
+simDR_inReplay              = find_dataref("sim/time/is_in_replay")
 B747DR_fdr_log_json     = find_dataref("laminar/B747/fdr/json")
 simDRTime=find_dataref("sim/time/total_running_time_sec")
 simDR_onGround=find_dataref("sim/flightmodel/failures/onground_any")
