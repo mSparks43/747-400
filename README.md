@@ -129,6 +129,20 @@ See the [commit history](https://github.com/mSparks43/747-400/commits/master) fo
 
 _Thank you all for your support and contributions!_
 
+## Release XP12.4.1-2026/03/15 (OP Program XP12-41-2026/03/15):
+
+### Enhancements
+  - Updated voice commands
+  - Custom waypoint progression code to better support slucing on flight plan
+  - UNABLE RNP EICAS Caution logic
+
+### Bug fixes
+  - Support for XP12.4.1
+  - Remove inop GPU request in XP12
+  - Allow climb during descent phase, make flare less aggressive
+  - Increase gear firmness, move low weight extenstion closer to high weight
+  - Fix go to PERF page on R6 of RTE page
+
 ## Release XP12.3.0-2025/11/16 (OP Program XP12-30-2025/11/16):
 
 ### Enhancements
