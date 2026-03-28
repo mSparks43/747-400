@@ -836,7 +836,7 @@ B747DR_CAS_memo_status          = find_dataref("laminar/B747/CAS/memo_status")
 
 --Marauder28
 function getCurrentWayPoint(fms,usenext)
-
+	print("FMS j="..fmsJSON)
 	for i=1,table.getn(fms),1 do
      --print("FMS j="..fmsJSON)
 
@@ -1216,6 +1216,7 @@ function after_physics()
 	
 	run_after_time(activate_inflightAP,1)
   end
+  --print("FMS j="..fmsJSON)
   didFlightInit=true;
 --     for i =1,24,1 do
 --       print(string.byte(fms_style,i))
