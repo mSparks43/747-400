@@ -2171,11 +2171,16 @@ end
 
 ----- ALTITUDE SELECTED -----------------------------------------------------------------
 function B747_getCurrentWayPoint(fmsO)
-	--B747_getCurrentWayPoint_default(fmsO)
-	B747_getCurrentWayPoint_function(fmsO)
+	if table.getn(fmsO)<B747DR_fmscurrentIndex then
+		simDR_override_fms_progress=0
+		B747_getCurrentWayPoint_default(fmsO)
+	else
+		B747_getCurrentWayPoint_function(fmsO)
+	end
 end
 
 function B747_getCurrentWayPoint_function(fmsO)
+	
 	if simDR_radarAlt1<1000 and simDR_vvi_fpm_pilot < 500.0 then return end --surpress during final/on ground
 	if (B747DR_fmscurrentIndex>1 and fmsO[B747DR_fmscurrentIndex-1][8]=="PPOS") then
 		simDR_override_fms_progress=0
@@ -3521,7 +3526,6 @@ function after_physics()
 		fmsData = json.decode(B747DR_FMSdata)
 	else
 		fmsData = json.decode("[]")
-
 	end
 
 	local fmsSTR = fmsJSON
