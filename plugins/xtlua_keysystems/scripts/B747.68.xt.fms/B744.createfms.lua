@@ -114,7 +114,7 @@ function keyDown(fmsModule,key)
       return
   elseif key=="prog" then
       fmsModules[fmsModule].targetCustomFMC=true
-      simCMD_FMS_key[fmsModule][key]:once()
+      --simCMD_FMS_key[fmsModule][key]:once()
       fmsModules[fmsModule].targetPage="PROGRESS"
       fmsModules[fmsModule].targetpgNo=1
       return

@@ -1030,10 +1030,15 @@ function B747_ap_VNAV_mode_CMDhandler(phase, duration)
 			B747DR_ap_inVNAVdescent = 0
 			B747DR_ap_thrust_mode = 0
 			B747DR_mcp_hold=0
-			if B747DR_autothrottle_active == 0 and isATEnabled() and simDR_onGround == 0 then
+			if B747DR_autothrottle_active == 0 and isATEnabled() and simDR_onGround == 1 then
 				--simCMD_autopilot_autothrottle_on:once()
 				B747DR_autothrottle_active=1
 			end
+		elseif B747DR_ap_FMA_active_pitch_mode==1 then
+			B747DR_ap_vnav_state = 1
+			setDescent(false)
+			setVNAVState("gotVNAVSpeed", false)
+			B747_vnav_speed()
 		else
 			B747DR_ap_vnav_state = 1
 			simDR_autopilot_alt_hold_status = 2
@@ -2172,6 +2177,12 @@ end
 
 function B747_getCurrentWayPoint_function(fmsO)
 	if simDR_radarAlt1<1000 and simDR_vvi_fpm_pilot < 500.0 then return end --surpress during final/on ground
+	if (B747DR_fmscurrentIndex>1 and fmsO[B747DR_fmscurrentIndex-1][8]=="PPOS") then
+		simDR_override_fms_progress=0
+		--print("simDR_override_fms_progress B747DR_fmscurrentIndex="..B747DR_fmscurrentIndex)
+		B747_getCurrentWayPoint_default(fmsO)
+		return
+	end
 	simDR_override_fms_progress=1
 	local best=0
 	local bestOffTrack=100 --can offset 99 miles

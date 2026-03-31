@@ -154,6 +154,7 @@ function modFlapSpeed(speed)
     else return speed end
 end
 function clb_src_setSpd()
+    
     if B747DR_airspeed_V2<900 then
         simDR_autopilot_airspeed_is_mach = 0
         B747DR_ap_ias_dial_value = math.min(399.0, B747DR_airspeed_V2)
@@ -406,6 +407,8 @@ function B747_vnav_setClimbspeed()
     local lastAlt=simDR_pressureAlt1+(simDR_radarAlt1-400)
     local cState="src"
     local nextAlt=spd_states["clb"]["src"]["nextfunc"]()
+     --print("B747_vnav_setClimbspeed "..nextAlt.." "..simDR_pressureAlt1)
+
     while simDR_pressureAlt1>nextAlt and spd_states["clb"][cState]["nextstate"]~=nil do
         lastAlt=nextAlt
         if simDR_pressureAlt1>nextAlt then
@@ -482,7 +485,7 @@ function B747_vnav_speed()
     if vnavSPD_state["gotVNAVSpeed"]==true then return end
     if B747DR_ap_inVNAVdescent ==0 then
         B747_vnav_setClimbspeed()
-
+        print("B747_vnav_setClimbspeed ")
     else
         B747_vnav_setDescendspeed()
 
