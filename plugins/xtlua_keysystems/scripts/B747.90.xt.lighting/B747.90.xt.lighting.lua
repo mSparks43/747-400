@@ -1658,7 +1658,7 @@ function B747_annunciators()
     annun.b.ap_vnav 	= B747_ternary(simDR_autopilot_fms_vnav_status > 0 or B747DR_ap_vnav_state>0, 1, 0)
     annun.b.ap_fl_ch 	= B747_ternary(B747DR_ap_FMA_active_pitch_mode == 8 and simDR_autopilot_fms_vnav_status < 1 and B747DR_ap_vnav_state < 1, 1, 0)
     annun.b.ap_hdg_hold	= B747_ternary(simDR_autopilot_heading_hold_status == 2, 1, 0)
-    annun.b.ap_vs 		= B747_ternary(simDR_autopilot_vs_status == 2 and simDR_autopilot_fms_vnav_status < 1 and B747DR_ap_vnav_state < 1 and simDR_autopilot_alt_hold_status==0, 1, 0)
+    annun.b.ap_vs 		= B747_ternary(simDR_autopilot_vs_status == 2 and simDR_autopilot_fms_vnav_status < 1 and B747DR_ap_vnav_state < 1 and simDR_autopilot_alt_hold_status==0 and B747DR_autopilot_gs_status < 2, 1, 0)
     annun.b.ap_alt_hold = B747_ternary(simDR_autopilot_alt_hold_status == 2 and simDR_autopilot_fms_vnav_status < 1 and B747DR_ap_vnav_state < 1, 1, 0)
     annun.b.ap_app 		= B747_ternary((B747DR_autopilot_nav_status > 0 and B747DR_autopilot_gs_status > 0) or B747DR_ap_approach_mode>0, 1, 0)
     annun.b.ap_loc 		= B747_ternary((B747DR_autopilot_nav_status > 0 or B747DR_ap_approach_mode<0) and annun.b.ap_app == 0, 1, 0) --test this

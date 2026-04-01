@@ -1867,7 +1867,7 @@ end
 ----- VERTICAL SPEED MODE ---------------------------------------------------------------
 function B747_ap_vs_mode()
 	----- WINDOW
-	B747DR_ap_vs_window_open = B747_ternary(simDR_autopilot_vs_status >= 1 and B747DR_ap_vnav_state < 2 and simDR_autopilot_alt_hold_status<2, 1, 0)
+	B747DR_ap_vs_window_open = B747_ternary(simDR_autopilot_vs_status >= 1 and B747DR_ap_vnav_state < 2 and simDR_autopilot_alt_hold_status<2 and B747DR_autopilot_gs_status < 2, 1, 0)
 
 	----- VVI FOR ANIMATION
 
