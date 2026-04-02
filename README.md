@@ -76,6 +76,7 @@ From a terminal inside the X-plane folder.
 
 Yes! Very much so. A complex aircraft simulation working well in VR is a key motivation of many contributors and users. Once you try this plane in VR it is likely you will never want to go back to 2D.
 
+
 ### **How did you achieve such high frame rates?**
 
 This overhaul converts all the existing 744 systems, along with all the numerous additions from XLua, which is single threaded and directly impacts X-Plane frame rates, to XTLua, a fork of XLua which maintains general compatibility with XLua, but takes all the aircraft systems off the X-Plane flight simulation thread and makes full use of a modern multi-threaded operating system (use Linux for the best results, but Microsoft Windows and macOS are also supported).
@@ -116,6 +117,10 @@ The aircraft brakes require hydraulic pressure to function, to prevent the aircr
 
 Additionally, the brake lever and X-Plane brakes are now separated, there is a new command to engage the brakes by lifting the parking brake lever.
 
+### **Why doesn't my throttle work?**
+
+It probably does, but there has been multiple issues noted with having both a joystick and the "interactive cockpit" control the throttles when in manual rather than auto throttle, for this reason it is now an either or - If you have a throttle bound to a joystick axis _only_ that joystick axis can move the throttle. This is the only way to stop moving one and then the other setting it back in an unreliable manner - the last thing you want is to push the throttle to full using the interactive cockpit for take off, only to have the joystick push it back up to idle throttle a few seconds later.
+
 ### **Why are half my screens blank?** 
 
 IRS alignment cannot complete until you set the IRS position in the FMC. (INIT REF -> POS -> R4 to copy GPS position, R5 to enter it into current position. Make sure you don't move while it's aligning!
@@ -128,6 +133,14 @@ You may be experiencing this if you have SAM v3. To fix, disable the "Jetway Ext
 See the [commit history](https://github.com/mSparks43/747-400/commits/master) for a detailed change log.
 
 _Thank you all for your support and contributions!_
+
+## Release XP12.4.1-2026/04/02 (OP Program XP12-41-2026/04/02):
+
+### Bug fixes
+  - avoid nulls in flight plan waypoints
+  - LNAV fixes
+  - disable V/S annuciation and window with active G/S
+  - Fix XP11 functionality broken in OP Program XP12-41-2026/03/15
 
 ## Release XP12.4.1-2026/03/15 (OP Program XP12-41-2026/03/15):
 

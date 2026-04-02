@@ -103,7 +103,7 @@ fmsPages["RTE1"].getPage=function(self,pgNo,fmsID)
 	fmsFunctionsDefs["RTE1"]["R6"]={"setpage","PERFINIT"}
     lastLine2="                   PERF>"
   else
-    --fmsFunctionsDefs["RTE1"]["L6"]={"setpage","RTE2"}
+    
 	local offsetT="---"
 	if pageNo~=1 then
 		offsetT="   "
@@ -119,7 +119,11 @@ fmsPages["RTE1"].getPage=function(self,pgNo,fmsID)
 		end
 		lastLine1="                       "
 	end
-    fmsFunctionsDefs["RTE1"]["L6"]={"setpage","LEGS"}
+	--if simDR_version<123004 then
+		fmsFunctionsDefs["RTE1"]["L6"]={"setpage","RTE2"}
+	--else
+    --	fmsFunctionsDefs["RTE1"]["L6"]={"setpage","LEGS"}
+	--end
 	
     lastLine2="<RTE 2                "..offsetT
   end
