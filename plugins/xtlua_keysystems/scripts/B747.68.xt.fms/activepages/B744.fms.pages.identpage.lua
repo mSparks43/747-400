@@ -14,7 +14,7 @@ fmsPages["IDENT"].getPage=function(self,pgNo,fmsID)--dynamic pages need to be th
 
  "       IDENT            ",
  "                        ",
- string.format("%-12s %12s",simConfigData["data"].PLANE.model,simConfigData["data"].PLANE.engines),
+ string.format("%-11s %12s",simConfigData["data"].PLANE.model,simConfigData["data"].PLANE.engines),
  "                        ",
  "           "..simConfigData["data"].FMC.INIT.active,
  "                        ",
