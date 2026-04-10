@@ -2172,7 +2172,7 @@ end
 
 ----- ALTITUDE SELECTED -----------------------------------------------------------------
 function B747_getCurrentWayPoint(fmsO)
-	if table.getn(fmsO)<B747DR_fmscurrentIndex or simDR_version<120012 then
+	if table.getn(fmsO)<B747DR_fmscurrentIndex then
 		simDR_override_fms_progress=0
 		B747_getCurrentWayPoint_default(fmsO)
 	else
