@@ -564,16 +564,23 @@ function B747_monitorAT()
 
     local diff=simDRTime-B747DR_ap_lastCommand
     if diff<0.5 then return end --mode switch at 0.5 second intervals
-    if simDR_autopilot_autothrottle_enabled>=0 then
-        if simDR_version>=120012 then
+    if simDR_version>=120012 then
+        if simDR_autopilot_autothrottle_enabled>0 then
+            print("simDR_autopilot_autothrottle_enabled>=0")
             simCMD_ATOff:once()
-        else
-            --simCMD_autopilot_autothrottle_off:once()
-            simDR_autopilot_autothrottle_enabled=0
-        
+            
+            B747DR_ap_lastCommand=simDRTime
         end
-        B747DR_ap_lastCommand=simDRTime
+    else
+        if simDR_autopilot_autothrottle_on>0 then 
+            print("simDR_autopilot_autothrottle_enabled>=0")
+            simCMD_ATOffXP11:once()
+            simDR_autopilot_autothrottle_enabled=0 
+            
+            B747DR_ap_lastCommand=simDRTime
+        end
     end
+
     --make sure autothrottle is in the correct mode for the FMA
     --[[local ap_state=toBits(simDR_autopilot_state)
     local fmsArm=0
@@ -626,6 +633,7 @@ function B747_monitorAT()
     --if  B747DR_ap_FMA_active_pitch_mode==5 or B747DR_ap_FMA_active_pitch_mode==9 then
     if  simDR_autopilot_alt_hold_status==2 or B747DR_ap_FMA_active_pitch_mode==2 then
         if B747DR_ap_thrust_mode~=0 then
+            print("B747DR_ap_thrust_mode~=0")
             B747DR_ap_lastCommand=simDRTime
         end
         B747DR_ap_thrust_mode=0
@@ -665,10 +673,13 @@ function B747_monitorAT()
 end
 
 function getWCAforHeading(theading)
+    --print("1..")
     local tas = simDR_TAS_mps * 1.94384 -- true airspeed in knots
     local heading=math.fmod(theading,360)
+   -- print("1..")
     if heading<0 then heading=heading+360 end
     local wca=0
+   -- print("2..")
     if B747DR_ND_Wind_Bearing<-90 then
         --rhs
         local angle=math.rad(180-(B747DR_ND_Wind_Bearing*-1))
@@ -690,11 +701,14 @@ function getWCAforHeading(theading)
         wca=-(simDR_wind_speed_kts/tas)*math.sin(angle)
         --local latWind=-math.sin(angle)*simDR_wind_speed
       end
+     --print("3..")
       wca=math.deg(wca)
-
+      --print("4..")
       local hV=heading +wca
       hV=math.fmod(hV,360)
+      --print("5..")
       if hV<0 then hV=hV+360 end
+      --print("6.."..hV)
       return hV
 end
 local onApproach=false
@@ -708,8 +722,8 @@ function B747_updateApproachHeading(fmsO)
     " simDR_hsi_nav2_vertical_signal " ..simDR_hsi_nav2_vertical_signal ..
     " simDR_nav1_gs_flag " .. simDR_nav1_gs_flag ..
     " simDR_nav2_gs_flag " ..  simDR_nav2_gs_flag ..
-    " simDR_hsi_vdef_dots_pilot " .. simDR_hsi_vdef_dots_pilot)]]--
-
+    " simDR_hsi_vdef_dots_pilot " .. simDR_hsi_vdef_dots_pilot.. "B747DR_ap_lastCommand "..B747DR_ap_lastCommand )]]--
+    
     local diff = simDRTime - B747DR_ap_lastCommand
     if simDR_autopilot_nav_status==1 and simDR_hsi_nav1_horizontal_signal==1 and simDR_hsi_nav2_horizontal_signal==1  and diff>0.5 then
         simDR_autopilot_nav_status=2
@@ -780,8 +794,9 @@ function B747_updateApproachHeading(fmsO)
         local targetLat=fmsO[start][5]
         local targetLong=fmsO[start][6]
         local distanceToTarget=getDistance(simDR_latitude,simDR_longitude,targetLat,targetLong)
+        --print("distanceToTarget "..distanceToTarget)
         if B747DR_ap_lnav_xtk_target==0 and start>1 then -- -100 direct to, 
-            
+            --print("B747DR_ap_lnav_xtk_target "..B747DR_ap_lnav_xtk_target)
             --we are more than 10 miles away from the target, and we want 0 track error
             -- find a correction target to put us back on track
             if distanceToTarget>10 then
@@ -797,9 +812,9 @@ function B747_updateApproachHeading(fmsO)
                         thisHeading=thisHeading+360
                     end
                     targetLat,targetLong = movePoint(fmsO[start-1][5],fmsO[start-1][6],track[1]+5,thisHeading)
-                    --print("was "..fmsO[start][5].." "..fmsO[start][6].." now "..targetLat.." "..targetLong.. " using "..thisHeading)
+                    print("was "..fmsO[start][5].." "..fmsO[start][6].." now "..targetLat.." "..targetLong.. " using "..thisHeading)
                     --thisHeading=getHeading(simDR_latitude,simDR_longitude,targetLat,targetLong)
-                   --print("B747DR_ap_lnav_xtk_target==0 on ".. thisHeading)
+                    print("B747DR_ap_lnav_xtk_target==0 on ".. thisHeading)
                 end
             end
         elseif B747DR_ap_lnav_xtk_target>=-99 and start>1 then
@@ -820,7 +835,7 @@ function B747_updateApproachHeading(fmsO)
             local track=getTriSpaceSolver(trackLength,dFromLast,distanceToTarget)
             local remainingLegLength=trackLength-track[1]
             if  remainingLegLength>10 then
-                    --print("error correct track with "..remainingLegLength)
+                    print("error correct track with "..remainingLegLength)
                    -- local thisHeading=getHeading(fmsO[start-1][5],fmsO[start-1][6],fmsO[start][5],fmsO[start][6])
                     if thisHeading<0 then
                         thisHeading=thisHeading+360
@@ -830,13 +845,15 @@ function B747_updateApproachHeading(fmsO)
                 targetLat=endLat
                 targetLong=endLong
             end
-            --print("was "..fmsO[start][5].." "..fmsO[start][6].." now "..targetLat.." "..targetLong.. " using "..thisHeading)
-            --print("on ".. thisHeading)
+            print("was "..fmsO[start][5].." "..fmsO[start][6].." now "..targetLat.." "..targetLong.. " using "..thisHeading)
+            print("on ".. thisHeading)
         elseif distanceToTarget<10 and B747DR_ap_lnav_xtk_target<=-99 then
             B747DR_ap_lnav_xtk_target=0 --target no track offset after direct to
+            print("B747DR_ap_lnav_xtk_target "..B747DR_ap_lnav_xtk_target)
         end
 
         local ap2Heading=getHeading(simDR_latitude,simDR_longitude,targetLat,targetLong)
+        --print("ap2Heading "..ap2Heading)
         local hV=getWCAforHeading(ap2Heading+simDR_variation)
         --print("B747_ set Heading hV="..hV.." wca="..wca.." wca_deg="..wca.." simDR_wind_speed_kts="..simDR_wind_speed_kts.." ap2Heading="..ap2Heading )
         simDR_autopilot_heading_deg =	 hV
@@ -848,10 +865,15 @@ function B747_monitorAP(fmsO)
     local autothrottlemode=B747DR_autothrottle_active
     local flch_status=simDR_autopilot_flch_status
     local vs_status=simDR_autopilot_vs_status
+    --print("1 simDRTime " .. simDRTime .. "B747DR_ap_lastCommand " .. B747DR_ap_lastCommand )
     B747_monitorAT()
+    --print("2 simDRTime " .. simDRTime .. "B747DR_ap_lastCommand " .. B747DR_ap_lastCommand )
     VNAV_modeSwitch(fmsO)
+    --print("3 simDRTime " .. simDRTime .. "B747DR_ap_lastCommand " .. B747DR_ap_lastCommand )
     LNAV_modeSwitch()
+    --print("4 simDRTime " .. simDRTime .. "B747DR_ap_lastCommand " .. B747DR_ap_lastCommand )
     aileronTrim()
-
+    --print("5 simDRTime " .. simDRTime .. "B747DR_ap_lastCommand " .. B747DR_ap_lastCommand )
     B747_updateApproachHeading(fmsO)
+    --print("6 simDRTime " .. simDRTime .. "B747DR_ap_lastCommand " .. B747DR_ap_lastCommand )
 end

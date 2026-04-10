@@ -132,8 +132,9 @@ B747DR_CAS_warning_status = find_dataref("laminar/B747/CAS/warning_status")
 simDR_autopilot_flight_dir_active = find_dataref("sim/cockpit2/annunciators/flight_director")
 simDR_autopilot_flight_dir_mode = find_dataref("sim/cockpit2/autopilot/flight_director_mode")
 B747DR_autothrottle_active = find_dataref("laminar/B747/engines/autothrottle_active")
---simDR_autopilot_autothrottle_on = find_dataref("sim/cockpit2/autopilot/autothrottle_on")
+simDR_autopilot_autothrottle_on = find_dataref("sim/cockpit2/autopilot/autothrottle_on")
 simCMD_ATOff = find_command("sim/autopilot/autothrottle_hard_off")
+simCMD_ATOffXP11 = find_command("sim/autopilot/autothrottle_off")
 simCMD_ThrottleDown = find_command("sim/engines/throttle_down")
 simCMD_ThrottleUp = find_command("sim/engines/throttle_up")
 B747DR_ap_vnav_pause = find_dataref("laminar/B747/autopilot/vnav_pause")
@@ -2171,7 +2172,7 @@ end
 
 ----- ALTITUDE SELECTED -----------------------------------------------------------------
 function B747_getCurrentWayPoint(fmsO)
-	if table.getn(fmsO)<B747DR_fmscurrentIndex then
+	if table.getn(fmsO)<B747DR_fmscurrentIndex or simDR_version<120012 then
 		simDR_override_fms_progress=0
 		B747_getCurrentWayPoint_default(fmsO)
 	else
@@ -2315,11 +2316,13 @@ function B747_getCurrentWayPoint_function(fmsO)
 end
 
 function B747_getCurrentWayPoint_default(fmsO)
+	B747DR_ap_lnavHeading_mode = 0
 	for i = 1, table.getn(fmsO), 1 do
 		--print("FMS j="..fmsJSON)
 
 		if fmsO[i][10] == true then
 			B747DR_fmscurrentIndex = i
+			B747DR_ap_lnavHeading_mode = B747DR_fmscurrentIndex
 			if i>1 then
 				local dFromLast=getDistance(simDR_latitude,simDR_longitude,fmsO[i-1][5],fmsO[i-1][6])
 				local dToNext=getDistance(simDR_latitude,simDR_longitude,fmsO[i][5],fmsO[i][6])
