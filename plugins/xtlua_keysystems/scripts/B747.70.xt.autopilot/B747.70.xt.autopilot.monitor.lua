@@ -674,7 +674,8 @@ end
 
 function getWCAforHeading(theading)
     --print("1..")
-    local tas = simDR_TAS_mps * 1.94384 -- true airspeed in knots
+    local tas = simDR_TAS_mps --* 1.94384 -- true airspeed in knots
+    --simDR_wind_speed_kts is actually in m/s
     local heading=math.fmod(theading,360)
    -- print("1..")
     if heading<0 then heading=heading+360 end
