@@ -674,7 +674,7 @@ end
 
 function getWCAforHeading(theading)
     --print("1..")
-    local tas = simDR_TAS_mps --* 1.94384 -- true airspeed in knots
+    local tas = simDR_TAS_mps * 1.94384 -- true airspeed in knots
     --simDR_wind_speed_kts is actually in m/s
     local heading=math.fmod(theading,360)
    -- print("1..")
@@ -703,12 +703,14 @@ function getWCAforHeading(theading)
         --local latWind=-math.sin(angle)*simDR_wind_speed
       end
      --print("3..")
+      wca = math.asin(wca)
       wca=math.deg(wca)
       --print("4..")
       local hV=heading +wca
       hV=math.fmod(hV,360)
       --print("5..")
       if hV<0 then hV=hV+360 end
+      --print("wca.."..wca.." B747DR_ND_Wind_Bearing.."..B747DR_ND_Wind_Bearing)
       --print("6.."..hV)
       return hV
 end
@@ -813,9 +815,9 @@ function B747_updateApproachHeading(fmsO)
                         thisHeading=thisHeading+360
                     end
                     targetLat,targetLong = movePoint(fmsO[start-1][5],fmsO[start-1][6],track[1]+5,thisHeading)
-                    print("was "..fmsO[start][5].." "..fmsO[start][6].." now "..targetLat.." "..targetLong.. " using "..thisHeading)
+                   -- print("was "..fmsO[start][5].." "..fmsO[start][6].." now "..targetLat.." "..targetLong.. " using "..thisHeading)
                     --thisHeading=getHeading(simDR_latitude,simDR_longitude,targetLat,targetLong)
-                    print("B747DR_ap_lnav_xtk_target==0 on ".. thisHeading)
+                    --print("B747DR_ap_lnav_xtk_target==0 on ".. thisHeading)
                 end
             end
         elseif B747DR_ap_lnav_xtk_target>=-99 and start>1 then
