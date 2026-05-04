@@ -134,6 +134,14 @@ See the [commit history](https://github.com/mSparks43/747-400/commits/master) fo
 
 _Thank you all for your support and contributions!_
 
+## Release XP12.4.1-2026/04/28 (OP Program XP12-41-2026/04/28):
+
+### Bug fixes
+  - fix engines and pax/cargo fms page spacing
+  - XP11 LNAV regression fixes
+  - Fix Wind Correction Angle algorithm
+  - Increase AutoThrottle gains for tighter speed control
+
 ## Release XP12.4.1-2026/04/02 (OP Program XP12-41-2026/04/02):
 
 ### Bug fixes
