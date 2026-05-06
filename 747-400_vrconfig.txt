@@ -53,6 +53,9 @@ END_MANIP
 BEGIN_MANIP command_knob laminar/B747/flt_inst/flt_dir_src/capt/sel_dial_up laminar/B747/flt_inst/flt_dir_src/capt/sel_dial_dn
 	DEG_PER_ACTION 30
 END_MANIP
+BEGIN_MANIP command_knob sim/flight_controls/rudder_trim_right	sim/flight_controls/rudder_trim_left
+	DEG_PER_ACTION 30
+END_MANIP
 BEGIN_MANIP command_knob laminar/B747/flt_inst/nav_src/capt/sel_dial_up laminar/B747/flt_inst/nav_src/capt/sel_dial_dn
 	DEG_PER_ACTION 30
 END_MANIP
