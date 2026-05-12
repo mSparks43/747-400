@@ -733,7 +733,7 @@ function B747_updateApproachHeading(fmsO)
         B747DR_ap_lastCommand = simDRTime
     end
 
-    if simDR_autopilot_nav_status==2 and simDR_nav1_gs_flag ==0 and simDR_nav2_gs_flag ==0 and simDR_autopilot_gs_status==1 and math.abs(simDR_hsi_vdef_dots_pilot)<0.3 and simDR_hsi_nav1_vertical_signal==1 and simDR_hsi_nav2_vertical_signal ==1 and diff>0.5 then
+    if simDR_autopilot_nav_status==2 and simDR_nav1_gs_flag ==0 and simDR_nav2_gs_flag ==0 and simDR_autopilot_gs_status==1 and math.abs(simDR_hsi_vdef_dots_pilot)<1.5 and simDR_hsi_nav1_vertical_signal==1 and simDR_hsi_nav2_vertical_signal ==1 and diff>0.5 then
         simDR_autopilot_gs_status=2
         B747DR_ap_lastCommand = simDRTime
     end
