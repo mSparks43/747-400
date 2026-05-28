@@ -135,7 +135,7 @@ fmsPages["RTE1"].getPage=function(self,pgNo,fmsID)
 	fmsFunctionsDefs["RTE1"]["R2"]={"custom2fmc","R2"}
 	fmsFunctionsDefs["RTE1"]["R3"]={"custom2fmc","R3"}
 	return {
-		"      ACT RTE 1     " .. string.sub(cleanFMSLine(B747DR_srcfms[fmsID][1]),-4,-1) ,
+		"      ACT RTE 1    " .. string.sub(cleanFMSLine(B747DR_srcfms[fmsID][1]),-5,-1) ,
 		cleanFMSLine(B747DR_srcfms[fmsID][2]),
 		cleanFMSLine(B747DR_srcfms[fmsID][3]),
 		cleanFMSLine(B747DR_srcfms[fmsID][4]),
