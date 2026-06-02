@@ -165,7 +165,7 @@ function clb_src_setSpd()
     vnavSPD_state["setBaro"]=false
 end
 function clb_aptres_setSpd()
-    local spdval=modFlapSpeed(math.min(B747DR_ap_ias_dial_value+5,tonumber(getFMSData("clbrestspd"))))
+    local spdval=modFlapSpeed(tonumber(getFMSData("clbrestspd")))
     spdval=math.max(spdval,simDR_ind_airspeed_kts_pilot-15)
     simDR_autopilot_airspeed_is_mach = 0
     print("convert to clb clbrestspd ".. spdval)
@@ -186,11 +186,11 @@ function clb_spcres_setSpd()
       B747DR_lastap_dial_airspeed=crzspdval*0.01
     else
 
-      if B747DR_ap_ias_dial_value+5<simDR_ind_airspeed_kts_pilot then
+      --[[if B747DR_ap_ias_dial_value+5<simDR_ind_airspeed_kts_pilot then
         spdval=math.min(simDR_ind_airspeed_kts_pilot,spdval)
       elseif(B747DR_ap_ias_dial_value<spdval) and simDR_autopilot_airspeed_is_mach == 0 then
         spdval=math.min(B747DR_ap_ias_dial_value+5,spdval)
-      end
+      end]]--
       spdval=math.max(spdval,simDR_ind_airspeed_kts_pilot-15)
       simDR_autopilot_airspeed_is_mach = 0
       print("convert to clb speed ".. spdval.. " at "..simDR_ind_airspeed_kts_pilot)
@@ -211,11 +211,11 @@ function clb_nores_setSpd()
       B747DR_lastap_dial_airspeed=crzspdval*0.01
     else
       if simDR_autopilot_airspeed_is_mach == 0 then
-      if(B747DR_ap_ias_dial_value<spdval) then
+      --[[if(B747DR_ap_ias_dial_value<spdval) then
         spdval=math.min(B747DR_ap_ias_dial_value+10,spdval)
       elseif(B747DR_ap_ias_dial_value>spdval) then
             spdval=math.max(B747DR_ap_ias_dial_value-10,spdval)
-      end
+      end]]--
      else
         simDR_autopilot_airspeed_is_mach = 0
      end
