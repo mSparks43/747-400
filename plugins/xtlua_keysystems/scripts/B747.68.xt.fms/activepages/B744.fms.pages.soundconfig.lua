@@ -94,7 +94,7 @@ fmsPages["PASSENGERSOUNDCONFIG"].getSmallPage=function(self,pgNo,fmsID)
 
 end
 
-fmsFunctionsDefs["PASSENGERSOUNDCONFIG"]["L6"]={"setpage","MAINTSIMCONFIG_4"}
+fmsFunctionsDefs["PASSENGERSOUNDCONFIG"]["L6"]={"setpage","MAINTSIMCONFIG_5"}
 
 
 
@@ -301,7 +301,7 @@ fmsPages["GPWSSOUNDCONFIG"].getSmallPage=function(self,pgNo,fmsID)
 
 end
 
-fmsFunctionsDefs["GPWSSOUNDCONFIG"]["L6"]={"setpage","MAINTSIMCONFIG_4"}
+fmsFunctionsDefs["GPWSSOUNDCONFIG"]["L6"]={"setpage","MAINTSIMCONFIG_5"}
 
 fmsPages["GPWSSOUNDCONFIG"].getNumPages=function(self)
 	return 3
@@ -322,7 +322,7 @@ fmsPages["MISCSOUNDCONFIG"].getPage=function(self,pgNo,fmsID)
 	fmsFunctionsDefs["MISCSOUNDCONFIG"]["L1"]={"setSoundOption","PM_toggle"}
 	fmsFunctionsDefs["MISCSOUNDCONFIG"]["L2"]={"setSoundOption", "alarmsOption"}
 	fmsFunctionsDefs["MISCSOUNDCONFIG"]["L3"]={"setSoundOption", "V1Option"}
-	fmsFunctionsDefs["MISCSOUNDCONFIG"]["L6"]={"setpage","MAINTSIMCONFIG_4"}
+	fmsFunctionsDefs["MISCSOUNDCONFIG"]["L6"]={"setpage","MAINTSIMCONFIG_5"}
 
 	if B747DR_SNDoptions[4] == 1 then
 		lineA = "  /OFF"
@@ -553,7 +553,7 @@ fmsPages["VOLUME"].getSmallPage=function(self,pgNo,fmsID)
 
 end
 
-fmsFunctionsDefs["VOLUME"]["L6"]={"setpage","MAINTSIMCONFIG_4"}
+fmsFunctionsDefs["VOLUME"]["L6"]={"setpage","MAINTSIMCONFIG_5"}
 
 fmsPages["VOLUME"].getNumPages=function(self)
 	return 4
