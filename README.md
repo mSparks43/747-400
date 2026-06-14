@@ -134,6 +134,20 @@ See the [commit history](https://github.com/mSparks43/747-400/commits/master) fo
 
 _Thank you all for your support and contributions!_
 
+## Release XP12.4.2-2026/06/15 (OP Program XP12-42-2026/06/15):
+
+### Bug fixes
+
+  - Fixup VR manipulators
+  - expand g/s capture window
+  - Fixup ACT RTE & LEGS page #944 (credit:remenkemi, Stratosphere 777)
+  - Fixup Soundconfig back button returning to wrong page (credit:remenkemi, Stratosphere 777)
+  - Fixup Tires not touching ground #938 (credit:remenkemi, Stratosphere 777)
+  - Fix sound pages (credit:remenkemi, Stratosphere 777)
+  - Improve gear (credit:remenkemi, Stratosphere 777)
+  - Remove climb speed pregression work arounds
+  - Nose wheel and body gear steering to spec
+
 ## Release XP12.4.1-2026/04/28 (OP Program XP12-41-2026/04/28):
 
 ### Bug fixes
