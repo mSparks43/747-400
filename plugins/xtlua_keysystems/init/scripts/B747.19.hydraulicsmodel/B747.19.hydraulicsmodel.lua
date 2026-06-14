@@ -99,6 +99,8 @@ simDR_hyd_press_1_2               = deferred_dataref("laminar/B747/hydraulics/in
 
 B747DR_hyd_dmd_pmp_sel_pos      = deferred_dataref("laminar/B747/hydraulics/dmd_pump/sel_dial_pos", "array[4]")
 B747DR_rudder_ratio   = deferred_dataref("laminar/B747/flt_ctrls/rudder_ratio", "number")
+
+
 B747DR_yaw_damper_lwr   = deferred_dataref("laminar/B747/flt_ctrls/yaw_damper_lwr", "number")
 B747DR_yaw_damper_upr   = deferred_dataref("laminar/B747/flt_ctrls/yaw_damper_upr", "number")
 B747DR_elevator_ratio   = deferred_dataref("laminar/B747/flt_ctrls/elevator_ratio", "number")

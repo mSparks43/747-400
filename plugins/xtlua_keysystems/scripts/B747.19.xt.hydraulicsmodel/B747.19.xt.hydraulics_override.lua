@@ -1117,11 +1117,25 @@ function flight_controls_override()
         doCompute=0
     end  
     simDR_override_control_surfaces=1--override
+    
+
+    
     if B747_pressureDRs[1]>1000 then
-        simDR_override_steering=0
+
+        if simDR_ias_pilot<20 then
+            simDR_override_steering=0
+        else
+            simDR_override_steering=1
+            simDR_steering[0]=B747_rescale(-1,-7,1,7,simDR_total_heading_ratio)
+            simDR_steering[1]=B747_interpolate_value(simDR_steering[1],0,-77,77,0.3)
+            simDR_steering[2]=B747_interpolate_value(simDR_steering[2],0,-77,77,0.3)
+        end
     else
+
         simDR_override_steering=1
     end
+    
+
     --Rudder ratio changer
     B747DR_rudder_ratio=1.0-B747_rescale(150,0,450,0.84375,simDR_ias_pilot)
     B747DR_elevator_ratio=1.0--(1.0-B747_rescale(150,0,350,0.84375,simDR_ias_pilot))*-1

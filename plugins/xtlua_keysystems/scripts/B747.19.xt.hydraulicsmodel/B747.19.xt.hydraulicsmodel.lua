@@ -72,7 +72,8 @@ B747DR_controlOverrides   = find_dataref("xtlua/controlObject")
 B747DR_speedbrake_lever     	= deferred_dataref("laminar/B747/flt_ctrls/speedbrake_lever", "number")
 simDR_prop_mode                 = find_dataref("sim/cockpit2/engine/actuators/prop_mode")
 B747DR_button_switch_position   = find_dataref("laminar/B747/button_switch/position")
-simDR_ias_pilot				= find_dataref("laminar/B747/gauges/indicators/airspeed_kts_pilot")
+--simDR_ias_pilot				= find_dataref("laminar/B747/gauges/indicators/airspeed_kts_pilot")
+simDR_ias_pilot				= find_dataref("sim/cockpit2/gauges/indicators/airspeed_kts_pilot")
 B747DR_display_N1					= deferred_dataref("laminar/B747/engines/display_N1", "array[4]")
 B747DR_display_N2					= deferred_dataref("laminar/B747/engines/display_N2", "array[4]")
 B747_duct_pressure_L                = deferred_dataref("laminar/B747/air/duct_pressure_L", "number")
@@ -141,6 +142,9 @@ simDR_parking_brake_ratio       = find_dataref("sim/cockpit2/controls/parking_br
 B747DR_rudder_lwr_pos   = deferred_dataref("laminar/B747/flt_ctrls/rudder_lwr_pos", "number")
 B747DR_rudder_upr_pos   = deferred_dataref("laminar/B747/flt_ctrls/rudder_upr_pos", "number")
 B747DR_rudder_ratio   = deferred_dataref("laminar/B747/flt_ctrls/rudder_ratio", "number")
+simDR_steering = find_dataref("sim/flightmodel2/gear/tire_steer_command_deg")
+simDR_total_heading_ratio   = deferred_dataref("sim/cockpit2/controls/total_heading_ratio", "number")
+
 B747DR_elevator_ratio   = deferred_dataref("laminar/B747/flt_ctrls/elevator_ratio", "number")
 B747_controls_lower_rudder           = deferred_dataref("laminar/B747/cablecontrols/lower_rudder", "number")
 B747_controls_upper_rudder           = deferred_dataref("laminar/B747/cablecontrols/upper_rudder", "number")
@@ -557,6 +561,7 @@ function flight_start()
     B747DR_rudder_ratio=1.0
     B747DR_elevator_ratio   = 1.0
     if initialiseControls then
+
       --YAW DAMPER
       B747DR_controlOverrides = '{"minin":-1,"maxin":1,"minout":-3.5,"maxout":3.5,"scale":1.0,"srcDref":"laminar/B747/flt_ctrls/yaw_damper_lwr","dstDref":"laminar/B747/cablecontrols/lower_rudder","scaledref":"laminar/B747/flt_ctrls/rudder_ratio"}';
       B747DR_controlOverrides = '{"minin":-1,"maxin":1,"minout":-3.5,"maxout":3.5,"scale":1.0,"srcDref":"laminar/B747/flt_ctrls/yaw_damper_upr","dstDref":"laminar/B747/cablecontrols/upper_rudder","scaledref":"laminar/B747/flt_ctrls/rudder_ratio"}';
