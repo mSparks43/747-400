@@ -132,14 +132,14 @@ function modFlapSpeed(speed)
 	local maxSafeSpeed = B747DR_airspeed_Vmo
 	if simDR_flap_ratio_control > 0 then
 		if simDR_flap_ratio_control <= 0.168 then --flaps 1
-			maxSafeSpeed = math.min(275,B747DR_airspeed_Vf0+2)
+			maxSafeSpeed = math.min(275,B747DR_airspeed_Vf0+15)
 		elseif simDR_flap_ratio_control <= 0.34 then --flaps 5
-			maxSafeSpeed = math.min(255,B747DR_airspeed_Vf1+2)
+			maxSafeSpeed = math.min(255,B747DR_airspeed_Vf1+15)
 		elseif simDR_flap_ratio_control <= 0.5 then --flaps 10
-			maxSafeSpeed = math.min(235,B747DR_airspeed_Vf5+2)
+			maxSafeSpeed = math.min(235,B747DR_airspeed_Vf5+15)
 			minSafeSpeed = minSafeSpeed - 5
 		elseif simDR_flap_ratio_control <= 0.668 then --flaps 20
-			maxSafeSpeed = math.min(225,B747DR_airspeed_Vf10+2)
+			maxSafeSpeed = math.min(225,B747DR_airspeed_Vf10+15)
 			minSafeSpeed = minSafeSpeed - 5
 		elseif simDR_flap_ratio_control <= 0.84 then --flaps 25
 			maxSafeSpeed = math.min(200,B747DR_airspeed_Vf20+2)
