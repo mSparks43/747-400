@@ -109041,7 +109041,7 @@ GROUP Captain ND
             gen_needle pointer 2
               POS 335.000000 71.000000
               IMAGE EFIS/Maps/Centered/VOR_L_bug
-              DATAREF sim/cockpit2/radios/indicators/nav_relative_bearing_deg[3]
+              DATAREF sim/cockpit2/radios/indicators/nav_relative_bearing_deg[2]
               HIDE
               LIGHT_MODE GLASS_AUTO
               LIGHT_RHEOSTAT 0
@@ -109059,7 +109059,7 @@ GROUP Captain ND
             gen_needle pointer 2
               POS 335.000000 71.000000
               IMAGE EFIS/Maps/Centered/VOR_R_bug
-              DATAREF sim/cockpit2/radios/indicators/nav_relative_bearing_deg[4]
+              DATAREF sim/cockpit2/radios/indicators/nav_relative_bearing_deg[3]
               HIDE
               LIGHT_MODE GLASS_AUTO
               LIGHT_RHEOSTAT 0
