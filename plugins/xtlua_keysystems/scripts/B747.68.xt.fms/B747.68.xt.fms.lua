@@ -85,8 +85,8 @@ function round(x)
 function cleanFMSLine(line)
     local retval=line:gsub("☐","*")
     retval=retval:gsub("°","`")
-	retval=retval:gsub("["," ")
-	retval=retval:gsub("]"," ")
+	retval=retval:gsub("[%[%]]"," ")
+	--retval=retval:gsub("]"," ")
     return retval
 end 
 function getHeadingDifference(desireddirection,current_heading)

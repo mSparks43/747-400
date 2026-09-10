@@ -134,6 +134,14 @@ See the [commit history](https://github.com/mSparks43/747-400/commits/master) fo
 
 _Thank you all for your support and contributions!_
 
+## Release XP12.4.3-2026/09/10 (OP Program XP12-43-2026/09/10):
+
+### Bug fixes
+
+ - Increase flap retraction schedule speeds
+ - Fix VOR mode centered VOR 2 needle not functioning (#949)
+ - Fix extra characters sent to WINCTRL plugin for X-Plane (#945)
+
 ## Release XP12.4.2-2026/06/15 (OP Program XP12-42-2026/06/15):
 
 ### Bug fixes
