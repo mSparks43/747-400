@@ -26,6 +26,11 @@ Aircraft names, company names, and trademarks belong to their respective owners.
 
 ### Additional Contributors
 
+### Adapted from Stratosphere Studios 777-300ER
+
+- **Stratosphere Studios / 777-300ER project** — CDU/FMC color-layer architecture, highlight text concept, and Strato command-color protocol adapted for the FeelMySparks 748i FMC. Adaptation was made with the 777 project author's permission and is gratefully credited here. The Strato 777 work is derived from the mSparks Sparky744 747-400 tradition and includes its own adaptation lineage, code, and assets where used.
+- **Stratosphere Studios contributors and 777 maintainers** — thanks for the public 777 repository, CDU assets, and documented color stack that helped this integration.
+
 Additional contributors, reference sources, and third-party assets will be credited here as they are confirmed and used.
 
 Thank you to everyone who creates and shares resources that help the flight-simulation community grow.
