@@ -104,6 +104,34 @@ static void collectRows(std::vector<SignalRow> &rows) {
     }
 }
 
+static void logDiagnostics(double now) {
+    static double lastLog = -1000.0;
+    if (now - lastLog < 10.0) return;
+    lastLog = now;
+    int available = 0;
+    int total = 0;
+    std::vector<SignalRow> * banks[4] = {&rowsFlight, &rowsFbw, &rowsControls, &rowsSupport};
+    for (int b = 0; b < 4; ++b) {
+        for (size_t i = 0; i < banks[b]->size(); ++i) {
+            ++total;
+            if ((*banks[b])[i].available) ++available;
+        }
+    }
+    char diag[512];
+    std::snprintf(diag, sizeof(diag), "[FeelMySparks 748i FBW Debug] sample t=%.1f: %d of %d channels available.", now, available, total);
+    XPLMDebugString(diag);
+    const std::vector<SignalRow> *search[4] = {&rowsFlight, &rowsFbw, &rowsControls, &rowsSupport};
+    for (int b = 0; b < 4; ++b) {
+        for (size_t i = 0; i < search[b]->size(); ++i) {
+            if (!(*search[b])[i].available) {
+                char missing[128];
+                std::snprintf(missing, sizeof(missing), "[FeelMySparks 748i FBW Debug] unavailable: %s", (*search[b])[i].label.c_str());
+                XPLMDebugString(missing);
+            }
+        }
+    }
+}
+
 static void collectAll() {
     collectRows(rowsFlight);
     collectRows(rowsFbw);
@@ -230,7 +258,16 @@ static void drawWindow(XPLMWindowID, void *) {
         drawText(left + 42, yTab - 12, tabName(i), 1.0f, 1.0f, (i == gTab) ? 0.4f : 0.75f);
     }
 
+    int visibleAvailable = 0;
+    int visibleTotal = 0;
+    for (size_t i = 0; i < (*activeRows).size(); ++i) {
+        ++visibleTotal;
+        if ((*activeRows)[i].available) ++visibleAvailable;
+    }
+    char status[128];
+    std::snprintf(status, sizeof(status), "Channels available: %d/%d (tab %.0f)", visibleAvailable, visibleTotal, (double)gTab);
     drawText(gLeft + 10, gTop - 40, "FeelMySparks FBW Debug - read-only", 1.0f, 1.0f, 1.0f);
+    drawText(gLeft + 320, gTop - 40, status, 1.0f, 1.0f, 0.25f);
     if (gTab == 0) drawRows(rowsFlight, gLeft + 8, gTop - 76);
     if (gTab == 1) drawRows(rowsFbw, gLeft + 8, gTop - 76);
     if (gTab == 2) drawRows(rowsControls, gLeft + 8, gTop - 76);
@@ -295,13 +332,19 @@ static void debugMenuHandler(void *menuRef, void *itemRef) {
 }
 
 float flightLoop(float, float, int, void *) {
+    static double lastEntryPointLog = -1000.0;
     gTab = gTab;
+    if (lastEntryPointLog < 0.0) {
+        XPLMDebugString("[FeelMySparks 748i FBW Debug] flight loop entered\n");
+        lastEntryPointLog = 0.0;
+    }
     ensureRows();
     double now = 0.0;
     XPLMDataRef timeRef = XPLMFindDataRef("sim/time/total_running_time_sec");
     if (timeRef != nullptr) XPLMGetDatad(timeRef, &now, 0, 1);
     if (!std::isfinite(now)) now = 0.0;
     collectAll();
+    logDiagnostics(now);
     gLastSample = now;
     return 0.25f;
 }
@@ -315,6 +358,7 @@ extern "C" PLUGIN_API int XPluginStart(char *outName, char *outSig, char *outDes
     std::strcpy(outDesc, "Read-only instrumentation window for the 747-8i FBW prototype");
 
     ensureRows();
+    XPLMDebugString("[FeelMySparks 748i FBW Debug] XPluginStart: rows built, returning 1\n");
     activeRows = &rowsFlight;
     switchTab(0);
     return 1;
@@ -328,7 +372,9 @@ extern "C" PLUGIN_API void XPluginStop(void) {
 }
 
 extern "C" PLUGIN_API int XPluginEnable(void) {
+    XPLMDebugString("[FeelMySparks 748i FBW Debug] XPluginEnable entered\n");
     XPLMRegisterFlightLoopCallback(flightLoop, 0.25f, nullptr);
+
     XPLMMenuID pluginsMenu = XPLMFindPluginsMenu();
     if (pluginsMenu != nullptr && gMenu == nullptr) {
         int item = XPLMAppendMenuItem(pluginsMenu, "FeelMySparks FBW Debug", nullptr, 0);
