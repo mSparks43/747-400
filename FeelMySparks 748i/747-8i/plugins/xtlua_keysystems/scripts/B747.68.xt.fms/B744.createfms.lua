@@ -577,10 +577,16 @@ end
 local function colorFMSLine(value,page,row,pageNo)
   local line=string.sub(tostring(value or ""),1,24)
   line=line..string.rep(" ",24-string.len(line))
+  -- One small stack per character. The matching color is set to true; the character is
+  -- still routed to one, and only one, X-Plane string layer at the end.
   local characters={}
+  local color={}
   local magenta={}
   local cyan={}
-  for i=1,24 do characters[i]=string.sub(line,i,i) end
+  for i=1,24 do
+    characters[i]=string.sub(line,i,i)
+    color[i]="white"
+  end
 
   if page=="VNAV" then
     markVnavAltitudes(line,magenta,row)
@@ -617,25 +623,43 @@ local function colorFMSLine(value,page,row,pageNo)
     marker=position+1
   end
 
-  local whiteLine={}
-  local magentaLine={}
-  local cyanLine={}
+  local whiteStack={}
+  local magentaStack={}
+  local cyanStack={}
+
+  -- Priority is explicit and local: magenta references win over cyan highlights.
   for i=1,24 do
     if magenta[i] then
-      whiteLine[i]=" "
-      magentaLine[i]=characters[i]
-      cyanLine[i]=" "
+      color[i]="magenta"
     elseif cyan[i] then
-      whiteLine[i]=" "
-      magentaLine[i]=" "
-      cyanLine[i]=characters[i]
+      color[i]="cyan"
     else
-      whiteLine[i]=characters[i]
-      magentaLine[i]=" "
-      cyanLine[i]=" "
+      color[i]="white"
     end
   end
-  return table.concat(whiteLine),table.concat(magentaLine),table.concat(cyanLine)
+
+  -- Send each character to one destination only, leaving spaces in the others.
+  for i=1,24 do
+    local char=characters[i]
+    if color[i]=="magenta" then
+      magentaStack[i]=char
+      cyanStack[i]=" "
+      whiteStack[i]=" "
+    elseif color[i]=="cyan" then
+      magentaStack[i]=" "
+      cyanStack[i]=char
+      whiteStack[i]=" "
+    else
+      magentaStack[i]=" "
+      cyanStack[i]=" "
+      whiteStack[i]=char
+    end
+  end
+
+  local whiteLine=table.concat(whiteStack)
+  local magentaLine=table.concat(magentaStack)
+  local cyanLine=table.concat(cyanStack)
+  return whiteLine,magentaLine,cyanLine
 end
 
 local function writeLineIfChanged(lines,id,row,value)
