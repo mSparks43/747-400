@@ -53,12 +53,8 @@ for row=1,14 do
     local line=string.format("Line%02d",row)
     create_dataref("laminar/B747/"..fmsid.."/"..line.."_M_L", "string")
     create_dataref("laminar/B747/"..fmsid.."/"..line.."_C_L", "string")
-    create_dataref("laminar/B747/"..fmsid.."/"..line.."_R_L", "string")
-    create_dataref("laminar/B747/"..fmsid.."/"..line.."_A_L", "string")
     create_dataref("laminar/B747/"..fmsid.."/"..line.."_M_S", "string")
     create_dataref("laminar/B747/"..fmsid.."/"..line.."_C_S", "string")
-    create_dataref("laminar/B747/"..fmsid.."/"..line.."_R_S", "string")
-    create_dataref("laminar/B747/"..fmsid.."/"..line.."_A_S", "string")
 end
 create_dataref("laminar/B747/"..fmsid.."/Line01_S", "string")
 create_dataref("laminar/B747/"..fmsid.."/Line02_S", "string")

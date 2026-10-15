@@ -45,18 +45,6 @@ local function isAmberFMCMessage(message)
   return amberFMCMessage[message] == true
 end
 
-local function isRedFMCMessage(message)
-  if message == nil or message == "" then return false end
-  message = string.gsub(message, "[%[%]]", "")
-  message = string.upper(str_trim(message))
-  return string.find(message, "WARNING") ~= nil
-      or string.find(message, "ERROR") ~= nil
-      or string.find(message, "FAIL") ~= nil
-      or string.find(message, "INHIBITED") ~= nil
-      or string.find(message, "DISAGREE") ~= nil
-      or string.find(message, "NO ACTIVE ROUTE") ~= nil
-end
-
 function fmsClearNotify(notification)
   
   for i =1,54,1 do
@@ -318,10 +306,6 @@ B747DR_fms_s={}
 B747DR_fms_amber={}
 B747DR_fms_magenta={}
 B747DR_fms_cyan={}
-B747DR_fms_red_L={}
-B747DR_fms_amber_L={}
-B747DR_fms_red_S={}
-B747DR_fms_amber_S={}
 B747DR_fms_magenta_s={}
 B747DR_fms_cyan_s={}
 B747DR_srcfms={}
@@ -361,22 +345,14 @@ function setDREFs(fmsO,cduid,fmsid,keyid,fmskeyid)
   B747DR_fms_s[fmsO.id][14]                = find_dataref("laminar/B747/"..fmsid.."/Line14_S", "string")
   B747DR_fms_magenta[fmsO.id]={}
   B747DR_fms_cyan[fmsO.id]={}
-  B747DR_fms_red_L[fmsO.id]={}
-  B747DR_fms_amber_L[fmsO.id]={}
   B747DR_fms_magenta_s[fmsO.id]={}
   B747DR_fms_cyan_s[fmsO.id]={}
-  B747DR_fms_red_S[fmsO.id]={}
-  B747DR_fms_amber_S[fmsO.id]={}
   for i=1,14 do
     local line=string.format("Line%02d",i)
     B747DR_fms_magenta[fmsO.id][i]=find_dataref("laminar/B747/"..fmsid.."/"..line.."_M_L", "string")
     B747DR_fms_cyan[fmsO.id][i]=find_dataref("laminar/B747/"..fmsid.."/"..line.."_C_L", "string")
-    B747DR_fms_red_L[fmsO.id][i]=find_dataref("laminar/B747/"..fmsid.."/"..line.."_R_L", "string")
-    B747DR_fms_amber_L[fmsO.id][i]=find_dataref("laminar/B747/"..fmsid.."/"..line.."_A_L", "string")
     B747DR_fms_magenta_s[fmsO.id][i]=find_dataref("laminar/B747/"..fmsid.."/"..line.."_M_S", "string")
     B747DR_fms_cyan_s[fmsO.id][i]=find_dataref("laminar/B747/"..fmsid.."/"..line.."_C_S", "string")
-    B747DR_fms_red_S[fmsO.id][i]=find_dataref("laminar/B747/"..fmsid.."/"..line.."_R_S", "string")
-    B747DR_fms_amber_S[fmsO.id][i]=find_dataref("laminar/B747/"..fmsid.."/"..line.."_A_S", "string")
   end
   B747DR_srcfms[fmsO.id]={}
   B747DR_srcfms[fmsO.id][1]=find_dataref("sim/cockpit2/radios/indicators/fms_".. cduid .."_text_line0")
@@ -598,19 +574,18 @@ local function markLegWaypoint(line,magenta)
   end
 end
 
-local function colorFMSLine(value,page,row,pageNo,available)
-  local channelAvailable = available or {}
+local function colorFMSLine(value,page,row,pageNo)
   local line=string.sub(tostring(value or ""),1,24)
   line=line..string.rep(" ",24-string.len(line))
-
-  -- One color slot per character plus a priority mask for each renderable layer.
+  -- One small stack per character. The matching color is set to true; the character is
+  -- still routed to one, and only one, X-Plane string layer at the end.
   local characters={}
+  local color={}
   local magenta={}
   local cyan={}
-  local red={}
-  local amber={}
   for i=1,24 do
     characters[i]=string.sub(line,i,i)
+    color[i]="white"
   end
 
   if page=="VNAV" then
@@ -618,19 +593,6 @@ local function colorFMSLine(value,page,row,pageNo,available)
   elseif page=="LEGS" and (row==3 or (row>=5 and row<=13 and row%2==1)
       or (pageNo>1 and row==2)) then
     markLegWaypoint(line,magenta)
-  end
-
-  local forcedColor = nil
-  if isAmberFMCMessage(line) then
-    forcedColor="amber"
-  elseif isRedFMCMessage(line) then
-    forcedColor="red"
-  end
-  if forcedColor == "red" and channelAvailable.red ~= true then
-    forcedColor = "white"
-  end
-  if forcedColor == "amber" and channelAvailable.amber ~= true then
-    forcedColor = "white"
   end
 
   local marker=1
@@ -661,57 +623,43 @@ local function colorFMSLine(value,page,row,pageNo,available)
     marker=position+1
   end
 
-  if forcedColor ~= nil and forcedColor ~= "white" then
-    for i=1,24 do
-      if characters[i] ~= " " then
-        if forcedColor == "red" then red[i]=true end
-        if forcedColor == "amber" then amber[i]=true end
-      end
-    end
-  end
-
   local whiteStack={}
   local magentaStack={}
   local cyanStack={}
-  local redStack={}
-  local amberStack={}
 
-  -- Priority is explicit: warnings above selections, selections above references.
-  local priority = { white=0, cyan=1, magenta=2, amber=3, red=4 }
+  -- Priority is explicit and local: magenta references win over cyan highlights.
   for i=1,24 do
-    local color
-    if red[i] then
-      color="red"
-    elseif amber[i] then
-      color="amber"
-    elseif magenta[i] then
-      color="magenta"
+    if magenta[i] then
+      color[i]="magenta"
     elseif cyan[i] then
-      color="cyan"
+      color[i]="cyan"
     else
-      color="white"
+      color[i]="white"
     end
+  end
 
-    if color=="red" then
-      redStack[i]=characters[i]; magentaStack[i]=" "; cyanStack[i]=" "; amberStack[i]=" "; whiteStack[i]=" "
-    elseif color=="amber" then
-      redStack[i]=" "; magentaStack[i]=" "; cyanStack[i]=" "; amberStack[i]=characters[i]; whiteStack[i]=" "
-    elseif color=="magenta" then
-      redStack[i]=" "; magentaStack[i]=characters[i]; cyanStack[i]=" "; amberStack[i]=" "; whiteStack[i]=" "
-    elseif color=="cyan" then
-      redStack[i]=" "; magentaStack[i]=" "; cyanStack[i]=characters[i]; amberStack[i]=" "; whiteStack[i]=" "
+  -- Send each character to one destination only, leaving spaces in the others.
+  for i=1,24 do
+    local char=characters[i]
+    if color[i]=="magenta" then
+      magentaStack[i]=char
+      cyanStack[i]=" "
+      whiteStack[i]=" "
+    elseif color[i]=="cyan" then
+      magentaStack[i]=" "
+      cyanStack[i]=char
+      whiteStack[i]=" "
     else
-      redStack[i]=" "; magentaStack[i]=" "; cyanStack[i]=" "; amberStack[i]=" "; whiteStack[i]=characters[i]
+      magentaStack[i]=" "
+      cyanStack[i]=" "
+      whiteStack[i]=char
     end
   end
 
   local whiteLine=table.concat(whiteStack)
   local magentaLine=table.concat(magentaStack)
   local cyanLine=table.concat(cyanStack)
-  local redLine=table.concat(redStack)
-  local amberLine=table.concat(amberStack)
-  return whiteLine,magentaLine,cyanLine,redLine,amberLine
-end
+  return whiteLine,magentaLine,cyanLine
 end
 
 local function writeLineIfChanged(lines,id,row,value)
@@ -720,14 +668,6 @@ end
 
 function fms:B747_fms_display()
     local thisID=self.id
-    local largeChannels = {
-      red = (B747DR_fms_red_L[thisID][1] ~= nil),
-      amber = (B747DR_fms_amber_L[thisID][1] ~= nil)
-    }
-    local smallChannels = {
-      red = (B747DR_fms_red_S[thisID][1] ~= nil),
-      amber = (B747DR_fms_amber_S[thisID][1] ~= nil)
-    }
    -- local m="false"
    -- if self.inCustomFMC then m="true" end
     --print("B747_fms_display "..thisID.." "..m.." "..self.currentPage)
@@ -795,61 +735,22 @@ function fms:B747_fms_display()
 
       local scratchpadMessage = lineValues[14]
       local amberMessage = ""
-      local redMessage = ""
-      if isRedFMCMessage(scratchpadMessage) then
-        redMessage = scratchpadMessage
-        lineValues[14]=string.rep(" ", 24)
-        smallLineValues[14]=string.rep(" ", 24)
-      elseif isAmberFMCMessage(scratchpadMessage) then
+      if isAmberFMCMessage(scratchpadMessage) then
         amberMessage = scratchpadMessage
         lineValues[14]=string.rep(" ", 24)
         smallLineValues[14]=string.rep(" ", 24)
       end
 
       for i=1,14 do
-        local line,magenta,cyan,red,amber=colorFMSLine(lineValues[i],page,i,self.pgNo,largeChannels)
-        local smallLine,smallMagenta,smallCyan,smallRed,smallAmber=colorFMSLine(smallLineValues[i],page,i,self.pgNo,smallChannels)
+        local line,magenta,cyan=colorFMSLine(lineValues[i],page,i,self.pgNo)
+        local smallLine,smallMagenta,smallCyan=colorFMSLine(smallLineValues[i],page,i,self.pgNo)
         writeLineIfChanged(B747DR_fms,thisID,i,line)
         writeLineIfChanged(B747DR_fms_magenta,thisID,i,magenta)
         writeLineIfChanged(B747DR_fms_cyan,thisID,i,cyan)
-        if B747DR_fms_red_L[thisID][i] ~= nil then
-          writeLineIfChanged(B747DR_fms_red_L,thisID,i,red)
-        else
-          writeLineIfChanged(B747DR_fms,thisID,i,line)
-        end
-        if B747DR_fms_amber_L[thisID][i] ~= nil then
-          writeLineIfChanged(B747DR_fms_amber_L,thisID,i,amber)
-        else
-          writeLineIfChanged(B747DR_fms,thisID,i,line)
-        end
         writeLineIfChanged(B747DR_fms_s,thisID,i,smallLine)
         writeLineIfChanged(B747DR_fms_magenta_s,thisID,i,smallMagenta)
         writeLineIfChanged(B747DR_fms_cyan_s,thisID,i,smallCyan)
-        if B747DR_fms_red_S[thisID][i] ~= nil then
-          writeLineIfChanged(B747DR_fms_red_S,thisID,i,smallRed)
-        else
-          writeLineIfChanged(B747DR_fms_s,thisID,i,smallLine)
-        end
-        if B747DR_fms_amber_S[thisID][i] ~= nil then
-          writeLineIfChanged(B747DR_fms_amber_S,thisID,i,smallAmber)
-        else
-          writeLineIfChanged(B747DR_fms_s,thisID,i,smallLine)
-        end
       end
-      if redMessage ~= "" then
-        if B747DR_fms_red_L[thisID][14] ~= nil then
-          if B747DR_fms_red_L[thisID][14] ~= redMessage then B747DR_fms_red_L[thisID][14]=redMessage end
-        else
-          if B747DR_fms[thisID][14] ~= redMessage then B747DR_fms[thisID][14]=redMessage end
-        end
-      elseif amberMessage ~= "" then
-        if B747DR_fms_amber_L[thisID][14] ~= nil then
-          if B747DR_fms_amber_L[thisID][14] ~= amberMessage then B747DR_fms_amber_L[thisID][14]=amberMessage end
-        else
-          if B747DR_fms[thisID][14] ~= amberMessage then B747DR_fms[thisID][14]=amberMessage end
-        end
-      else
-        if B747DR_fms_amber[thisID] ~= "" then B747DR_fms_amber[thisID]="" end
-      end
+      if B747DR_fms_amber[thisID]~=amberMessage then B747DR_fms_amber[thisID]=amberMessage end
     
 end
