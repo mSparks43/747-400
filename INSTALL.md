@@ -31,21 +31,10 @@ If the aircraft does not appear in X-Plane 12, check that the aircraft folder is
 
 *FeelMySparks 748i — an independent X-Plane 12 community project.*
 
-## Weight and Balance Plugin
+## macOS Quarantine
 
-When installing the aircraft package into `X-Plane 12/Aircraft/FeelMySparks 748i/`, ensure that this companion plugin is present at:
-
-```
-FeelMySparks 748i/747-8i/plugins/FeelMySparks748i_WB/64/mac.xpl
-```
-
-On macOS, remove quarantine from the copied aircraft package so X-Plane does not require manual approval on every launch:
+If macOS blocks a copied aircraft package, remove its quarantine attribute:
 
 ```
 xattr -dr com.apple.quarantine '/path/to/FeelMySparks 748i'
 ```
-
-Current platform support:
-
-- macOS universal binary: included.
-- Windows and Linux binaries: not yet built.

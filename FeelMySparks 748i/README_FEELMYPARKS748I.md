@@ -1,22 +1,11 @@
 FeelMySparks 748i
 ==================
 
-This repository currently focuses on the standalone Weight and Balance plugin
-for the FeelMySparks 748i (Boeing 747-8i) project.
+This repository contains the FeelMySparks 748i (Boeing 747-8i) aircraft project.
+The standalone Weight and Balance plugin has been removed and is no longer supported.
 
-Aircraft package files were intentionally removed from this repository to avoid
-shipping an incompatible avionics set. Re-add the matching baseline aircraft
-package separately.
+## Experimental Flight-Control Augmentation
 
-Standalone Weight and Balance plugin:
-- Plugin path: plugins/FeelMySparks748i_WB
-- Source: plugins/FeelMySparks748i_WB/source/feelmysparks748i_wb.cpp
-- macOS binary: plugins/FeelMySparks748i_WB/64/mac.xpl
+The aircraft now has a tunable, approximate FBW-style layer integrated into the existing hydraulic control-surface model. It adds G-load maneuver alleviation through the outboard ailerons and 12 modeled spoiler channels, flap-linked outboard-aileron droop, roll-acceleration damping (an OAMS proxy), low-altitude tail-strike elevator bias, and low-altitude asymmetric-thrust roll compensation. The existing speed-dependent outboard-aileron reduction remains active by default from 232 to 238 KIAS.
 
-Features:
-- X-Plane 12 native window UI.
-- Direct fuel injection into sim/cockpit2/fuel/fuel_quantity.
-- 9-tank priority scheduling from preset loads.
-- CG safety checks and takeoff trim helper.
-- Numeric text-field editing and drag interface.
-- Native colorized 3D notepad-style visual sheet.
+All modes and tuning values are exposed under `laminar/B747/fbw/` for DataRefTool/DataRefEditor. Defaults are restored at each aircraft `flight_start`; edit the defaults in `B747.19.xt.hydraulicsmodel.lua` to retain tuning across flights. The OAMS proxy uses aircraft roll acceleration rather than wingtip accelerometers, and all thresholds and deflections are experimental values to refine in X-Plane. Back up the package and test changes at safe altitude. No aircraft geometry or ACF files were changed.

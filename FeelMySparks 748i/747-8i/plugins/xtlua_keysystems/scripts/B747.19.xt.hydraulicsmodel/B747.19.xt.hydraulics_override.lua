@@ -48,6 +48,238 @@ B747_pressureDRs[0]=0
 local computeRate=0.0333 -- handle low FPS
 local lastCompute=0
 local doCompute=0
+
+local simDR_fbw_g_normal = find_dataref("sim/flightmodel/forces/g_nrml")
+local simDR_fbw_roll_accel = find_dataref("sim/flightmodel/position/P_dot")
+local simDR_fbw_pitch = find_dataref("sim/flightmodel/position/theta")
+local simDR_fbw_pitch_rate = find_dataref("sim/flightmodel/position/theta_dot")
+local simDR_fbw_ias = find_dataref("sim/cockpit2/gauges/indicators/airspeed_kts_pilot")
+local simDR_fbw_ground = find_dataref("sim/flightmodel/failures/onground_any")
+local simDR_fbw_radio_altitude = find_dataref("sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot")
+local simDR_fbw_flaps = find_dataref("sim/cockpit2/controls/flap_ratio")
+local simDR_fbw_engine_n1 = find_dataref("sim/flightmodel/engine/ENGN_N1_")
+local simDR_fbw_gear_deflection = find_dataref("sim/flightmodel2/gear/tire_vertical_deflection_mtr")
+
+B747DR_fbw_enabled = find_dataref("laminar/B747/fbw/enabled")
+B747DR_fbw_speed_reduction_enabled = find_dataref("laminar/B747/fbw/speed_reduction_enabled")
+B747DR_fbw_aileron_lockout_start_kts = find_dataref("laminar/B747/fbw/aileron_lockout_start_kts")
+B747DR_fbw_aileron_lockout_end_kts = find_dataref("laminar/B747/fbw/aileron_lockout_end_kts")
+B747DR_fbw_mla_enabled = find_dataref("laminar/B747/fbw/mla_enabled")
+B747DR_fbw_mla_start_g = find_dataref("laminar/B747/fbw/mla_start_g")
+B747DR_fbw_mla_full_g = find_dataref("laminar/B747/fbw/mla_full_g")
+B747DR_fbw_mla_max_aileron_deg = find_dataref("laminar/B747/fbw/mla_max_aileron_deg")
+B747DR_fbw_mla_max_spoiler_deg = find_dataref("laminar/B747/fbw/mla_max_spoiler_deg")
+B747DR_fbw_droop_enabled = find_dataref("laminar/B747/fbw/droop_enabled")
+B747DR_fbw_droop_max_deg = find_dataref("laminar/B747/fbw/droop_max_deg")
+B747DR_fbw_oams_enabled = find_dataref("laminar/B747/fbw/oams_enabled")
+B747DR_fbw_oams_min_ias_kts = find_dataref("laminar/B747/fbw/oams_min_ias_kts")
+B747DR_fbw_oams_gain = find_dataref("laminar/B747/fbw/oams_gain")
+B747DR_fbw_oams_max_deg = find_dataref("laminar/B747/fbw/oams_max_deg")
+B747DR_fbw_tail_strike_enabled = find_dataref("laminar/B747/fbw/tail_strike_enabled")
+B747DR_fbw_tail_strike_pitch_deg = find_dataref("laminar/B747/fbw/tail_strike_pitch_deg")
+B747DR_fbw_tail_strike_pitch_rate_dps = find_dataref("laminar/B747/fbw/tail_strike_pitch_rate_dps")
+B747DR_fbw_tail_strike_altitude_ft = find_dataref("laminar/B747/fbw/tail_strike_altitude_ft")
+B747DR_fbw_tail_strike_max_elevator_deg = find_dataref("laminar/B747/fbw/tail_strike_max_elevator_deg")
+B747DR_fbw_asym_thrust_enabled = find_dataref("laminar/B747/fbw/asym_thrust_enabled")
+B747DR_fbw_asym_thrust_min_n1_diff = find_dataref("laminar/B747/fbw/asym_thrust_min_n1_diff")
+B747DR_fbw_asym_thrust_min_ias_kts = find_dataref("laminar/B747/fbw/asym_thrust_min_ias_kts")
+B747DR_fbw_asym_thrust_max_altitude_ft = find_dataref("laminar/B747/fbw/asym_thrust_max_altitude_ft")
+B747DR_fbw_asym_thrust_max_aileron_deg = find_dataref("laminar/B747/fbw/asym_thrust_max_aileron_deg")
+B747DR_fbw_asym_thrust_max_spoiler_deg = find_dataref("laminar/B747/fbw/asym_thrust_max_spoiler_deg")
+B747DR_fbw_load_factor = find_dataref("laminar/B747/fbw/load_factor")
+B747DR_fbw_mla_demand = find_dataref("laminar/B747/fbw/mla_demand")
+B747DR_fbw_mla_spoiler_deg = find_dataref("laminar/B747/fbw/mla_spoiler_deg")
+B747DR_fbw_aileron_droop_deg = find_dataref("laminar/B747/fbw/aileron_droop_deg")
+B747DR_fbw_oams_deg = find_dataref("laminar/B747/fbw/oams_deg")
+B747DR_fbw_tail_strike_deg = find_dataref("laminar/B747/fbw/tail_strike_deg")
+B747DR_fbw_asym_thrust_imbalance = find_dataref("laminar/B747/fbw/asym_thrust_imbalance")
+B747DR_fbw_asym_roll_deg = find_dataref("laminar/B747/fbw/asym_roll_deg")
+B747DR_fbw_gear_compression_m = find_dataref("laminar/B747/fbw/gear_compression_m")
+
+local fbw_last_time = nil
+local fbw_roll_accel_filtered = 0
+local fbw_mla_aileron_command = 0
+local fbw_mla_spoiler_command = 0
+local fbw_droop_command = 0
+local fbw_oams_command = 0
+local fbw_tail_strike_command = 0
+local fbw_asym_roll_command = 0
+local fbw_asym_spoiler_command = 0
+
+local function fbw_clamp(value, minimum, maximum)
+    return math.max(minimum, math.min(maximum, value))
+end
+
+local function fbw_slew(current, target, degrees_per_second, delta_time)
+    local max_step = degrees_per_second * delta_time
+    if target > current then
+        return math.min(target, current + max_step)
+    end
+    return math.max(target, current - max_step)
+end
+
+local function B747_fbw_apply_control_laws()
+    local delta_time = computeRate
+    if fbw_last_time ~= nil then
+        local measured_delta = simDRTime - fbw_last_time
+        if measured_delta > 0 and measured_delta <= 0.1 then
+            delta_time = measured_delta
+        end
+    end
+    fbw_last_time = simDRTime
+
+    local enabled = B747DR_fbw_enabled > 0.5
+    local load_factor = math.abs(simDR_fbw_g_normal)
+    local roll_accel = simDR_fbw_roll_accel
+    local pitch = simDR_fbw_pitch
+    local pitch_rate = simDR_fbw_pitch_rate
+    local airspeed = simDR_fbw_ias
+    local on_ground = simDR_fbw_ground == 1
+    local radio_altitude = math.max(simDR_fbw_radio_altitude, 0)
+    local flap_ratio = fbw_clamp(simDR_fbw_flaps, 0, 1)
+    local gear_compression = 0
+
+    for i = 0, 9 do
+        gear_compression = math.max(gear_compression, simDR_fbw_gear_deflection[i])
+    end
+
+    local mla_demand = 0
+    if enabled and B747DR_fbw_mla_enabled > 0.5 and not on_ground then
+        local start_g = math.max(B747DR_fbw_mla_start_g, 1.0)
+        local full_g = math.max(B747DR_fbw_mla_full_g, start_g + 0.1)
+        mla_demand = fbw_clamp((load_factor - start_g) / (full_g - start_g), 0, 1)
+    end
+    fbw_mla_aileron_command = fbw_slew(
+        fbw_mla_aileron_command,
+        mla_demand * math.max(B747DR_fbw_mla_max_aileron_deg, 0),
+        8,
+        delta_time
+    )
+    fbw_mla_spoiler_command = fbw_slew(
+        fbw_mla_spoiler_command,
+        mla_demand * math.max(B747DR_fbw_mla_max_spoiler_deg, 0),
+        12,
+        delta_time
+    )
+
+    local droop_target = 0
+    if enabled and B747DR_fbw_droop_enabled > 0.5 then
+        droop_target = flap_ratio * math.max(B747DR_fbw_droop_max_deg, 0)
+    end
+    fbw_droop_command = fbw_slew(fbw_droop_command, droop_target, 5, delta_time)
+
+    local roll_filter_alpha = delta_time / (0.25 + delta_time)
+    fbw_roll_accel_filtered = fbw_roll_accel_filtered
+        + roll_filter_alpha * (roll_accel - fbw_roll_accel_filtered)
+    local oams_target = 0
+    if enabled and B747DR_fbw_oams_enabled > 0.5
+        and not on_ground and airspeed >= B747DR_fbw_oams_min_ias_kts
+    then
+        local roll_accel_high_pass = roll_accel - fbw_roll_accel_filtered
+        oams_target = fbw_clamp(
+            roll_accel_high_pass * B747DR_fbw_oams_gain,
+            -math.max(B747DR_fbw_oams_max_deg, 0),
+            math.max(B747DR_fbw_oams_max_deg, 0)
+        )
+    end
+    fbw_oams_command = fbw_slew(fbw_oams_command, oams_target, 12, delta_time)
+
+    local near_ground = on_ground
+        or radio_altitude <= B747DR_fbw_tail_strike_altitude_ft
+        or gear_compression > 0.03
+    local tail_strike_target = 0
+    if enabled and B747DR_fbw_tail_strike_enabled > 0.5
+        and airspeed >= 40 and near_ground
+        and pitch >= B747DR_fbw_tail_strike_pitch_deg
+        and (on_ground or pitch_rate >= B747DR_fbw_tail_strike_pitch_rate_dps)
+    then
+        local pitch_excess = pitch - B747DR_fbw_tail_strike_pitch_deg
+        local rate_excess = math.max(pitch_rate - B747DR_fbw_tail_strike_pitch_rate_dps, 0)
+        tail_strike_target = math.min(
+            math.max(B747DR_fbw_tail_strike_max_elevator_deg, 0),
+            pitch_excess * 0.5 + rate_excess * 0.5
+        )
+    end
+    fbw_tail_strike_command = fbw_slew(fbw_tail_strike_command, tail_strike_target, 5, delta_time)
+
+    local left_n1 = (simDR_fbw_engine_n1[0] + simDR_fbw_engine_n1[1]) * 0.5
+    local right_n1 = (simDR_fbw_engine_n1[2] + simDR_fbw_engine_n1[3]) * 0.5
+    local n1_difference = left_n1 - right_n1
+    local asymmetry_demand = 0
+    if enabled and B747DR_fbw_asym_thrust_enabled > 0.5
+        and math.max(left_n1, right_n1) >= 35
+        and math.abs(n1_difference) > B747DR_fbw_asym_thrust_min_n1_diff
+        and airspeed >= B747DR_fbw_asym_thrust_min_ias_kts
+        and (on_ground or radio_altitude <= B747DR_fbw_asym_thrust_max_altitude_ft)
+    then
+        local threshold = fbw_clamp(B747DR_fbw_asym_thrust_min_n1_diff, 0, 99)
+        asymmetry_demand = fbw_clamp(
+            (math.abs(n1_difference) - threshold) / (100 - threshold),
+            0,
+            1
+        )
+    end
+    local asym_roll_target = -fbw_clamp(n1_difference / 100, -1, 1)
+        * asymmetry_demand * math.max(B747DR_fbw_asym_thrust_max_aileron_deg, 0)
+    fbw_asym_roll_command = fbw_slew(fbw_asym_roll_command, asym_roll_target, 4, delta_time)
+    local asym_spoiler_target = fbw_clamp(n1_difference / 100, -1, 1)
+        * asymmetry_demand * math.max(B747DR_fbw_asym_thrust_max_spoiler_deg, 0)
+    fbw_asym_spoiler_command = fbw_slew(fbw_asym_spoiler_command, asym_spoiler_target, 6, delta_time)
+
+    controlRatios[9] = fbw_clamp(
+        controlRatios[9] + fbw_droop_command - fbw_mla_aileron_command
+            - fbw_oams_command + fbw_asym_roll_command,
+        -25,
+        15
+    )
+    controlRatios[10] = fbw_clamp(
+        controlRatios[10] + fbw_droop_command - fbw_mla_aileron_command
+            + fbw_oams_command - fbw_asym_roll_command,
+        -25,
+        15
+    )
+
+    for i = 3, 6 do
+        controlRatios[i] = fbw_clamp(controlRatios[i] + fbw_tail_strike_command, -22, 17)
+    end
+
+    for i = 11, 22 do
+        controlRatios[i] = fbw_clamp(controlRatios[i] + fbw_mla_spoiler_command, 0, 45)
+    end
+
+    if fbw_asym_spoiler_command > 0 then
+        for i = 17, 22 do
+            controlRatios[i] = fbw_clamp(controlRatios[i] + fbw_asym_spoiler_command, 0, 45)
+        end
+    elseif fbw_asym_spoiler_command < 0 then
+        for i = 11, 16 do
+            controlRatios[i] = fbw_clamp(controlRatios[i] - fbw_asym_spoiler_command, 0, 45)
+        end
+    end
+
+    B747DR_fbw_load_factor = load_factor
+    B747DR_fbw_mla_demand = mla_demand
+    B747DR_fbw_mla_spoiler_deg = fbw_mla_spoiler_command
+    B747DR_fbw_aileron_droop_deg = fbw_droop_command
+    B747DR_fbw_oams_deg = fbw_oams_command
+    B747DR_fbw_tail_strike_deg = fbw_tail_strike_command
+    B747DR_fbw_asym_thrust_imbalance = n1_difference
+    B747DR_fbw_asym_roll_deg = fbw_asym_roll_command
+    B747DR_fbw_gear_compression_m = gear_compression
+end
+
+function B747_fbw_reset()
+    fbw_last_time = nil
+    fbw_roll_accel_filtered = 0
+    fbw_mla_aileron_command = 0
+    fbw_mla_spoiler_command = 0
+    fbw_droop_command = 0
+    fbw_oams_command = 0
+    fbw_tail_strike_command = 0
+    fbw_asym_roll_command = 0
+    fbw_asym_spoiler_command = 0
+end
+
 function pressure_input()
     B747_pressureDRs[1]=B747DR_hyd_sys_pressure_1
     B747_pressureDRs[2]=B747DR_hyd_sys_pressure_2
@@ -269,6 +501,7 @@ function spoiler_consumption(controlDiff)
 end
 
 function flight_controls_consumption()
+    B747_fbw_apply_control_laws()
     controlDiff={}
     for i=1,numSurfaces,1 do
         --print(i.." getting")
@@ -1139,8 +1372,14 @@ function flight_controls_override()
     --Rudder ratio changer
     B747DR_rudder_ratio=1.0-B747_rescale(150,0,450,0.84375,simDR_ias_pilot)
     B747DR_elevator_ratio=1.0--(1.0-B747_rescale(150,0,350,0.84375,simDR_ias_pilot))*-1
-    B747DR_l_aileron_outer_lockout   = 1.0-B747_rescale(232,0,238,1.0,simDR_ias_pilot)
-    B747DR_r_aileron_outer_lockout   = (1.0-B747_rescale(232,0,238,1.0,simDR_ias_pilot))*-1
+    local lockout_start = math.max(B747DR_fbw_aileron_lockout_start_kts, 0)
+    local lockout_end = math.max(B747DR_fbw_aileron_lockout_end_kts, lockout_start + 0.1)
+    local aileron_reduction = 0
+    if B747DR_fbw_speed_reduction_enabled > 0.5 then
+        aileron_reduction = B747_rescale(lockout_start, 0, lockout_end, 1.0, simDR_ias_pilot)
+    end
+    B747DR_l_aileron_outer_lockout = 1.0 - aileron_reduction
+    B747DR_r_aileron_outer_lockout = (1.0 - aileron_reduction) * -1
     B747_slats()
     if((simDRTime - B747DR_switching_servos_on)<2) then
         ap_pitch_assist()

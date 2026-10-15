@@ -6,12 +6,8 @@ This project is currently in early development. Versions and features are subjec
 
 ## [Unreleased]
 
-### Added
-- Standalone X-Plane 12 native Weight & Balance plugin in `FeelMySparks 748i/747-8i/plugins/FeelMySparks748i_WB`.
-- Direct fuel injection using X-Plane standard `sim/cockpit2/fuel/fuel_quantity`.
-- Nine-tank fuel priority scheduling and `EMPTY`, `STD PAX`, `MAX CARGO`, and `MTOW` presets.
-- Plugins-menu entry to reopen the Weight and Balance window.
-- macOS universal binary in `64/mac.xpl`.
+### Removed
+- Standalone Weight and Balance plugin; it is no longer included in the aircraft package.
 
 ### Planned
 - Set up the project structure.

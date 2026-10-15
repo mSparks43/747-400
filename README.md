@@ -71,22 +71,4 @@ For questions, suggestions, or permission requests, contact the project author t
 
 *FeelMySparks 748i — an independent community aircraft project.*
 
-## Companion Weight and Balance Plugin
-
-The development worktree now includes a standalone native X-Plane 12 Weight and Balance plugin for the 747-8i package.
-
-Current plugin capabilities:
-
-- Native floating window UI with a white notepad-style canvas.
-- Standard X-Plane datarefs for live weight, CG, and direct fuel writes.
-- Nine-tank fuel priority scheduling.
-- `EMPTY`, `STD PAX`, `MAX CARGO`, and `MTOW` fuel presets.
-- Live CG status checking and takeoff trim guidance.
-- Reopen command from `Plugins -> FeelMySparks W&B -> Show W&B Window`.
-- macOS universal (`x86_64` + `arm64`) binary in `FeelMySparks 748i/747-8i/plugins/FeelMySparks748i_WB/64/mac.xpl`.
-
-Platform status:
-
-- macOS: built and tested.
-- Windows and Linux: not yet built.
-- W&B tank capacities, CG limits, and overall aircraft calibration remain provisional.
+The standalone Weight and Balance plugin has been removed from the aircraft package.
