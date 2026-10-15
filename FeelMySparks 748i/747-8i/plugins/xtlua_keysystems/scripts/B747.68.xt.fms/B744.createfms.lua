@@ -859,7 +859,7 @@ function fms:B747_fms_display()
           magenta = true,
           cyan = true,
           green = false,
-          highlight = false,
+          highlight = false, -- Reverted from true until the ACF layer edit is validated
           grey = false,
           amber = B747DR_fms_amber[thisID] ~= nil,
           red = false,
@@ -868,7 +868,7 @@ function fms:B747_fms_display()
           magenta = true,
           cyan = true,
           green = false,
-          highlight = false,
+          highlight = false, -- Reverted from true until the ACF layer edit is validated
           grey = false,
           amber = false,
           red = false,
