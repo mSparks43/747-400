@@ -33,6 +33,10 @@ local rollRateDampingGain = find_dataref("laminar/B747/fbw/roll_rate_damping_gai
 local buffetEnabled = find_dataref("laminar/B747/fbw/buffet_enabled")
 local mlaDemandOutput = find_dataref("laminar/B747/fbw/mla_demand")
 local droopOutput = find_dataref("laminar/B747/fbw/aileron_droop_ratio")
+local lowSpeedBlendOutput = find_dataref("laminar/B747/fbw/low_speed_blend")
+local rollResponseEffectOutput = find_dataref("laminar/B747/fbw/roll_response_effect")
+local rollRateDampingEffectOutput = find_dataref("laminar/B747/fbw/roll_rate_damping_effect")
+local activeOutput = find_dataref("laminar/B747/fbw/active")
 local normalG = find_dataref("sim/flightmodel/forces/g_nrml")
 local onGround = find_dataref("sim/flightmodel/failures/onground_any")
 local indicatedAirspeed = find_dataref("sim/cockpit2/gauges/indicators/airspeed_kts_pilot")
@@ -136,6 +140,10 @@ local function apply(controlRatios)
     writeNumber(mlaDemandOutput, mlaDemand)
     writeNumber(droopOutput, aileronDroop)
     writeNumber(stickShaker, lawState.active and readNumber(buffetEnabled) >= 0.5 and 1 or 0)
+    writeNumber(lowSpeedBlendOutput, lawState.lowSpeedBlend)
+    writeNumber(rollResponseEffectOutput, lawState.rollResponseGain)
+    writeNumber(rollRateDampingEffectOutput, lawState.rollRateDamping)
+    writeNumber(activeOutput, lawState.active and 1 or 0)
 end
 
 B747_fbw = {
