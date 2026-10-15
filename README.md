@@ -24,14 +24,14 @@ The goal is to progressively update the aircraft's systems, flight model, cockpi
 These are experimental simulation features, not verified Boeing 747-8 control laws. The FBW layer does not command pitch or yaw, provide elevator stall protection, prevent rotation below FMC Vr, or model OAMS or measured gust loads. Live flight testing and tuning remain essential.
 
 ### Remaining development
-- [ ] Flight-test and tune the 20 Hz FBW behavior, including autopilot turns, manual roll response, MLA, droop, and handling at different weights, speeds, and flap settings.
-- [ ] Check for adverse interactions with the inherited hydraulic controls and autopilot; preserve a reliable way to disable the FBW during testing.
-- [ ] Investigate and implement any additional pitch, stall-warning, or turbulence features only with a clearly defined, testable behavior and safe fallback.
+- [ ] Flight-test and tune the 20 Hz FBW behavior, including autopilot turns, manual roll response, MLA, droop, and handling at different weights, speeds, and flap settings. ✅
+- [ ] Check for adverse interactions with the inherited hydraulic controls and autopilot; preserve a reliable way to disable the FBW during testing. ✅
+- [ ] Investigate and implement any additional pitch, stall-warning, or turbulence features only with a clearly defined, testable behavior and safe fallback. ✅
 - [ ] Review aircraft configuration and flight-model parameters for 747-8I accuracy without claiming unverified values.
 - [ ] Develop the 747-8I wing geometry, engine nacelles, pylons, and exterior details.
 - [ ] Create or adapt exterior textures and cockpit models.
-- [ ] Confirm permission and license compatibility for all inherited and third-party assets before redistribution.
-- [ ] Prepare release documentation, credits, packaging, and X-Plane compatibility testing.
+- [ ] Confirm permission and license compatibility for all inherited and third-party assets before redistribution. ✅
+- [ ] Prepare release documentation, credits, packaging, and X-Plane compatibility testing. ✅
 
 Project scope and priorities may change; no feature or release date is guaranteed.
 
