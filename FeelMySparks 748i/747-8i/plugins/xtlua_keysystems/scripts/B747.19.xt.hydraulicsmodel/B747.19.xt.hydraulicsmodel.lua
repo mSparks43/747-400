@@ -527,34 +527,6 @@ end
 
 local initialiseControls=true
 function flight_start() 
-  B747DR_fbw_enabled = 1
-  B747DR_fbw_speed_reduction_enabled = 1
-  B747DR_fbw_aileron_lockout_start_kts = 232
-  B747DR_fbw_aileron_lockout_end_kts = 238
-  B747DR_fbw_mla_enabled = 1
-  B747DR_fbw_mla_start_g = 1.3
-  B747DR_fbw_mla_full_g = 2.0
-  B747DR_fbw_mla_max_aileron_deg = 3
-  B747DR_fbw_mla_max_spoiler_deg = 8
-  B747DR_fbw_droop_enabled = 1
-  B747DR_fbw_droop_max_deg = 4
-  B747DR_fbw_oams_enabled = 1
-  B747DR_fbw_oams_min_ias_kts = 180
-  B747DR_fbw_oams_gain = 0.04
-  B747DR_fbw_oams_max_deg = 1.5
-  B747DR_fbw_tail_strike_enabled = 1
-  B747DR_fbw_tail_strike_pitch_deg = 10
-  B747DR_fbw_tail_strike_pitch_rate_dps = 2
-  B747DR_fbw_tail_strike_altitude_ft = 40
-  B747DR_fbw_tail_strike_max_elevator_deg = 3
-  B747DR_fbw_asym_thrust_enabled = 1
-  B747DR_fbw_asym_thrust_min_n1_diff = 20
-  B747DR_fbw_asym_thrust_min_ias_kts = 80
-  B747DR_fbw_asym_thrust_max_altitude_ft = 1000
-  B747DR_fbw_asym_thrust_max_aileron_deg = 3
-  B747DR_fbw_asym_thrust_max_spoiler_deg = 4
-  B747_fbw_reset()
-
   --initial pids
   --lockedout
   --p 0.1

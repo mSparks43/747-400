@@ -123,43 +123,6 @@ B747DR_r_aileron_outer   = deferred_dataref("laminar/B747/flt_ctrls/r_aileron_ou
 
 B747DR_l_aileron_outer_lockout   = deferred_dataref("laminar/B747/flt_ctrls/left_outer_aileron_lockout", "number")
 B747DR_r_aileron_outer_lockout   = deferred_dataref("laminar/B747/flt_ctrls/right_outer_aileron_lockout", "number")
-
-B747DR_fbw_enabled = deferred_dataref("laminar/B747/fbw/enabled", "number")
-B747DR_fbw_speed_reduction_enabled = deferred_dataref("laminar/B747/fbw/speed_reduction_enabled", "number")
-B747DR_fbw_aileron_lockout_start_kts = deferred_dataref("laminar/B747/fbw/aileron_lockout_start_kts", "number")
-B747DR_fbw_aileron_lockout_end_kts = deferred_dataref("laminar/B747/fbw/aileron_lockout_end_kts", "number")
-B747DR_fbw_mla_enabled = deferred_dataref("laminar/B747/fbw/mla_enabled", "number")
-B747DR_fbw_mla_start_g = deferred_dataref("laminar/B747/fbw/mla_start_g", "number")
-B747DR_fbw_mla_full_g = deferred_dataref("laminar/B747/fbw/mla_full_g", "number")
-B747DR_fbw_mla_max_aileron_deg = deferred_dataref("laminar/B747/fbw/mla_max_aileron_deg", "number")
-B747DR_fbw_mla_max_spoiler_deg = deferred_dataref("laminar/B747/fbw/mla_max_spoiler_deg", "number")
-B747DR_fbw_droop_enabled = deferred_dataref("laminar/B747/fbw/droop_enabled", "number")
-B747DR_fbw_droop_max_deg = deferred_dataref("laminar/B747/fbw/droop_max_deg", "number")
-B747DR_fbw_oams_enabled = deferred_dataref("laminar/B747/fbw/oams_enabled", "number")
-B747DR_fbw_oams_min_ias_kts = deferred_dataref("laminar/B747/fbw/oams_min_ias_kts", "number")
-B747DR_fbw_oams_gain = deferred_dataref("laminar/B747/fbw/oams_gain", "number")
-B747DR_fbw_oams_max_deg = deferred_dataref("laminar/B747/fbw/oams_max_deg", "number")
-B747DR_fbw_tail_strike_enabled = deferred_dataref("laminar/B747/fbw/tail_strike_enabled", "number")
-B747DR_fbw_tail_strike_pitch_deg = deferred_dataref("laminar/B747/fbw/tail_strike_pitch_deg", "number")
-B747DR_fbw_tail_strike_pitch_rate_dps = deferred_dataref("laminar/B747/fbw/tail_strike_pitch_rate_dps", "number")
-B747DR_fbw_tail_strike_altitude_ft = deferred_dataref("laminar/B747/fbw/tail_strike_altitude_ft", "number")
-B747DR_fbw_tail_strike_max_elevator_deg = deferred_dataref("laminar/B747/fbw/tail_strike_max_elevator_deg", "number")
-B747DR_fbw_asym_thrust_enabled = deferred_dataref("laminar/B747/fbw/asym_thrust_enabled", "number")
-B747DR_fbw_asym_thrust_min_n1_diff = deferred_dataref("laminar/B747/fbw/asym_thrust_min_n1_diff", "number")
-B747DR_fbw_asym_thrust_min_ias_kts = deferred_dataref("laminar/B747/fbw/asym_thrust_min_ias_kts", "number")
-B747DR_fbw_asym_thrust_max_altitude_ft = deferred_dataref("laminar/B747/fbw/asym_thrust_max_altitude_ft", "number")
-B747DR_fbw_asym_thrust_max_aileron_deg = deferred_dataref("laminar/B747/fbw/asym_thrust_max_aileron_deg", "number")
-B747DR_fbw_asym_thrust_max_spoiler_deg = deferred_dataref("laminar/B747/fbw/asym_thrust_max_spoiler_deg", "number")
-B747DR_fbw_load_factor = deferred_dataref("laminar/B747/fbw/load_factor", "number")
-B747DR_fbw_mla_demand = deferred_dataref("laminar/B747/fbw/mla_demand", "number")
-B747DR_fbw_mla_spoiler_deg = deferred_dataref("laminar/B747/fbw/mla_spoiler_deg", "number")
-B747DR_fbw_aileron_droop_deg = deferred_dataref("laminar/B747/fbw/aileron_droop_deg", "number")
-B747DR_fbw_oams_deg = deferred_dataref("laminar/B747/fbw/oams_deg", "number")
-B747DR_fbw_tail_strike_deg = deferred_dataref("laminar/B747/fbw/tail_strike_deg", "number")
-B747DR_fbw_asym_thrust_imbalance = deferred_dataref("laminar/B747/fbw/asym_thrust_imbalance", "number")
-B747DR_fbw_asym_roll_deg = deferred_dataref("laminar/B747/fbw/asym_roll_deg", "number")
-B747DR_fbw_gear_compression_m = deferred_dataref("laminar/B747/fbw/gear_compression_m", "number")
-
 B747DR_spoilers      = deferred_dataref("laminar/B747/flt_ctrls/spoilers", "array[13]") --0 unused
 
 B747DR_spoiler1 = deferred_dataref("laminar/B747/cablecontrols/spoiler1", "number")
@@ -196,6 +159,21 @@ B747DR_yaw_damper_upr_on             = deferred_dataref("laminar/B747/flt_ctrls/
 B747DR_yaw_damper_lwr_on             = deferred_dataref("laminar/B747/flt_ctrls/yaw_damper_lwr_on", "number")
 B747DR_outer_spoilers      = deferred_dataref("laminar/B747/flt_ctrls/outer_spoilers", "array[2]") --for stat display
 B747DR_flaps      = deferred_dataref("laminar/B747/flt_ctrls/flaps", "array[5]") --0 unuse
+
+B747DR_fbw_enabled = deferred_dataref("laminar/B747/fbw/enabled", "number")
+B747DR_fbw_mla_enabled = deferred_dataref("laminar/B747/fbw/mla_enabled", "number")
+B747DR_fbw_droop_enabled = deferred_dataref("laminar/B747/fbw/droop_enabled", "number")
+B747DR_fbw_roll_response_gain = deferred_dataref("laminar/B747/fbw/roll_response_gain", "number")
+B747DR_fbw_buffet_enabled = deferred_dataref("laminar/B747/fbw/buffet_enabled", "number")
+B747DR_fbw_mla_demand = deferred_dataref("laminar/B747/fbw/mla_demand", "number")
+B747DR_fbw_aileron_droop_ratio = deferred_dataref("laminar/B747/fbw/aileron_droop_ratio", "number")
+B747DR_fbw_enabled = 1
+B747DR_fbw_mla_enabled = 1
+B747DR_fbw_droop_enabled = 1
+B747DR_fbw_roll_response_gain = 0.12
+B747DR_fbw_buffet_enabled = 1
+B747DR_fbw_mla_demand = 0
+B747DR_fbw_aileron_droop_ratio = 0
 
 B747DR_pidRollP = deferred_dataref("laminar/B747/flt_ctrls/pid/roll/p", "number")
 B747DR_pidRollI = deferred_dataref("laminar/B747/flt_ctrls/pid/roll/i", "number")

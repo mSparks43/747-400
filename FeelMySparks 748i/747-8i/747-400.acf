@@ -83491,8 +83491,8 @@ P acf/_frc_spring_ptch_lb 0.000000000
 P acf/_frc_spring_roll_lb 0.000000000
 P acf/_frc_stall_freq 0.000000000
 P acf/_frc_stall_lb 0.000000000
-P acf/_frc_stickshaker_freq 0.000000000
-P acf/_frc_stickshaker_lb 0.000000000
+P acf/_frc_stickshaker_freq 20.000000000
+P acf/_frc_stickshaker_lb 3.000000000
 P acf/_free_turb_Ng_pow_sig28 4.500000000
 P acf/_free_turb_Ng_pow_sigSL 6.000000000
 P acf/_free_turb_Np_pow_sig28 4.500000000

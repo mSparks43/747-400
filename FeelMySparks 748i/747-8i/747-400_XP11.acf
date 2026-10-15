@@ -90849,8 +90849,8 @@ P acf/_frc_spring_ptch_lb 0.0
 P acf/_frc_spring_roll_lb 0.0
 P acf/_frc_stall_freq 0.0
 P acf/_frc_stall_lb 0.0
-P acf/_frc_stickshaker_freq 0.0
-P acf/_frc_stickshaker_lb 0.0
+P acf/_frc_stickshaker_freq 20.0
+P acf/_frc_stickshaker_lb 3.0
 P acf/_fuel_1/0 -80.0
 P acf/_fuel_1/1 -2.0
 P acf/_fuel_1/2 135.0
