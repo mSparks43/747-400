@@ -35,6 +35,7 @@ local normalG = find_dataref("sim/flightmodel/forces/g_nrml")
 local onGround = find_dataref("sim/flightmodel/failures/onground_any")
 local indicatedAirspeed = find_dataref("sim/cockpit2/gauges/indicators/airspeed_kts_pilot")
 local rollRate = find_dataref("sim/flightmodel/position/P")
+local autopilotServosOn = find_dataref("laminar/B747/autopilot/servos_on")
 local flapRatio = find_dataref("laminar/B747/cablecontrols/flap_ratio")
 local stickShaker = find_dataref("sim/aircraft/forcefeedback/acf_ff_stickshaker")
 local simTime = find_dataref("sim/time/total_running_time_sec")
@@ -84,7 +85,7 @@ local function updateLawState()
     lawState.mlaDemand = lawState.mlaDemand + clamp(mlaStep, -0.2, 0.4)
 
     lawState.rollRateDamping = 0
-    if airborne and readNumber(rollRateDampingGain) > 0 then
+    if airborne and readNumber(autopilotServosOn) < 0.5 and readNumber(rollRateDampingGain) > 0 then
         lawState.rollRateDamping = clamp(
             readNumber(rollRate) * clamp(readNumber(rollRateDampingGain), 0, 1),
             -6,
