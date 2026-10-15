@@ -369,6 +369,11 @@ int clickWindow(XPLMWindowID window, int x, int y, XPLMMouseStatus status, void 
     int left, top, right, bottom;
     XPLMGetWindowGeometry(window, &left, &top, &right, &bottom);
     const Action action = hitTest(x, y, left, top, right);
+    char clickDiagnostic[192];
+    std::snprintf(clickDiagnostic, sizeof(clickDiagnostic),
+                  "[FeelMySparks Load Control] mouse-down x=%d y=%d bounds=%d,%d..%d,%d action=%d\n",
+                  x, y, left, bottom, right, top, static_cast<int>(action));
+    XPLMDebugString(clickDiagnostic);
     refreshRefs();
     refreshTanks();
     switch (action) {
@@ -389,6 +394,14 @@ int clickWindow(XPLMWindowID window, int x, int y, XPLMMouseStatus status, void 
         case Action::None: std::snprintf(gNotice, sizeof(gNotice), "Click one of the labeled controls"); break;
     }
     return 1;
+}
+
+XPLMCursorStatus cursorWindow(XPLMWindowID, int, int, void *) {
+    return xplm_CursorDefault;
+}
+
+int mouseWheelWindow(XPLMWindowID, int, int, int, void *) {
+    return 0;
 }
 
 float flightLoop(float, float, int, void *) {
@@ -447,6 +460,8 @@ extern "C" PLUGIN_API int XPluginEnable(void) {
     params.visible = 1;
     params.drawWindowFunc = drawWindow;
     params.handleMouseClickFunc = clickWindow;
+    params.handleCursorFunc = cursorWindow;
+    params.handleMouseWheelFunc = mouseWheelWindow;
     params.decorateAsFloatingWindow = xplm_WindowDecorationRoundRectangle;
     params.layer = xplm_WindowLayerFloatingWindows;
     gWindow = XPLMCreateWindowEx(&params);

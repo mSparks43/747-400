@@ -15,6 +15,8 @@ typedef int XPLMCursorStatus;
 typedef void (*XPLMMenuHandler_f)(void *, void *);
 typedef void (*XPLMDrawWindow_f)(XPLMWindowID, void *);
 typedef int (*XPLMHandleMouseClick_f)(XPLMWindowID, int, int, XPLMMouseStatus, void *);
+typedef XPLMCursorStatus (*XPLMHandleCursor_f)(XPLMWindowID, int, int, void *);
+typedef int (*XPLMHandleMouseWheel_f)(XPLMWindowID, int, int, int, void *);
 
 typedef struct {
     int structSize;
@@ -26,8 +28,8 @@ typedef struct {
     XPLMDrawWindow_f drawWindowFunc;
     XPLMHandleMouseClick_f handleMouseClickFunc;
     void *handleKeyFunc;
-    void *handleCursorFunc;
-    void *handleMouseWheelFunc;
+    XPLMHandleCursor_f handleCursorFunc;
+    XPLMHandleMouseWheel_f handleMouseWheelFunc;
     void *refcon;
     int decorateAsFloatingWindow;
     int layer;
@@ -37,6 +39,7 @@ typedef struct {
 #define xplm_MouseDown 0
 #define xplm_MouseUp 1
 #define xplm_MouseDrag 2
+#define xplm_CursorDefault 0
 #define xplm_WindowDecorationRoundRectangle 1
 #define xplm_WindowLayerFloatingWindows 0
 #define xplmType_Int 1
