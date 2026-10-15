@@ -308,10 +308,6 @@ B747DR_fms_magenta={}
 B747DR_fms_cyan={}
 B747DR_fms_magenta_s={}
 B747DR_fms_cyan_s={}
-B747DR_fms_gn={}
-B747DR_fms_hl={}
-B747DR_fms_gy={}
-B747DR_fms_hl_s={}
 B747DR_srcfms={}
 
 function setDREFs(fmsO,cduid,fmsid,keyid,fmskeyid)
@@ -349,10 +345,6 @@ function setDREFs(fmsO,cduid,fmsid,keyid,fmskeyid)
   B747DR_fms_s[fmsO.id][14]                = find_dataref("laminar/B747/"..fmsid.."/Line14_S", "string")
   B747DR_fms_magenta[fmsO.id]={}
   B747DR_fms_cyan[fmsO.id]={}
-  B747DR_fms_gn[fmsO.id]={}
-  B747DR_fms_hl[fmsO.id]={}
-  B747DR_fms_gy[fmsO.id]={}
-  B747DR_fms_hl_s[fmsO.id]={}
   B747DR_fms_magenta_s[fmsO.id]={}
   B747DR_fms_cyan_s[fmsO.id]={}
   for i=1,14 do
@@ -361,10 +353,6 @@ function setDREFs(fmsO,cduid,fmsid,keyid,fmskeyid)
     B747DR_fms_cyan[fmsO.id][i]=find_dataref("laminar/B747/"..fmsid.."/"..line.."_C_L", "string")
     B747DR_fms_magenta_s[fmsO.id][i]=find_dataref("laminar/B747/"..fmsid.."/"..line.."_M_S", "string")
     B747DR_fms_cyan_s[fmsO.id][i]=find_dataref("laminar/B747/"..fmsid.."/"..line.."_C_S", "string")
-    B747DR_fms_gn[fmsO.id][i]=find_dataref("laminar/B747/"..fmsid.."/"..line.."_L_gn", "string")
-    B747DR_fms_hl[fmsO.id][i]=find_dataref("laminar/B747/"..fmsid.."/"..line.."_L_hl", "string")
-    B747DR_fms_gy[fmsO.id][i]=find_dataref("laminar/B747/"..fmsid.."/"..line.."_L_gy", "string")
-    B747DR_fms_hl_s[fmsO.id][i]=find_dataref("laminar/B747/"..fmsid.."/"..line.."_S_hl", "string")
   end
   B747DR_srcfms[fmsO.id]={}
   B747DR_srcfms[fmsO.id][1]=find_dataref("sim/cockpit2/radios/indicators/fms_".. cduid .."_text_line0")
@@ -586,109 +574,7 @@ local function markLegWaypoint(line,magenta)
   end
 end
 
-local function stratoColorFMSLine(inputValue, available)
-    local rawInput = string.sub(tostring(inputValue or ""), 1, 24)
-    rawInput = rawInput .. string.rep(" ", 24 - #rawInput)
-    local colors = { g = "", h = "", r = "", m = "", c = "", a = "", d = "" }
-    local colorCount = select(2, rawInput:gsub(";", ""))
-    local white = ""
-
-    if colorCount == 0 then
-        white = rawInput
-    else
-        local colorsCounted = 0
-        local remainingInput = rawInput
-        for _ in rawInput:gmatch(";") do
-            colorsCounted = colorsCounted + 1
-            local before, color, amount, after = remainingInput:match("(.-);([ghrmcad])(%d?%d?)(.*)")
-            if before == nil or color == nil then
-                break
-            end
-            local numChars = tonumber(amount)
-            if numChars == nil or numChars < 1 then
-                numChars = 1
-            end
-            if numChars > #before then
-                numChars = #before
-            end
-            local charsToColor = before:sub(-numChars, -1)
-            local spaces = string.rep(" ", #before)
-            for key, currentValue in pairs(colors) do
-                if key == color then
-                    colors[key] = currentValue .. string.rep(" ", #before - numChars) .. charsToColor
-                else
-                    colors[key] = currentValue .. spaces
-                end
-            end
-            white = white .. before:sub(1, #before - numChars) .. string.rep(" ", numChars)
-            remainingInput = after
-            if colorCount == colorsCounted then
-                white = white .. remainingInput
-            end
-        end
-    end
-
-    local green = string.sub(colors.g or "", 1, 24) .. string.rep(" ", 24 - #string.sub(colors.g or "", 1, 24))
-    local highlight = string.sub(colors.h or "", 1, 24) .. string.rep(" ", 24 - #string.sub(colors.h or "", 1, 24))
-    local grey = string.sub(colors.r or "", 1, 24) .. string.rep(" ", 24 - #string.sub(colors.r or "", 1, 24))
-    local magenta = string.sub(colors.m or "", 1, 24) .. string.rep(" ", 24 - #string.sub(colors.m or "", 1, 24))
-    local cyan = string.sub(colors.c or "", 1, 24) .. string.rep(" ", 24 - #string.sub(colors.c or "", 1, 24))
-    local amber = string.sub(colors.a or "", 1, 24) .. string.rep(" ", 24 - #string.sub(colors.a or "", 1, 24))
-    local red = string.sub(colors.d or "", 1, 24) .. string.rep(" ", 24 - #string.sub(colors.d or "", 1, 24))
-    white = string.sub(white, 1, 24) .. string.rep(" ", 24 - #string.sub(white, 1, 24))
-
-    local whiteChars, greenChars, highlightChars = {}, {}, {}
-    local greyChars, magentaChars, cyanChars, amberChars, redChars = {}, {}, {}, {}, {}
-    for i = 1, 24 do
-        whiteChars[i] = white:sub(i, i)
-        greenChars[i] = green:sub(i, i)
-        highlightChars[i] = highlight:sub(i, i)
-        greyChars[i] = grey:sub(i, i)
-        magentaChars[i] = magenta:sub(i, i)
-        cyanChars[i] = cyan:sub(i, i)
-        amberChars[i] = amber:sub(i, i)
-        redChars[i] = red:sub(i, i)
-    end
-    local channels = {
-        { available = available and available["green"] == true, chars = greenChars },
-        { available = available and available["highlight"] == true, chars = highlightChars },
-        { available = available and available["grey"] == true, chars = greyChars },
-        { available = available and available["magenta"] == true, chars = magentaChars },
-        { available = available and available["cyan"] == true, chars = cyanChars },
-        { available = available and available["amber"] == true, chars = amberChars },
-        { available = available and available["red"] == true, chars = redChars },
-    }
-    for _, channel in ipairs(channels) do
-        if not channel.available then
-            for i = 1, 24 do
-                if whiteChars[i] == " " and channel.chars[i] ~= " " then
-                    whiteChars[i] = channel.chars[i]
-                end
-            end
-        end
-    end
-
-    white = table.concat(whiteChars)
-    magenta = pad24(magenta)
-    cyan = pad24(cyan)
-    local greenOut = pad24(green)
-    local highlightOut = pad24(highlight)
-    local greyOut = pad24(grey)
-    local redOut = pad24(red)
-    local amberOut = pad24(amber)
-    if true then end
-    return white, magenta, cyan, greenOut, highlightOut, greyOut, redOut, amberOut
-end
-
-local function colorFMSLine(value, page, row, pageNo, available)
-    if string.find(tostring(value or ""), ";", true) ~= nil then
-        return stratoColorFMSLine(value, available)
-    end
-    local white, magenta, cyan = legacyColorFMSLine(value, page, row, pageNo)
-    return white, magenta, cyan, string.rep(" ", 24), string.rep(" ", 24), string.rep(" ", 24), string.rep(" ", 24), string.rep(" ", 24)
-end
-
-local function legacyColorFMSLine(value,page,row,pageNo)
+local function colorFMSLine(value,page,row,pageNo)
   local line=string.sub(tostring(value or ""),1,24)
   line=line..string.rep(" ",24-string.len(line))
   -- One small stack per character. The matching color is set to true; the character is
@@ -855,38 +741,15 @@ function fms:B747_fms_display()
         smallLineValues[14]=string.rep(" ", 24)
       end
 
-      local availableLarge = {
-          magenta = true,
-          cyan = true,
-          green = false,
-          highlight = false, -- Reverted from true until the ACF layer edit is validated
-          grey = false,
-          amber = B747DR_fms_amber[thisID] ~= nil,
-          red = false,
-      }
-      local availableSmall = {
-          magenta = true,
-          cyan = true,
-          green = false,
-          highlight = false, -- Reverted from true until the ACF layer edit is validated
-          grey = false,
-          amber = false,
-          red = false,
-      }
-
       for i=1,14 do
-        local white,magenta,cyan,green,highlight,grey,red,amber = colorFMSLine(lineValues[i], page, i, self.pgNo, availableLarge)
-        local smallWhite,smallMagenta,smallCyan,smallGreen,smallHighlight,smallGrey,smallRed,smallAmber = colorFMSLine(smallLineValues[i], page, i, self.pgNo, availableSmall)
-        writeLineIfChanged(B747DR_fms,thisID,i,white)
+        local line,magenta,cyan=colorFMSLine(lineValues[i],page,i,self.pgNo)
+        local smallLine,smallMagenta,smallCyan=colorFMSLine(smallLineValues[i],page,i,self.pgNo)
+        writeLineIfChanged(B747DR_fms,thisID,i,line)
         writeLineIfChanged(B747DR_fms_magenta,thisID,i,magenta)
         writeLineIfChanged(B747DR_fms_cyan,thisID,i,cyan)
-        if B747DR_fms_gn[thisID][i] ~= nil then writeLineIfChanged(B747DR_fms_gn,thisID,i,green) end
-        if B747DR_fms_hl[thisID][i] ~= nil then writeLineIfChanged(B747DR_fms_hl,thisID,i,highlight) end
-        if B747DR_fms_gy[thisID][i] ~= nil then writeLineIfChanged(B747DR_fms_gy,thisID,i,grey) end
-        writeLineIfChanged(B747DR_fms_s,thisID,i,smallWhite)
+        writeLineIfChanged(B747DR_fms_s,thisID,i,smallLine)
         writeLineIfChanged(B747DR_fms_magenta_s,thisID,i,smallMagenta)
         writeLineIfChanged(B747DR_fms_cyan_s,thisID,i,smallCyan)
-        if B747DR_fms_hl_s[thisID][i] ~= nil then writeLineIfChanged(B747DR_fms_hl_s,thisID,i,smallHighlight) end
       end
       if B747DR_fms_amber[thisID]~=amberMessage then B747DR_fms_amber[thisID]=amberMessage end
     
