@@ -1,1 +1,0 @@
-copy and paste items in the folder to C:\X-Plane 12\Aircraft\747-400-master\objects\747_exterior overwrite when prompted
