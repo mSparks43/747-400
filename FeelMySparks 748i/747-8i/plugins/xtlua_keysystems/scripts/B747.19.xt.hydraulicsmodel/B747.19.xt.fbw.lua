@@ -40,7 +40,7 @@ local flapRatio = find_dataref("laminar/B747/cablecontrols/flap_ratio")
 local stickShaker = find_dataref("sim/aircraft/forcefeedback/acf_ff_stickshaker")
 local simTime = find_dataref("sim/time/total_running_time_sec")
 
-local lawUpdatePeriod = 0.2
+local lawUpdatePeriod = 0.05
 local lastLawUpdate = -1
 local lawState = {
     lowSpeedBlend = 0,
@@ -82,7 +82,7 @@ local function updateLawState()
         targetMlaDemand = clamp((readNumber(normalG) - 1.3) / 0.8, 0, 1)
     end
     local mlaStep = targetMlaDemand - lawState.mlaDemand
-    lawState.mlaDemand = lawState.mlaDemand + clamp(mlaStep, -0.2, 0.4)
+    lawState.mlaDemand = lawState.mlaDemand + clamp(mlaStep, -0.05, 0.1)
 
     lawState.rollRateDamping = 0
     if airborne and readNumber(autopilotServosOn) < 0.5 and readNumber(rollRateDampingGain) > 0 then
