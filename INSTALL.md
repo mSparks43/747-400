@@ -18,10 +18,11 @@
 
 ## Notes
 
-- This project is currently in early development. Installation instructions may change.
+- This project is in active development; installation instructions may change.
 - Additional aircraft dependencies may be required and will be listed here if applicable.
 - Do not install over another aircraft's folder.
 - This aircraft is intended for flight simulation in X-Plane 12 only.
+- Review the project [aircraft license](./LICENSE.md), [MIT code license](./LICENSE-MIT.md), and all component-specific notices before using or redistributing the package. Aircraft material and the authorized exterior contribution are CC BY-NC 4.0; the standalone FBW module is MIT-licensed. Third-party components may use different licenses.
 
 ## Troubleshooting
 

@@ -7,7 +7,7 @@
 
 FeelMySparks 748i is an independent community aircraft project developing a Boeing 747-8 Intercontinental-inspired aircraft for X-Plane 12. The current aircraft is based on the Sparky-derived 747-400 project; it is an ongoing conversion, not yet a complete 747-8I recreation.
 
-The goal is to progressively update the aircraft's systems, flight model, cockpit, and exterior while preserving the useful inherited aircraft functionality. A standalone release remains subject to third-party permissions and licensing.
+The goal is to progressively update the aircraft's systems, flight model, cockpit, and exterior while preserving the useful inherited aircraft functionality. The current aircraft uses a Sparky744-derived 747-400 base. In the Discord exchange shared with this project on 15 October 2026, mSparks stated that the 744 project is licensed CC BY-NC 4.0 and invited contributions through pull requests with README credit.
 
 ## Project Status
 
@@ -19,6 +19,7 @@ The goal is to progressively update the aircraft's systems, flight model, cockpi
 - An isolated, experimental FBW augmentation module is integrated with the existing XTLua hydraulic mixer. It updates its law state at 20 Hz and includes low-speed roll-response scheduling, flap-linked outboard-aileron droop, prototype maneuver-load alleviation, manual-flight roll-rate damping, and the native X-Plane force-feedback stick-shaker cue.
 - The roll-rate damper is bypassed while autopilot servos are engaged, avoiding FBW opposition to autopilot-commanded turns.
 - The FBW module and its documentation have been synced across the development, Intercontinental, backup, and installed X-Plane aircraft copies.
+- An exterior-only 747-8I mod by lkoledic has been prepared as an initial beta contribution and submitted as a pull request. It changes the exterior only; it does not modify internal systems. The pull request is pending review and has not yet been accepted or merged.
 
 These are experimental simulation features, not verified Boeing 747-8 control laws. The FBW layer does not command pitch or yaw, provide elevator stall protection, prevent rotation below FMC Vr, or model OAMS or measured gust loads. Live flight testing and tuning remain essential.
 
@@ -47,24 +48,21 @@ The current model is intentionally partial: roll response is speed-scheduled, dr
 - Integration and iterative tuning of the isolated FBW prototype, including faster 20 Hz updates and autopilot-aware roll damping.
 - Ongoing work toward 747-8I visual, systems, and flight-model changes.
 
+## Licensing and Contributions
+
+The Sparky744-derived aircraft package, project documentation, and authorized exterior-only mod contribution are licensed under **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**, as reflected in the permission exchange shared with this project. The original standalone FBW module is separately licensed under MIT. See [LICENSE.md](./LICENSE.md) and [LICENSE-MIT.md](./LICENSE-MIT.md) for scope, attribution, and third-party exceptions.
+
+This is not a blanket relicensing of every file in the aircraft. Inherited or modified Sparky744 scripts, XTLua/XLua frameworks, embedded libraries, and other third-party assets remain under their applicable notices and licenses; see the corresponding in-tree license files. The exterior contribution is pending pull-request review; submission does not imply acceptance, and no dev-team membership is claimed by this notice.
+
+Pull requests are welcome for review. Contributors should identify their changes, preserve all applicable notices, and confirm that submitted material may be included under CC BY-NC 4.0 or its applicable component license.
+
 ## Credits
 
-This project acknowledges the work of the creators of the Sparky744 747-400 and its Enhancement Mod, if used as the development base.
+This project acknowledges mSparks / Sparky744 for the 747-400 project used as the development base and the creators of the Sparky744 Enhancement Mod.
 
-Full credits, acknowledgements, and applicable licence notices will be included before release.
+The project's 747-8I exterior-only beta contribution is by lkoledic and is pending review. It does not alter the aircraft's internal systems.
 
 FeelMySparks 748i is an independent community project. It is not an official Boeing or Lufthansa product and is not endorsed by either company.
-
-## Permissions and Licensing
-
-The project intends to use a restrictive distribution policy for its original assets.
-
-- Personal use is intended to be permitted under the project's release terms.
-- Redistribution, rehosting, or publication of modified versions requires prior written permission from the project author.
-- Any permission to modify or redistribute the project must be obtained in writing.
-- Third-party assets remain subject to their respective licences and rights holders' permissions.
-
-The project's final licence and distribution terms will be confirmed before public release. No third-party content will be included or redistributed without the required permissions.
 
 ## Disclaimer
 

@@ -1,3 +1,5 @@
+-- SPDX-License-Identifier: MIT
+
 local function clamp(value, minimum, maximum)
     if value < minimum then return minimum end
     if value > maximum then return maximum end

@@ -1,0 +1,29 @@
+MIT License
+
+Copyright (c) 2026 lkoledic / FeelMySparks 748i contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of the software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+## Scope
+
+This MIT notice applies only to the original, standalone FBW module:
+
+`FeelMySparks 748i/747-8i/plugins/xtlua_keysystems/scripts/B747.19.xt.hydraulicsmodel/B747.19.xt.fbw.lua`
+
+It does not apply to inherited or modified Sparky744 scripts in neighboring files, the XTLua/XLua frameworks, or other third-party content. Their own licenses and notices control.

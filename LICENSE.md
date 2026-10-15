@@ -1,46 +1,31 @@
-# FeelMySparks 748i — LICENSE
+# FeelMySparks 748i — License and Third-Party Notices
 
-**Copyright © 2026 FeelMySparks 748i project. All rights reserved.**
+## Project material
 
-## 1. Permission to use
+The Sparky744-derived aircraft package, project documentation, exterior assets, and the authorized exterior-only 747-8I beta contribution are licensed under the **Creative Commons Attribution-NonCommercial 4.0 International Public License (CC BY-NC 4.0)**, except for material identified as third-party or covered by a separate in-file license:
 
-You may download and use this aircraft package for your own personal, non-commercial use in X-Plane 12, subject to the terms below and any applicable third-party licence terms.
+<https://creativecommons.org/licenses/by-nc/4.0/>
 
-## 2. No redistribution without permission
+The canonical legal code is available at:
 
-You may not re-upload, mirror, bundle, redistribute, sell, or otherwise share this package or substantial portions of it without prior written permission from the FeelMySparks 748i project author.
+<https://creativecommons.org/licenses/by-nc/4.0/legalcode>
 
-If you want to redistribute the package—for example, on another website or as part of another aircraft package—ask for permission first.
+The original, standalone FBW Lua module at `FeelMySparks 748i/747-8i/plugins/xtlua_keysystems/scripts/B747.19.xt.hydraulicsmodel/B747.19.xt.fbw.lua` is separately licensed under the MIT License in [LICENSE-MIT.md](./LICENSE-MIT.md). This file-specific license does not relicense inherited or modified Sparky744 code in neighboring files.
 
-## 3. No modifications or derivative releases without permission
+The exterior-only 747-8I beta contribution by lkoledic was prepared under CC BY-NC 4.0 with permission as described in the project Discord exchange shared on 15 October 2026. Its pull request is pending review and has not been accepted or merged.
 
-You may not publish, distribute, or make publicly available modified versions or derivative works based on this package without prior written permission from the project author.
+## Upstream aircraft and attribution
 
-Private modifications for your own personal use are not granted by this document as an express permission; ask the project author if you want to modify the package and are unsure whether permission is required.
+mSparks stated in the shared project Discord exchange that the Sparky744 747-400 project is licensed under CC BY-NC 4.0. The aircraft uses that project as its base. When sharing material derived from it, retain attribution to **mSparks / Sparky744**, identify the project as the source, and comply with the CC BY-NC 4.0 terms.
 
-## 4. Credit and attribution
+The exchange also invited contributions through pull requests with README credit. Permission to prepare the exterior-only mod does not imply acceptance of its pending pull request or membership in the upstream development team.
 
-If permission is granted to modify or redistribute this package, you must:
+## Separate third-party licenses
 
-- Credit the FeelMySparks 748i project and its author.
-- Clearly identify the changes you made.
-- Preserve this licence and any applicable third-party notices.
-- Follow any additional conditions agreed to in writing.
+This notice does not relicense third-party material. The XTLua/XLua frameworks, embedded libraries, JSON templates, sounds, fonts, aircraft assets, and other contributed material remain subject to their own licenses and notices. XTLua/XLua framework files identified as MIT-licensed remain under their MIT license files; that framework license does not automatically apply to every aircraft Lua script. Preserve and consult the license files located alongside each component.
 
-Permission to use another creator's name, branding, or project identity is not granted by this licence.
+This project is unofficial and is not endorsed by Boeing, GE Aerospace, Lufthansa, mSparks, or the Sparky744 contributors.
 
-## 5. Third-party content and source-project assets
+## License summary
 
-This licence applies **only to original material owned by the FeelMySparks 748i project author**. It does not replace, override, or change the licence terms for any third-party content, including any assets or files derived from Sparky's 747-400, the Enhancement Mod, or other contributors.
-
-Any use, modification, or redistribution of third-party material must comply with its own licence and any permissions required from its rights holders. Do not assume that permission to use one part of a project grants permission to use every included asset.
-
-## 6. No warranty
-
-This package is provided “as is”, without warranties of any kind, to the fullest extent permitted by applicable law. The author is not responsible for damage or issues arising from its use.
-
-## 7. Requests for permission
-
-For permission to modify, redistribute, or create a public derivative release, contact the project author through the official project page or the contact method listed with the release. Obtain permission in writing before publishing.
-
----
+CC BY-NC 4.0 permits sharing and adaptation for noncommercial purposes subject to attribution and the complete license terms. It is **not** CC BY-NC-SA: the ShareAlike condition is not part of the license selected for this project material.

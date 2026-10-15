@@ -2,18 +2,20 @@
 
 ## FeelMySparks 748i
 
-FeelMySparks 748i is an independent community aircraft project for X-Plane 12, aiming to recreate the Boeing 747-8I Intercontinental.
+FeelMySparks 748i is an independent community aircraft project for X-Plane 12, developing a Boeing 747-8I-inspired aircraft.
 
 ### Original Project
 
-- **FeelMySparks 748i** — original project concept, custom modelling, textures, and development by the project author.
+- **lkoledic / FeelMySparks 748i** — project development, FMC display work, experimental FBW implementation, and proposed exterior-only beta contribution (pull request pending review).
 
-### Inspiration and Potential Base Aircraft
+### Base Aircraft and Related Work
 
-- **mSparks / Sparky744** — credit for the Sparky744 Boeing 747-400 project, which is being considered as a potential starting point for this project.
-- **Sparky744 Enhancement Mod contributors** — credit to the respective authors for their work on the Enhancement Mod.
+- **mSparks / Sparky744** — credit for the Boeing 747-400 project used as the aircraft base. In the permission exchange shared with this project on 15 October 2026, mSparks stated that the 744 project is licensed CC BY-NC 4.0 and invited contributions through pull requests with README credit.
+- **Sparky744 Enhancement Mod contributors** — credit to the respective authors for their work on the Enhancement Mod; their contributions remain subject to applicable notices and permissions.
 
-Use of files from these projects is subject to the applicable licences and any permissions required from their authors. Listing a project here does not imply endorsement or permission to reuse its assets.
+The exterior-only 747-8I beta contribution does not change internal systems. Its pull request is pending review and has not been accepted or merged.
+
+Aircraft and project documentation use CC BY-NC 4.0 except where a component notice says otherwise. The original standalone FBW module has a scoped MIT notice in [LICENSE-MIT.md](./LICENSE-MIT.md); see [LICENSE.md](./LICENSE.md) for third-party boundaries.
 
 ### Aircraft and Engine References
 
