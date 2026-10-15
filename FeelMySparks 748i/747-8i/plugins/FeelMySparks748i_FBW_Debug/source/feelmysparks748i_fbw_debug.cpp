@@ -50,6 +50,8 @@ static void ensureRows() {
     addRow(rowsFlight, "Pitch angle (deg)", "sim/flightmodel/position/theta", "%.1f");
     addRow(rowsFlight, "Heading (deg)", "sim/flightmodel/position/psi", "%.1f");
     addRow(rowsFlight, "Roll rate (deg/s)", "sim/flightmodel/position/P", "%.2f");
+    addRow(rowsFlight, "Turn rate (deg/s)", "", "%.2f");
+    addRow(rowsFlight, "Turn radius (m)", "", "%.0f");
     addRow(rowsFlight, "Pitch rate (deg/s)", "sim/flightmodel/position/Q", "%.2f");
     addRow(rowsFlight, "Yaw rate (deg/s)", "sim/flightmodel/position/R", "%.2f");
     addRow(rowsFlight, "Normal G", "sim/flightmodel/forces/g_nrml", "%.3f");
@@ -61,7 +63,7 @@ static void ensureRows() {
     addRow(rowsFbw, "MLA enabled", "laminar/B747/fbw/mla_enabled", "%.0f");
     addRow(rowsFbw, "Droop enabled", "laminar/B747/fbw/droop_enabled", "%.0f");
     addRow(rowsFbw, "Buffet enabled", "laminar/B747/fbw/buffet_enabled", "%.0f");
-    addRow(rowsFbw, "Roll respawn target", "laminar/B747/fbw/roll_response_gain", "%.4f");
+    addRow(rowsFbw, "Roll response target", "laminar/B747/fbw/roll_response_gain", "%.4f");
     addRow(rowsFbw, "Roll damping target", "laminar/B747/fbw/roll_rate_damping_gain", "%.4f");
     addRow(rowsFbw, "Low-speed blend", "laminar/B747/fbw/low_speed_blend", "%.3f");
     addRow(rowsFbw, "Roll response effect", "laminar/B747/fbw/roll_response_effect", "%.4f");
@@ -86,8 +88,8 @@ static void ensureRows() {
     addRow(rowsSupport, "Hyd 2 use pressure", "laminar/B747/hydraulics/pressure_use_2", "%.0f");
     addRow(rowsSupport, "Hyd 3 use pressure", "laminar/B747/hydraulics/pressure_use_3", "%.0f");
     addRow(rowsSupport, "Hyd 4 use pressure", "laminar/B747/hydraulics/pressure_use_4", "%.0f");
-    addRow(rowsSupport, "ERP stick shaker", "sim/aircraft/forcefeedback/acf_ff_stickshaker", "%.3f");
-    addRow(rowsSupport, "Vertical speed", "sim/flightmodel/position/vh_ind", "%.1f");
+    addRow(rowsSupport, "Stick shaker cue", "sim/aircraft/forcefeedback/acf_ff_stickshaker", "%.3f");
+    addRow(rowsSupport, "Vertical speed (m/s)", "sim/flightmodel/position/vh_ind", "%.1f");
 }
 
 static void collectRows(std::vector<SignalRow> &rows) {
@@ -107,6 +109,35 @@ static void collectAll() {
     collectRows(rowsFbw);
     collectRows(rowsControls);
     collectRows(rowsSupport);
+
+    /* Provide derived test values without publishing anything to the aircraft. */
+    double yawRate = 0.0;
+    bool hasYawRate = false;
+    double groundSpeed = 0.0;
+    bool hasGroundSpeed = false;
+    for (size_t i = 0; i < rowsFlight.size(); ++i) {
+        if (rowsFlight[i].label == "Yaw rate (deg/s)") {
+            if (rowsFlight[i].available) { yawRate = rowsFlight[i].value; hasYawRate = true; }
+        }
+        if (rowsFlight[i].label == "Ground speed (m/s)") {
+            if (rowsFlight[i].available) { groundSpeed = rowsFlight[i].value; hasGroundSpeed = true; }
+        }
+    }
+    for (size_t i = 0; i < rowsFlight.size(); ++i) {
+        if (rowsFlight[i].label == "Turn rate (deg/s)") {
+            if (hasYawRate) { rowsFlight[i].value = yawRate; rowsFlight[i].available = true; }
+            else rowsFlight[i].available = false;
+        }
+        if (rowsFlight[i].label == "Turn radius (m)") {
+            const double radiansPerSecond = yawRate * 0.0174532925;
+            if (hasYawRate && hasGroundSpeed && std::fabs(radiansPerSecond) > 0.001) {
+                rowsFlight[i].value = groundSpeed / radiansPerSecond;
+                rowsFlight[i].available = true;
+            } else {
+                rowsFlight[i].available = false;
+            }
+        }
+    }
 }
 
 static void switchTab(int tab) {
