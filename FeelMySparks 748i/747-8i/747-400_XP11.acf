@@ -90325,7 +90325,7 @@ P acf/_cyclic_up_trim_rat 0.0
 P acf/_deg_psi_per_deg_def 3.0
 P acf/_deg_the_per_deg_def 6.0
 P acf/_delta3 0.0
-P acf/_descrip B747-400
+P acf/_descrip 747-8i Alpha
 P acf/_diff_coll_with_hdng 0.0
 P acf/_diff_coll_with_ptch 0.0
 P acf/_diff_coll_with_roll 0.0
@@ -91100,7 +91100,7 @@ P acf/_mixt_x_ctr 0.0
 P acf/_n1_power_curve1 2.839999914
 P acf/_n1_power_curve2 1.799999952
 P acf/_n2_power_curve 3.599999905
-P acf/_name Boeing 747-400
+P acf/_name Boeing 747-8i Alpha
 P acf/_new_plot_XP3D_cock/0 1
 P acf/_new_plot_XP3D_cock/1 1
 P acf/_new_plot_XP3D_cock/2 0
