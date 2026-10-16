@@ -17,6 +17,10 @@ The exterior-only 747-8I beta contribution does not change internal systems. Its
 
 Aircraft and project documentation use CC BY-NC 4.0 except where a component notice says otherwise. The original standalone FBW module has a scoped MIT notice in [LICENSE-MIT.md](./LICENSE-MIT.md); see [LICENSE.md](./LICENSE.md) for third-party boundaries.
 
+### External 3D Assets
+
+- **Nobilis 2** — "Boeing 747-830İ Lufthansa 100th Year" — Sketchfab model `<https://skfb.ly/pKpSJ>`, licensed under Creative Commons Attribution 4.0 International (`http://creativecommons.org/licenses/by/4.0/`). Used, where applicable, as a referenced 747-8I exterior/model source; any redistribution or derivative use must retain appropriate attribution.
+
 ### Aircraft and Engine References
 
 - **Boeing** — Boeing 747-8 Intercontinental aircraft design and reference information.
