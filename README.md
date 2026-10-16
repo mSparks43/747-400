@@ -15,6 +15,7 @@ The goal is to progressively update the aircraft's systems, flight model, cockpi
 
 ### Work completed or in active use
 - The working FMC has custom alert colors and restored transparent display backing.
+- `Boeing 747-8i Alpha` is now the stable aircraft identity; the isolated Strato Studios 777-derived FMC command color-stack work remains on the `stack-implementation-dev` branch so non-tagged pages stay on the baseline behavior.
 - The standalone Weight & Balance plugin has been removed from the aircraft package.
 - An isolated, experimental FBW augmentation module is integrated with the existing XTLua hydraulic mixer. It updates its law state at 20 Hz and includes low-speed roll-response scheduling, flap-linked outboard-aileron droop, prototype maneuver-load alleviation, manual-flight roll-rate damping, and the native X-Plane force-feedback stick-shaker cue.
 - The roll-rate damper is bypassed while autopilot servos are engaged, avoiding FBW opposition to autopilot-commanded turns.
