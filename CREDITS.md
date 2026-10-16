@@ -1,0 +1,44 @@
+# Credits
+
+## FeelMySparks 748i
+
+FeelMySparks 748i is an independent community aircraft project for X-Plane 12, developing a Boeing 747-8I-inspired aircraft.
+
+### Original Project
+
+- **lkoledic / FeelMySparks 748i** — project development, FMC display work, experimental FBW implementation, and proposed exterior-only beta contribution (pull request pending review).
+
+### Base Aircraft and Related Work
+
+- **mSparks / Sparky744** — credit for the Boeing 747-400 project used as the aircraft base. In the permission exchange shared with this project on 15 October 2026, mSparks stated that the 744 project is licensed CC BY-NC 4.0 and invited contributions through pull requests with README credit.
+- **Sparky744 Enhancement Mod contributors** — credit to the respective authors for their work on the Enhancement Mod; their contributions remain subject to applicable notices and permissions.
+
+The exterior-only 747-8I beta contribution does not change internal systems. Its pull request is pending review and has not been accepted or merged.
+
+Aircraft and project documentation use CC BY-NC 4.0 except where a component notice says otherwise. The original standalone FBW module has a scoped MIT notice in [LICENSE-MIT.md](./LICENSE-MIT.md); see [LICENSE.md](./LICENSE.md) for third-party boundaries.
+
+### External 3D Assets
+
+- **Nobilis 2** — "Boeing 747-830İ Lufthansa 100th Year" — Sketchfab model `<https://skfb.ly/pKpSJ>`, licensed under Creative Commons Attribution 4.0 International (`http://creativecommons.org/licenses/by/4.0/`). Used, where applicable, as a referenced 747-8I exterior/model source; any redistribution or derivative use must retain appropriate attribution.
+
+### Aircraft and Engine References
+
+- **Boeing** — Boeing 747-8 Intercontinental aircraft design and reference information.
+- **GE Aerospace** — GEnx-2B engine design and reference information.
+
+Aircraft names, company names, and trademarks belong to their respective owners. This project is unofficial and is not affiliated with or endorsed by Boeing, GE Aerospace, or Lufthansa.
+
+### Additional Contributors
+
+### Adapted from Stratosphere Studios 777-300ER
+
+- **Stratosphere Studios / 777-300ER project** — CDU/FMC color-layer architecture, highlight text concept, and Strato command-color protocol adapted for the FeelMySparks 748i FMC. Adaptation was made with the 777 project author's permission and is gratefully credited here. The Strato 777 work is derived from the mSparks Sparky744 747-400 tradition and includes its own adaptation lineage, code, and assets where used.
+- **Stratosphere Studios contributors and 777 maintainers** — thanks for the public 777 repository, CDU assets, and documented color stack that helped this integration.
+
+Additional contributors, reference sources, and third-party assets will be credited here as they are confirmed and used.
+
+Thank you to everyone who creates and shares resources that help the flight-simulation community grow.
+
+---
+
+*FeelMySparks 748i — an independent X-Plane 12 community project.*

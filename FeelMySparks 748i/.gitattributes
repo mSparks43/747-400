@@ -1,0 +1,3 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+# W&B plugin standard refs: gross=m_total, cg=flightmodel/misc/cgz_ref_to_default (fallback cg_z), fuel=fuel_quantity
