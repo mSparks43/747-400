@@ -97,7 +97,7 @@
 | `tests/static/*_test.lua` | 全系統に共通の検査。xt スクリプトの dataref が init で作られているか、`INTERFACES.tsv` の名前が残っているか、全モジュール（26）が X-Plane なしで読み込み・`flight_start`・60 フレームを Lua の誤りなしに通るか（`modules_run_test.lua`） |
 | `tests/tools/same_behaviour.lua` | 挙動を変えない変更（コードの切り出しなど）の確認。作業ツリーと git の版で同じモジュールを同じ入力・同じ乱数の種で回し、毎フレーム、書かれた dataref・実行したコマンド・print の行を比べる。20・30・45 fps で回す |
 | `tests/tools/scenarios/*.lua` | `same_behaviour.lua` の入力。`hydraulics_afds.lua` は油圧モジュール（AFDS の制御則・ヨーダンパー・スラットを含む） |
-| `tests/<系統>/*_test.lua` | 系統ごとの試験（作り直しと一緒に書く）。`tests/elec/`：電源モデルの単体（`elec_model_test.lua`）と、XTLua で動かした電源モジュール（`elec_module_test.lua`） |
+| `tests/<系統>/*_test.lua` | 系統ごとの試験（作り直しと一緒に書く）。`tests/elec/`：電源モデルの単体と、XTLua で動かした電源モジュール。`tests/gear/`：空地判定（PSEU）の単体と、XTLua で動かした脚モジュール |
 
 - `tests/lib/xtlua.lua`（XTLua の再現）：
   - 本物の `plugins/<instance>/init.lua` を新しい環境で読み、`run_module_in_namespace()` でモジュールを読み込む。`dofile` はモジュールのフォルダから読む。名前空間の動き（bare table のコピーなど）も XTLua と同じに出る。
