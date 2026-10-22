@@ -18,15 +18,17 @@
   - 1-1（電源）：モデル（4fb1fa46）と、機体への組み込み（f38d0baf。電源モジュール、P5 の灯、EICAS、表示器と時計の電源）まで。X-Plane でカスタム acf の `s02_elec_panel` 63/63・`s00` 64/64、純正 acf の `s02` 63/63・`s00` 64/64。残りは使う側の乗り換え（下）。
   - 1-2（空地判定、PSEU）：モデル・脚モジュールへの組み込み・公開 dataref まで。乗り換え済みは電源の BCU（air mode など）、脚レバーのロック、逆推力のロックアウト（前脚を含む全輪の接地 → 主脚左右の接地）。X-Plane で地上（`s02`、両 acf）と空中（`s01`、カスタム acf）の判定を確認。残りの系統は各作り直しで。
   - 1-3（警報の枠組み）：モデル（001f345e）と、機体への組み込みまで（警報モジュールの新しいグルー、fltInst02 の CANC/RCL と manipulators の master リセットは押した回数の dataref で渡す、メッセージ表のレベルと文言を FCOM に合わせた）。試験はモデル 94 件・モジュール 41 件、X-Plane の `s03_alerts`。残りは下の「警報（1-3）の GAP の状態」。
+  - 1-4（油圧）：モデル（4 系統のポンプ、HYDIM の論理と灯・EICAS、系統圧・量・温度、ブレーキ源と accumulator、負荷の系統の表）と試験 94 件まで。機体への組み込み（油圧モジュールの圧の計算・灯・EICAS の置き換え、消費側の判定）はまだ。
 
 ## 次にやること
 
-1. 1-1（電源）の残り：電源の有無を `bus_volts` で見ている系統を、バスごとの dataref（ARCHITECTURE.md §4.1）に乗り換える。
+1. 1-4（油圧）の組み込み：油圧モジュール（`B747.19.xt.hydraulicsmodel`）の圧の計算（`B747_edp_pressures`・`B747_dem_pressures`・`B747_system_pressures`）をモデルに置き換え、synoptic・STATUS・ブレーキ accumulator の dataref（notes/ATA-29.md §6.2）、P5 の灯（lighting）、EICAS（`B747.20.xt.hydraulics`）をモデルから書く。X-Plane の油圧には故障を書かない（§6.1）。消費側（舵面・脚・ブレーキ・ステアリング・逆推力）の「動力あり」はモデルの負荷の表で判定する。1 行で直る HYD-04・06・07・08 もここで。
+2. 1-1（電源）の残り：電源の有無を `bus_volts` で見ている系統を、バスごとの dataref（ARCHITECTURE.md §4.1）に乗り換える。どれも後の作り直し（空圧 1-5、空調 3-1、燃料 2-2、IRS と無線、照明、操縦系統 4-1）と絡むので、1-2 と同じく各系統の作り直しのときに行う（2026-10-23 に決めた。利用者の確認待ち）。
    - 済：表示器（fltInst02。機長 PFD・ND は APU standby、upper EICAS は main standby、ほかは F/O transfer）、EICAS の計算（warning。EIU のどれかに電源）、時計の計時（fltInst03・04。main hot battery bus）、ELEC パネルの灯（lighting）。
    - 残り：燃料のポンプと弁（fuel：AC・utility・battery bus の割り当て。APU の DC 燃料ポンプとの関係があるので 2-2 と一緒に）、抽気弁と装備冷却（air：DC bus）、IRS と NAV RAD（fms）、表示灯の輝度（lighting：`bus_volts[0]`・`[2]`）、客室灯（lighting）、ヨーダンパー（fltCtrls：`battery_array_on`）、STAT ページの main バッテリー（X-Plane の値）。
-2. 1-2（空地判定）の残り：`onground_any` を読んでいる 16 モジュール（autopilot、fms、fltInst02、antiice、fltCtrls、EEC、engines、fuel、hydraulicsmodel、gear の autobrake、manipulators、fdr、lighting など）を、PSEU の dataref（ARCHITECTURE.md §4.2）に乗り換える。どの信号（pri/alt の AIR・GND、前脚圧縮）を使うかは notes/ATA-32.md §4.1 の表。各系統の作り直しのときに行う。
-3. 1-3 の残り：他のメッセージによる抑止（notes/ATA-31-warning.md §4.4.1）と時間遅れは、各系統の作り直しで表に足す。音（`.snd`）とパネル（PG・3 ページ目以降・STATUS）は承認待ち。
-4. R-3 は、作り直しが先になる系統の害の大きい誤りだけ、合間に入れる。
+3. 1-2（空地判定）の残り：`onground_any` を読んでいる 16 モジュール（autopilot、fms、fltInst02、antiice、fltCtrls、EEC、engines、fuel、hydraulicsmodel、gear の autobrake、manipulators、fdr、lighting など）を、PSEU の dataref（ARCHITECTURE.md §4.2）に乗り換える。どの信号（pri/alt の AIR・GND、前脚圧縮）を使うかは notes/ATA-32.md §4.1 の表。各系統の作り直しのときに行う。
+4. 1-3 の残り：他のメッセージによる抑止（notes/ATA-31-warning.md §4.4.1）と時間遅れは、各系統の作り直しで表に足す。音（`.snd`）とパネル（PG・3 ページ目以降・STATUS）は承認待ち。
+5. R-3 は、作り直しが先になる系統の害の大きい誤りだけ、合間に入れる。
 
 ## 段階 T の状態
 
@@ -77,6 +79,8 @@
 - X-Plane を起動し、Web API で両方の acf のフライトを開始して試験した。X-Plane が「応答なし」で止まったとき、`Log.txt` を残してから強制終了し、起動し直した（下の「気づいたこと」）。
 - `.gitattributes` を足し、`tests/*.sh` を常に LF で取り出すようにした（CRLF だと bash が動かない）。対象はこの 2 本だけ。
 - git の作者：この PC には `user.name`／`user.email` が無いので、旧フォークと同じ作者をコミットごとに `-c` で渡している（設定は変えていない）。
+- 1-1 の残り（電源を使う側の乗り換え）は、空圧・空調・燃料・IRS・照明・操縦系統の作り直しと絡むので、1-2 と同じく各系統の作り直しのときに行うことにした（次にやること 2）。
+- 警報の組み込みで、CANC・RCL・master リセットを「押した回数」の dataref（新設 3 本）で警報モジュールに渡すことにした（プラグインやモジュールが別で、Lua の状態を共有できないため。ARCHITECTURE.md §4.3）。
 
 ## 承認待ち（利用者に決めてもらうこと）
 
@@ -112,6 +116,14 @@ PLAN.md §3 と GAP_ANALYSIS.md §4・§5 の一覧。主なもの：
   - wailer は >AUTOPILOT DISC の表示中、最低 1 秒（表示を消すのは AP の側）。
   - memo が最後のページに入りきらないときは、memo だけのページを作る（FCOM に記載なし）。
   - 火災ハンドルを「引いた」とみなすのは、動きの途中の値 `pos_arm` が 0.5 を超えたとき。
+- 油圧（1-4。`B747.19.hyd_model.lua` に「estimate」と書いてある）：
+  - 舵面などが「油圧で動く」とみなす圧 1000 psi（資料に無い。前のコードは 900 と 1000）。
+  - demand pump の圧力スイッチの解除 1600 psi（EDP の値を流用）。ADP の 10 秒タイマーは「空中でフラップが上がってから 10 秒運転を続ける」とした（論理図からタイマーの種類が読めない）。
+  - HYDIM-3・4 と ACMP 3 の制御の DC バス、ADP 1＝左ダクト・4＝右ダクト（資料の 1・2 系統の図からの対称）。
+  - EDP の流量は N2 に比例。EDP を減圧するソレノイドは DC bus n（バスは資料に無い）で、DC が無いと加圧する。
+  - 系統の漏れ 0.5 gpm、ADP のタービンが要るダクト圧 5〜15 psi、圧の立ち上がり 0.5 秒・減衰 4 秒、accumulator の充圧 1 秒。
+  - 油温：ポンプが回っていれば外気温 ＋30 ℃ に 600 秒で近づく（FCOM の例が 50 ℃）。リザーバの与圧は抽気が無くなってから 300 秒で抜ける。
+  - ブレーキ源の系統 2 の切替圧 1500 psi。accumulator の計器は予圧 750 psi より下がらない。HYD CONTROL 1・4 は HYDIM 1・4 の電源喪失で出す。
 
 ## 電源（1-1）の GAP の状態
 
@@ -207,3 +219,4 @@ PLAN.md §3 と GAP_ANALYSIS.md §4・§5 の一覧。主なもの：
 - 2026-10-23 03:57：試験ランナーの読み直しの修正と進み具合をコミット（66ca7677）。
 - 2026-10-23 04:0x〜：警報の組み込み（1-3 の 2 段目）。モデルに音の要求・caution ごとの beeper・CANC 済みの報告を足し、グルー `B747.87.xt.alerts.lua` を新設、古い待ち行列と表示を外した。CANC/RCL と master リセットは押した回数の dataref で渡す。表のレベルと文言を FCOM に合わせた。試験：モデル 94 件、モジュール 41 件。
 - 2026-10-23 04:20〜：X-Plane で `s03_alerts`（新シナリオ）。1 回目は Web API の長さ 0 のコマンドで押しボタンが押されたままになり 25/26（TESTING.md §4.6）。0.2 秒押す形に直してカスタム acf 26/26、純正 acf 26/26。純正 acf の `s00` 64/64。
+- 2026-10-23 04:4x：警報の組み込みをコミット（2e0b4cda）。カスタム acf の `s00` も 64/64。油圧（1-4）のモデルと試験 94 件。
