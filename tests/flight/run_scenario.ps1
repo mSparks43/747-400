@@ -12,7 +12,8 @@
 # Output goes to tests\flight\runs\<time>_<scenario>_<acf>\.
 #
 # Scenario file (JSON): { "name", "description", "flight": {init without
-# "aircraft"}, "steps": [ ... ] }. Step types ("do"):
+# "aircraft"}, ["reload": true], "steps": [ ... ] }. "reload" asks for -Reload
+# (the scenario needs the aircraft's systems fresh). Step types ("do"):
 #   record_start | record_stop | mark            the FlyWithLua recorder
 #   cmd     {name, [duration]}                   run a command
 #   set     {dref, value}                        write a dataref
@@ -121,6 +122,7 @@ if (-not $NoFlight) {
     $t = Start-XPFlight $init
     Add-Result @{ do = 'flight' } 'info' "flight running (sim time $([math]::Round($t,1)) s)"
 }
+if ($spec.reload -eq $true -and -not $NoFlight) { $Reload = $true }
 if ($Reload) {
     # X-Plane drops the command while it is still settling after a flight
     # load, so wait for the new load in Log.txt and try again if none comes.
