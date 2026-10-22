@@ -97,7 +97,7 @@
 | `tests/static/*_test.lua` | 全系統に共通の検査。xt スクリプトの dataref が init で作られているか、`INTERFACES.tsv` の名前が残っているか、全モジュール（26）が X-Plane なしで読み込み・`flight_start`・60 フレームを Lua の誤りなしに通るか（`modules_run_test.lua`） |
 | `tests/tools/same_behaviour.lua` | 挙動を変えない変更（コードの切り出しなど）の確認。作業ツリーと git の版で同じモジュールを同じ入力・同じ乱数の種で回し、毎フレーム、書かれた dataref・実行したコマンド・print の行を比べる。20・30・45 fps で回す |
 | `tests/tools/scenarios/*.lua` | `same_behaviour.lua` の入力。`hydraulics_afds.lua` は油圧モジュール（AFDS の制御則・ヨーダンパー・スラットを含む） |
-| `tests/<系統>/*_test.lua` | 系統ごとの試験（作り直しと一緒に書く） |
+| `tests/<系統>/*_test.lua` | 系統ごとの試験（作り直しと一緒に書く）。`tests/elec/`：電源モデルの単体（`elec_model_test.lua`）と、XTLua で動かした電源モジュール（`elec_module_test.lua`） |
 
 - `tests/lib/xtlua.lua`（XTLua の再現）：
   - 本物の `plugins/<instance>/init.lua` を新しい環境で読み、`run_module_in_namespace()` でモジュールを読み込む。`dofile` はモジュールのフォルダから読む。名前空間の動き（bare table のコピーなど）も XTLua と同じに出る。
@@ -125,8 +125,8 @@
 | 置き場所 | 中身 |
 |---|---|
 | `tests/flight/xp.ps1` | Web API クライアント。`/api/capabilities` の確認、名前→ID の解決とキャッシュ、dataref の読み書き（文字列の dataref は復号する）、コマンドの実行、フライトの開始、スクリーンショットの取得。コマンド行からも使える（`caps`・`get`・`set`・`cmd`・`flight`・`shot`・`find`） |
-| `tests/flight/run_scenario.ps1` | シナリオの実行。手順を順に実行し、条件を待ち（タイムアウト付き）、判定する。結果は JSON と Markdown で書く。手順の種類はファイルの先頭に一覧がある（`switch`・`wait`・`check`・`snapshot`・`cas`・`view`・`shot` など） |
-| `tests/flight/scenarios/` | シナリオの定義。`s00_baseline_start`（駐機から電源投入・APU・4 発始動）、`s01_ap_basic`（空中から A/P の ALT HOLD・HDG・V/S） |
+| `tests/flight/run_scenario.ps1` | シナリオの実行。手順を順に実行し、条件を待ち（タイムアウト付き）、判定する。結果は JSON と Markdown で書く。手順の種類はファイルの先頭に一覧がある（`switch`・`wait`・`check`・`snapshot`・`cas`・`view`・`shot` など）。`view` の型：`forward`（前）、`panel`（機長席から計器盤）、`overhead`（機長席から P5 の電源パネル） |
+| `tests/flight/scenarios/` | シナリオの定義。`s00_baseline_start`（駐機から電源投入・APU・4 発始動）、`s01_ap_basic`（空中から A/P の ALT HOLD・HDG・V/S。機体を読み直す）、`s02_elec_panel`（エンジン運転中に P5 の電源パネルを操作。機体を読み直す） |
 | `tests/flight/fwl/B747_flighttest.lua` | FlyWithLua 用の記録スクリプト。毎フレームの記録、イベント、最大・最小。コマンド（`FlyWithLua/B747_flighttest/start`・`stop`・`mark`）を Web API から操作する。747 以外の機体では何もしない。X-Plane の `Resources/plugins/FlyWithLua/Scripts/` に写して使う |
 | `tests/flight/runs/<日時>_<シナリオ>_<acf>/` | 出力。`session.csv`、`events.csv`、`summary.txt`、`result.json`・`result.md`、スクリーンショット、その回の `Log.txt`（全体と、誤りらしい行の抜粋）。git の管理外 |
 

@@ -26,7 +26,7 @@
 #   snapshot {drefs: [...]}                      log values
 #   cas                                          log the EICAS message lines
 #   view    {name} | {the, psi}                  turn the pilot's head: a preset
-#                                                (forward, panel) or pitch/heading
+#                                                (forward, panel, overhead) or pitch/heading
 #   shot    {name}                               screenshot
 # Every step may carry "note" (shown in the report) and "cite" (source page).
 param(
@@ -198,7 +198,7 @@ foreach ($step in $spec.steps) {
             'cas' { $lines = Get-CasLines; Add-Result $step 'info' ("{0} line(s): {1}" -f $lines.Count, ($lines -join ' | ')) $lines }
             'view' {
                 # head pitch/heading in degrees from the captain's eye point
-                $presets = @{ forward = @(0, 0); panel = @(-28, 20) }
+                $presets = @{ forward = @(0, 0); panel = @(-28, 20); overhead = @(58, 48) }
                 $v = if ($step.name) { $presets[$step.name] } else { @($step.the, $step.psi) }
                 if (-not $v) { throw "unknown view preset $($step.name)" }
                 Set-XPDataref 'sim/graphics/view/pilots_head_the' $v[0]
