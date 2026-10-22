@@ -68,7 +68,7 @@
 | xtlua | B747.95.AI | 0 / 2709 | quick start（系統ごとの `laminar/B747/ai/*_quick_start`）。旧 B738 の流用 | |
 | xtlua | B747.99.VRcontrols | 375 / 0 | VR 用の操作（init 側のみ） | |
 | xtlua | Avionics・B747.Avitab | 5 / 130 | 補助（発電機の電流など）、Avitab の連携 | |
-| xtlua_keysystems | B747.19.hydraulicsmodel | 186 / 2103 | 油圧 4 系統のモデル、舵面の駆動（`hydraulics_override`。AFDS の制御則とヨーダンパーも同居）、ステアリング | control_surfaces、wheel_steer |
+| xtlua_keysystems | B747.19.hydraulicsmodel | 186 / 2116 | 油圧 4 系統のモデル、舵面の駆動とステアリング（`hydraulics_override`）。同じ名前空間に AFDS の制御則（`afds_control`）・ヨーダンパー（`yaw_damper`）・スラット（`slats`）。R-1 で `hydraulics_override` から分けた（§2.1） | control_surfaces、wheel_steer |
 | xtlua_keysystems | B747.20.hydraulics | 92 / 555 | 油圧パネルと表示 | |
 | xtlua_keysystems | B747.30.fltMgmt | 112 / 452 | IRU のモードセレクタ、トランスポンダのパネル | |
 | xtlua_keysystems | B747.55.air | 170 / 1220 | 空調パック、抽気、与圧、温度 | |
@@ -78,6 +78,25 @@
 | xtlua_keysystems | B747.90.lighting | 215 / 2403 | 照明（計器、フラッド、外部灯）、気象レーダーの表示操作（`wxr`） | |
 | xtlua_nd | B747.61.nd | 532 / 1314 | ND の地図。ウェイポイント、航法施設、シンボル（`laminar/B747/nd/*`、633 個） | |
 | xtlua_fdr | B747.01.fdr | 34 / 1038 | flight data recorder。モード変化のマーカー（`laminar/B747/fdr/*`）、解析用の記録 | |
+
+### 2.1 R-1 で動かしたコードの行番号
+
+notes と GAP_ANALYSIS.md の行番号は R-1 の前（041c9ffa）のもの。`B747.19.xt.hydraulics_override.lua` の行は、次のとおり移った（フォルダは `plugins/xtlua_keysystems/scripts/B747.19.xt.hydraulicsmodel/`。中身は変えていない）。
+
+| 元の行 | 移った先（行） | 中身 |
+|---|---|---|
+| 1–17 | `hydraulics_override` 1–17 | 先頭のコメント |
+| 18 | `hydraulicsmodel` の `dofile` の並び | `dofile("pid.lua")` |
+| 20–21 | `afds_control` 6–7 | AFDS のモード枠の dataref |
+| 22–341 | `hydraulics_override` 18–337（元 − 4） | 油圧の消費、舵面の出力 |
+| 342–368 | `slats` 4–30（元 − 338） | スラット |
+| 369–391、399–403、405–425 | `afds_control` 8–30、31–35、36–56 | トリムの変数、FD の記録、ロール指令 |
+| 393–398、404、426–432 | `yaw_damper` 5–10、11、12–18 | ヨーの記録、ヨーの入力 |
+| 433–835 | `afds_control` 57–459（元 − 376） | ピッチ指令（FLCH・ALT・V/S・G/S・TO/GA）、ロールの平均 |
+| 836–899 | `yaw_damper` 19–82（元 − 817） | ヨーダンパーの入力の平均 |
+| 900–1040 | `afds_control` 460–600（元 − 440） | ピッチの平均、autotrim、ピッチ・ロールのサーボ（PID） |
+| 1041–1103 | `yaw_damper` 83–145（元 − 958） | ヨーダンパーの則（PID） |
+| 1104–1154 | `hydraulics_override` 338–388（元 − 766） | `flight_controls_override`（毎フレームの呼び出し、ステアリング） |
 
 ## 3. X-Plane 本体の機能との関係
 

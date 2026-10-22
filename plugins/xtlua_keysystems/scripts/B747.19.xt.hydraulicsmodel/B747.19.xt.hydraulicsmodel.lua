@@ -340,7 +340,11 @@ function B747_rescale(in1, out1, in2, out2, x)
 
 end
 B747DR_switching_servos_on = deferred_dataref("laminar/B747/autopilot/ap_monitor/servos_on_time", "number")
+dofile("pid.lua")
 dofile("B747.19.xt.hydraulics_override.lua")
+dofile("B747.19.xt.slats.lua")
+dofile("B747.19.xt.afds_control.lua")
+dofile("B747.19.xt.yaw_damper.lua")
 function B747_engine_hyd_valves()
 -- ENGINE #1
     if B747DR_button_switch_position[30] > 0.95 then
