@@ -115,15 +115,28 @@ function Get-CasLines {
 # the first Log.txt line of this run, for the excerpt at the end
 $logStart = if (Test-Path $logPath) { (Get-Content $logPath).Count } else { 0 }
 
+$freshLoad = $false
 if (-not $NoFlight) {
     $init = $spec.flight | ConvertTo-Json -Depth 30 | ConvertFrom-Json
     $init | Add-Member -NotePropertyName aircraft -NotePropertyValue @{ path = $acfPath } -Force
     Write-Host "starting flight: $acfPath"
+    $loadsBefore = Get-XPAircraftLoads
     $t = Start-XPFlight $init
-    Add-Result @{ do = 'flight' } 'info' "flight running (sim time $([math]::Round($t,1)) s)"
+    $freshLoad = (Get-XPAircraftLoads) -gt $loadsBefore
+    Add-Result @{ do = 'flight' } 'info' ("flight running (sim time {0} s){1}" -f [math]::Round($t, 1), $(if ($freshLoad) { ', aircraft loaded' } else { '' }))
 }
 if ($spec.reload -eq $true -and -not $NoFlight) { $Reload = $true }
+# Reloading right after X-Plane has loaded the aircraft hung X-Plane twice
+# (2026-10-23, docs/overhaul/TESTING.md §4.6); a freshly loaded aircraft
+# needs no reload anyway.
+if ($Reload -and $freshLoad) {
+    Add-Result @{ do = 'reload' } 'info' 'no reload: the flight start loaded the aircraft'
+    $Reload = $false
+}
 if ($Reload) {
+    # let the aircraft's plugins settle before unloading them
+    $since = Get-XPDataref 'sim/time/total_running_time_sec'
+    Wait-XP { (Get-XPDataref 'sim/time/total_running_time_sec') -gt $since + 20 } 120 1000 | Out-Null
     # X-Plane drops the command while it is still settling after a flight
     # load, so wait for the new load in Log.txt and try again if none comes.
     $loads = Get-XPAircraftLoads
