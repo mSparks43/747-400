@@ -1,0 +1,2035 @@
+# Datarefs/commands under laminar/ that the 3D objects (obj), the panel instruments embedded in the acf files (panel:
+# DATAREF and SHOW_EQUAL/SHOW_LESS/SHOW_GREATER conditions), the FMOD sound definitions (snd) and AutoATC voice control
+# (autoatc) refer to. Generated on 2026-10-23 from the overhaul branch (041c9ffa) plus the local assets; static scan only.
+# kind=dynamic means the Lua code builds the name at run time (loops such as CDU keys or EICAS message lines) or it is
+# missing; check it in the sim before relying on it. Do not rename or change the meaning of anything listed here.
+name	kind	used_by	defined_in
+laminar/B747/CAS/caution_status	dataref	panel	B747.87.warning02,B747.87.xt.warning
+laminar/B747/CAS/gen_advisory_msg_000	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_001	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_002	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_003	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_004	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_005	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_006	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_007	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_008	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_009	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_010	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_011	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_012	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_013	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_014	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_015	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_016	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_017	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_018	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_019	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_020	dynamic	panel	
+laminar/B747/CAS/gen_advisory_msg_021	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_000	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_001	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_002	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_003	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_004	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_005	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_006	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_007	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_008	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_009	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_010	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_011	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_012	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_013	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_014	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_015	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_016	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_017	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_018	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_019	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_020	dynamic	panel	
+laminar/B747/CAS/gen_caution_msg_021	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_000	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_001	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_002	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_003	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_004	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_005	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_006	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_007	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_008	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_009	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_010	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_011	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_012	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_013	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_014	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_015	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_016	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_017	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_018	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_019	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_020	dynamic	panel	
+laminar/B747/CAS/gen_memo_msg_021	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_000	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_001	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_002	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_003	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_004	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_005	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_006	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_007	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_008	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_009	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_010	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_011	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_012	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_013	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_014	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_015	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_016	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_017	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_018	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_019	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_020	dynamic	panel	
+laminar/B747/CAS/gen_warning_msg_021	dynamic	panel	
+laminar/B747/CAS/msg_page	dataref	panel	B747.87.warning02,B747.87.xt.warning
+laminar/B747/CAS/num_msg_pages	dataref	panel	B747.87.warning02,B747.87.xt.warning
+laminar/B747/CAS/recall_ind	dataref	panel	B747.87.warning02,B747.87.xt.warning
+laminar/B747/EICAS2/stat/LO	dataref	panel	B747.20.hydraulics,B747.20.xt.hydraulics
+laminar/B747/EICAS2/stat/RF	dataref	panel	B747.20.hydraulics,B747.20.xt.hydraulics
+laminar/B747/actuator/gear_handle	dataref	obj,snd	B747.10.gear,B747.10.xt.gear
+laminar/B747/actuator/gear_handle_detent	dataref	obj,snd	B747.10.gear,B747.10.xt.gear
+laminar/B747/air/apu/bleed_valve_pos	dataref	panel	B747.55.air,B747.55.xt.air
+laminar/B747/air/cabin_alt_auto/sel_dial_dn	command	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/cabin_alt_auto/sel_dial_pos	dataref	obj,snd	B747.55.air,B747.55.xt.air
+laminar/B747/air/cabin_alt_auto/sel_dial_up	command	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/cargo_temp_ctrl/rheostat	dataref	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/duct_pressure_C	dataref	panel	B747.55.air
+laminar/B747/air/duct_pressure_L	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/air/duct_pressure_R	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/air/engine1/bleed_air_psi	dataref	panel	B747.55.air,B747.19.xt.hydraulicsmodel,B747.55.xt.air
+laminar/B747/air/engine1/bleed_valve_pos	dataref	panel	B747.55.air,B747.55.xt.air
+laminar/B747/air/engine2/bleed_air_psi	dataref	panel	B747.55.air,B747.55.xt.air
+laminar/B747/air/engine2/bleed_valve_pos	dataref	panel	B747.55.air,B747.55.xt.air
+laminar/B747/air/engine3/bleed_air_psi	dataref	panel	B747.55.air,B747.55.xt.air
+laminar/B747/air/engine3/bleed_valve_pos	dataref	panel	B747.55.air,B747.55.xt.air
+laminar/B747/air/engine4/bleed_air_psi	dataref	panel	B747.55.air,B747.19.xt.hydraulicsmodel,B747.55.xt.air
+laminar/B747/air/engine4/bleed_valve_pos	dataref	panel	B747.55.air,B747.55.xt.air
+laminar/B747/air/equip_cooling/sel_dial_dn	command	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/equip_cooling/sel_dial_pos	dataref	obj,snd	B747.55.air,B747.55.xt.air
+laminar/B747/air/equip_cooling/sel_dial_up	command	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/flt_deck_temp_ctrl/rheostat	dataref	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/isolation_valve_L_pos	dataref	panel	B747.55.air,B747.55.xt.air
+laminar/B747/air/isolation_valve_R_pos	dataref	panel	B747.55.air,B747.55.xt.air
+laminar/B747/air/land_alt_sel/rheostat	dataref	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/landing_alt/button	command	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/landing_alt/button_pos	dataref	obj,panel,snd	B747.55.air,B747.55.xt.air
+laminar/B747/air/landing_altitude	dataref	panel	B747.55.air,B747.55.xt.air
+laminar/B747/air/outflow_valve_left/pos	dataref	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/outflow_valve_right/pos	dataref	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/pack_ctrl/sel_dial_pos	dataref	obj,panel,snd	B747.42.xt.EEC,B747.55.air,B747.55.xt.air
+laminar/B747/air/pack_ctrl_01/sel_dial_dn	command	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/pack_ctrl_01/sel_dial_up	command	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/pack_ctrl_02/sel_dial_dn	command	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/pack_ctrl_02/sel_dial_up	command	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/pack_ctrl_03/sel_dial_dn	command	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/pack_ctrl_03/sel_dial_up	command	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/pass_temp_ctrl/rheostat	dataref	obj	B747.55.air,B747.55.xt.air
+laminar/B747/air/pressurization/EICAS1_display_status	dataref	panel	B747.55.air,B747.55.xt.air
+laminar/B747/airspeed/V1	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02,B744.fms.pages,B744.fms.pages.takeoff
+laminar/B747/airspeed/Vf0	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/airspeed/Vf1	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/airspeed/Vf10	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/airspeed/Vf20	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/airspeed/Vf25	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/airspeed/Vf30	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/airspeed/Vf5	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/airspeed/Vmax	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/airspeed/Vmaxm	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/airspeed/Vmc	dataref	panel	B747.42.xt.EEC,B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/airspeed/Vr	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02,B744.fms.pages,B744.fms.pages.takeoff
+laminar/B747/airspeed/Vref	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/airspeed/VrefFlap	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/airspeed/Vs	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/airspeed/showVf25	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/airspeed/showVf30	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/airspeed_window/min	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/altimeter/baro_hectopascal	dataref	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/altimeter/ft_adjusted	dataref	snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/annunciator/brightness_ratio	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/annunciators/engine_fires	dataref	obj	B747.40.engines,B747.35.xt.fire
+laminar/B747/antiice/nacelle/valve_pos	dataref	panel	B747.50.antiice,B747.42.xt.EEC,B747.50.xt.antiice
+laminar/B747/antiice/wing/valve_pos	dataref	panel	B747.50.antiice,B747.50.xt.antiice
+laminar/B747/antiice/wndshlsd_wiper_L/sel_dial_dn	command	obj	B747.50.antiice,B747.50.xt.antiice
+laminar/B747/antiice/wndshlsd_wiper_L/sel_dial_pos	dataref	obj,snd	B747.50.antiice,B747.50.xt.antiice
+laminar/B747/antiice/wndshlsd_wiper_L/sel_dial_up	command	obj	B747.50.antiice,B747.50.xt.antiice
+laminar/B747/antiice/wndshlsd_wiper_R/sel_dial_dn	command	obj	B747.50.antiice,B747.50.xt.antiice
+laminar/B747/antiice/wndshlsd_wiper_R/sel_dial_pos	dataref	obj,snd	B747.50.antiice,B747.50.xt.antiice
+laminar/B747/antiice/wndshlsd_wiper_R/sel_dial_up	command	obj	B747.50.antiice,B747.50.xt.antiice
+laminar/B747/ap/button_sw_pos	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap/toggle_sw_pos	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/app_mkr/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/app_mkr/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/app_rcvr/sel_dial_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/app_rcvr/sel_dial_pos	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/app_rcvr/sel_dial_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/cab/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/cab/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/cab/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/flt/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/flt/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/flt/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/hf_L/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/hf_L/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/hf_L/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/hf_R/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/hf_R/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/hf_R/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/nav_filter/sel_dial_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/nav_filter/sel_dial_pos	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/nav_filter/sel_dial_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/pa/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/pa/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/pa/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/ptt/sel_switch_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/ptt/sel_switch_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/sat_L/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/sat_L/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/sat_L/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/sat_R/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/sat_R/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/sat_R/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/spkr/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/spkr/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/vhf_C/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/vhf_C/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/vhf_C/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/vhf_L/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/vhf_L/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/vhf_L/xmt_sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/vhf_R/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/vhf_R/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/vhf_R/xmt_sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/vor_adf/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/vor_adf/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/vor_adf_rcvr/sel_dial_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/vor_adf_rcvr/sel_dial_pos	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_C/vor_adf_rcvr/sel_dial_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/app_mkr/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/app_mkr/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/app_rcvr/sel_dial_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/app_rcvr/sel_dial_pos	dataref	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/app_rcvr/sel_dial_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/cab/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/cab/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/cab/xmt_sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/flt/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/flt/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/flt/xmt_sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/hf_L/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/hf_L/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/hf_L/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/hf_R/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/hf_R/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/hf_R/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/nav_filter/sel_dial_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/nav_filter/sel_dial_pos	dataref	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/nav_filter/sel_dial_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/pa/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/pa/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/pa/xmt_sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/ptt/sel_switch_dn	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/ptt/sel_switch_up	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/sat_L/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/sat_L/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/sat_L/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/sat_R/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/sat_R/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/sat_R/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/spkr/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/spkr/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/vhf_C/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/vhf_C/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/vhf_C/xmt_sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/vhf_L/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/vhf_L/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/vhf_L/xmt_sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/vhf_R/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/vhf_R/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/vhf_R/xmt_sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/vor_adf/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/vor_adf/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/vor_adf_rcvr/sel_dial_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/vor_adf_rcvr/sel_dial_pos	dataref	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_L/vor_adf_rcvr/sel_dial_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/app_mkr/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/app_mkr/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/app_rcvr/sel_dial_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/app_rcvr/sel_dial_pos	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/app_rcvr/sel_dial_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/cab/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/cab/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/cab/xmt_sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/flt/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/flt/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/flt/xmt_sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/hf_L/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/hf_L/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/hf_L/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/hf_R/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/hf_R/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/hf_R/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/nav_filter/sel_dial_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/nav_filter/sel_dial_pos	dataref	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/nav_filter/sel_dial_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/pa/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/pa/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/pa/xmt_sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/ptt/sel_switch_dn	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/ptt/sel_switch_up	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/sat_L/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/sat_L/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/sat_L/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/sat_R/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/sat_R/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/sat_R/xmt_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/spkr/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/spkr/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/vhf_C/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/vhf_C/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/vhf_C/xmt_sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/vhf_L/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/vhf_L/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/vhf_L/xmt_sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/vhf_R/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/vhf_R/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/vhf_R/xmt_sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/vor_adf/audio_sel_switch	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/vor_adf/audio_vol	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/vor_adf_rcvr/sel_dial_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/vor_adf_rcvr/sel_dial_pos	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/ap_R/vor_adf_rcvr/sel_dial_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/apu/n2	dataref	panel	B747.40.engines
+laminar/B747/apu/oil	dataref	panel	B747.40.engines
+laminar/B747/autopilot/AFDS/mode_box2_status_copilot	dataref	panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/AFDS/mode_box_status_copilot	dataref	panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/AFDS/mode_box_status_pilot	dataref	panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/AFDS/status_annun_copilot	dataref	panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/AFDS/status_annun_pilot	dataref	panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/FMA/active_pitch_mode	dataref	panel	B747.42.xt.EEC,B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/FMA/active_roll_mode	dataref	panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/FMA/armed_pitch_mode	dataref	panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/FMA/armed_roll_mode	dataref	panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/FMA/autothrottle/mode_box_status	dataref	panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/FMA/autothrottle_mode	dataref	panel	B747.01.xt.manipulators,B747.40.xt.engines,B747.42.xt.EEC,B747.70.autopilot,B747.70.xt.autopilot,B747.90.xt.lighting
+laminar/B747/autopilot/FMA/pitch/mode_box_status	dataref	panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/FMA/roll/mode_box_status	dataref	panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/FMA/showFMA	dataref	panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/altitude/show_tenThousands	dataref	obj	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/altitude/show_thousands	dataref	obj	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/altitude/target	dataref	autoatc	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/approach	command	obj,snd	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/bank_limit/sel_dial_pos	dataref	obj,snd	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/button_switch/LNAV	command	obj,snd	B747.70.autopilot
+laminar/B747/autopilot/button_switch/VNAV	command	obj,snd	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/button_switch/alt_hold_mode	command	autoatc,obj,snd	B747.70.autopilot
+laminar/B747/autopilot/button_switch/autothrottle_disco_L	command	obj,snd	B747.70.autopilot
+laminar/B747/autopilot/button_switch/autothrottle_disco_R	command	obj,snd	B747.70.autopilot
+laminar/B747/autopilot/button_switch/cmd_C	command	obj,snd	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/button_switch/cmd_L	command	autoatc,obj,snd	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/button_switch/cmd_R	command	obj,snd	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/button_switch/flch_mode	command	autoatc,obj,snd	B747.70.autopilot
+laminar/B747/autopilot/button_switch/heading_select	command	obj,snd	B747.70.autopilot
+laminar/B747/autopilot/button_switch/loc_mode	command	obj,snd	B747.70.autopilot
+laminar/B747/autopilot/button_switch/position	dataref	obj,snd	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/button_switch/speed_mode	command	obj,snd	B747.70.autopilot
+laminar/B747/autopilot/button_switch/thrust_mode	command	obj,snd	B747.70.autopilot
+laminar/B747/autopilot/button_switch/vs_mode	command	obj,snd	B747.70.autopilot
+laminar/B747/autopilot/button_switch/yoke_disengage_capt	command	obj,snd	B747.70.autopilot
+laminar/B747/autopilot/button_switch/yoke_disengage_fo	command	obj,snd	B747.70.autopilot
+laminar/B747/autopilot/capt_roll_ref	dataref	panel	B747.70.autopilot
+laminar/B747/autopilot/dist/flight_path_error	dataref	panel	B747.70.autopilot
+laminar/B747/autopilot/flaps/target	dataref	autoatc	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/flight_director_pitch_deg	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/autopilot/fo_roll_ref	dataref	panel	B747.70.autopilot
+laminar/B747/autopilot/heading/altitude_dial_ft	dataref	obj,panel,snd	B747.42.xt.EEC,B747.70.autopilot
+laminar/B747/autopilot/heading/altitude_dial_ft_pfd	dataref	panel	B747.70.autopilot,B747.19.xt.hydraulicsmodel,B747.70.xt.autopilot
+laminar/B747/autopilot/heading/degrees	dataref	obj,panel,snd	B747.70.autopilot,B747.60.xt.fltInst02,B747.70.xt.autopilot
+laminar/B747/autopilot/heading/target	dataref	autoatc	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/ias_bug_value_pfd	dataref	panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/ias_dial_value	dataref	obj,panel,snd	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/ias_mach/rheostat	dynamic	obj	
+laminar/B747/autopilot/ias_mach/window_open	dataref	obj	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/ias_mach_dial_value	dataref	panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/ils_dots	dataref	panel	B747.70.autopilot,B744.fms.pages,B747.70.xt.autopilot
+laminar/B747/autopilot/mach_dec_vis	dataref	obj	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/slide_switch/disengage_bar	command	obj	B747.70.autopilot
+laminar/B747/autopilot/speed/target	dataref	autoatc	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/vert_spd/window_open	dataref	obj,panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/vert_speed/show_thousands	dataref	obj	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/vertspeed/target	dataref	autoatc	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/vnav/after_tod	dataref	panel	B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/autopilot/vvi_fpm	dataref	obj	B747.42.xt.EEC,B747.70.autopilot,B747.70.xt.autopilot
+laminar/B747/button_switch/altn_flap	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/altn_nose_gear_extend	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/altn_wing_gear_extend	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/anti_ice_nacelle_1	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/anti_ice_nacelle_2	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/anti_ice_nacelle_3	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/anti_ice_nacelle_4	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/anti_ice_window_L	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/anti_ice_window_R	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/anti_ice_wing	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/bleed_air_isln_vlv_L	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/bleed_air_isln_vlv_R	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/bleed_air_vlv_apu	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/bleed_air_vlv_engine_1	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/bleed_air_vlv_engine_2	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/bleed_air_vlv_engine_3	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/bleed_air_vlv_engine_4	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/cargo_fire_arm_aft	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/cargo_fire_arm_fwd	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/cargo_fire_disch	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_apu_gen_1	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_apu_gen_2	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_battery	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_bus_tie_1	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_bus_tie_2	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_bus_tie_3	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_bus_tie_4	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_drive_disc_1	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_drive_disc_2	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_drive_disc_3	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_drive_disc_4	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_eng_ctrl_1	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_eng_ctrl_2	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_eng_ctrl_3	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_eng_ctrl_4	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_ext_pwr_1	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_ext_pwr_2	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_gen_ctrl_1	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_gen_ctrl_2	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_gen_ctrl_3	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_gen_ctrl_4	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_util_L	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/elec_util_R	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_ctr_wing_tnk_pump_L	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_ctr_wing_tnk_pump_R	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_jet_nozzle_vlv_L	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_jet_nozzle_vlv_R	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_main_pump_aft_1	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_main_pump_aft_2	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_main_pump_aft_3	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_main_pump_aft_4	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_main_pump_fwd_1	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_main_pump_fwd_2	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_main_pump_fwd_3	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_main_pump_fwd_4	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_overd_pump_aft_2	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_overd_pump_aft_3	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_overd_pump_fwd_2	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_overd_pump_fwd_3	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_stab_tnk_pump_L	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_stab_tnk_pump_R	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_xfeed_vlv_1	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_xfeed_vlv_2	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_xfeed_vlv_3	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/fuel_xfeed_vlv_4	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/gnd_prox_flap_ovrd	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/gnd_prox_gear_ovrd	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/gnd_prox_gs_inhibit	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/gnd_prox_terr_ovrd	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/hyd_pump_1	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/hyd_pump_2	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/hyd_pump_3	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/hyd_pump_4	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/misc_fuel_xfr_1_4	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/position	dataref	obj,panel,snd	B747.01.manipulators,B747.01.xt.manipulators,B747.42.xt.EEC
+laminar/B747/button_switch/press_airspeed	command	obj,snd	B747.70.autopilot
+laminar/B747/button_switch/press_altitude	command	obj,snd	B747.70.autopilot
+laminar/B747/button_switch/press_outflow_vlv_L	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/press_outflow_vlv_R	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/start_autostart	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/start_ign_cont	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/temp_aft_cargo_ht	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/temp_hi_flow	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/temp_pack_rst	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/temp_recirc_lwr	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/temp_recirc_upr	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/temp_trim_air	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/temp_zone_rst	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/warn_caut_capt	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/warn_caut_fo	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/yaw_damper_lwr	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch/yaw_damper_upr	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch_cover/position	dataref	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/button_switch_cover00	dynamic	obj	
+laminar/B747/button_switch_cover01	dynamic	obj	
+laminar/B747/button_switch_cover02	dynamic	obj	
+laminar/B747/button_switch_cover03	dynamic	obj	
+laminar/B747/button_switch_cover04	dynamic	obj	
+laminar/B747/button_switch_cover05	dynamic	obj	
+laminar/B747/button_switch_cover06	dynamic	obj	
+laminar/B747/button_switch_cover07	dynamic	obj	
+laminar/B747/button_switch_cover08	dynamic	obj	
+laminar/B747/button_switch_cover09	dynamic	obj	
+laminar/B747/button_switch_cover10	dynamic	obj	
+laminar/B747/button_switch_cover11	dynamic	obj	
+laminar/B747/button_switch_cover12	dynamic	obj	
+laminar/B747/button_switch_cover13	dynamic	obj	
+laminar/B747/button_switch_cover14	dynamic	obj	
+laminar/B747/button_switch_cover15	dynamic	obj	
+laminar/B747/button_switch_cover16	dynamic	obj	
+laminar/B747/button_switch_cover17	dynamic	obj	
+laminar/B747/button_switch_cover18	dynamic	obj	
+laminar/B747/button_switch_cover19	dynamic	obj	
+laminar/B747/cockpit2/autopilot/vvi_dial_fpm	dataref	obj,snd	B747.70.autopilot
+laminar/B747/comm/ap_C/app_mkr_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/app_mkr_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/cab_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/cab_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/flt_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/flt_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/hf_L_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/hf_L_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/hf_R_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/hf_R_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/pa_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/pa_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/sat_L_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/sat_L_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/sat_R_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/sat_R_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/spkr_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/spkr_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/vhf_C_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/vhf_C_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/vhf_L_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/vhf_L_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/vhf_R_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/vhf_R_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/vor_adf_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_C/vor_adf_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/app_mkr_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/app_mkr_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/cab_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/cab_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/flt_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/flt_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/hf_L_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/hf_L_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/hf_R_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/hf_R_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/pa_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/pa_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/sat_L_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/sat_L_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/sat_R_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/sat_R_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/spkr_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/spkr_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/vhf_C_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/vhf_C_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/vhf_L_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/vhf_L_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/vhf_R_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/vhf_R_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/vor_adf_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_L/vor_adf_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/app_mkr_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/app_mkr_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/cab_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/cab_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/flt_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/flt_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/hf_L_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/hf_L_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/hf_R_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/pa_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/pa_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/sat_L_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/sat_L_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/sat_R_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/spkr_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/spkr_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/vhf_C_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/vhf_C_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/vhf_L_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/vhf_L_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/vhf_R_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/vhf_R_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/vor_adf_audio/vol_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/ap_R/vor_adf_audio/vol_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/rtp_C/freq_MHz/sel_dial_pos	dataref	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/comm/rtp_C/freq_khz/sel_dial_pos	dataref	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/comm/rtp_C/hf_sens_ctrl/rheostat	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/rtp_C/lcd_to_display	dataref	panel	B747.15.com,B747.15.xt.com
+laminar/B747/comm/rtp_L/freq_MHz/sel_dial_pos	dataref	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/comm/rtp_L/freq_khz/sel_dial_pos	dataref	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/comm/rtp_L/hf_sens_ctrl/rheostat	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/rtp_L/lcd_to_display	dataref	panel	B747.15.com,B747.15.xt.com
+laminar/B747/comm/rtp_R/freq_MHz/sel_dial_pos	dataref	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/comm/rtp_R/freq_khz/sel_dial_pos	dataref	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/comm/rtp_R/hf_sens_ctrl/rheostat	dataref	obj	B747.15.com,B747.15.xt.com
+laminar/B747/comm/rtp_R/lcd_to_display	dataref	panel	B747.15.com,B747.15.xt.com
+laminar/B747/dec_height/display_status	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/canc/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/canc_switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/drs/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/drs_switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/ecs/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/ecs_switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/elec/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/elec_switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/eng/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/eng_switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/fuel/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/fuel_switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/gear/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/gear_switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/hyd/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/hyd_switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/rcl/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/rcl_switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/stat/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/stat_switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/dsp/synoptic_display	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro/capt/preselect	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02,B747.70.xt.autopilot
+laminar/B747/efis/baro/capt/set_dial_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02,B747.70.xt.autopilot
+laminar/B747/efis/baro/fo/preselect	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02,B747.70.xt.autopilot
+laminar/B747/efis/baro/fo/set_dial_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02,B747.70.xt.autopilot
+laminar/B747/efis/baro_ref/capt	dataref	panel	B747.01.xt.manipulators,B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_ref/capt/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_ref/capt/sel_dial_pos	dataref	obj,panel,snd	B747.05.xt.simconfig,B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_ref/capt/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_ref/fo	dataref	panel	B747.01.xt.manipulators,B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_ref/fo/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_ref/fo/sel_dial_pos	dataref	obj,panel,snd	B747.05.xt.simconfig,B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_ref/fo/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_set/capt/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_set/capt/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_set/fo/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_set/fo/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_std/capt/show_preselect	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_std/capt/switch	command	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_std/capt/switch_pos	dataref	panel	B747.05.xt.simconfig,B747.60.fltInst,B747.60.xt.fltInst02,B747.70.xt.autopilot
+laminar/B747/efis/baro_std/fo/show_preselect	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_std/fo/switch	command	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/baro_std/fo/switch_pos	dataref	panel	B747.05.xt.simconfig,B747.60.fltInst,B747.60.xt.fltInst02,B747.70.xt.autopilot
+laminar/B747/efis/dh/capt/reset_switch	command	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/dh/fo/reset_switch	command	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/fpv/capt/switch	command	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/fpv/capt/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/fpv/fo/switch	command	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/fpv/fo/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/meters/capt/selected	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/meters/capt/switch	command	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/meters/capt/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/meters/fo/selected	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/meters/fo/switch	command	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/meters/fo/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/min_ref_alt/capt/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/min_ref_alt/capt/sel_dial_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/min_ref_alt/capt/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/min_ref_alt/fo/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/min_ref_alt/fo/sel_dial_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/min_ref_alt/fo/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/radio_altitude	dataref	panel	B747.42.xt.EEC,B747.60.fltInst,B747.30.xt.fltMgmt,B747.60.xt.fltInst02
+laminar/B747/efis/ref_alt/capt/set_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/ref_alt/capt/set_dial_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/ref_alt/capt/set_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/ref_alt/fo/set_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/ref_alt/fo/set_dial_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/efis/ref_alt/fo/set_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/electrical/apu/sel_dial_dn	command	obj	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/apu/sel_dial_pos	dataref	obj,snd	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/apu/sel_dial_up	command	obj	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/apu_inlet_door	dataref	obj	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/apu_pwr1_on	dataref	panel,snd	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/apu_pwr2_on	dataref	panel,snd	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/apu_volts	dataref	panel	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/auto_ignit/sel_dial_dn	command	obj	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/auto_ignit/sel_dial_pos	dataref	obj,snd	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/auto_ignit/sel_dial_up	command	obj	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/bus1hot	dataref	panel	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/bus2hot	dataref	panel	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/bus3hot	dataref	panel	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/bus4hot	dataref	panel	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/connect_power	command	autoatc	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/display_has_power	dataref	panel	B747.03.electrical
+laminar/B747/electrical/ext_pwr1_on	dataref	panel,snd	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/ext_pwr2_on	dataref	panel,snd	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/ssb	dataref	panel	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/standby_power/sel_dial_dn	command	obj	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/standby_power/sel_dial_pos	dataref	obj,snd	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/standby_power/sel_dial_up	command	obj	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/stby_ignit/sel_dial_dn	command	obj	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/stby_ignit/sel_dial_pos	dataref	obj,snd	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/stby_ignit/sel_dial_up	command	obj	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/topleftbus	dataref	panel	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/toprightbus	dataref	panel	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/utilityleft1	dataref	panel	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/utilityleft2	dataref	panel	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/utilityright1	dataref	panel	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/utilityright2	dataref	panel	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/engine/rev_mnp_show	dataref	obj	B747.40.engines,B747.40.xt.engines
+laminar/B747/engine/rev_mnp_show_all	dataref	obj	B747.40.engines,B747.40.xt.engines
+laminar/B747/engine/throttle	dataref	obj,snd	B747.40.engines,B747.01.xt.manipulators,B747.42.xt.EEC,B747.68.xt.fms
+laminar/B747/engine/throttle_reversor	dataref	obj	B747.40.engines,B747.01.xt.manipulators,B747.42.xt.EEC,B747.68.xt.fms
+laminar/B747/engine/thrust_mnp_show	dataref	obj	B747.40.engines,B747.40.xt.engines
+laminar/B747/engine/thrust_mnp_show_all	dataref	obj	B747.40.engines,B747.40.xt.engines
+laminar/B747/engine/vibration_position	dataref	obj	B747.40.engines,B747.40.xt.engines
+laminar/B747/engines/EGT/amber_inhibit	dataref	panel	B747.40.engines,B747.40.xt.engines
+laminar/B747/engines/EGT/amber_on	dataref	panel	B747.40.engines,B747.40.xt.engines
+laminar/B747/engines/EGT/white_on	dataref	panel	B747.40.engines,B747.40.xt.engines
+laminar/B747/engines/EICAS2_oil_press_status	dataref	panel	B747.40.engines,B747.40.xt.engines
+laminar/B747/engines/TRA	dataref	panel	B747.42.EEC,B747.42.xt.EEC,B747.68.xt.fms
+laminar/B747/engines/display_EGT	dataref	panel	B747.42.EEC,B747.40.xt.engines,B747.42.xt.EEC
+laminar/B747/engines/display_EPR	dataref	panel	B747.42.EEC,B747.42.xt.EEC
+laminar/B747/engines/display_EPR_max	dataref	panel	B747.42.EEC,B747.42.xt.EEC
+laminar/B747/engines/display_EPR_ref	dataref	panel	B747.42.EEC,B747.42.xt.EEC
+laminar/B747/engines/display_GE_EGT	dataref	panel	B747.42.EEC,B747.42.xt.EEC
+laminar/B747/engines/display_N1	dataref	panel	B747.42.EEC,B747.42.xt.EEC,B747.19.xt.hydraulicsmodel
+laminar/B747/engines/display_N1_max	dataref	panel	B747.42.EEC,B747.42.xt.EEC
+laminar/B747/engines/display_N1_ref	dataref	panel	B747.42.EEC,B747.42.xt.EEC
+laminar/B747/engines/display_N2	dataref	panel	B747.42.EEC,B747.42.xt.EEC,B747.19.xt.hydraulicsmodel
+laminar/B747/engines/display_N3	dataref	panel	B747.42.EEC,B747.42.xt.EEC
+laminar/B747/engines/display_ref_line_magenta	dataref	panel	B747.42.EEC,B747.42.xt.EEC
+laminar/B747/engines/fuel_on_indicator_status	dataref	panel	B747.40.engines,B747.40.xt.engines
+laminar/B747/engines/oil_press_psi	dataref	panel	B747.40.engines,B747.40.xt.engines
+laminar/B747/engines/oil_qty_liters	dataref	panel	B747.40.engines,B747.40.xt.engines
+laminar/B747/engines/oil_temp_degC	dataref	panel	B747.40.engines,B747.40.xt.engines
+laminar/B747/engines/ref_thr_limit_mode	dataref	panel	B747.40.engines,B747.40.xt.engines,B747.42.xt.EEC,B747.70.xt.autopilot
+laminar/B747/engines/thrust_ref	dataref	panel	B747.05.simconfig,B747.05.xt.simconfig
+laminar/B747/engines/type	dataref	obj,panel	B747.05.simconfig,B747.05.xt.simconfig,B747.40.xt.engines,B747.42.xt.EEC
+laminar/B747/engines/vibration	dataref	panel	B747.40.engines,B747.40.xt.engines
+laminar/B747/fire/button/fire_ovht_test	command	obj	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine01/ext_switch/pos_arm	dataref	obj,snd	B747.35.fire,B747.35.xt.fire,B747.40.xt.engines,B747.55.xt.air
+laminar/B747/fire/engine01/ext_switch/pos_disch	dataref	obj,snd	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine01/ext_switch_A	command	obj	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine01/ext_switch_B	command	obj	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine01/ext_switch_arm	command	obj	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine02/ext_switch/pos_arm	dataref	obj,snd	B747.35.fire,B747.35.xt.fire,B747.40.xt.engines,B747.55.xt.air
+laminar/B747/fire/engine02/ext_switch/pos_disch	dataref	obj,snd	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine02/ext_switch_A	command	obj	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine02/ext_switch_B	command	obj	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine02/ext_switch_arm	command	obj	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine03/ext_switch/pos_arm	dataref	obj,snd	B747.35.fire,B747.35.xt.fire,B747.40.xt.engines,B747.55.xt.air
+laminar/B747/fire/engine03/ext_switch/pos_disch	dataref	obj,snd	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine03/ext_switch_A	command	obj	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine03/ext_switch_B	command	obj	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine03/ext_switch_arm	command	obj	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine04/ext_switch/pos_arm	dataref	obj,snd	B747.35.fire,B747.35.xt.fire,B747.40.xt.engines,B747.55.xt.air
+laminar/B747/fire/engine04/ext_switch/pos_disch	dataref	obj,snd	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine04/ext_switch_A	command	obj	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine04/ext_switch_B	command	obj	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/engine04/ext_switch_arm	command	obj	B747.35.fire,B747.35.xt.fire
+laminar/B747/fire/fire_ovht/button_pos	dataref	obj,snd	B747.35.fire,B747.35.xt.fire,B747.87.xt.warning
+laminar/B747/fire/snoke_evac/handle	dataref	obj	B747.35.fire
+laminar/B747/fltInst/capt/clock_chr_minutes	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_chr_seconds	dataref	obj	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_chr_sw_pos	dataref	obj	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_chrono_switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_date_display_mode	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_date_sw_pos	dataref	obj	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_date_switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_et_chr_display	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_et_hours	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_et_minutes	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_et_seconds	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_et_sel_down	command	obj	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_et_sel_pos	dataref	obj	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_et_sel_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_set_sel_down	command	obj	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_set_sel_pos	dataref	obj	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_set_sel_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_utc_display	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/capt/clock_year	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst03
+laminar/B747/fltInst/fo/clock_chr_minutes	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_chr_seconds	dataref	obj	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_chr_sw_pos	dataref	obj	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_chrono_switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_date_display_mode	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_date_sw_pos	dataref	obj	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_date_switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_et_chr_display	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_et_hours	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_et_minutes	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_et_seconds	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_et_sel_down	command	obj	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_et_sel_pos	dataref	obj	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_et_sel_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_set_sel_down	command	obj	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_set_sel_pos	dataref	obj	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_set_sel_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_utc_display	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/fltInst/fo/clock_year	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst04
+laminar/B747/flt_ctrls/aileron_trim/switch_pos	dataref	obj	B747.45.fltCtrls,B747.45.xt.fltCtrls
+laminar/B747/flt_ctrls/alt_flaps/sel_dial_pos	dataref	obj,snd	B747.45.fltCtrls,B747.45.xt.fltCtrls
+laminar/B747/flt_ctrls/elevator_trim/mid/indicator	dataref	obj	B747.45.fltCtrls,B747.45.xt.fltCtrls
+laminar/B747/flt_ctrls/flap/transition_status	dataref	panel	B747.45.fltCtrls,B747.45.xt.fltCtrls
+laminar/B747/flt_ctrls/flap_lever_detent	dataref	obj,snd	B747.45.fltCtrls,B747.45.xt.fltCtrls,B747.19.xt.hydraulicsmodel
+laminar/B747/flt_ctrls/flaps	dataref	obj	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/flt_ctrls/flaps/EICAS1_display_status	dataref	panel	B747.45.fltCtrls,B747.45.xt.fltCtrls
+laminar/B747/flt_ctrls/flaps/alt_flaps/sel_dial_dn	command	obj	B747.45.fltCtrls,B747.45.xt.fltCtrls
+laminar/B747/flt_ctrls/flaps/alt_flaps/sel_dial_up	command	obj	B747.45.fltCtrls,B747.45.xt.fltCtrls
+laminar/B747/flt_ctrls/l_aileron_inner	dataref	obj,panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/flt_ctrls/l_aileron_outer	dataref	obj,panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/flt_ctrls/l_elev_inner	dataref	obj	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/flt_ctrls/l_elev_outer	dataref	obj,panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/flt_ctrls/outer_spoilers	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/flt_ctrls/parking_brake_ratio	dataref	obj,snd	B747.45.fltCtrls
+laminar/B747/flt_ctrls/r_aileron_inner	dataref	obj,panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/flt_ctrls/r_aileron_outer	dataref	obj,panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/flt_ctrls/r_elev_inner	dataref	obj	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/flt_ctrls/r_elev_outer	dataref	obj,panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/flt_ctrls/rudder_lwr_pos	dataref	obj,panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/flt_ctrls/rudder_trim/sel_dial_pos	dataref	obj	B747.45.fltCtrls,B747.45.xt.fltCtrls
+laminar/B747/flt_ctrls/rudder_upr_pos	dataref	obj,panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/flt_ctrls/speedbrake_lever	dataref	obj,snd	B747.45.fltCtrls,B747.45.xt.fltCtrls,B747.19.xt.hydraulicsmodel
+laminar/B747/flt_ctrls/speedbrake_lever_detent	dataref	obj,snd	B747.45.fltCtrls,B747.45.xt.fltCtrls
+laminar/B747/flt_ctrls/spoilers	dataref	obj,panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/flt_ctrls/stab_trim_dn_capt	command	obj	B747.45.fltCtrls,B747.45.xt.fltCtrls
+laminar/B747/flt_ctrls/stab_trim_dn_fo	command	obj,snd	B747.45.fltCtrls,B747.45.xt.fltCtrls
+laminar/B747/flt_ctrls/stab_trim_up_capt	command	obj	B747.45.fltCtrls,B747.45.xt.fltCtrls
+laminar/B747/flt_ctrls/stab_trim_up_fo	command	obj,snd	B747.45.fltCtrls,B747.45.xt.fltCtrls
+laminar/B747/flt_inst/air_data_src/capt/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/air_data_src/capt/sel_dial_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/air_data_src/capt/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/air_data_src/fo/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/air_data_src/fo/sel_dial_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/air_data_src/fo/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/capt_inbd_display/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/capt_inbd_display/sel_dial_pos	dataref	obj,snd	B747.05.xt.simconfig,B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/capt_inbd_display/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/capt_lwr_display/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/capt_lwr_display/sel_dial_pos	dataref	obj,snd	B747.05.xt.simconfig,B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/capt_lwr_display/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/display/capt/nd_pos	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/display/capt/pfd_pos	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/display/eicas_pos	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/display/fo/eicas_pos	dynamic	panel	
+laminar/B747/flt_inst/display/fo/nd_pos	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/display/fo/pfd_pos	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/display/fo/pri_eicas_pos	dynamic	panel	
+laminar/B747/flt_inst/display/pri_eicas_pos	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/eiu_src/capt/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/eiu_src/capt/sel_dial_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/eiu_src/capt/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/eiu_src/ctr_pnl/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/eiu_src/ctr_pnl/sel_dial_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/eiu_src/ctr_pnl/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/eiu_src/fo/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/eiu_src/fo/sel_dial_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/eiu_src/fo/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/flt_dir_src/capt/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/flt_dir_src/capt/sel_dial_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/flt_dir_src/capt/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/flt_dir_src/fo/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/flt_dir_src/fo/sel_dial_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/flt_dir_src/fo/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/fmc_master_src/ctr_pnl/sel_dial	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/fmc_master_src/ctr_pnl/sel_dial_pos	dataref	obj,panel,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/fo_inbd_display/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/fo_inbd_display/sel_dial_pos	dataref	obj,snd	B747.05.xt.simconfig,B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/fo_inbd_display/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/fo_lwr_display/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/fo_lwr_display/sel_dial_pos	dataref	obj,snd	B747.05.xt.simconfig,B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/fo_lwr_display/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/irs_src/capt/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/irs_src/capt/sel_dial_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/irs_src/capt/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/irs_src/fo/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/irs_src/fo/sel_dial_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/irs_src/fo/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/nav_src/capt/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/nav_src/capt/sel_dial_pos	dataref	obj,panel,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/nav_src/capt/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/nav_src/fo/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/nav_src/fo/sel_dial_pos	dataref	obj,panel,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_inst/nav_src/fo/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/flt_mgmt/iru/mode_sel_dial_C_dn	command	obj	B747.30.fltMgmt,B747.30.xt.fltMgmt
+laminar/B747/flt_mgmt/iru/mode_sel_dial_C_up	command	obj	B747.30.fltMgmt,B747.30.xt.fltMgmt
+laminar/B747/flt_mgmt/iru/mode_sel_dial_L_dn	command	obj	B747.30.fltMgmt,B747.30.xt.fltMgmt
+laminar/B747/flt_mgmt/iru/mode_sel_dial_L_up	command	obj	B747.30.fltMgmt,B747.30.xt.fltMgmt
+laminar/B747/flt_mgmt/iru/mode_sel_dial_R_dn	command	obj	B747.30.fltMgmt,B747.30.xt.fltMgmt
+laminar/B747/flt_mgmt/iru/mode_sel_dial_R_up	command	obj	B747.30.fltMgmt,B747.30.xt.fltMgmt
+laminar/B747/flt_mgmt/iru/mode_sel_dial_pos	dataref	obj,snd	B747.30.fltMgmt,B747.30.xt.fltMgmt
+laminar/B747/flt_mgmt/transponder/ident_btn_pos	dataref	obj	B747.30.fltMgmt,B747.30.xt.fltMgmt
+laminar/B747/flt_mgmt/transponder/mode_sel_dial_dn	command	obj	B747.30.fltMgmt,B747.30.xt.fltMgmt
+laminar/B747/flt_mgmt/transponder/mode_sel_dial_up	command	obj	B747.30.fltMgmt,B747.30.xt.fltMgmt
+laminar/B747/flt_mgmt/transponder/sel_dial	command	obj	B747.30.fltMgmt,B747.30.xt.fltMgmt
+laminar/B747/flt_mgmt/transponder/sel_dial_pos	dataref	obj,panel,snd	B747.30.fltMgmt,B747.30.xt.fltMgmt
+laminar/B747/flt_mgmt/transponder_code/digts_12_dial_pos	dataref	obj	B747.30.fltMgmt,B747.30.xt.fltMgmt
+laminar/B747/flt_mgmt/transponder_code/digts_34_dial_pos	dataref	obj	B747.30.fltMgmt,B747.30.xt.fltMgmt
+laminar/B747/flt_mgmt/txpdr/mode_sel_pos	dataref	obj,snd	B747.30.fltMgmt,B747.30.xt.fltMgmt
+laminar/B747/fmc/cockpit_seats_hide	dataref	obj	B747.05.simconfig,B747.05.xt.simconfig,B744.fms.pages
+laminar/B747/fmod/callouts/appDH	dataref	snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/fmod/callouts/v1	dataref	snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/fms1/Line01_L	dynamic	panel	
+laminar/B747/fms1/Line01_S	dynamic	panel	
+laminar/B747/fms1/Line02_L	dynamic	panel	
+laminar/B747/fms1/Line02_S	dynamic	panel	
+laminar/B747/fms1/Line03_L	dynamic	panel	
+laminar/B747/fms1/Line03_S	dynamic	panel	
+laminar/B747/fms1/Line04_L	dynamic	panel	
+laminar/B747/fms1/Line04_S	dynamic	panel	
+laminar/B747/fms1/Line05_L	dynamic	panel	
+laminar/B747/fms1/Line05_S	dynamic	panel	
+laminar/B747/fms1/Line06_L	dynamic	panel	
+laminar/B747/fms1/Line06_S	dynamic	panel	
+laminar/B747/fms1/Line07_L	dynamic	panel	
+laminar/B747/fms1/Line07_S	dynamic	panel	
+laminar/B747/fms1/Line08_L	dynamic	panel	
+laminar/B747/fms1/Line08_S	dynamic	panel	
+laminar/B747/fms1/Line09_L	dynamic	panel	
+laminar/B747/fms1/Line09_S	dynamic	panel	
+laminar/B747/fms1/Line10_L	dynamic	panel	
+laminar/B747/fms1/Line10_S	dynamic	panel	
+laminar/B747/fms1/Line11_L	dynamic	panel	
+laminar/B747/fms1/Line11_S	dynamic	panel	
+laminar/B747/fms1/Line12_L	dynamic	panel	
+laminar/B747/fms1/Line12_S	dynamic	panel	
+laminar/B747/fms1/Line13_L	dynamic	panel	
+laminar/B747/fms1/Line13_S	dynamic	panel	
+laminar/B747/fms1/Line14_L	dynamic	panel	
+laminar/B747/fms1/Line14_S	dynamic	panel	
+laminar/B747/fms1/alphanum_key/0	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/1	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/2	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/3	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/4	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/5	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/6	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/7	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/8	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/9	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/A	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/B	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/C	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/D	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/E	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/F	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/G	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/H	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/I	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/J	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/K	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/L	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/M	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/N	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/O	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/P	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/Q	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/R	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/S	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/T	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/U	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/V	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/W	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/X	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/Y	dynamic	obj,snd	
+laminar/B747/fms1/alphanum_key/Z	dynamic	obj,snd	
+laminar/B747/fms1/display_brightness	dataref	obj	B747.68.fms,B747.68.xt.fms
+laminar/B747/fms1/display_mode	dynamic	obj	
+laminar/B747/fms1/func_key/clb	dynamic	obj,snd	
+laminar/B747/fms1/func_key/crz	dynamic	obj,snd	
+laminar/B747/fms1/func_key/dep_arr	dynamic	obj,snd	
+laminar/B747/fms1/func_key/des	dynamic	obj,snd	
+laminar/B747/fms1/func_key/dir_intc	dynamic	obj,snd	
+laminar/B747/fms1/func_key/fix	dynamic	obj,snd	
+laminar/B747/fms1/func_key/fpln	dynamic	obj,snd	
+laminar/B747/fms1/func_key/hold	dynamic	obj,snd	
+laminar/B747/fms1/func_key/index	dynamic	obj,snd	
+laminar/B747/fms1/func_key/legs	dynamic	obj,snd	
+laminar/B747/fms1/func_key/navrad	dynamic	obj,snd	
+laminar/B747/fms1/func_key/next_pg	dynamic	obj,snd	
+laminar/B747/fms1/func_key/prev_pg	dynamic	obj,snd	
+laminar/B747/fms1/func_key/prog	dynamic	obj,snd	
+laminar/B747/fms1/key/clear	dynamic	obj,snd	
+laminar/B747/fms1/key/del	dynamic	obj,snd	
+laminar/B747/fms1/key/execute	dynamic	obj,snd	
+laminar/B747/fms1/key/minus	dynamic	obj,snd	
+laminar/B747/fms1/key/period	dynamic	obj,snd	
+laminar/B747/fms1/key/slash	dynamic	obj,snd	
+laminar/B747/fms1/key/space	dynamic	obj,snd	
+laminar/B747/fms1/ls_key/L1	dynamic	obj,snd	
+laminar/B747/fms1/ls_key/L2	dynamic	obj,snd	
+laminar/B747/fms1/ls_key/L3	dynamic	obj,snd	
+laminar/B747/fms1/ls_key/L4	dynamic	obj,snd	
+laminar/B747/fms1/ls_key/L5	dynamic	obj,snd	
+laminar/B747/fms1/ls_key/L6	dynamic	obj,snd	
+laminar/B747/fms1/ls_key/R1	dynamic	obj,snd	
+laminar/B747/fms1/ls_key/R2	dynamic	obj,snd	
+laminar/B747/fms1/ls_key/R3	dynamic	obj,snd	
+laminar/B747/fms1/ls_key/R4	dynamic	obj,snd	
+laminar/B747/fms1/ls_key/R5	dynamic	obj,snd	
+laminar/B747/fms1/ls_key/R6	dynamic	obj,snd	
+laminar/B747/fms1/radio/ils_course_dn	dynamic	obj	
+laminar/B747/fms1/radio/ils_course_up	dynamic	obj	
+laminar/B747/fms1/radio/vorL_course_dn	dynamic	obj	
+laminar/B747/fms1/radio/vorL_course_up	dynamic	obj	
+laminar/B747/fms1/radio/vorL_freq_coarse_dn	dynamic	obj	
+laminar/B747/fms1/radio/vorL_freq_coarse_up	dynamic	obj	
+laminar/B747/fms1/radio/vorL_freq_fine_dn	dynamic	obj	
+laminar/B747/fms1/radio/vorL_freq_fine_up	dynamic	obj	
+laminar/B747/fms1/radio/vorR_course_dn	dynamic	obj	
+laminar/B747/fms1/radio/vorR_course_up	dynamic	obj	
+laminar/B747/fms1/radio/vorR_freq_ccoarse_dn	dynamic	obj	
+laminar/B747/fms1/radio/vorR_freq_ccoarse_up	dynamic	obj	
+laminar/B747/fms1/radio/vorR_freq_coarse_dn	dynamic	obj	
+laminar/B747/fms1/radio/vorR_freq_fine_dn	dynamic	obj	
+laminar/B747/fms1/radio/vorR_freq_fine_up	dynamic	obj	
+laminar/B747/fms2/Line01_L	dynamic	panel	
+laminar/B747/fms2/Line01_S	dynamic	panel	
+laminar/B747/fms2/Line02_L	dynamic	panel	
+laminar/B747/fms2/Line02_S	dynamic	panel	
+laminar/B747/fms2/Line03_L	dynamic	panel	
+laminar/B747/fms2/Line03_S	dynamic	panel	
+laminar/B747/fms2/Line04_L	dynamic	panel	
+laminar/B747/fms2/Line04_S	dynamic	panel	
+laminar/B747/fms2/Line05_L	dynamic	panel	
+laminar/B747/fms2/Line05_S	dynamic	panel	
+laminar/B747/fms2/Line06_L	dynamic	panel	
+laminar/B747/fms2/Line06_S	dynamic	panel	
+laminar/B747/fms2/Line07_L	dynamic	panel	
+laminar/B747/fms2/Line07_S	dynamic	panel	
+laminar/B747/fms2/Line08_L	dynamic	panel	
+laminar/B747/fms2/Line08_S	dynamic	panel	
+laminar/B747/fms2/Line09_L	dynamic	panel	
+laminar/B747/fms2/Line09_S	dynamic	panel	
+laminar/B747/fms2/Line10_L	dynamic	panel	
+laminar/B747/fms2/Line10_S	dynamic	panel	
+laminar/B747/fms2/Line11_L	dynamic	panel	
+laminar/B747/fms2/Line11_S	dynamic	panel	
+laminar/B747/fms2/Line12_L	dynamic	panel	
+laminar/B747/fms2/Line12_S	dynamic	panel	
+laminar/B747/fms2/Line13_L	dynamic	panel	
+laminar/B747/fms2/Line13_S	dynamic	panel	
+laminar/B747/fms2/Line14_L	dynamic	panel	
+laminar/B747/fms2/Line14_S	dynamic	panel	
+laminar/B747/fms2/alphanum_key/0	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/1	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/2	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/3	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/4	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/5	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/6	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/7	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/8	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/9	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/A	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/B	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/C	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/D	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/E	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/F	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/G	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/H	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/I	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/J	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/K	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/L	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/M	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/N	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/O	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/P	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/Q	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/R	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/S	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/T	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/U	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/V	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/W	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/X	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/Y	dynamic	obj,snd	
+laminar/B747/fms2/alphanum_key/Z	dynamic	obj,snd	
+laminar/B747/fms2/display_brightness	dynamic	obj	
+laminar/B747/fms2/func_key/clb	dynamic	obj,snd	
+laminar/B747/fms2/func_key/crz	dynamic	obj,snd	
+laminar/B747/fms2/func_key/dep_arr	dynamic	obj,snd	
+laminar/B747/fms2/func_key/des	dynamic	obj,snd	
+laminar/B747/fms2/func_key/dir_intc	dynamic	obj,snd	
+laminar/B747/fms2/func_key/fix	dynamic	obj,snd	
+laminar/B747/fms2/func_key/fpln	dynamic	obj,snd	
+laminar/B747/fms2/func_key/hold	dynamic	obj,snd	
+laminar/B747/fms2/func_key/index	dynamic	obj,snd	
+laminar/B747/fms2/func_key/legs	dynamic	obj,snd	
+laminar/B747/fms2/func_key/navrad	dynamic	obj,snd	
+laminar/B747/fms2/func_key/next_pg	dynamic	obj,snd	
+laminar/B747/fms2/func_key/prev_pg	dynamic	obj,snd	
+laminar/B747/fms2/func_key/prog	dynamic	obj,snd	
+laminar/B747/fms2/key/clear	dynamic	obj,snd	
+laminar/B747/fms2/key/del	dynamic	obj,snd	
+laminar/B747/fms2/key/execute	dynamic	obj,snd	
+laminar/B747/fms2/key/minus	dynamic	obj,snd	
+laminar/B747/fms2/key/period	dynamic	obj,snd	
+laminar/B747/fms2/key/slash	dynamic	obj,snd	
+laminar/B747/fms2/key/space	dynamic	obj,snd	
+laminar/B747/fms2/ls_key/L1	dynamic	obj,snd	
+laminar/B747/fms2/ls_key/L2	dynamic	obj,snd	
+laminar/B747/fms2/ls_key/L3	dynamic	obj,snd	
+laminar/B747/fms2/ls_key/L4	dynamic	obj,snd	
+laminar/B747/fms2/ls_key/L5	dynamic	obj,snd	
+laminar/B747/fms2/ls_key/L6	dynamic	obj,snd	
+laminar/B747/fms2/ls_key/R1	dynamic	obj,snd	
+laminar/B747/fms2/ls_key/R2	dynamic	obj,snd	
+laminar/B747/fms2/ls_key/R3	dynamic	obj,snd	
+laminar/B747/fms2/ls_key/R4	dynamic	obj,snd	
+laminar/B747/fms2/ls_key/R5	dynamic	obj,snd	
+laminar/B747/fms2/ls_key/R6	dynamic	obj,snd	
+laminar/B747/fms3/Line01_L	dynamic	panel	
+laminar/B747/fms3/Line01_S	dynamic	panel	
+laminar/B747/fms3/Line02_L	dynamic	panel	
+laminar/B747/fms3/Line02_S	dynamic	panel	
+laminar/B747/fms3/Line03_L	dynamic	panel	
+laminar/B747/fms3/Line03_S	dynamic	panel	
+laminar/B747/fms3/Line04_L	dynamic	panel	
+laminar/B747/fms3/Line04_S	dynamic	panel	
+laminar/B747/fms3/Line05_L	dynamic	panel	
+laminar/B747/fms3/Line05_S	dynamic	panel	
+laminar/B747/fms3/Line06_L	dynamic	panel	
+laminar/B747/fms3/Line06_S	dynamic	panel	
+laminar/B747/fms3/Line07_L	dynamic	panel	
+laminar/B747/fms3/Line07_S	dynamic	panel	
+laminar/B747/fms3/Line08_L	dynamic	panel	
+laminar/B747/fms3/Line08_S	dynamic	panel	
+laminar/B747/fms3/Line09_L	dynamic	panel	
+laminar/B747/fms3/Line09_S	dynamic	panel	
+laminar/B747/fms3/Line10_L	dynamic	panel	
+laminar/B747/fms3/Line10_S	dynamic	panel	
+laminar/B747/fms3/Line11_L	dynamic	panel	
+laminar/B747/fms3/Line11_S	dynamic	panel	
+laminar/B747/fms3/Line12_L	dynamic	panel	
+laminar/B747/fms3/Line12_S	dynamic	panel	
+laminar/B747/fms3/Line13_L	dynamic	panel	
+laminar/B747/fms3/Line13_S	dynamic	panel	
+laminar/B747/fms3/Line14_L	dynamic	panel	
+laminar/B747/fms3/Line14_S	dynamic	panel	
+laminar/B747/fms3/alphanum_key/0	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/1	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/2	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/3	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/4	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/5	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/6	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/7	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/8	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/9	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/A	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/B	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/C	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/D	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/E	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/F	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/G	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/H	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/I	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/J	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/K	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/L	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/M	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/N	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/O	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/P	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/Q	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/R	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/S	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/T	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/U	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/V	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/W	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/X	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/Y	dynamic	obj,snd	
+laminar/B747/fms3/alphanum_key/Z	dynamic	obj,snd	
+laminar/B747/fms3/display_brightness	dynamic	obj	
+laminar/B747/fms3/func_key/clb	dynamic	obj,snd	
+laminar/B747/fms3/func_key/crz	dynamic	obj,snd	
+laminar/B747/fms3/func_key/dep_arr	dynamic	obj,snd	
+laminar/B747/fms3/func_key/des	dynamic	obj,snd	
+laminar/B747/fms3/func_key/dir_intc	dynamic	obj,snd	
+laminar/B747/fms3/func_key/fix	dynamic	obj,snd	
+laminar/B747/fms3/func_key/fpln	dynamic	obj,snd	
+laminar/B747/fms3/func_key/hold	dynamic	obj,snd	
+laminar/B747/fms3/func_key/index	dynamic	obj,snd	
+laminar/B747/fms3/func_key/legs	dynamic	obj,snd	
+laminar/B747/fms3/func_key/navrad	dynamic	obj,snd	
+laminar/B747/fms3/func_key/next_pg	dynamic	obj,snd	
+laminar/B747/fms3/func_key/prev_pg	dynamic	obj,snd	
+laminar/B747/fms3/func_key/prog	dynamic	obj,snd	
+laminar/B747/fms3/key/clear	dynamic	obj,snd	
+laminar/B747/fms3/key/del	dynamic	obj,snd	
+laminar/B747/fms3/key/execute	dynamic	obj,snd	
+laminar/B747/fms3/key/minus	dynamic	obj,snd	
+laminar/B747/fms3/key/period	dynamic	obj,snd	
+laminar/B747/fms3/key/slash	dynamic	obj,snd	
+laminar/B747/fms3/key/space	dynamic	obj,snd	
+laminar/B747/fms3/ls_key/L1	dynamic	obj,snd	
+laminar/B747/fms3/ls_key/L2	dynamic	obj,snd	
+laminar/B747/fms3/ls_key/L3	dynamic	obj,snd	
+laminar/B747/fms3/ls_key/L4	dynamic	obj,snd	
+laminar/B747/fms3/ls_key/L5	dynamic	obj,snd	
+laminar/B747/fms3/ls_key/L6	dynamic	obj,snd	
+laminar/B747/fms3/ls_key/R1	dynamic	obj,snd	
+laminar/B747/fms3/ls_key/R2	dynamic	obj,snd	
+laminar/B747/fms3/ls_key/R3	dynamic	obj,snd	
+laminar/B747/fms3/ls_key/R4	dynamic	obj,snd	
+laminar/B747/fms3/ls_key/R5	dynamic	obj,snd	
+laminar/B747/fms3/ls_key/R6	dynamic	obj,snd	
+laminar/B747/freighter	dataref	obj	B747.05.xt.simconfig,B747.30.fltMgmt
+laminar/B747/fuel/center_tank/jett_vlv_L_pos	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/center_tank/jett_vlv_R_pos	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/center_tank/ovrd_jett_pump_L_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/center_tank/ovrd_jett_pump_R_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/ctr_scvg_L_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/ctr_scvg_R_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/engine1_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/engine2_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/engine3_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/engine4_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/fuel_control/toggle_sw_pos	dataref	obj,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/fuel_control_1/toggle_switch	command	obj	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/fuel_control_2/toggle_switch	command	obj	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/fuel_control_3/toggle_switch	command	obj	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/fuel_control_4/toggle_switch	command	obj	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/fuel_display_units_eicas	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/fuel_flow_sec_display	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/fuel_jett/el_dial_up	command	obj	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/fuel_jett/sel_dial_dn	command	obj	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/fuel_jettison/sel_dial_pos	dataref	obj,panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/fuel_tank_display_qty	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/fuel_to_remain/rheostat	dataref	obj,panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/fuel_total_display_qty	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/gen/xfeed_vlv1_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/gen/xfeed_vlv2_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/gen/xfeed_vlv3_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/gen/xfeed_vlv4_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/gen_XFmfld_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jett/OJctrL_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jett/OJctrR_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jett/OJmain2_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jett/OJmain3_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jett/OJstab_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jett/mXmfld_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jett/mfldL1_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jett/mfldL2_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jett/mfldL3_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jett/mfldR1_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jett/mfldR2_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jett/mfldR3_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jett_nozzle_vlv_L_pos	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jett_nozzle_vlv_R_pos	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jett_vlv_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/jettison_time	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/main1_tank/main_pump_aft_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/main1_tank/main_pump_fwd_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/main1_tank/main_xfr_vlv_pos	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/main2_tank/main_pump_aft_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/main2_tank/main_pump_fwd_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/main2_tank/ovrd_jett_pump_aft_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/main2_tank/ovrd_jett_pump_fwd_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/main3_tank/main_pump_aft_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/main3_tank/main_pump_fwd_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/main3_tank/ovrd_jett_pump_aft_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/main3_tank/ovrd_jett_pump_fwd_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/main4_tank/main_pump_aft_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/main4_tank/main_pump_fwd_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/main4_tank/main_xfr_vlv_pos	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/oj_pump2_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/oj_pump3_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/preselect	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/refuel	dataref	panel	B747.25.fuel,B747.25.xt.fuel,B744.fms.pages
+laminar/B747/fuel/res2_xfr_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/res3_xfr_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/stab_tank/xfr_jett_pump_L_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/stab_tank/xfr_jett_pump_R_on	dataref	panel,snd	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/stab_xfr_status	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/fuel/temperature	dataref	panel	B747.25.fuel,B747.25.xt.fuel
+laminar/B747/gauges/indicators/airspeed_kts_copilot	dataref	panel,snd	B747.60.fltInst
+laminar/B747/gauges/indicators/airspeed_kts_pilot	dataref	obj,panel	B747.42.xt.EEC,B747.60.fltInst
+laminar/B747/gauges/indicators/flap_deployed_ratio	dataref	panel	B747.19.hydraulicsmodel
+laminar/B747/gauges/indicators/flap_deployed_ratio1	dataref	panel	B747.45.xt.fltCtrls,B747.19.hydraulicsmodel
+laminar/B747/gauges/indicators/flap_deployed_ratio2	dataref	panel	B747.45.xt.fltCtrls,B747.19.hydraulicsmodel
+laminar/B747/gauges/indicators/flap_deployed_ratio3	dataref	panel	B747.45.xt.fltCtrls,B747.19.hydraulicsmodel
+laminar/B747/gauges/indicators/flap_deployed_ratio4	dataref	panel	B747.45.xt.fltCtrls,B747.19.hydraulicsmodel
+laminar/B747/gear/EICAS1_display_status	dataref	panel	B747.10.gear,B747.10.xt.gear
+laminar/B747/gear/autobrakes/sel_dial_dn	command	obj	B747.10.gear,B747.10.xt.gear
+laminar/B747/gear/autobrakes/sel_dial_pos	dataref	obj,snd	B747.10.gear,B747.10.xt.gear,B747.45.xt.fltCtrls
+laminar/B747/gear/autobrakes/sel_dial_up	command	obj	B747.10.gear,B747.10.xt.gear
+laminar/B747/gear/brake_temp	dataref	obj,panel	B747.10.gear,B747.10.xt.gear
+laminar/B747/gear/brake_temp_ind	dataref	panel	B747.10.gear,B747.10.xt.gear
+laminar/B747/gear/chocked	dataref	obj	B747.10.gear,B747.03.xt.electrical,B747.10.xt.gear,B747.45.xt.fltCtrls
+laminar/B747/gear/gear_position/annun_status	dataref	panel	B747.10.gear,B747.10.xt.gear
+laminar/B747/gear/overrideDown	command	autoatc	B747.10.gear,B747.10.xt.gear
+laminar/B747/gear/overrideOff	command	autoatc	B747.10.gear,B747.10.xt.gear
+laminar/B747/gear/overrideUp	command	autoatc	B747.10.gear,B747.10.xt.gear
+laminar/B747/gear/tire_pressure	dataref	panel	B747.10.gear,B747.10.xt.gear
+laminar/B747/gear_lock/override	command	obj	B747.10.gear,B747.10.xt.gear
+laminar/B747/gear_lock_ovrd/position	dataref	obj,snd	B747.10.gear,B747.10.xt.gear
+laminar/B747/glareshiled/captain/chrono_switch_pos	dataref	obj	B747.60.xt.fltInst02
+laminar/B747/glareshiled/fo/chrono_switch_pos	dataref	obj	B747.60.xt.fltInst02
+laminar/B747/hydraulics/aux_pressure	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/dem_mode_1	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/dem_mode_2	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/dem_mode_3	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/dem_mode_4	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/dem_pressure_1	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/dem_pressure_2	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/dem_pressure_3	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/dem_pressure_4	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/dmd_pump/sel_dial_pos	dataref	obj,snd	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/edp_pressure_1	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/edp_pressure_2	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/edp_pressure_3	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/edp_pressure_4	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/indicators/hydraulic_pressure_1_2_4	dataref	obj	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/pressure_1	dataref	panel,snd	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel,B747.70.xt.autopilot
+laminar/B747/hydraulics/pressure_13	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/pressure_2	dataref	panel,snd	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel,B747.70.xt.autopilot
+laminar/B747/hydraulics/pressure_23	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/pressure_234	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/pressure_24	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/pressure_3	dataref	panel,snd	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel,B747.70.xt.autopilot
+laminar/B747/hydraulics/pressure_4	dataref	panel,snd	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/pressure_dsp_1	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/pressure_dsp_2	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/pressure_dsp_3	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/pressure_dsp_4	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/res_1	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/res_2	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/res_3	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/res_4	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/sel_dial/dmd_pump_01_dn	command	obj	B747.20.hydraulics,B747.20.xt.hydraulics
+laminar/B747/hydraulics/sel_dial/dmd_pump_01_up	command	obj	B747.20.hydraulics,B747.20.xt.hydraulics
+laminar/B747/hydraulics/sel_dial/dmd_pump_02_dn	command	obj	B747.20.hydraulics,B747.20.xt.hydraulics
+laminar/B747/hydraulics/sel_dial/dmd_pump_02_up	command	obj	B747.20.hydraulics,B747.20.xt.hydraulics
+laminar/B747/hydraulics/sel_dial/dmd_pump_03_dn	command	obj	B747.20.hydraulics,B747.20.xt.hydraulics
+laminar/B747/hydraulics/sel_dial/dmd_pump_03_up	command	obj	B747.20.hydraulics,B747.20.xt.hydraulics
+laminar/B747/hydraulics/sel_dial/dmd_pump_04_dn	command	obj	B747.20.hydraulics,B747.20.xt.hydraulics
+laminar/B747/hydraulics/sel_dial/dmd_pump_04_up	command	obj	B747.20.hydraulics,B747.20.xt.hydraulics
+laminar/B747/hydraulics/temp_1	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/temp_2	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/temp_3	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/temp_4	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/valve_1	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/valve_2	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/valve_3	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/hydraulics/valve_4	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
+laminar/B747/irs/gps_display_line	dataref	panel	B747.68.fms,B747.68.xt.fms
+laminar/B747/irs/irs_display_line	dataref	panel	B747.68.fms,B747.68.xt.fms,irs_system
+laminar/B747/irs/line1	dataref	panel	B747.68.fms
+laminar/B747/irs/line2	dataref	panel	B747.68.fms
+laminar/B747/irs/line3	dataref	panel	B747.68.fms
+laminar/B747/irs/line4	dataref	panel	B747.68.fms
+laminar/B747/light/chart/rheostat/captain	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/chart/rheostat/first_officer	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/cockpit_lightsOff	command	autoatc	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/cockpit_lightsOn	command	autoatc	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/flood/rheostat/aisle_stand	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/flood/rheostat/captain_panel	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/flood/rheostat/first_officer_panel	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/flood/rheostat/mcp_panel	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/flood/rheostat/overhead	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/map/rheostat/captain	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/map/rheostat/first_officer	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/map/rheostat/observer	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/spill/ratio/aisle_stand	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/spill/ratio/captain_chart	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/spill/ratio/captain_map	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/spill/ratio/captain_panel	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/spill/ratio/center_panel	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/spill/ratio/first_officer_chart	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/spill/ratio/first_officer_map	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/spill/ratio/first_officer_panel	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/spill/ratio/mag_compass	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/spill/ratio/mcp_panel	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/light/spill/ratio/observer_map	dataref	obj	B747.90.lighting,B747.90.xt.lighting
+laminar/B747/misc/accy_door_handle	dataref	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/misc/ovhd_map_light/x_axis/capt	dataref	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/misc/ovhd_map_light/x_axis/fo	dataref	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/misc/ovhd_map_light/y_axis/capt	dataref	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/misc/ovhd_map_light/y_axis/fo	dataref	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/misc/sun_visor/left_right/capt	dataref	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/misc/sun_visor/left_right/fo	dataref	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/nd/adfL_id_flag/capt	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/adfR_id_flag/capt	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/arpt/capt/switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/arpt/capt/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/arpt/fo/switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/arpt/fo/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/capt/tcas_off	dataref	panel	B747.30.fltMgmt
+laminar/B747/nd/capt/text/bluetext0	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext1	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext10	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext11	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext12	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext13	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext14	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext15	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext16	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext17	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext18	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext19	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext2	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext20	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext21	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext22	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext23	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext24	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext25	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext26	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext27	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext28	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext29	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext3	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext30	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext31	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext32	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext33	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext34	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext35	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext36	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext37	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext38	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext39	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext4	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext40	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext41	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext42	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext43	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext44	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext45	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext46	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext47	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext48	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext49	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext5	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext50	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext51	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext52	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext53	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext54	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext55	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext56	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext57	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext58	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext59	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext6	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext7	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext8	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/bluetext9	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/distance	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext0	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext1	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext10	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext11	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext12	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext13	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext14	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext15	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext16	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext17	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext18	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext19	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext2	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext20	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext21	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext22	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext23	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext24	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext25	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext26	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext27	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext28	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext29	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext3	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext30	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext31	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext32	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext33	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext34	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext35	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext36	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext37	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext38	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext39	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext4	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext40	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext41	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext42	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext43	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext44	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext45	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext46	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext47	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext48	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext49	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext5	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext50	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext51	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext52	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext53	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext54	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext55	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext56	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext57	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext58	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext59	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext6	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext7	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext8	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/greentext9	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/heading	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/icon	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext0	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext1	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext10	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext11	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext12	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext13	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext14	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext15	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext16	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext17	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext18	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext19	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext2	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext20	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext21	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext22	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext23	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext24	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext25	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext26	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext27	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext28	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext29	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext3	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext30	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext31	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext32	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext33	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext34	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext35	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext36	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext37	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext38	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext39	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext4	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext40	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext41	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext42	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext43	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext44	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext45	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext46	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext47	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext48	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext49	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext5	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext50	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext51	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext52	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext53	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext54	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext55	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext56	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext57	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext58	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext59	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext6	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext7	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext8	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/redtext9	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/show	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/tilt	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext0	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext1	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext10	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext11	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext12	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext13	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext14	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext15	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext16	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext17	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext18	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext19	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext2	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext20	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext21	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext22	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext23	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext24	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext25	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext26	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext27	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext28	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext29	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext3	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext30	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext31	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext32	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext33	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext34	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext35	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext36	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext37	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext38	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext39	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext4	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext40	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext41	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext42	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext43	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext44	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext45	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext46	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext47	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext48	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext49	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext5	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext50	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext51	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext52	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext53	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext54	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext55	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext56	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext57	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext58	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext59	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext6	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext7	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext8	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/whitetext9	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/text/wxr	dataref	panel	B747.61.nd
+laminar/B747/nd/capt/tfc	dataref	panel	B747.60.fltInst
+laminar/B747/nd/capt/track_line_on	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/center/capt/switch	command	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/center/fo/switch	command	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/current_waypoint	dataref	panel	B747.68.fms,B747.68.xt.fms
+laminar/B747/nd/data/capt/apt	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/data/capt/switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/data/capt/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/data/capt/terr	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02,B747.68.xt.fms
+laminar/B747/nd/data/capt/vor_ndb	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/data/capt/wpt	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/data/fo/apt	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/data/fo/switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/data/fo/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/data/fo/terr	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02,B747.68.xt.fms
+laminar/B747/nd/data/fo/vor_ndb	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/data/fo/wpt	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/fo/tcas_off	dataref	panel	B747.30.fltMgmt
+laminar/B747/nd/fo/text/bluetext0	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext1	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext10	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext11	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext12	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext13	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext14	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext15	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext16	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext17	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext18	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext19	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext2	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext20	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext21	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext22	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext23	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext24	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext25	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext26	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext27	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext28	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext29	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext3	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext30	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext31	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext32	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext33	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext34	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext35	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext36	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext37	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext38	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext39	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext4	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext40	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext41	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext42	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext43	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext44	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext45	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext46	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext47	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext48	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext49	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext5	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext50	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext51	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext52	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext53	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext54	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext55	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext56	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext57	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext58	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext59	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext6	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext7	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext8	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/bluetext9	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/distance	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext0	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext1	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext10	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext11	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext12	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext13	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext14	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext15	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext16	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext17	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext18	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext19	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext2	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext20	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext21	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext22	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext23	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext24	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext25	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext26	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext27	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext28	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext29	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext3	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext30	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext31	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext32	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext33	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext34	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext35	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext36	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext37	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext38	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext39	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext4	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext40	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext41	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext42	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext43	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext44	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext45	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext46	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext47	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext48	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext49	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext5	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext50	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext51	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext52	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext53	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext54	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext55	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext56	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext57	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext58	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext59	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext6	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext7	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext8	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/greentext9	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/heading	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/icon	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext0	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext1	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext10	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext11	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext12	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext13	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext14	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext15	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext16	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext17	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext18	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext19	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext2	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext20	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext21	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext22	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext23	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext24	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext25	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext26	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext27	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext28	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext29	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext3	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext30	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext31	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext32	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext33	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext34	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext35	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext36	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext37	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext38	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext39	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext4	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext40	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext41	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext42	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext43	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext44	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext45	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext46	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext47	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext48	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext49	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext5	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext50	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext51	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext52	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext53	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext54	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext55	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext56	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext57	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext58	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext59	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext6	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext7	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext8	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/redtext9	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/show	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/tilt	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext0	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext1	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext10	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext11	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext12	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext13	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext14	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext15	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext16	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext17	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext18	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext19	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext2	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext20	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext21	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext22	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext23	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext24	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext25	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext26	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext27	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext28	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext29	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext3	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext30	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext31	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext32	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext33	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext34	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext35	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext36	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext37	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext38	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext39	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext4	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext40	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext41	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext42	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext43	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext44	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext45	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext46	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext47	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext48	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext49	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext5	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext50	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext51	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext52	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext53	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext54	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext55	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext56	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext57	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext58	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext59	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext6	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext7	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext8	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/whitetext9	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/text/wxr	dataref	panel	B747.61.nd
+laminar/B747/nd/fo/tfc	dataref	panel	B747.60.fltInst
+laminar/B747/nd/fo/track_line_on	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/gs_tas_line	dataref	panel	B747.68.fms,B747.68.xt.fms
+laminar/B747/nd/gs_tas_line_copilot	dataref	panel	B747.68.fms,B747.68.xt.fms
+laminar/B747/nd/gs_tas_line_pilot	dataref	panel	B747.68.fms,B747.68.xt.fms
+laminar/B747/nd/map_center/capt	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/map_center/fo	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/mode/capt/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/mode/capt/sel_dial_pos	dataref	obj,panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/mode/capt/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/mode/capt/show_heading_bug	dataref	panel	B747.60.fltInst
+laminar/B747/nd/mode/fo/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/mode/fo/sel_dial_pos	dataref	obj,panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/mode/fo/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/mode/fo/show_heading_bug	dataref	panel	B747.60.fltInst
+laminar/B747/nd/pln/capt	dataref	panel	B747.61.nd
+laminar/B747/nd/pln/fo	dataref	panel	B747.61.nd
+laminar/B747/nd/pos/capt/switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/pos/capt/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/pos/fo/switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/pos/fo/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/range/capt/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/range/capt/sel_dial_pos	dataref	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/range/capt/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/range/fo/sel_dial_dn	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/range/fo/sel_dial_pos	dataref	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/range/fo/sel_dial_up	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/range_display_capt	dataref	panel	B747.68.fms,B747.68.xt.fms
+laminar/B747/nd/range_display_fo	dataref	panel	B747.68.fms,B747.68.xt.fms
+laminar/B747/nd/sta/capt/switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/sta/capt/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/sta/fo/switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/sta/fo/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/terr/capt/switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/terr/capt/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/terr/fo/switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/terr/fo/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/terr_weather/capt	dataref	panel	B747.61.nd
+laminar/B747/nd/terr_weather/fo	dataref	panel	B747.61.nd
+laminar/B747/nd/toc/capt_active	dataref	panel	B747.61.nd
+laminar/B747/nd/toc/distance/capt	dataref	panel	B747.61.nd
+laminar/B747/nd/toc/distance/fo	dataref	panel	B747.61.nd
+laminar/B747/nd/toc/fo_active	dataref	panel	B747.61.nd
+laminar/B747/nd/traffic/capt/switch	command	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/traffic/fo/switch	command	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/up/capt	dataref	panel	B747.61.nd
+laminar/B747/nd/up/fo	dataref	panel	B747.61.nd
+laminar/B747/nd/vorL_id_flag/capt	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/vorR_id_flag/capt	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/waypoint_distance	dataref	panel	B747.68.fms,B747.68.xt.fms
+laminar/B747/nd/waypoint_eta	dataref	panel	B747.68.fms,B747.68.xt.fms
+laminar/B747/nd/wind_bearing	dataref	panel	B747.68.fms,B747.68.xt.fms
+laminar/B747/nd/wind_line	dataref	panel	B747.68.fms,B747.68.xt.fms
+laminar/B747/nd/wpt/capt/switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/wpt/capt/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/wpt/fo/switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/wpt/fo/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/wxr/capt/switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/wxr/capt/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/wxr/fo/switch	command	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/nd/wxr/fo/switch_pos	dataref	obj,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/pfd/capt/irs	dataref	panel	B747.60.fltInst
+laminar/B747/pfd/fo/irs	dataref	panel	B747.60.fltInst
+laminar/B747/pfd/show_mins	dataref	panel	B747.60.fltInst
+laminar/B747/pfd/style	dataref	panel	B747.05.simconfig,B747.05.xt.simconfig
+laminar/B747/radio_alt/display_status	dataref	panel	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/rel_esys	dataref	panel	B747.03.electrical
+laminar/B747/rel_esys2	dataref	panel	B747.03.electrical
+laminar/B747/rel_esys3	dataref	panel	B747.03.electrical
+laminar/B747/rel_esys4	dataref	panel	B747.03.electrical
+laminar/B747/rmi_left/captain/bearing	dataref	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/rmi_right/captain/bearing	dataref	obj	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/rtp_C/am/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_C/freq_MHz/sel_dial_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_C/freq_MHz/sel_dial_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_C/freq_khz/sel_dial_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_C/freq_khz/sel_dial_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_C/freq_txfr/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_C/hf_L/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_C/hf_R/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_C/off_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_C/vhf_C/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_C/vhf_L/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_C/vhf_R/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_L/am/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_L/freq_MHz/sel_dial_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_L/freq_MHz/sel_dial_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_L/freq_khz/sel_dial_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_L/freq_khz/sel_dial_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_L/freq_txfr/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_L/hf_L/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_L/hf_R/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_L/off_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_L/vhf_C/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_L/vhf_L/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_L/vhf_R/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_R/am/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_R/freq_MHz/sel_dial_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_R/freq_MHz/sel_dial_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_R/freq_khz/sel_dial_dn	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_R/freq_khz/sel_dial_up	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_R/freq_txfr/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_R/hf_L/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_R/hf_R/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_R/off_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_R/vhf_C/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_R/vhf_L/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/rtp_R/vhf_R/sel_switch	command	obj,snd	B747.15.com,B747.15.xt.com
+laminar/B747/safety/checklist_marker_capt	dataref	obj	B747.85.safety,B747.85.xt.safety
+laminar/B747/safety/checklist_marker_fo	dataref	obj	B747.85.safety,B747.85.xt.safety
+laminar/B747/safety/no_smoking/sel_dial_dn	command	obj	B747.85.safety,B747.85.xt.safety
+laminar/B747/safety/no_smoking/sel_dial_pos	dataref	obj,snd	B747.85.safety,B747.85.xt.safety
+laminar/B747/safety/no_smoking/sel_dial_up	command	obj	B747.85.safety,B747.85.xt.safety
+laminar/B747/safety/seat_belts/sel_dial_dn	command	obj	B747.85.safety,B747.85.xt.safety
+laminar/B747/safety/seat_belts/sel_dial_pos	dataref	obj,snd	B747.85.safety,B747.85.xt.safety
+laminar/B747/safety/seat_belts/sel_dial_up	command	obj	B747.85.safety,B747.85.xt.safety
+laminar/B747/switches/instrument_brightness_ratio	dataref	obj	B747.90.lighting
+laminar/B747/toggle_sun_visor/up_down/capt	command	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_sun_visor/up_down/fo	command	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/autothrottle	command	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/beacon_light_down	command	autoatc,obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/beacon_light_up	command	autoatc,obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/engine_start1	command	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/engine_start2	command	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/engine_start3	command	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/engine_start4	command	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/flight_dir_L	command	autoatc,obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/flight_dir_R	command	autoatc,obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/heading_ref	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/ind_light_down	command	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/ind_light_up	command	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/landing_light_IBL	command	autoatc,obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/landing_light_IBR	command	autoatc,obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/landing_light_OBL	command	autoatc,obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/landing_light_OBR	command	autoatc,obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/logo_light	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/nav_light	command	autoatc,obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/observer_audio_left	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/observer_audio_right	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/outflow_valve_close	command	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/outflow_valve_open	command	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/position	dataref	obj,panel,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/rwy_tunoff_L	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/rwy_tunoff_R	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/srvc_interphone	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/storm_light	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/strobe_light	command	autoatc,obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/taxi_light	command	autoatc,obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/windshield_washer_L	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/windshield_washer_R	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/toggle_switch/wing_light	command	obj,snd	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/vsi/fpm	dataref	panel,snd	B747.60.fltInst,B747.60.xt.fltInst02
+laminar/B747/warning/master_caution	dataref	snd	B747.01.manipulators
+laminar/B747/warning/master_caution_audio	dataref	snd	B747.01.manipulators
+laminar/B747/warning/master_warning	dataref	snd	B747.01.manipulators
+laminar/B747/window_shade/up_down_front/front_capt	command	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/window_shade/up_down_front/front_fo	command	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/window_shade/up_down_rear/capt	command	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/window_shade/up_down_rear/fo	command	obj	B747.01.manipulators,B747.01.xt.manipulators
+laminar/B747/wxr/buttons/cpt_ftr	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/wxr/buttons/fo_ftr	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/wxr/buttons/lr	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/wxr/buttons/rr	command	obj	B747.15.com,B747.15.xt.com
+laminar/B747/wxr/buttons/test	command	obj	B747.15.com,B747.15.xt.com
