@@ -193,7 +193,7 @@
 - 方式: 本番 Lua を `dofile` か目印コメント間の切出しで読み、dataref・コマンド・タイマーをモック。一部は XTLua の名前空間内で実行し、`XPLANE_ROOT` 指定時は実 CIFP も確認。
 - 範囲: 離陸プロファイル、FMC ページ、CRZ ALT 同期、離着陸・失速速度、AFDS 各モード、A/T・EEC、VNAV（上昇/降下/進入/旋回パス/CIFP）、LNAV、ヨーダンパー、逆噴射、XTLua の読込・warm reads・表。
 - 状態: 最後の「全スイート通過」の記述は 63 本（2026-10-20）で、45cce506 での全通過は不明。README 自身が「ロジックと界面の検証のみ」とし、X-Plane で飛ぶべき 16 シナリオを残している。
-- 旧フォークの関数名・ファイル構成・切出し目印を前提にしたテストなので、上流ベースの `overhaul`（`tests/` なし）には持ち込んでいない。
+- 旧フォークの関数名・ファイル構成・切出し目印を前提にしたテストなので、上流ベースの `overhaul`（`tests/` なし）には持ち込んでいない。参照用に `tests_old/` に置いてある（git 管理外）。流用する仕組みは TESTING.md にまとめた。
 
 ## 新規 dataref・コマンド（名前のみ。残すかは再構築で判断）
 - dataref: `laminar/B747/fms/exec_light`, `laminar/B747/fms/crzalt_sync_fault`, `laminar/B747/nd/current_waypoint_capt`, `laminar/B747/nd/current_waypoint_fo`
