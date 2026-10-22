@@ -1,0 +1,3 @@
+# bash cannot run scripts with CRLF line ends: keep the test scripts LF on
+# every checkout, whatever core.autocrlf says
+tests/*.sh text eol=lf

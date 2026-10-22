@@ -83,15 +83,32 @@
 
 ## 3. 新しい回帰試験（`tests/`、git 管理）
 
-- 構成（予定）：
-  - `tests/lib/`：判定の道具、XTLua の名前空間ローダ、dataref・コマンド・タイマーのモック、CSV の読み込み
-  - `tests/<系統>/*_test.lua`：系統ごとの試験。電源から作る
-  - `tests/static/*_test.lua`：全系統に共通の静的検査（§2 の静的検査、`INTERFACES.tsv` の名前が残っているか）
-  - `tests/run.sh`・`tests/run.ps1`：全部回す
+- 回し方（リポジトリの直下から。LuaJIT の場所は §6）：
+  - `bash tests/run.sh`：`tests/**/*_test.lua` を 1 本ずつ LuaJIT で回す。
+  - `bash tests/syntax_check.sh`：機体の Lua（git 管理のもの）と試験の構文チェック（`luajit -bl`）。
+  - `luajit tests/tools/same_behaviour.lua <入力> [git の版]`：挙動を変えない変更の確認（下）。
+- 構成：
+
+| 置き場所 | 中身 |
+|---|---|
+| `tests/lib/check.lua` | 判定の道具（`check`・`equal`・`near`。失敗を集めて最後に出す） |
+| `tests/lib/source.lua` | 機体の Lua を文字列で読む。init と xt の区別、init で作られる名前の一覧 |
+| `tests/lib/xtlua.lua` | XTLua のモジュールを X-Plane なしで動かす（下） |
+| `tests/static/*_test.lua` | 全系統に共通の検査。xt スクリプトの dataref が init で作られているか、`INTERFACES.tsv` の名前が残っているか、全モジュール（26）が X-Plane なしで読み込み・`flight_start`・60 フレームを Lua の誤りなしに通るか（`modules_run_test.lua`） |
+| `tests/tools/same_behaviour.lua` | 挙動を変えない変更（コードの切り出しなど）の確認。作業ツリーと git の版で同じモジュールを同じ入力・同じ乱数の種で回し、毎フレーム、書かれた dataref・実行したコマンド・print の行を比べる。20・30・45 fps で回す |
+| `tests/tools/scenarios/*.lua` | `same_behaviour.lua` の入力。`hydraulics_afds.lua` は油圧モジュール（AFDS の制御則・ヨーダンパー・スラットを含む） |
+| `tests/<系統>/*_test.lua` | 系統ごとの試験（作り直しと一緒に書く） |
+
+- `tests/lib/xtlua.lua`（XTLua の再現）：
+  - 本物の `plugins/<instance>/init.lua` を新しい環境で読み、`run_module_in_namespace()` でモジュールを読み込む。`dofile` はモジュールのフォルダから読む。名前空間の動き（bare table のコピーなど）も XTLua と同じに出る。
+  - init.lua が呼ぶ C の関数（`XTLuaFindDataRef`・`XTLuaGetNumber` など）は、メモリ上の dataref の表で置き換える。関数名は XTLua の本体（`64/win.xpl`）の文字列と照合した（`XlLuaReplaceCommand` の綴りも本体どおり）。
+  - dataref の型：`laminar/…` は init スクリプトを実際に走らせ、作られた型を集める（`"array[" .. NUM_BTN_SW .. "]"` のように実行時に組み立てる型もとれる）。`sim/…` は X-Plane の `Resources/plugins/DataRefs.txt`（場所は環境変数 `XPLANE_ROOT` で変えられる）。どちらにも無い名前は、X-Plane と同じく読むと 0、書いても消える。試験の側から無い名前に書こうとすると誤りにする。
+  - `int` の dataref は、書いた値を切り捨てる。数値の dataref に数値でないものを書くと 0 になる（同じ global を 2 回 `find_dataref` すると起きる）。
+  - X-Plane との違い：読み書きはすぐ反映する（X-Plane ではフレームごとに同期し、最初の読みは 0）。dataref を動かすのは試験だけ。
+  - 1 フレームでは、時計（`sim/time/total_running_time_sec`）を進め、タイマーを回し、`before_physics`・`after_physics` を読み込んだ順に呼ぶ。コマンドは phase 0・1・2 で呼べる。
 - 系統を作り直すときに、その系統の試験を一緒に書く。
 - 1 件の試験は「入力（スイッチ、dataref の値、経過時間）→ 期待される出力（dataref、EICAS メッセージ、ライト）」の形にし、出典のページを付ける。
 - 時間で進む処理は、dt を渡して回す。フレームレートを変えても結果が同じになることも確かめる。
-- LuaJIT はまだ入っていない。PLAN の最初の項目で、入手元を示して用意する。
 
 ## 4. 飛行試験キット（新規。PLAN の最初の項目）
 
@@ -103,20 +120,46 @@
 - **毎フレームの精度が要る部分だけ FlyWithLua で補う**。毎フレームの記録（`session.csv`）、FMA の変化などのイベントの時刻、最大値・最小値のような細かい判定がそれにあたる。Web API の更新は、WebSocket で約 10 Hz。
 - FlyWithLua のスクリプトは `../../Resources/plugins/FlyWithLua/Scripts/` に置く（利用者の許可あり。置いたものは報告する）。正本はリポジトリに置き、コピーして使う。
 
-### 4.2 構成（予定）
+### 4.2 構成
 
 | 置き場所 | 中身 |
 |---|---|
-| `tests/flight/xp.ps1` | Web API クライアント。`/api/capabilities` の確認、名前→ID の解決とキャッシュ、dataref の読み書き、コマンドの実行、フライトの開始、スクリーンショットの取得 |
-| `tests/flight/run_scenario.ps1` | シナリオの実行。手順を順に実行し、条件を待ち（タイムアウト付き）、判定する。結果は JSON と Markdown で書く |
-| `tests/flight/scenarios/` | シナリオの定義。手順、待つ条件、判定、出典。`docs/overhaul/notes/FCTM.md` の案から作る |
-| `tests/flight/fwl/B747_flighttest.lua` | FlyWithLua 用のスクリプト。毎フレームの記録、イベント、細かい判定を受け持つ。自分で作るコマンド（開始・停止・印）を Web API から操作する。747 以外の機体では何もしない |
-| `tests/flight/runs/<日時>_<シナリオ>_<acf>/` | 出力。`session.csv`、`events.csv`、`result.json`、スクリーンショット、その回の `Log.txt` の抜粋。git の管理外にする |
+| `tests/flight/xp.ps1` | Web API クライアント。`/api/capabilities` の確認、名前→ID の解決とキャッシュ、dataref の読み書き（文字列の dataref は復号する）、コマンドの実行、フライトの開始、スクリーンショットの取得。コマンド行からも使える（`caps`・`get`・`set`・`cmd`・`flight`・`shot`・`find`） |
+| `tests/flight/run_scenario.ps1` | シナリオの実行。手順を順に実行し、条件を待ち（タイムアウト付き）、判定する。結果は JSON と Markdown で書く。手順の種類はファイルの先頭に一覧がある（`switch`・`wait`・`check`・`snapshot`・`cas`・`view`・`shot` など） |
+| `tests/flight/scenarios/` | シナリオの定義。`s00_baseline_start`（駐機から電源投入・APU・4 発始動）、`s01_ap_basic`（空中から A/P の ALT HOLD・HDG・V/S） |
+| `tests/flight/fwl/B747_flighttest.lua` | FlyWithLua 用の記録スクリプト。毎フレームの記録、イベント、最大・最小。コマンド（`FlyWithLua/B747_flighttest/start`・`stop`・`mark`）を Web API から操作する。747 以外の機体では何もしない。X-Plane の `Resources/plugins/FlyWithLua/Scripts/` に写して使う |
+| `tests/flight/runs/<日時>_<シナリオ>_<acf>/` | 出力。`session.csv`、`events.csv`、`summary.txt`、`result.json`・`result.md`、スクリーンショット、その回の `Log.txt`（全体と、誤りらしい行の抜粋）。git の管理外 |
 
-- `session.csv` の列：
-  - §1.3 の列（`t, alt, ias, vs, pitch, thrust, tgt, flap, fma, mcp_alt, window, weight, fd, q, alpha, trim, elevator_ratio`）を、同じ名前・単位で必ず含める。
-  - その後ろに足す列の例：ロール、方位、対地速度、電波高度、N1・N2・EPR・燃料流量（4 発分）、ロールと A/T の FMA、EICAS のメッセージ数、主要な系統の状態。
-  - 各列の出典 dataref は、フェーズ1で確かめて、この文書に表で書く。
+- 使い方：`powershell -NoProfile -ExecutionPolicy Bypass -File tests\flight\run_scenario.ps1 -Scenario <シナリオ> -Acf custom|stock [-Reload]`。
+  - 同じ機体のまま新しいフライトを始めても、X-Plane は機体を読み直さない（系統の状態が前のフライトから続く）。真っさらから始めるときは `-Reload`。
+- `session.csv` の列（記録スクリプトの版 3。先頭 17 列は §1.3 と同じ名前・単位）：
+
+| 列 | dataref | 単位 |
+|---|---|---|
+| `t` | 記録開始からの sim 時間 | s |
+| `alt`・`ias`・`vs` | `sim/cockpit2/gauges/indicators/altitude_ft_pilot`・`airspeed_kts_pilot`・`vvi_fpm_pilot` | ft・kt・fpm |
+| `pitch`・`q`・`alpha` | `sim/flightmodel/position/theta`・`Q`・`alpha` | deg・deg/s・deg |
+| `thrust` | 4 基の `sim/flightmodel/engine/POINT_thrust` の平均 | N |
+| `tgt` | `sim/cockpit2/autopilot/airspeed_dial_kts` | kt |
+| `flap` | `sim/cockpit2/controls/flap_ratio` | 0〜1 |
+| `fma` | `laminar/B747/autopilot/FMA/active_pitch_mode` | 番号 |
+| `mcp_alt` | `laminar/B747/autopilot/heading/altitude_dial_ft` | ft |
+| `window` | `laminar/B747/autopilot/ap_monitor/alt_capture_window` | ft |
+| `weight` | `sim/flightmodel/weight/m_total` | kg |
+| `fd` | `laminar/B747/autopilot/flight_director_pitch_deg` | deg |
+| `trim` | `sim/flightmodel2/controls/elevator_trim` | -1〜1 |
+| `elevator_ratio` | `laminar/B747/flt_ctrls/custom_pitch_ratio`（A/P の `sim_pitch_ratio` と操縦輪の和。旧データと同じ意味。版 1・2 では昇降舵の指令角 `cablecontrols/left_inner_elevator`（deg）を入れていた） | -1〜1 |
+| `roll`・`hdg_mag`・`gs_kt` | `sim/flightmodel/position/phi`・`mag_psi`・`groundspeed`（kt に換算） | deg・deg・kt |
+| `ra`・`gload` | `sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot`・`sim/flightmodel/forces/g_nrml` | ft・G |
+| `n1_1`〜`egt_4` | `sim/flightmodel/engine/ENGN_N1_`・`ENGN_N2_`・`ENGN_EPR`・`ENGN_EGT_c`（4 発） | %・%・—・℃ |
+| `ff_1`〜`ff_4` | `sim/cockpit2/engine/indicators/fuel_flow_kg_sec`（機体の燃料系と EICAS が使う値。版 1 は `ENGN_FF_` で、始動中に負になる） | kg/s |
+| `thro_1`〜`thro_4` | `sim/flightmodel/engine/ENGN_thro_use` | 0〜1 |
+| `fma_roll`・`fma_pitch_armed`・`fma_roll_armed`・`fma_at` | `laminar/B747/autopilot/FMA/active_roll_mode`・`armed_pitch_mode`・`armed_roll_mode`・`autothrottle_mode` | 番号 |
+| `servos_on`・`on_ground` | `laminar/B747/autopilot/servos_on`・`sim/flightmodel/failures/onground_any` | 0/1 |
+| `frame_rate`・`sim_t` | `1 / sim/operation/misc/frame_rate_period`・`sim/time/total_running_time_sec` | fps・s |
+| `elev_deg` | `laminar/B747/flt_ctrls/l_elev_inner`（左内側の昇降舵。版 3 から） | deg |
+
+- `events.csv`：FMA（4 種）、A/T、サーボ、空地、フラップの変化と、`mark`。
 
 ### 4.3 判定
 
@@ -141,6 +184,11 @@
 - X-Plane の Network 設定で「Disable Incoming Traffic」が入っていると、すべて 403 になる。
 - XTLua の double 型 dataref に小数を書くと 400 になる（旧フォーク）。キットでは書き方を工夫するか、FlyWithLua 側で書く。
 - 機体の設定（エンジン型式、タンク数など）は、dataref から読んで判定に使う。カスタム acf の値を決め打ちしない。
+- `/flight` は機体の読み込みが終わるまで応答しない（2 分以上かかることがある）。
+- フライトの読み込み直後に機体の読み直し（`sim/operation/reload_aircraft_no_art`）を送ると、捨てられることがある。`-Reload` は `Log.txt` に新しい読み込みが出るのを待ち、出なければ送り直す。
+- X-Plane が「応答なし」になっても、Web API は答え続ける（sim の時計だけが止まる）。2026-10-23 に一度起きた（カスタム acf から純正 acf へ切り替えた直後。PROGRESS.md）。`run_scenario.ps1` は sim の時計が 30 秒動かなければ、残りの手順をやめて記録を残す。
+- スクリーンショットは、sim が止まっているか読み込み中だと撮れない。X-Plane は撮れるようになってからまとめて保存する。
+- FlyWithLua に付属の `please read the manual.lua` が、吹き出しをスクリーンショットの右上に出す（利用者のファイルなので消していない）。
 
 ## 5. 1 項目ごとの流れ（フェーズ1以降）
 
@@ -155,6 +203,6 @@
 ## 6. 環境（2026-10-23 時点）
 
 - X-Plane 12.4.4-b5。Web API は v3 が使える（ARCHITECTURE.md §9）。
-- FlyWithLua NG+ 2.8.19 は利用者が導入済み。`Scripts/` には付属の説明スクリプトだけがある。
-- LuaJIT と Lua は入っていない（PLAN の最初の項目で用意する）。
+- FlyWithLua NG+ 2.8.19 は利用者が導入済み。`Scripts/` に記録スクリプト `B747_flighttest.lua` を置いた（正本は `tests/flight/fwl/`）。
+- LuaJIT 2.1（`C:\Users\gakug\tools\luajit\bin\luajit.exe`。入手元は PROGRESS.md の T-1）。`tests/run.sh` は環境変数 `LUAJIT` で場所を変えられる。
 - Python は使わない（CLAUDE.md）。
