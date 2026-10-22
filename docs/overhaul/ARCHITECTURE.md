@@ -163,12 +163,34 @@ Lua が作る名前の数：dataref 1617 個、コマンド 628 個。静的に�
 - `documentation/`：`LNAV.VNAV.md`、試験飛行の手順と解析スクリプト（R）、FMC ページのテキスト（`fms pages/`）など。
 - `build.sh`：リリース zip の作成。`add.sh`：版数を書いて README.pdf を作る。`test.lua`：作者の試し書き。
 
+## 9a. 新しいコードの書き方（PLAN.md の R-2）
+
+作り直す系統のコードは、次の取り決めで書く。XTLua の `init.lua`（4 つのプラグインで同じ）を読んで決めた。
+
+- **ロジックとグルーを分ける**：
+  - 系統の論理は、X-Plane に触らない純粋なモジュール（`<系統>.model.lua` など）に置く。入力の表と経過時間 dt を受け取り、状態と出力の表を返す形にする。
+  - dataref とコマンドとの受け渡しは、xt スクリプト（グルー）だけが行う。
+  - こうすると、モジュールは LuaJIT の回帰試験（`tests/<系統>/`）で X-Plane なしに試せる。グルーを含むモジュール全体も、`tests/lib/xtlua.lua` で X-Plane なしに回せる（TESTING.md §3）。
+- **モジュールの読み込み**：
+  - XTLua の `dofile`（`get_run_file_in_namespace`）は、読んだチャンクの戻り値を捨てる。
+  - そこでモジュールは、表をスクリプトの名前空間のグローバルに置き（例：`B747_elec_model = M`）、同時に `return M` もする。
+  - xt スクリプトはグローバルから使い、試験は `dofile` の戻り値を使う。
+- **グローバルの表には必ずメタテーブルを付ける**（`local M = setmetatable({}, {})`）。
+  - XTLua の名前空間（`namespace_write`）は、メタテーブルの無い表を代入すると、その時点の中身を別の表にコピーする。
+  - そのため、あとで元の表を書き換えても反映されない。コピーの側で無いキーを読むと、`parent` を探す処理が自分を呼び続けてスタックが溢れる（旧フォークで計器・FMC・AP が止まった原因）。
+- **dataref**：
+  - 新しい公開 dataref は init スクリプト（`init/scripts/<モジュール>/`）で作る。xt スクリプトの `deferred_dataref` は探すだけで、作らない。`tests/static/xt_bindings_created_test.lua` がこれを検査する。
+  - 名前は既存の名前空間（`laminar/B747/<系統>/…`）に置く。INTERFACES.tsv の名前と意味は変えない（`tests/static/interfaces_test.lua`）。
+  - 判定に使う dataref は毎フレーム読む（最初の読みが 0 になる問題への対策。TESTING.md §1.2）。
+  - 書いた値は X-Plane に非同期で反映されるので、同じフレームで読み直して判定しない。
+- **時間**：経過時間は dt として受け取り、フレームレートに頼らない（例：「1 フレームに 0.005 動かす」は使わない）。
+
 ## 9. 開発・試験の環境（2026-10-23 時点）
 
-- Lua の構文チェックと回帰試験：`luac` も `luajit` も無い。PLAN の最初の項目で用意する（TESTING.md）。
-- FlyWithLua：NG+ 2.8.19 が導入済み。`Scripts/` には付属の説明スクリプトだけがある。
+- Lua の構文チェックと回帰試験：LuaJIT 2.1 を用意した（PLAN の T-1。TESTING.md §3・§6）。
+- FlyWithLua：NG+ 2.8.19 が導入済み。`Scripts/` に飛行試験の記録スクリプトを置いた（TESTING.md §4）。
 - 試験の仕組み（旧フォークの試験 `tests_old/`、新しい回帰試験、飛行試験キット）：TESTING.md。
-- X-Plane の Web API（localhost:8086）：まだ試していない。フェーズ1で使う予定。公式の説明（https://developer.x-plane.com/article/x-plane-web-api/ 、2026-10-23 確認）の要点：
+- X-Plane の Web API（localhost:8086）：飛行試験キットで使っている（TESTING.md §4。気をつけることは §4.6）。公式の説明（https://developer.x-plane.com/article/x-plane-web-api/ 、2026-10-23 確認）の要点：
   - X-Plane 12.4.0 以降は v3 が使える。REST は `http://localhost:8086/api/v3/…`、WebSocket は `ws://localhost:8086/api/v3`。`GET /api/capabilities` で対応版を確かめられる。
   - dataref：`GET /datarefs`（`filter[name]` で名前から ID を引く）、`GET /datarefs/{id}/value`、`PATCH /datarefs/{id}/value`（本体は `{"data": 値}`。配列の要素は `index` で指定）。
   - コマンド：`POST /command/{id}/activate`（本体は `{"duration": 秒}`、0 は押してすぐ離す）。
