@@ -40,6 +40,10 @@
     { "do": "check", "note": "X-Plane のバス電圧（音は 28 V で判定）", "dref": "sim/cockpit2/electrical/bus_volts[0]", "op": ">=", "value": 27.5 },
     { "do": "check", "note": "ELEC AC BUS 1 が出ていない", "dref": "laminar/B747/CAS/caution_status[15]", "op": "==", "value": 0 },
     { "do": "check", "note": "ELEC GEN OFF 1 が出ていない", "dref": "laminar/B747/CAS/advisory_status[100]", "op": "==", "value": 0 },
+    { "do": "check", "note": "PSEU：地上（ATA29_32 p.322）", "dref": "laminar/B747/gear/air_ground/pri_gnd", "op": "==", "value": 1 },
+    { "do": "check", "note": "PSEU：air ではない", "dref": "laminar/B747/gear/air_ground/pri_air", "op": "==", "value": 0 },
+    { "do": "check", "note": "PSEU：前脚圧縮（ATA29_32 p.310）", "dref": "laminar/B747/gear/air_ground/ng_compressed", "op": "==", "value": 1 },
+    { "do": "check", "note": "PSEU：地上ではレバーをロック（FCOM p.1512）", "dref": "laminar/B747/gear/air_ground/lever_unlock", "op": "==", "value": 0 },
 
     { "do": "mark", "note": "BUS TIE 2 OFF" },
     { "do": "switch", "note": "BUS TIE 2 OFF", "dref": "laminar/B747/button_switch/position[19]", "value": 0, "cmd": "laminar/B747/button_switch/elec_bus_tie_2" },

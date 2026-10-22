@@ -91,6 +91,18 @@ B747DR_brake_temp               = deferred_dataref("laminar/B747/gear/brake_temp
 B747DR_brake_temp_ind               = deferred_dataref("laminar/B747/gear/brake_temp_ind", "array[18]")
 B747DR_init_gear_CD             = deferred_dataref("laminar/B747/gear/init_CD", "number")
 B747DR__gear_chocked           = deferred_dataref("laminar/B747/gear/chocked", "number")
+
+-- Air/ground sensing (PSEU), 1 true, from B747.10.pseu_model.lua
+-- (docs/overhaul/ARCHITECTURE.md §4.2). Other systems read these instead of
+-- sim/flightmodel/failures/onground_any (any one wheel on the ground).
+B747DR_pseu_pri_air            = deferred_dataref("laminar/B747/gear/air_ground/pri_air", "number")
+B747DR_pseu_pri_gnd            = deferred_dataref("laminar/B747/gear/air_ground/pri_gnd", "number")
+B747DR_pseu_alt_air            = deferred_dataref("laminar/B747/gear/air_ground/alt_air", "number")
+B747DR_pseu_alt_gnd            = deferred_dataref("laminar/B747/gear/air_ground/alt_gnd", "number")
+B747DR_pseu_ng_compressed      = deferred_dataref("laminar/B747/gear/air_ground/ng_compressed", "number")
+B747DR_pseu_all_gear_down      = deferred_dataref("laminar/B747/gear/air_ground/all_gear_down", "number")
+B747DR_pseu_nose_not_down      = deferred_dataref("laminar/B747/gear/air_ground/nose_not_down", "number")
+B747DR_pseu_lever_unlock       = deferred_dataref("laminar/B747/gear/air_ground/lever_unlock", "number")
 B747DR_parking_brake_ratio = find_dataref("laminar/B747/flt_ctrls/parking_brake_ratio")
 simDR_parking_brake_ratio       = find_dataref("sim/cockpit2/controls/parking_brake_ratio")
 ----- GEAR HANDLE DATAREF HANDLER -------------------------------------------------------

@@ -166,6 +166,20 @@ Lua が作る名前の数：dataref 1617 個、コマンド 628 個。静的に�
 - 前からある名前（`bus1hot`〜`bus4hot`、`topleftbus`・`toprightbus`、`ssb`、`utilityleft1/2`・`utilityright1/2`、`ext_pwr1_on`・`apu_pwr1_on` など、`laminar/B747/rel_esys`〜`rel_esys4`、`capt_display_power`・`fo_display_power`、`display_has_power[6-8]`、`apu_volts`）も、同じモデルから意味を保って書く（notes/ATA-24.md §6）。
 - X-Plane の電気系統は代理として残す：`cross_tie` は 1、`battery_on[0]` は BATTERY スイッチ、`gpu_on` は XPC のどれか、`APU_generator_on` は APB のどれか、`generator_on[n]` は GCB n。
 
+### 4.2 空地判定（PSEU）の公開 dataref（1-2 で新設）
+
+空地のモデル（`plugins/xtlua/scripts/B747.10.xt.gear/B747.10.pseu_model.lua`）の出力。init スクリプト `B747.10.gear` で作り、`B747.10.xt.pseu.lua` が毎フレーム書く。他の系統は、空地をここで判定する（`sim/flightmodel/failures/onground_any` はどれか 1 輪の接地で真になる）。値は 1 が真。中身は notes/ATA-32.md §4.1。
+
+| 名前 `laminar/B747/gear/air_ground/…` | 中身 |
+|---|---|
+| `pri_air`・`pri_gnd` | primary の AIR・GND（ATA29_32 p.322 の式。片側の主脚だけの接地では AIR のまま、左右とも接地で GND） |
+| `alt_air`・`alt_gnd` | alternate の AIR・GND（故障を入れるまでは primary と同じ） |
+| `ng_compressed` | 前脚圧縮（主脚とは別の信号。ペダルのステアリング、離陸警報、失速警報が使う） |
+| `all_gear_down`・`nose_not_down` | ALL GR DN（5 本ともダウンロック）・前脚がダウンロックでない |
+| `lever_unlock` | LG LVR UNLK（主脚トラック 4 本とも傾き、かつ胴体脚ステアリングがロック：FCOM p.1512） |
+
+- 乗り換え済み：電源の BCU（air mode・APU 発電機・地上ハンドリングバス）、脚レバーのロック。ほかの系統は、それぞれの作り直しで乗り換える（PROGRESS.md）。
+
 ## 5. 表示系（PFD・ND・EICAS・CDU）
 
 - 描画は、各 acf の末尾（`P` 行の後ろ）に埋め込まれた X-Plane の generic instrument で行う。数は 2850 個で、内訳は rotary 1164、text 709、pointer 293、needle 122、tape 85、rolling 24。

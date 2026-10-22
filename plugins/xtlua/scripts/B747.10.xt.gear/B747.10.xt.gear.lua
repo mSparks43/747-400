@@ -97,6 +97,9 @@ simDR_prop_mode                 = find_dataref("sim/cockpit2/engine/actuators/pr
 simDR_left_brake_fail     = find_dataref("sim/operation/failures/rel_lbrakes")--6 = inoperative
 simDR_right_brake_fail     = find_dataref("sim/operation/failures/rel_rbrakes")--6 = inoperative
 
+-- air/ground sensing (PSEU): the model and its glue
+dofile("B747.10.xt.pseu.lua")
+
 --Marauder28
 --Autobrake OFF/DISARM logic
 simDR_speedbrake_lever	 		= find_dataref("laminar/B747/flt_ctrls/speedbrake_lever")
@@ -531,21 +534,12 @@ function B747_set_gear_handle_lock()
     if B747_gear_handle_lock_override == 1 then
         B747_gear_handle_lock = 0
 
-    -- OVERRIDE LOCK BUTTON IS NOT PRESSED
+    -- OVERRIDE LOCK BUTTON IS NOT PRESSED: the PSEU releases the lock with
+    -- all four trucks tilted and the body gear steering locked (FCOM p.1512)
+    elseif B747DR_pseu_lever_unlock == 1 then
+        B747_gear_handle_lock = 0
     else
-
-        -- AIRCRAFT WHEELS ARE ON THE GROUND
-        if simDR_aircraft_on_ground == 1 then
-            B747_gear_handle_lock = 1
-
-        -- AIRCRAFT IS IN THE AIR
-        else
-            if (simDR_tire_steer_deg[1] == 0.0 and simDR_tire_steer_deg[1] == 0.0)          -- BODY GEAR "CENTERED" (STEERING)
-                and (simDR_gear_claw_angle[3] > 0.0 and simDR_gear_claw_angle[4] > 0.0)     -- MAIN (WING) GEAR TILTED (CLAW)
-            then
-                B747_gear_handle_lock = 0
-            end
-        end
+        B747_gear_handle_lock = 1
     end
 
 end
@@ -1039,6 +1033,7 @@ function after_physics()
         do_flight_start()
     end
     flightInit=true
+    B747_pseu()
     B747_set_gear_handle_lock()
 
     B747_primary_EICAS_gear_status()

@@ -28,6 +28,10 @@
       "sim/flightmodel/engine/ENGN_N1_[0]", "sim/cockpit2/engine/actuators/throttle_ratio_all" ] },
     { "do": "cas", "note": "開始直後" },
     { "do": "check", "note": "空中開始の速度（200 kt 以上でなければ開始の失敗）", "dref": "sim/cockpit2/gauges/indicators/airspeed_kts_pilot", "op": ">=", "value": 200 },
+    { "do": "check", "note": "PSEU：air（ATA29_32 p.322）", "dref": "laminar/B747/gear/air_ground/pri_air", "op": "==", "value": 1 },
+    { "do": "check", "note": "PSEU：地上ではない", "dref": "laminar/B747/gear/air_ground/pri_gnd", "op": "==", "value": 0 },
+    { "do": "check", "note": "電源の BCU も air mode（LH24 p.66）", "dref": "laminar/B747/electrical/air_mode", "op": "==", "value": 1 },
+    { "do": "check", "note": "空中では APU GEN の AVAIL 灯が消える（FCOM p.783）", "dref": "laminar/B747/electrical/light/apu_avail[0]", "op": "==", "value": 0 },
 
     { "do": "set", "note": "MCP 速度 250 kt（MCP の IAS 窓。A/P がこれを X-Plane の速度ダイヤルに写す）", "dref": "laminar/B747/autopilot/ias_dial_value", "value": 250 },
     { "do": "set", "note": "MCP 高度 10,000 ft", "dref": "laminar/B747/autopilot/heading/altitude_dial_ft", "value": 10000 },

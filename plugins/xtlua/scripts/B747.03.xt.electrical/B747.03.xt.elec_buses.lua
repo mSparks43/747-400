@@ -11,6 +11,7 @@ local E = B747_elec_model
 
 simDR_elec_engine_N2            = find_dataref("sim/flightmodel/engine/ENGN_N2_")
 B747DR_elec_engine_type         = find_dataref("laminar/B747/engines/type")
+B747DR_elec_pseu_air            = find_dataref("laminar/B747/gear/air_ground/pri_air")
 
 B747DR_elec_bus_ac              = find_dataref("laminar/B747/electrical/bus/ac")
 B747DR_elec_bus_dc              = find_dataref("laminar/B747/electrical/bus/dc")
@@ -89,7 +90,7 @@ local function read_inputs(inp)
     inp.ext_available[2] = B747DR_elec_ext_pwr2_available == 1
     inp.apu_n1 = simDR_apu_N1_pct
     inp.apu_start = simDR_apu_start_switch_mode == 2 and simDR_apu_N1_pct < E.APU_READY_N1
-    inp.on_ground = simDR_aircraft_on_ground == 1
+    inp.on_ground = B747DR_elec_pseu_air == 0               -- PSEU air relays, ATA29_32 p.299
 end
 
 local function write_buses(out)

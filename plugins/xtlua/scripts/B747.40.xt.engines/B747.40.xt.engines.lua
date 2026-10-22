@@ -117,6 +117,9 @@ simDR_startup_running           = find_dataref("sim/operation/prefs/startup_runn
 simDR_radarAlt1           	= find_dataref("sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot")
 simDR_all_wheels_on_ground      = find_dataref("sim/flightmodel/failures/onground_any")
 simDR_reallyall_wheels_on_ground      = find_dataref("sim/flightmodel/failures/onground_all")
+-- reversers: PSEU ground relays (TR 1/4 primary, TR 2/3 alternate, ATA29_32 p.299)
+B747DR_engines_pseu_pri_gnd     = find_dataref("laminar/B747/gear/air_ground/pri_gnd")
+B747DR_engines_pseu_alt_gnd     = find_dataref("laminar/B747/gear/air_ground/alt_gnd")
 simDR_thrust_rev_deploy_ratio   = find_dataref("sim/flightmodel2/engines/thrust_reverser_deploy_ratio")
 simDR_autoReverse=find_dataref("sim/cockpit2/switches/auto_reverse_on")
 B747DR_speedbrake_lever     	= find_dataref("laminar/B747/flt_ctrls/speedbrake_lever")
@@ -750,7 +753,9 @@ function B747_prop_mode()
     end
     -- Mode 0 is feathered, 1 is normal, 2 is in beta, and reverse (prop or jet) is mode 3
     local refreshGroundstate=simDR_all_wheels_on_ground
-    if simDR_reallyall_wheels_on_ground==0 then
+    -- locked out until the PSEU says ground: both main gear sides down, not the
+    -- nose gear too (GEAR-01; ATA29_32 p.299, p.322)
+    if B747DR_engines_pseu_pri_gnd == 0 and B747DR_engines_pseu_alt_gnd == 0 then
         B747DR_reverser_lockout = 1
     else 
         B747DR_reverser_lockout = 0
