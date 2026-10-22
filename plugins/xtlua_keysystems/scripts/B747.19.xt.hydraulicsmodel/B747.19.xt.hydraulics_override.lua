@@ -15,7 +15,6 @@
 --sim/flightmodel2/wing/flap2_deg[]
 --sim/flightmodel2/controls/slat2_deploy_ratio
 --sim/flightmodel2/controls/slat1_deploy_ratio
-lastBraking=0
 lastPitch=0
 lastRoll=0
 lastYaw=0
@@ -27,7 +26,7 @@ for i=0,numSurfaces,1 do
 end
 
 -- 1 rudder lower 2,4
--- 2 rudder upper 1,2
+-- 2 rudder upper 1,3
 -- 3 l elev inner
 -- 4 r elev inner
 -- 5 l elev outer
@@ -36,7 +35,6 @@ end
 -- 8 r ail inner sim/flightmodel/controls/wing4r_ail1def[0]
 -- 9 l ail outer sim/flightmodel/controls/wing4l_ail2def[0]
 -- 10 r ail outer sim/flightmodel/controls/wing2r_ail2def[0]
-brakeConsumption=0
 local B747_pressureDRs={}
 local controlRatios={}
 controlRatios[0]=0
@@ -44,11 +42,12 @@ B747_pressureDRs[0]=0
 local computeRate=0.0333 -- handle low FPS
 local lastCompute=0
 local doCompute=0
+-- the hydraulic model's pressures (B747.19.xt.hyd_power.lua); each move of
+-- a surface takes some, and a surface stops when its systems have no more
 function pressure_input()
-    B747_pressureDRs[1]=B747DR_hyd_sys_pressure_1
-    B747_pressureDRs[2]=B747DR_hyd_sys_pressure_2
-    B747_pressureDRs[3]=B747DR_hyd_sys_pressure_3
-    B747_pressureDRs[4]=B747DR_hyd_sys_pressure_4
+    for n=1,4,1 do
+        B747_pressureDRs[n]=B747_hyd_power_psi(n)
+    end
     
     controlRatios[1]=B747_controls_lower_rudder--simDR_rudder[10]
     controlRatios[2]=B747_controls_upper_rudder--simDR_rudder[10]
@@ -88,26 +87,15 @@ function pressure_input()
 end
 
 function pressure_output()
-    if B747DR_hyd_sys_restotal_1>0.1 then
-        B747DR_hyd_sys_pressure_1=B747_pressureDRs[1]
-    else
-        B747DR_hyd_sys_pressure_1=0
+    -- what is left goes back to the model as the flow taken; the quantity's
+    -- effect on pressure is in the model (the standpipe, HYD-21)
+    for n=1,4,1 do
+        B747_hyd_power_left(n,B747_pressureDRs[n])
     end
-    if B747DR_hyd_sys_restotal_2>0.1 then
-        B747DR_hyd_sys_pressure_2=B747_pressureDRs[2]
-    else
-        B747DR_hyd_sys_pressure_2=0
-    end
-    if B747DR_hyd_sys_restotal_3>0.1 then
-        B747DR_hyd_sys_pressure_3=B747_pressureDRs[3]
-    else
-        B747DR_hyd_sys_pressure_3=0
-    end
-    if B747DR_hyd_sys_restotal_4>0.1 then
-        B747DR_hyd_sys_pressure_4=B747_pressureDRs[4]
-    else
-        B747DR_hyd_sys_pressure_4=0
-    end
+    B747DR_hyd_sys_pressure_1=B747_pressureDRs[1]
+    B747DR_hyd_sys_pressure_2=B747_pressureDRs[2]
+    B747DR_hyd_sys_pressure_3=B747_pressureDRs[3]
+    B747DR_hyd_sys_pressure_4=B747_pressureDRs[4]
 
     B747DR_rudder_lwr_pos=B747_animate_value(B747DR_rudder_lwr_pos,controlRatios[1],-100,100,20)
     B747DR_rudder_upr_pos=B747_animate_value(B747DR_rudder_upr_pos,controlRatios[2],-100,100,20)
@@ -191,22 +179,6 @@ function hydraulics_consumer(src,consumption)
     end
 end
 
-function brake_accumulator()
-    if simDR_parking_brake_ratio>lastBraking then
-        brakeDiff=(simDR_parking_brake_ratio-lastBraking)*400
-    else
-        brakeDiff=0
-    end
-    if brakeDiff<simDR_hyd_press_1_2 then
-        simDR_hyd_press_1_2=simDR_hyd_press_1_2-brakeDiff
-    else
-        simDR_hyd_press_1_2=0
-    end
-    brakeConsumption=brakeConsumption+brakeDiff
-    lastBraking=simDR_parking_brake_ratio
-
-    brakeConsumption=brakeConsumption-hydraulics_consumer({1,1,0,1},brakeConsumption)  
-end
 function flap_consumption(controlDiff)
     if hydraulics_consumer({0,0,0,1},controlDiff[23]*10)==0 then
         controlRatios[23]=lastControlValue[23]
@@ -259,7 +231,7 @@ function spoiler_consumption(controlDiff)
     if hydraulics_consumer({0,0,0,1},controlDiff[17]/3)==0 then
         controlRatios[17]=B747_animate_value(lastControlValue[17],0,-100,100,1)
     end
-    if hydraulics_consumer({0,0,0,1},controlDiff[1]/3)==0 then
+    if hydraulics_consumer({0,0,0,1},controlDiff[18]/3)==0 then
         controlRatios[18]=B747_animate_value(lastControlValue[18],0,-100,100,1)
     end
 end
@@ -288,8 +260,8 @@ function flight_controls_consumption()
     --[[if hydraulics_consumer({0,1,0,1},controlDiff[1]*3)==0 then
         controlRatios[1]=B747_animate_value(lastControlValue[1],0,-100,100,1)
     end]]
-    -- rudder upper 
-    if hydraulics_consumer({1,1,0,0},controlDiff[2]*3)==0 then
+    -- rudder upper 1,3
+    if hydraulics_consumer({1,0,1,0},controlDiff[2]*3)==0 then
         controlRatios[2]=B747_animate_value(lastControlValue[2],0,-100,100,10)
     end
     
@@ -311,8 +283,8 @@ function flight_controls_consumption()
     end
 
 
-    --1,2 L inboard aileron
-    if hydraulics_consumer({1,1,0,0},controlDiff[7]*3)==0 then
+    --1,3 L inboard aileron
+    if hydraulics_consumer({1,0,1,0},controlDiff[7]*3)==0 then
         controlRatios[7]=B747_animate_value(lastControlValue[7],0,-100,100,1)
     end
     --2,4 R inboard aileron
@@ -323,8 +295,8 @@ function flight_controls_consumption()
     if hydraulics_consumer({1,1,0,0},controlDiff[9]*3)==0 then
         controlRatios[9]=B747_animate_value(lastControlValue[9],0,-100,100,1)
     end
-    --2,3,4 R outboard aileron
-    if hydraulics_consumer({0,1,1,1},controlDiff[10]*3)==0 then
+    --3,4 R outboard aileron
+    if hydraulics_consumer({0,0,1,1},controlDiff[10]*3)==0 then
         controlRatios[10]=B747_animate_value(lastControlValue[10],0,-100,100,1)
     end
 

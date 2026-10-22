@@ -205,6 +205,16 @@ Lua が作る名前の数：dataref 1617 個、コマンド 628 個。静的に�
 | `laminar/B747/CAS/rcl_count` | fltInst02 の RCL（`laminar/B747/dsp/rcl_switch`） | 隠したものを戻して 1 ページ目。RECALL の表示（`CAS/recall_ind`）は今までどおり fltInst02 |
 | `laminar/B747/warning/master_reset_count` | manipulators の master リセット（`button_switch/warn_caut_capt`・`_fo`） | 両方の master 灯を消す。灯は manipulators もその場で消す |
 
+### 4.4 油圧（1-4）
+
+油圧のモデル（`plugins/xtlua_keysystems/scripts/B747.19.xt.hydraulicsmodel/B747.19.hyd_model.lua`）を、グルー `B747.19.xt.hyd_power.lua` が油圧モジュール（`B747.19.xt.hydraulicsmodel.lua`）の中で毎フレーム回す。中身は notes/ATA-29.md §2〜§4。
+
+- 毎フレームの順：`B747_hyd_power()`（モデル）→ `pressure_input()`（舵面が使える圧＝モデルの系統圧）→ `flight_controls_consumption()`（舵面が動くたびに圧を差し引き、900 psi 未満の系統しか無い舵面は止まる。前からの作り）→ `pressure_output()`（残りを `pressure_n` に書き、差し引いた量を次のフレームのモデルの需要にする）。舵面とモデルの受け渡しは同じ Lua の状態の関数（`B747_hyd_power_psi`・`B747_hyd_power_left`）で、dataref の読み直しはしない。
+- 書く dataref（名前と意味は前と同じ。notes/ATA-29.md §6.2）：`hydraulics/pressure_1〜4`（系統圧、psi）、`edp_pressure_n`・`dem_pressure_n`・`aux_pressure`（ポンプの出口圧）、`dem_mode_n`（セレクタ。-1 AUX、0 OFF、1 AUTO、2 ON）、`valve_n`（1＝供給遮断弁が開で EDP が ON）、`pressure_13`・`23`・`24`・`234`（synoptic の不作動の絵）、`res_n`・`restotal_n`（作動油量。正規量 1.00 の比）、`temp_n`（℃）、`indicators/hydraulic_pressure_1_2_4`（ブレーキ accumulator 計）、`EICAS2/stat/RF`・`LO`（[1]〜[4]）。
+- 新設（1-4、init スクリプト `B747.19.hydraulicsmodel`）：`laminar/B747/hydraulics/light/eng_press`・`dem_press`・`sys_fault`（[0]〜[3]＝系統 1〜4）、`light/brake_source`。照明モジュールが P5 の ENGINE PRESS・DEMAND PRESS・SYS FAULT と機長側の BRAKE SOURCE の灯に使う。
+- EICAS：caution 9（>BRAKE SOURCE）、40〜43（HYD PRESS SYS）、advisory 200・201（HYD CONTROL 1・4）、202〜205（HYD OVHT SYS）、206〜209（HYD PRESS DEM）、210〜213（HYD PRESS ENG）、218〜221（>HYD QTY LOW）。
+- X-Plane の油圧は「常に加圧、故障を書かない」（notes/ATA-29.md §6.1）。`B747.20` はポンプの故障（`rel_hydpmp*`）を書かなくなった。X-Plane の漏れ故障（`rel_hydleak*`）は、グルーが作動油量を減らす形で受ける。
+
 ## 5. 表示系（PFD・ND・EICAS・CDU）
 
 - 描画は、各 acf の末尾（`P` 行の後ろ）に埋め込まれた X-Plane の generic instrument で行う。数は 2850 個で、内訳は rotary 1164、text 709、pointer 293、needle 122、tape 85、rolling 24。

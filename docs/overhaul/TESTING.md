@@ -97,7 +97,7 @@
 | `tests/static/*_test.lua` | 全系統に共通の検査。xt スクリプトの dataref が init で作られているか、`INTERFACES.tsv` の名前が残っているか、全モジュール（26）が X-Plane なしで読み込み・`flight_start`・60 フレームを Lua の誤りなしに通るか（`modules_run_test.lua`） |
 | `tests/tools/same_behaviour.lua` | 挙動を変えない変更（コードの切り出しなど）の確認。作業ツリーと git の版で同じモジュールを同じ入力・同じ乱数の種で回し、毎フレーム、書かれた dataref・実行したコマンド・print の行を比べる。20・30・45 fps で回す |
 | `tests/tools/scenarios/*.lua` | `same_behaviour.lua` の入力。`hydraulics_afds.lua` は油圧モジュール（AFDS の制御則・ヨーダンパー・スラットを含む） |
-| `tests/<系統>/*_test.lua` | 系統ごとの試験（作り直しと一緒に書く）。`tests/elec/`：電源モデルの単体と、XTLua で動かした電源モジュール。`tests/gear/`：空地判定（PSEU）の単体と、XTLua で動かした脚モジュール。`tests/warning/`：警報のモデルの単体と、XTLua で動かした警報モジュール（manipulators の master リセットと fltInst の CANC・RCL も一緒に読み込む）。`tests/hyd/`：油圧のモデルの単体（機体への組み込みはまだ） |
+| `tests/<系統>/*_test.lua` | 系統ごとの試験（作り直しと一緒に書く）。`tests/elec/`：電源モデルの単体と、XTLua で動かした電源モジュール。`tests/gear/`：空地判定（PSEU）の単体と、XTLua で動かした脚モジュール。`tests/warning/`：警報のモデルの単体と、XTLua で動かした警報モジュール（manipulators の master リセットと fltInst の CANC・RCL も一緒に読み込む）。`tests/hyd/`：油圧のモデルの単体と、XTLua で動かした油圧モジュール（B747.20 も一緒に読み込む） |
 
 - `tests/lib/xtlua.lua`（XTLua の再現）：
   - 本物の `plugins/<instance>/init.lua` を新しい環境で読み、`run_module_in_namespace()` でモジュールを読み込む。`dofile` はモジュールのフォルダから読む。名前空間の動き（bare table のコピーなど）も XTLua と同じに出る。
@@ -126,7 +126,7 @@
 |---|---|
 | `tests/flight/xp.ps1` | Web API クライアント。`/api/capabilities` の確認、名前→ID の解決とキャッシュ、dataref の読み書き（文字列の dataref は復号する）、コマンドの実行、フライトの開始、スクリーンショットの取得。コマンド行からも使える（`caps`・`get`・`set`・`cmd`・`flight`・`shot`・`find`） |
 | `tests/flight/run_scenario.ps1` | シナリオの実行。手順を順に実行し、条件を待ち（タイムアウト付き）、判定する。結果は JSON と Markdown で書く。手順の種類はファイルの先頭に一覧がある（`switch`・`wait`・`check`・`snapshot`・`cas`・`view`・`shot` など）。`view` の型：`forward`（前）、`panel`（機長席から計器盤）、`overhead`（機長席から P5 の電源パネル）、`eicas`（機長席から upper EICAS を中央に） |
-| `tests/flight/scenarios/` | シナリオの定義。`s00_baseline_start`（駐機から電源投入・APU・4 発始動）、`s01_ap_basic`（空中から A/P の ALT HOLD・HDG・V/S。機体を読み直す）、`s02_elec_panel`（エンジン運転中に P5 の電源パネルを操作。機体を読み直す）、`s03_alerts`（エンジン運転中に BUS TIE 2・GEN CONT 2 で advisory と caution を出し、EICAS の並び・master CAUTION とリセット・CANC/RCL を見る。機体を読み直す） |
+| `tests/flight/scenarios/` | シナリオの定義。`s00_baseline_start`（駐機から電源投入・APU・4 発始動）、`s01_ap_basic`（空中から A/P の ALT HOLD・HDG・V/S。機体を読み直す）、`s02_elec_panel`（エンジン運転中に P5 の電源パネルを操作。機体を読み直す）、`s03_alerts`（エンジン運転中に BUS TIE 2・GEN CONT 2 で advisory と caution を出し、EICAS の並び・master CAUTION とリセット・CANC/RCL を見る。機体を読み直す）、`s04_hydraulics`（エンジン運転中に ENGINE pump 1・DEMAND 1 を切り、油圧・P5 の灯・EICAS・synoptic を見る。機体を読み直す） |
 | `tests/flight/fwl/B747_flighttest.lua` | FlyWithLua 用の記録スクリプト。毎フレームの記録、イベント、最大・最小。コマンド（`FlyWithLua/B747_flighttest/start`・`stop`・`mark`）を Web API から操作する。747 以外の機体では何もしない。X-Plane の `Resources/plugins/FlyWithLua/Scripts/` に写して使う |
 | `tests/flight/runs/<日時>_<シナリオ>_<acf>/` | 出力。`session.csv`、`events.csv`、`summary.txt`、`result.json`・`result.md`、スクリーンショット、その回の `Log.txt`（全体と、誤りらしい行の抜粋）。git の管理外 |
 
@@ -188,6 +188,7 @@
 - フライトの読み込み直後に機体の読み直し（`sim/operation/reload_aircraft_no_art`）を送ると、捨てられることがある。`-Reload` は `Log.txt` に新しい読み込みが出るのを待ち、出なければ送り直す。
 - X-Plane が「応答なし」になっても、Web API は答え続ける（sim の時計だけが止まる）。2026-10-23 に 2 回起きた。どちらも、機体を読み込んだ直後に機体の読み直し（`reload_aircraft_no_art`）を送ったとき（1 回目は acf の切り替え、2 回目は X-Plane の起動直後の最初のフライト）。そこで `run_scenario.ps1` は、フライトの開始で機体が読み込まれたときは読み直さない（読み込んだばかりなので要らない）。読み直すときは sim の時計が 20 秒進んでから送る。また sim の時計が 30 秒動かなければ、残りの手順をやめて記録を残す。
 - Web API でコマンドを長さ 0（`{"duration": 0}`、押してすぐ離す）で送ると、XTLua のハンドラーに phase 2（離した）が届かないことがある。押しボタン（CANC・RCL・master リセットなど）は押されたままになり、離したときの処理（RECALL を 1 秒後に消すなど）も動かない（2026-10-23、`s03_alerts`）。押しボタンは `cmd` の手順に `"duration": 0.2` を付けて押す。
+- 空中開始の `s01` は、機体の読み込み方で AFDS の初期状態が変わり、結果が変わる（PROGRESS.md「気づいたこと」）。X-Plane を起動し直した後の最初のフライト（フライトの開始で機体が読み込まれる）で回す。
 - スクリーンショットは、sim が止まっているか読み込み中だと撮れない。X-Plane は撮れるようになってからまとめて保存する。
 - FlyWithLua に付属の `please read the manual.lua` が、吹き出しをスクリーンショットの右上に出す（利用者のファイルなので消していない）。
 

@@ -241,46 +241,9 @@ B747CMD_ai_hyd_quick_start		= deferred_command("laminar/B747/ai/hyd_quick_start"
 --** 				                  SYSTEM FUNCTIONS           	    			 **--
 --*************************************************************************************--
 
--- ENGINE DRIVEN PUMPS
-function B747_engine_hyd_pumps()
-
-    --[[ UTILIZE FAILURES TO TURN PUMPS ON AND OFF ]]--
-
-    -- ENGINE #1
-    if B747DR_button_switch_position[30] > 0.95 then
-        simDR_engine01_hyd_pump_fail = 0
-    elseif B747DR_button_switch_position[30] < 0.05 then
-        simDR_engine01_hyd_pump_fail = 6
-    end
-
-
-    -- ENGINE #2
-    if B747DR_button_switch_position[31] > 0.95 then
-        simDR_engine02_hyd_pump_fail = 0
-    elseif B747DR_button_switch_position[31] < 0.05 then
-        simDR_engine02_hyd_pump_fail = 6
-    end
-
-
-    -- ENGINE #3
-    if B747DR_button_switch_position[32] > 0.95 then
-        simDR_engine03_hyd_pump_fail = 0
-    elseif B747DR_button_switch_position[32] < 0.05 then
-        simDR_engine03_hyd_pump_fail = 6
-    end
-
-
-    -- ENGINE #4
-    if B747DR_button_switch_position[33] > 0.95 then
-        simDR_engine04_hyd_pump_fail = 0
-    elseif B747DR_button_switch_position[33] < 0.05 then
-        simDR_engine04_hyd_pump_fail = 6
-    end
-
-end
-
-
-
+-- X-Plane's own hydraulics stay pressurised and get no pump failures
+-- (notes/ATA-29.md §6.1, HYD-13); the pumps are the hydraulic model's
+-- (B747.19.xt.hyd_power.lua).
 
 -- ELECTRIC DEMAND PUMPS
 function B747_elec_hyd_pumps()
@@ -331,39 +294,8 @@ end
 ----- EICAS MESSAGES --------------------------------------------------------------------
 function B747_hyd_EICAS_msg()
 
-    -- >BRAKE SOURCE
-    
-    --[[if simDR_engine01_hyd_pump_fail == 6
-        and simDR_engine02_hyd_pump_fail == 6
-        and simDR_engine04_hyd_pump_fail == 6]]
-    if B747DR_hyd_sys_pressure_1 < 1000 and B747DR_hyd_sys_pressure_2 < 1000 and B747DR_hyd_sys_pressure_4 < 1000
-    then
-        B747DR_CAS_caution_status[9] = 1
-    else
-      B747DR_CAS_caution_status[9] = 0
-    end
-
-    -- HYD PRESS SYS 1-4   
-    if B747DR_hyd_sys_pressure_1 < 1000.0 then
-        B747DR_CAS_caution_status[40] = 1
-    else
-        B747DR_CAS_caution_status[40] = 0
-    end
-    if B747DR_hyd_sys_pressure_2 < 1000.0 then
-        B747DR_CAS_caution_status[41] = 1
-    else
-        B747DR_CAS_caution_status[41] = 0
-    end
-    if B747DR_hyd_sys_pressure_3 < 1000.0 then
-        B747DR_CAS_caution_status[42] = 1
-    else
-        B747DR_CAS_caution_status[42] = 0
-    end
-    if B747DR_hyd_sys_pressure_4 < 1000.0 then
-        B747DR_CAS_caution_status[43] = 1
-    else
-        B747DR_CAS_caution_status[43] = 0
-    end
+    -- >BRAKE SOURCE, HYD PRESS SYS, >HYD QTY LOW and the STATUS RF/LO come from
+    -- the hydraulic model (B747.19.xt.hyd_power.lua)
 
     -- PARK BRAKE SET
     
@@ -371,47 +303,6 @@ function B747_hyd_EICAS_msg()
       B747DR_CAS_memo_status[26] = 1 
     else
       B747DR_CAS_memo_status[26] = 0
-    end
-
-    -- RF and LO warnings by crazytimtimtim
-    local B747_hyd_sys_res = {B747DR_hyd_sys_res_1, B747DR_hyd_sys_res_2, B747DR_hyd_sys_res_3, B747DR_hyd_sys_res_4}
-    for i = 1, 4 do
-        if B747_hyd_sys_res[i] <= 0.75 and B747_hyd_sys_res[i] >= 0.35 then
-            B747DR_EICAS2_STAT_RF[i] = 1
-            B747DR_EICAS2_STAT_LO[i] = 0
-        elseif B747_hyd_sys_res[i] < 0.35 then
-            B747DR_EICAS2_STAT_RF[i] = 0
-            B747DR_EICAS2_STAT_LO[i] = 1
-        else
-            B747DR_EICAS2_STAT_RF[i] = 0
-            B747DR_EICAS2_STAT_LO[i] = 0
-        end
-    end
-    
-    -- ">HYD QTY LOW" eicas warnings
-    if B747DR_EICAS2_STAT_LO[1] == 1 then
-        
-        B747DR_CAS_advisory_status[218] = 1
-    else
-        B747DR_CAS_advisory_status[218] = 0
-    end
-    
-    if B747DR_EICAS2_STAT_LO[2] == 1 then
-        B747DR_CAS_advisory_status[219] = 1
-    else
-        B747DR_CAS_advisory_status[219] = 0
-    end
-    
-    if B747DR_EICAS2_STAT_LO[3] == 1 then
-        B747DR_CAS_advisory_status[220] = 1
-    else
-        B747DR_CAS_advisory_status[220] = 0
-    end
-    
-    if B747DR_EICAS2_STAT_LO[4] == 1 then
-        B747DR_CAS_advisory_status[221] = 1
-    else
-        B747DR_CAS_advisory_status[221] = 0
     end
 
 end
@@ -439,14 +330,6 @@ end
 function B747_set_hyd_all_modes()
 
 	B747DR_init_hyd_CD = 0	
-B747DR_hyd_sys_restotal_1=math.random()*0.4+0.55
-B747DR_hyd_sys_restotal_2=math.random()*0.4+0.55
-B747DR_hyd_sys_restotal_3=math.random()*0.4+0.55
-B747DR_hyd_sys_restotal_4=math.random()*0.4+0.55
-B747DR_hyd_sys_res_1=B747DR_hyd_sys_restotal_1
-B747DR_hyd_sys_res_2=B747DR_hyd_sys_restotal_2
-B747DR_hyd_sys_res_3=B747DR_hyd_sys_restotal_3
-B747DR_hyd_sys_res_4=B747DR_hyd_sys_restotal_4
 end
 
 
@@ -540,7 +423,6 @@ function after_physics()
         do_flight_start()
     end
     flightInit=true
-    B747_engine_hyd_pumps()
     B747_elec_hyd_pumps()
 
     B747_hyd_EICAS_msg()

@@ -145,10 +145,11 @@ simDR_generator_fail_01             = find_dataref("sim/operation/failures/rel_g
 simDR_generator_fail_02             = find_dataref("sim/operation/failures/rel_genera1")
 simDR_generator_fail_03             = find_dataref("sim/operation/failures/rel_genera2")
 simDR_generator_fail_04             = find_dataref("sim/operation/failures/rel_genera3")
-simDR_hyd_pump_fail_eng_01          = find_dataref("sim/operation/failures/rel_hydpmp")
-simDR_hyd_pump_fail_eng_02          = find_dataref("sim/operation/failures/rel_hydpmp2")
-simDR_hyd_pump_fail_eng_03          = find_dataref("sim/operation/failures/rel_hydpmp3")
-simDR_hyd_pump_fail_eng_04          = find_dataref("sim/operation/failures/rel_hydpmp4")
+-- the hydraulic model's P5 lights (B747.19.xt.hyd_power.lua)
+B747DR_light_hyd_eng_press          = find_dataref("laminar/B747/hydraulics/light/eng_press")
+B747DR_light_hyd_dem_press          = find_dataref("laminar/B747/hydraulics/light/dem_press")
+B747DR_light_hyd_sys_fault          = find_dataref("laminar/B747/hydraulics/light/sys_fault")
+B747DR_light_hyd_brake_source       = find_dataref("laminar/B747/hydraulics/light/brake_source")
 --simDR_nacelle_inlet_antiice_fail_01 = find_dataref("sim/operation/failures/rel_ice_inlet_heat")
 --simDR_nacelle_inlet_antiice_fail_02 = find_dataref("sim/operation/failures/rel_ice_inlet_heat2")
 --simDR_nacelle_inlet_antiice_fail_03 = find_dataref("sim/operation/failures/rel_ice_inlet_heat3")
@@ -1115,10 +1116,11 @@ function B747_annunciators()
     annun.b.gen_drive_disc_04 = B747DR_elec_light_drive[3]
 
     -- HYDRAULIC PUMP
-    annun.b.hyd_pump_01 = B747_ternary((simDR_engine_running[0] == 0) or (simDR_hyd_pump_fail_eng_01 == 6), 1, 0)
-    annun.b.hyd_pump_02 = B747_ternary((simDR_engine_running[1] == 0) or (simDR_hyd_pump_fail_eng_02 == 6), 1, 0)
-    annun.b.hyd_pump_03 = B747_ternary((simDR_engine_running[2] == 0) or (simDR_hyd_pump_fail_eng_03 == 6), 1, 0)
-    annun.b.hyd_pump_04 = B747_ternary((simDR_engine_running[3] == 0) or (simDR_hyd_pump_fail_eng_04 == 6), 1, 0)
+    -- ENGINE PRESS: the engine pump's pressure low for 2 s (FCOM p.1484)
+    annun.b.hyd_pump_01 = B747DR_light_hyd_eng_press[0]
+    annun.b.hyd_pump_02 = B747DR_light_hyd_eng_press[1]
+    annun.b.hyd_pump_03 = B747DR_light_hyd_eng_press[2]
+    annun.b.hyd_pump_04 = B747DR_light_hyd_eng_press[3]
 
     -- CARGO FIRE
     annun.b.cargo_fire_fwd = 0
@@ -1369,7 +1371,7 @@ function B747_annunciators()
     ----- MAIN PANEL -----
 
     -- BRAKE SOURCE LOW PRESS           simDR_hyd_press_01
-    annun.a.brake_source = B747_ternary(((simDR_hyd_press_01 < 1000.0) and (simDR_hyd_press_02 < 1000.0)and (simDR_hyd_press_04 < 1000.0)), 1, 0)
+    annun.a.brake_source = B747DR_light_hyd_brake_source
 
 
     ----- OVERHEAD PANEL -----
@@ -1408,16 +1410,16 @@ function B747_annunciators()
     annun.a.irs_on_bat = 0
 
     -- HYDRAULIC SYSTEM FAULT
-    annun.a.hyd_sys_fault_01 = B747_ternary((simDR_hyd_press_01 < 1000.0) or (simDR_hyd_fluid_level_01 < 0.1), 1, 0)
-    annun.a.hyd_sys_fault_02 = B747_ternary((simDR_hyd_press_02 < 1000.0) or (simDR_hyd_fluid_level_02 < 0.1), 1, 0)
-    annun.a.hyd_sys_fault_03 = B747_ternary((simDR_hyd_press_03 < 1000.0) or (simDR_hyd_fluid_level_03 < 0.1), 1, 0)
-    annun.a.hyd_sys_fault_04 = B747_ternary((simDR_hyd_press_04 < 1000.0) or (simDR_hyd_fluid_level_04 < 0.1), 1, 0)
+    annun.a.hyd_sys_fault_01 = B747DR_light_hyd_sys_fault[0]
+    annun.a.hyd_sys_fault_02 = B747DR_light_hyd_sys_fault[1]
+    annun.a.hyd_sys_fault_03 = B747DR_light_hyd_sys_fault[2]
+    annun.a.hyd_sys_fault_04 = B747DR_light_hyd_sys_fault[3]
 
     -- HYDRAULIC DEMAND PUMP PRESS LOW              -- TODO:  ADD CONDITIONS:  DEMAND PUMP PRESS LOW / DEMAND PUMP FAIL
-    annun.a.demand_pump_press_01 = B747_ternary((B747DR_hyd_dmd_pmp_sel_pos[0] == 0), 1, 0)
-    annun.a.demand_pump_press_02 = B747_ternary((B747DR_hyd_dmd_pmp_sel_pos[1] == 0), 1, 0)
-    annun.a.demand_pump_press_03 = B747_ternary((B747DR_hyd_dmd_pmp_sel_pos[2] == 0), 1, 0)
-    annun.a.demand_pump_press_04 = B747_ternary((B747DR_hyd_dmd_pmp_sel_pos[3] == 0), 1, 0)
+    annun.a.demand_pump_press_01 = B747DR_light_hyd_dem_press[0]
+    annun.a.demand_pump_press_02 = B747DR_light_hyd_dem_press[1]
+    annun.a.demand_pump_press_03 = B747DR_light_hyd_dem_press[2]
+    annun.a.demand_pump_press_04 = B747DR_light_hyd_dem_press[3]
 
     -- FIRE EXTINGUISHER BOTTLE DISCHARGE
     annun.a.fire_bottle_0102A_disch = B747_ternary((B747DR_fire_ext_bottle_0102A_psi < 225.0), 1, 0)

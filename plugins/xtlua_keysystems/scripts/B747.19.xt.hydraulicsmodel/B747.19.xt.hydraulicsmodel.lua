@@ -345,127 +345,7 @@ dofile("B747.19.xt.hydraulics_override.lua")
 dofile("B747.19.xt.slats.lua")
 dofile("B747.19.xt.afds_control.lua")
 dofile("B747.19.xt.yaw_damper.lua")
-function B747_engine_hyd_valves()
--- ENGINE #1
-    if B747DR_button_switch_position[30] > 0.95 then
-        B747DR_hyd_valve_1 = 1
-    elseif B747DR_button_switch_position[30] < 0.05 then
-        B747DR_hyd_valve_1  = 0
-    end
-
-
-    -- ENGINE #2
-    if B747DR_button_switch_position[31] > 0.95 then
-        B747DR_hyd_valve_2  = 1
-    elseif B747DR_button_switch_position[31] < 0.05 then
-        B747DR_hyd_valve_2  = 0
-    end
-
-
-    -- ENGINE #3
-    if B747DR_button_switch_position[32] > 0.95 then
-        B747DR_hyd_valve_3  = 1
-    elseif B747DR_button_switch_position[32] < 0.05 then
-        B747DR_hyd_valve_3  = 0
-    end
-
-
-    -- ENGINE #4
-    if B747DR_button_switch_position[33] > 0.95 then
-        B747DR_hyd_valve_4  = 1
-    elseif B747DR_button_switch_position[33] < 0.05 then
-        B747DR_hyd_valve_4  = 0
-    end
-end
-function B747_engine_dem_modes()
-  
-  B747DR_hyd_dem_mode_1=B747DR_hyd_dmd_pmp_sel_pos[0]
-  B747DR_hyd_dem_mode_2=B747DR_hyd_dmd_pmp_sel_pos[1]
-  B747DR_hyd_dem_mode_3=B747DR_hyd_dmd_pmp_sel_pos[2]
-  B747DR_hyd_dem_mode_4=B747DR_hyd_dmd_pmp_sel_pos[3]
-  
-end
-function B747_edp_pressures()
-    if B747DR_hyd_valve_1==1 then
-      B747DR_hyd_edp_pressure_1=40*B747DR_display_N1[0]
-    else
-      B747DR_hyd_edp_pressure_1=0;
-    end
-    
-    if B747DR_hyd_valve_2==1 then
-      B747DR_hyd_edp_pressure_2=40*B747DR_display_N1[1]
-    else
-      B747DR_hyd_edp_pressure_2=0;
-    end
-    
-    if B747DR_hyd_valve_3==1 then
-      B747DR_hyd_edp_pressure_3=40*B747DR_display_N1[2]
-    else
-      B747DR_hyd_edp_pressure_3=0;
-    end
-    
-    if B747DR_hyd_valve_4==1 then
-      B747DR_hyd_edp_pressure_4=40*B747DR_display_N1[3]
-    else
-      B747DR_hyd_edp_pressure_4=0;
-    end
-end
-
-function B747_dem_pressures()
-  if B747DR_hyd_dem_mode_1>0 then 
-    if B747DR_hyd_dem_mode_1==2 then
-      B747DR_hyd_dem_pressure_1=B747_duct_pressure_L*110
-    elseif B747DR_hyd_edp_pressure_1<2500 then
-      B747DR_hyd_dem_pressure_1=B747_duct_pressure_L*110
-    else
-      B747DR_hyd_dem_pressure_1=0
-    end
-  else
-     B747DR_hyd_dem_pressure_1=0  
-  end
-  
-  
-  if B747DR_hyd_dem_mode_2>0 then
-    if B747DR_hyd_dem_mode_2==2 then
-      B747DR_hyd_dem_pressure_2=3000
-    elseif B747DR_hyd_edp_pressure_2<2500 then
-      B747DR_hyd_dem_pressure_2=3000
-    else
-      B747DR_hyd_dem_pressure_2=0
-    end
-   else
-     B747DR_hyd_dem_pressure_2=0 
-  end
- 
-  if B747DR_hyd_dem_mode_3>0 then
-    if B747DR_hyd_dem_mode_3==2 then
-      B747DR_hyd_dem_pressure_3=3000
-    elseif B747DR_hyd_edp_pressure_3<2500 then
-      B747DR_hyd_dem_pressure_3=3000
-    else
-      B747DR_hyd_dem_pressure_3=0
-    end
-   else
-     B747DR_hyd_dem_pressure_3=0
-  end
-  
-  if B747DR_hyd_dem_mode_4>0 then
-    if B747DR_hyd_dem_mode_4==2 then
-      B747DR_hyd_dem_pressure_4=B747_duct_pressure_R*110
-    elseif B747DR_hyd_edp_pressure_4<2500 then
-      B747DR_hyd_dem_pressure_4=B747_duct_pressure_R*110
-    else
-      B747DR_hyd_dem_pressure_4=0
-    end
-    elseif B747DR_hyd_dem_mode_4<0 then
-     B747DR_hyd_aux_pressure=2950
-     B747DR_hyd_dem_pressure_4=0
-    else
-     B747DR_hyd_dem_pressure_4=0
-     B747DR_hyd_aux_pressure=0
-  end
-  
-end
+dofile("B747.19.xt.hyd_power.lua")
 local lastpressureUpdate=0
 function B747_show_system_pressures()
   local diff = simDRTime - lastpressureUpdate
@@ -479,38 +359,6 @@ function B747_show_system_pressures()
 
   lastpressureUpdate=simDRTime
 end
-function B747_system_pressures()
-  --B747_animate_value(B747DR_hyd_sys_pressure_1,math.max(B747DR_hyd_dem_pressure_1,B747DR_hyd_edp_pressure_1),0,3000,1)
-  B747DR_hyd_sys_pressure_use_1=B747_animate_value(B747DR_hyd_sys_pressure_use_1,((B747DR_hyd_dem_pressure_1+B747DR_hyd_edp_pressure_1)/10),0,45,1)--math.max(B747DR_hyd_dem_pressure_1,B747DR_hyd_edp_pressure_1)
-  B747DR_hyd_sys_pressure_use_2=B747_animate_value(B747DR_hyd_sys_pressure_use_2,((B747DR_hyd_dem_pressure_2+B747DR_hyd_edp_pressure_2)/10),0,45,1)--math.max(B747DR_hyd_dem_pressure_2,B747DR_hyd_edp_pressure_2)
-  B747DR_hyd_sys_pressure_use_3=B747_animate_value(B747DR_hyd_sys_pressure_use_3,((B747DR_hyd_dem_pressure_3+B747DR_hyd_edp_pressure_3)/10),0,45,1)--math.max(B747DR_hyd_dem_pressure_3,B747DR_hyd_edp_pressure_3)
-  B747DR_hyd_sys_pressure_use_4=B747_animate_value(B747DR_hyd_sys_pressure_use_4,((B747DR_hyd_dem_pressure_4+B747DR_hyd_edp_pressure_4+B747DR_hyd_aux_pressure)/10),0,45,1)--math.max(B747DR_hyd_dem_pressure_4,B747DR_hyd_edp_pressure_4,B747DR_hyd_aux_pressure)
-  
-  --sys_pressure_use now contains how much pressure we can put into the system
-  local s1Max=math.min(math.max(B747DR_hyd_dem_pressure_1,B747DR_hyd_edp_pressure_1,B747DR_hyd_sys_pressure_1),3300)
-  local s2Max=math.min(math.max(B747DR_hyd_dem_pressure_2,B747DR_hyd_edp_pressure_2,B747DR_hyd_sys_pressure_2),3300)
-  local s3Max=math.min(math.max(B747DR_hyd_dem_pressure_3,B747DR_hyd_edp_pressure_3,B747DR_hyd_sys_pressure_3),3300)
-  local s4Max=math.min(math.max(B747DR_hyd_dem_pressure_4,B747DR_hyd_edp_pressure_4,B747DR_hyd_aux_pressure,B747DR_hyd_sys_pressure_4),3300)
-  B747DR_hyd_sys_pressure_1=B747_animate_value(B747DR_hyd_sys_pressure_1,B747DR_hyd_sys_pressure_1+B747DR_hyd_sys_pressure_use_1,0,s1Max-math.random()*50,10)
-  B747DR_hyd_sys_pressure_2=B747_animate_value(B747DR_hyd_sys_pressure_2,B747DR_hyd_sys_pressure_2+B747DR_hyd_sys_pressure_use_2,0,s2Max-math.random()*50,10)
-  B747DR_hyd_sys_pressure_3=B747_animate_value(B747DR_hyd_sys_pressure_3,B747DR_hyd_sys_pressure_3+B747DR_hyd_sys_pressure_use_3,0,s3Max-math.random()*50,10)
-  B747DR_hyd_sys_pressure_4=B747_animate_value(B747DR_hyd_sys_pressure_4,B747DR_hyd_sys_pressure_4+B747DR_hyd_sys_pressure_use_4,0,s4Max-math.random()*50,10)
-  B747DR_hyd_sys_pressure_13=math.max(B747DR_hyd_sys_pressure_1,B747DR_hyd_sys_pressure_3) --12 remapped to 13
-  B747DR_hyd_sys_pressure_23=math.max(B747DR_hyd_sys_pressure_2,B747DR_hyd_sys_pressure_3)
-  B747DR_hyd_sys_pressure_24=math.max(B747DR_hyd_sys_pressure_2,B747DR_hyd_sys_pressure_4) 
-  B747DR_hyd_sys_pressure_234=math.max(B747DR_hyd_sys_pressure_2,B747DR_hyd_sys_pressure_3,B747DR_hyd_sys_pressure_4)
-  
-  B747DR_hyd_sys_res_1=B747DR_hyd_sys_restotal_1-(B747DR_hyd_sys_pressure_1/3000)*0.1
-  B747DR_hyd_sys_res_2=B747DR_hyd_sys_restotal_2-(B747DR_hyd_sys_pressure_2/3000)*0.1
-  B747DR_hyd_sys_res_3=B747DR_hyd_sys_restotal_3-(B747DR_hyd_sys_pressure_3/3000)*0.1
-  B747DR_hyd_sys_res_4=B747DR_hyd_sys_restotal_4-(B747DR_hyd_sys_pressure_4/3000)*0.1
-  simDR_hyd_press_1_2 = math.max(simDR_hyd_press_1_2,B747DR_hyd_sys_pressure_1,B747DR_hyd_sys_pressure_2,B747DR_hyd_sys_pressure_4)
-
-  B747DR_hyd_sys_temp_1=B747DR_hyd_temp+(1-B747DR_hyd_sys_res_1)*20
-  B747DR_hyd_sys_temp_2=B747DR_hyd_temp+(1-B747DR_hyd_sys_res_2)*20
-  B747DR_hyd_sys_temp_3=B747DR_hyd_temp+(1-B747DR_hyd_sys_res_3)*20
-  B747DR_hyd_sys_temp_4=B747DR_hyd_temp+(1-B747DR_hyd_sys_res_4)*20
-end
 --*************************************************************************************--
 --**                          EVENT CALLBACKS                        **--
 --*************************************************************************************--
@@ -518,17 +366,6 @@ end
 --function aircraft_load() end
 
 --function aircraft_unload() end
-function B747_set_hyd_model_ER()
-  B747DR_hyd_sys_pressure_use_1=3100
-  B747DR_hyd_sys_pressure_use_2=3100
-  B747DR_hyd_sys_pressure_use_3=3100
-  B747DR_hyd_sys_pressure_use_4=3100
-  B747DR_hyd_sys_pressure_1=3100
-  B747DR_hyd_sys_pressure_2=3100
-  B747DR_hyd_sys_pressure_3=3100
-  B747DR_hyd_sys_pressure_4=3100
-end  
-
 local initialiseControls=true
 function flight_start() 
   --initial pids
@@ -707,24 +544,7 @@ function flight_start()
     else 
       print("not reinitialising controls!!!")
     end
-    B747DR_hyd_sys_restotal_1=math.random()*0.2+0.8
-    B747DR_hyd_sys_restotal_2=math.random()*0.2+0.8
-    B747DR_hyd_sys_restotal_3=math.random()*0.2+0.8
-    B747DR_hyd_sys_restotal_4=math.random()*0.2+0.8
-    B747DR_hyd_sys_res_1=B747DR_hyd_sys_restotal_1
-    B747DR_hyd_sys_res_2=B747DR_hyd_sys_restotal_2
-    B747DR_hyd_sys_res_3=B747DR_hyd_sys_restotal_3
-    B747DR_hyd_sys_res_4=B747DR_hyd_sys_restotal_4
-
-    B747DR_hyd_sys_temp_1=B747DR_hyd_temp
-    B747DR_hyd_sys_temp_2=B747DR_hyd_temp
-    B747DR_hyd_sys_temp_3=B747DR_hyd_temp
-    B747DR_hyd_sys_temp_4=B747DR_hyd_temp
-    if simDR_startup_running == 1 then
-
-		B747_set_hyd_model_ER() -- pressurise the system if engines start running
-
-    end
+    B747_hyd_power_flight_start()
 end
 
 --function flight_crash() end
@@ -734,11 +554,6 @@ debug_hydro     = deferred_dataref("laminar/B747/debug/hydro", "number")
 
 local lastStat=0
 local countFrame=0
-local hyd_failures={0,0,0,0}
-local hydfailed1=false
-local hydfailed2=false
-local hydfailed3=false
-local hasHydFailure=false
 function roundToIncrement(number, increment)
 
   local y = number / increment
@@ -748,73 +563,17 @@ function roundToIncrement(number, increment)
   return z
 
 end
-function hydraulic_failures()
-  if simDR_failhyd1 ==0 and simDR_failhyd2 == 0 and simDR_failhyd3 ==0 then
-    if hasHydFailure then
-      hyd_failures={0,0,0,0}
-      hydfailed1=false
-      hydfailed2=false
-      hydfailed3=false
-      B747DR_hyd_sys_restotal_1=math.random()*0.2+0.8
-      B747DR_hyd_sys_restotal_2=math.random()*0.2+0.8
-      B747DR_hyd_sys_restotal_3=math.random()*0.2+0.8
-      B747DR_hyd_sys_restotal_4=math.random()*0.2+0.8
-      hasHydFailure=false
-    end
-    return
-  end
-  hasHydFailure=true
-  if simDR_failhyd1 == 6 and not(hydfailed1) then
-    local failIndex=1+roundToIncrement(math.random(),1)
-
-    hyd_failures[failIndex] = 15+math.random()*15
-    hydfailed1=true
-  end
-  if simDR_failhyd2 == 6 and not(hydfailed2) then
-    local failIndex=2+roundToIncrement(math.random(),1)
-
-    hyd_failures[failIndex] = 15+math.random()*15
-    hydfailed2=true
-  end
-  if simDR_failhyd3 == 6 and not(hydfailed3) then
-    local failIndex=3+roundToIncrement(math.random(),1)
-    hyd_failures[failIndex] = 15+math.random()*15
-    hydfailed2=true
-  end
-  if hyd_failures[1] >0 then
-    B747DR_hyd_sys_restotal_1=B747_interpolate_value(B747DR_hyd_sys_restotal_1,0,0,1,hyd_failures[1])
-  end
-  if hyd_failures[2] >0 then
-    B747DR_hyd_sys_restotal_2=B747_interpolate_value(B747DR_hyd_sys_restotal_2,0,0,1,hyd_failures[2])
-  end
-  if hyd_failures[3] >0 then
-    B747DR_hyd_sys_restotal_3=B747_interpolate_value(B747DR_hyd_sys_restotal_3,0,0,1,hyd_failures[3])
-  end
-  if hyd_failures[4] >0 then
-    B747DR_hyd_sys_restotal_4=B747_interpolate_value(B747DR_hyd_sys_restotal_4,0,0,1,hyd_failures[4])
-  end
-  --print("hyd failure "..hyd_failures[1].." "..hyd_failures[2].." "..hyd_failures[3].." "..hyd_failures[4])
-
-end
 function after_physics()
   if debug_hydro>0 then return end
   
 
-   B747_engine_hyd_valves()
-   B747_engine_dem_modes()
-   B747_edp_pressures()
-   B747_dem_pressures()
-   B747_system_pressures()
-   B747_show_system_pressures()
+   B747_hyd_power()
    --consumers
    pressure_input()
-   brake_accumulator()
    flight_controls_consumption()
    pressure_output()
+   B747_show_system_pressures()
    flight_controls_override()
-   if simDR_version>=120012 then
-    hydraulic_failures()
-   end
    if debug_hydro<0 then
     local diff=simDRTime-lastStat
     countFrame=countFrame+1

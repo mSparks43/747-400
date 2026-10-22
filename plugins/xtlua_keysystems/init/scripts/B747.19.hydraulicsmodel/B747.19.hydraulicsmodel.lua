@@ -98,6 +98,13 @@ simDR_hyd_press_1_2               = deferred_dataref("laminar/B747/hydraulics/in
 
 
 B747DR_hyd_dmd_pmp_sel_pos      = deferred_dataref("laminar/B747/hydraulics/dmd_pump/sel_dial_pos", "array[4]")
+-- the hydraulic model's P5 lights (B747.19.xt.hyd_power.lua, read by the
+-- lighting module): ENGINE PRESS, DEMAND PRESS and SYS FAULT of systems 1-4,
+-- and the BRAKE SOURCE light (1 = on)
+B747DR_hyd_light_eng_press      = deferred_dataref("laminar/B747/hydraulics/light/eng_press", "array[4]")
+B747DR_hyd_light_dem_press      = deferred_dataref("laminar/B747/hydraulics/light/dem_press", "array[4]")
+B747DR_hyd_light_sys_fault      = deferred_dataref("laminar/B747/hydraulics/light/sys_fault", "array[4]")
+B747DR_hyd_light_brake_source   = deferred_dataref("laminar/B747/hydraulics/light/brake_source", "number")
 B747DR_rudder_ratio   = deferred_dataref("laminar/B747/flt_ctrls/rudder_ratio", "number")
 
 

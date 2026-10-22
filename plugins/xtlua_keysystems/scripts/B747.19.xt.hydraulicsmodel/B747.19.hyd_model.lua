@@ -114,6 +114,16 @@ function M.new()
     return s
 end
 
+-- a flight that starts with the engines running: the systems pressurised,
+-- the engine pump switches reset
+function M.preset_running(s)
+    for n = 1, 4 do
+        local ss = s.sys[n]
+        ss.psi, ss.edp_low, ss.edp_low_t, ss.sys_low_t = M.NOMINAL_PSI, false, 0, 0
+    end
+    s.acc_psi = M.NOMINAL_PSI
+end
+
 local function clamp(x, lo, hi)
     if x < lo then return lo end
     if x > hi then return hi end
