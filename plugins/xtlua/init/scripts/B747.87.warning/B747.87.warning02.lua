@@ -147,6 +147,12 @@ B747DR_CAS_status_cue           = deferred_dataref("laminar/B747/CAS/status_cue"
 B747DR_CAS_msg_page             = deferred_dataref("laminar/B747/CAS/msg_page", "number")
 B747DR_CAS_num_msg_pages        = deferred_dataref("laminar/B747/CAS/num_msg_pages", "number")
 B747DR_CAS_caut_adv_display     = deferred_dataref("laminar/B747/CAS/caut_adv_display", "number")
+-- pushes of CANC and RCL (fltInst02) and of the master WARNING/CAUTION
+-- reset switches (manipulators), counted for the alert model
+-- (B747.87.xt.alerts.lua), which runs in the other plugin or module
+B747DR_CAS_canc_count           = deferred_dataref("laminar/B747/CAS/canc_count", "number")
+B747DR_CAS_rcl_count            = deferred_dataref("laminar/B747/CAS/rcl_count", "number")
+B747DR_master_reset_count       = deferred_dataref("laminar/B747/warning/master_reset_count", "number")
 
 
 B747DR_master_warning           = find_dataref("laminar/B747/warning/master_warning")

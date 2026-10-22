@@ -1,0 +1,87 @@
+{
+  "name": "s03_alerts",
+  "description": "乗員への警報（1-3）の X-Plane での確認。エンジン運転中の地上で開始し、BUS TIE 2 と GEN CONT 2 を切って advisory と caution を出し、EICAS の並び、master CAUTION 灯とリセット、CANC/RCL を見る。期待値は FCOM 15.10-15.20（機体 109）と notes/ATA-31-warning.md。",
+  "reload": true,
+  "flight": {
+    "runway_start": { "airport_id": "RJAA", "runway": "34L" },
+    "engine_status": { "all_engines": { "running": true } },
+    "local_time": { "day_of_year": 295, "time_in_24_hours": 10.0 },
+    "weather": {
+      "definition": "vfr_few_clouds",
+      "vertical_speed_in_thermal_in_feet_per_minute": 0,
+      "wave_height_in_meters": 0.5,
+      "wave_direction_in_degrees": 0,
+      "terrain_state": "dry",
+      "variation_across_region_percentage": 0,
+      "evolution_over_time_enum": "static"
+    }
+  },
+  "steps": [
+    { "do": "record_start" },
+    { "do": "sleep", "seconds": 8 },
+    { "do": "cas", "note": "開始直後" },
+    { "do": "snapshot", "note": "開始直後", "drefs": [
+      "sim/aircraft/view/acf_relative_path", "laminar/B747/warning/master_warning", "laminar/B747/warning/master_caution",
+      "laminar/B747/CAS/msg_page", "laminar/B747/CAS/num_msg_pages", "laminar/B747/CAS/caut_adv_display",
+      "laminar/B747/gear/air_ground/pri_air", "laminar/B747/fuel/fuel_control/toggle_sw_pos[0]" ] },
+    { "do": "check", "note": "1 ページ目（FCOM p.1549）", "dref": "laminar/B747/CAS/msg_page", "op": "==", "value": 1 },
+    { "do": "check", "note": "warning は出ていない", "dref": "laminar/B747/warning/master_warning", "op": "==", "value": 0 },
+    { "do": "cmd", "note": "master リセットで灯を消しておく", "name": "laminar/B747/button_switch/warn_caut_capt", "duration": 0.2 },
+    { "do": "sleep", "seconds": 1 },
+    { "do": "check", "note": "master リセットを数えた", "dref": "laminar/B747/warning/master_reset_count", "op": ">=", "value": 1 },
+    { "do": "check", "note": "master CAUTION 消灯", "dref": "laminar/B747/warning/master_caution", "op": "==", "value": 0 },
+
+    { "do": "mark", "note": "BUS TIE 2 OFF" },
+    { "do": "switch", "note": "BUS TIE 2 OFF", "dref": "laminar/B747/button_switch/position[19]", "value": 0, "cmd": "laminar/B747/button_switch/elec_bus_tie_2" },
+    { "do": "wait", "note": "ELEC BUS ISLN 2（advisory、FCOM p.821）", "dref": "laminar/B747/CAS/advisory_status[93]", "op": "==", "value": 1, "timeout": 5 },
+    { "do": "sleep", "seconds": 1 },
+    { "do": "check", "note": "advisory では master CAUTION は点かない（FCOM p.1532）", "dref": "laminar/B747/warning/master_caution", "op": "==", "value": 0 },
+    { "do": "cas", "note": "BUS TIE 2 OFF" },
+
+    { "do": "mark", "note": "GEN CONT 2 OFF" },
+    { "do": "switch", "note": "GEN CONT 2 OFF", "dref": "laminar/B747/button_switch/position[23]", "value": 0, "cmd": "laminar/B747/button_switch/elec_gen_ctrl_2" },
+    { "do": "wait", "note": "ELEC AC BUS 2（caution、FCOM p.821）", "dref": "laminar/B747/CAS/caution_status[16]", "op": "==", "value": 1, "timeout": 5 },
+    { "do": "wait", "note": "master CAUTION 点灯（FCOM p.1532）", "dref": "laminar/B747/warning/master_caution", "op": "==", "value": 1, "timeout": 2 },
+    { "do": "check", "note": "新しい caution が 1 行目（warning が無いとき。FCOM p.1548）", "dref": "laminar/B747/CAS/gen_caution_msg_000", "op": "==", "value": "ELEC AC BUS 2" },
+    { "do": "view", "name": "eicas" },
+    { "do": "shot", "name": "eicas_ac_bus_2" },
+    { "do": "cas", "note": "GEN CONT 2 OFF" },
+
+    { "do": "mark", "note": "master リセット" },
+    { "do": "cmd", "note": "master リセット（機長側）", "name": "laminar/B747/button_switch/warn_caut_capt", "duration": 0.2 },
+    { "do": "sleep", "seconds": 1.5 },
+    { "do": "check", "note": "リセットの後も消灯のまま（FCOM p.1532）", "dref": "laminar/B747/warning/master_caution", "op": "==", "value": 0 },
+    { "do": "check", "note": "メッセージは残る", "dref": "laminar/B747/CAS/gen_caution_msg_000", "op": "==", "value": "ELEC AC BUS 2" },
+
+    { "do": "mark", "note": "CANC" },
+    { "do": "cmd", "note": "CANC（1 ページなので caution と advisory が消える。FCOM p.1530）", "name": "laminar/B747/dsp/canc_switch", "duration": 0.2 },
+    { "do": "sleep", "seconds": 1 },
+    { "do": "check", "note": "CANC を数えた", "dref": "laminar/B747/CAS/canc_count", "op": ">=", "value": 1 },
+    { "do": "check", "note": "caution が消える", "dref": "laminar/B747/CAS/gen_caution_msg_000", "op": "!=", "value": "ELEC AC BUS 2" },
+    { "do": "check", "note": "CANC で隠れたものがある", "dref": "laminar/B747/CAS/caut_adv_display", "op": "==", "value": 0 },
+    { "do": "check", "note": "1 ページ目のまま", "dref": "laminar/B747/CAS/msg_page", "op": "==", "value": 1 },
+    { "do": "shot", "name": "eicas_after_canc" },
+    { "do": "cas", "note": "CANC の後" },
+
+    { "do": "mark", "note": "RCL" },
+    { "do": "cmd", "note": "RCL（FCOM p.1530）", "name": "laminar/B747/dsp/rcl_switch", "duration": 0.2 },
+    { "do": "sleep", "seconds": 0.5 },
+    { "do": "check", "note": "RECALL 表示（離してから 1 秒。FCOM p.1528）", "dref": "laminar/B747/CAS/recall_ind", "op": "==", "value": 1, "level": "warn" },
+    { "do": "check", "note": "caution が戻る", "dref": "laminar/B747/CAS/gen_caution_msg_000", "op": "==", "value": "ELEC AC BUS 2" },
+    { "do": "check", "note": "隠れたものは無い", "dref": "laminar/B747/CAS/caut_adv_display", "op": "==", "value": 1 },
+    { "do": "shot", "name": "eicas_recall" },
+    { "do": "sleep", "seconds": 2 },
+    { "do": "check", "note": "RECALL は消える", "dref": "laminar/B747/CAS/recall_ind", "op": "==", "value": 0 },
+
+    { "do": "mark", "note": "復旧" },
+    { "do": "switch", "note": "GEN CONT 2 ON", "dref": "laminar/B747/button_switch/position[23]", "value": 1, "cmd": "laminar/B747/button_switch/elec_gen_ctrl_2" },
+    { "do": "switch", "note": "BUS TIE 2 AUTO", "dref": "laminar/B747/button_switch/position[19]", "value": 1, "cmd": "laminar/B747/button_switch/elec_bus_tie_2" },
+    { "do": "wait", "note": "ELEC AC BUS 2 が消える", "dref": "laminar/B747/CAS/caution_status[16]", "op": "==", "value": 0, "timeout": 10 },
+    { "do": "sleep", "seconds": 1 },
+    { "do": "check", "note": "caution の行から消える（FCOM p.1547）", "dref": "laminar/B747/CAS/gen_caution_msg_000", "op": "!=", "value": "ELEC AC BUS 2" },
+    { "do": "check", "note": "master CAUTION は消灯のまま", "dref": "laminar/B747/warning/master_caution", "op": "==", "value": 0 },
+    { "do": "cas", "note": "復旧後" },
+    { "do": "view", "name": "forward" },
+    { "do": "record_stop" }
+  ]
+}

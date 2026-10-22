@@ -17,15 +17,15 @@
 - **段階 1**：
   - 1-1（電源）：モデル（4fb1fa46）と、機体への組み込み（f38d0baf。電源モジュール、P5 の灯、EICAS、表示器と時計の電源）まで。X-Plane でカスタム acf の `s02_elec_panel` 63/63・`s00` 64/64、純正 acf の `s02` 63/63・`s00` 64/64。残りは使う側の乗り換え（下）。
   - 1-2（空地判定、PSEU）：モデル・脚モジュールへの組み込み・公開 dataref まで。乗り換え済みは電源の BCU（air mode など）、脚レバーのロック、逆推力のロックアウト（前脚を含む全輪の接地 → 主脚左右の接地）。X-Plane で地上（`s02`、両 acf）と空中（`s01`、カスタム acf）の判定を確認。残りの系統は各作り直しで。
-  - 1-3（警報の枠組み）：モデル（001f345e。メッセージの並びとページ、CANC/RCL、master 灯、始動前・始動中・離陸・着陸の抑止）と試験 69 件まで。機体への組み込み（警報モジュール、fltInst02 の CANC/RCL、manipulators の master リセット、メッセージ表の 109 基準への整理）はまだ。
+  - 1-3（警報の枠組み）：モデル（001f345e）と、機体への組み込みまで（警報モジュールの新しいグルー、fltInst02 の CANC/RCL と manipulators の master リセットは押した回数の dataref で渡す、メッセージ表のレベルと文言を FCOM に合わせた）。試験はモデル 94 件・モジュール 41 件、X-Plane の `s03_alerts`。残りは下の「警報（1-3）の GAP の状態」。
 
 ## 次にやること
 
 1. 1-1（電源）の残り：電源の有無を `bus_volts` で見ている系統を、バスごとの dataref（ARCHITECTURE.md §4.1）に乗り換える。
    - 済：表示器（fltInst02。機長 PFD・ND は APU standby、upper EICAS は main standby、ほかは F/O transfer）、EICAS の計算（warning。EIU のどれかに電源）、時計の計時（fltInst03・04。main hot battery bus）、ELEC パネルの灯（lighting）。
    - 残り：燃料のポンプと弁（fuel：AC・utility・battery bus の割り当て。APU の DC 燃料ポンプとの関係があるので 2-2 と一緒に）、抽気弁と装備冷却（air：DC bus）、IRS と NAV RAD（fms）、表示灯の輝度（lighting：`bus_volts[0]`・`[2]`）、客室灯（lighting）、ヨーダンパー（fltCtrls：`battery_array_on`）、STAT ページの main バッテリー（X-Plane の値）。
-2. 1-2（空地判定）の残り：`onground_any` を読んでいる 17 モジュール（warning、autopilot、fms、fltInst02、antiice、fltCtrls、EEC、engines、fuel、hydraulicsmodel、gear の autobrake、manipulators、fdr、lighting など）を、PSEU の dataref（ARCHITECTURE.md §4.2）に乗り換える。どの信号（pri/alt の AIR・GND、前脚圧縮）を使うかは notes/ATA-32.md §4.1 の表。各系統の作り直しのときに行う。
-3. 1-3 の組み込み：警報モジュールの待ち行列と表示（`B747_CAS_queue`・`B747_CAS_display`）をモデルに置き換える。CANC/RCL は fltInst02 のハンドラーから要求の dataref を書き、警報モジュールが処理する。メッセージ表のレベルの誤り（WARN-06：ENG FAIL など）を直す。抑止の入力（エンジン始動中、V1、LAND 2/3）を各系統から集める。
+2. 1-2（空地判定）の残り：`onground_any` を読んでいる 16 モジュール（autopilot、fms、fltInst02、antiice、fltCtrls、EEC、engines、fuel、hydraulicsmodel、gear の autobrake、manipulators、fdr、lighting など）を、PSEU の dataref（ARCHITECTURE.md §4.2）に乗り換える。どの信号（pri/alt の AIR・GND、前脚圧縮）を使うかは notes/ATA-32.md §4.1 の表。各系統の作り直しのときに行う。
+3. 1-3 の残り：他のメッセージによる抑止（notes/ATA-31-warning.md §4.4.1）と時間遅れは、各系統の作り直しで表に足す。音（`.snd`）とパネル（PG・3 ページ目以降・STATUS）は承認待ち。
 4. R-3 は、作り直しが先になる系統の害の大きい誤りだけ、合間に入れる。
 
 ## 段階 T の状態
@@ -82,8 +82,8 @@
 
 PLAN.md §3 と GAP_ANALYSIS.md §4・§5 の一覧。主なもの：
 
-- カスタム acf のパネル（表示）の変更。
-- `.snd` の変更（サイレン・ファイアベルの結線）と 3D の操作子の追加。
+- カスタム acf のパネル（表示）の変更。例：EICAS のメッセージ欄は 2 ページ分しか無く、ページ番号（PG）は 3 ページ以上のときしか出ない（`num_msg_pages > 2`）。FCOM どおりにするには、PG を 2 ページから出し、3 ページ目以降の行を足す。
+- `.snd` の変更（サイレン・ファイアベル・wailer を Lua の要求 `warning_siren`・`warning_bell`・`warning_wailer` に、beeper を caution ごとの `master_caution_audio` に結び直す。1-3 で Lua 側は用意した）と 3D の操作子の追加。
 - FCOM の機体番号（109・405・570）と、機体設定（エンジン型式、`freighter`）の対応。
 - 資料で決まらない既定値。
 - RR エンジンを今のまま残すこと。
@@ -104,6 +104,14 @@ PLAN.md §3 と GAP_ANALYSIS.md §4・§5 の一覧。主なもの：
   - 前脚圧縮：前輪の接地（`on_ground[0]`）。実機は strut が 8 in を超えて縮んだとき。
   - HYDIM 1・4 の「高圧」：1,500 psi 以上（資料に値が無い）。
   - 胴体脚ステアリングの「ロック」：胴体脚の車輪の角度が 0。
+- 乗員への警報（1-3。`B747.87.alert_model.lua`・`B747.87.xt.alerts.lua` に「estimate」と書いてある）：
+  - モデルを回す周期 0.1 秒（資料に値が無い。前は約 2 秒ごと）。EIU が電源投入から 4 秒で動き出すのは前の値のまま。
+  - 始動中の抑止の終わりの「アイドル到達」：N2 60 %（CF6 の min idle は 61.6 %：ATA70_80 p.206。PW の値は資料に無い）。
+  - 離陸の抑止は、地上で 30 kt 未満になった後の離陸滑走でだけ働く（着陸滑走で 80 kt を逆向きに通るのを離陸と取らないため）。
+  - CONFIG GEAR のサイレンは master リセットで止まらない方にした（原因がレバーかフラップかを、メッセージだけでは区別できない。FCOM p.1551）。
+  - wailer は >AUTOPILOT DISC の表示中、最低 1 秒（表示を消すのは AP の側）。
+  - memo が最後のページに入りきらないときは、memo だけのページを作る（FCOM に記載なし）。
+  - 火災ハンドルを「引いた」とみなすのは、動きの途中の値 `pos_arm` が 0.5 を超えたとき。
 
 ## 電源（1-1）の GAP の状態
 
@@ -129,8 +137,27 @@ PLAN.md §3 と GAP_ANALYSIS.md §4・§5 の一覧。主なもの：
 | ELEC-19 air mode | 済 |
 | ELEC-20 故障 dataref の上書き | 済（書くのをやめた） |
 
+## 警報（1-3）の GAP の状態
+
+| ID | 状態 |
+|---|---|
+| WARN-01 CANC 後の新しいメッセージ | 済（メッセージごとの CANC 済みの印） |
+| WARN-02 サイレンの結線 | 一部。Lua 側の要求（`warning_siren`・`warning_bell`・`warning_wailer`。リセットの可否つき）は済。`.snd` はまだ master WARNING 灯でサイレンを鳴らす（`.snd` の変更は承認待ち） |
+| WARN-03 bell | 一部。Lua 側の要求は済（master リセットで止まる）。`.snd` は X-Plane の火災 annunciator のまま。FIRE APU・CARGO などのメッセージ自体は火災（3-4）で |
+| WARN-04 caution ごとの beeper | 一部。caution ごとの 1 秒の `master_caution_audio` は済（`747-400_XP11.snd` が使う）。`747-400.snd` は master CAUTION の立ち上がりで鳴らすまま（承認待ち） |
+| WARN-05 抑止 | 一部。始動前・始動中・離陸・着陸は済。他のメッセージによる抑止（notes/ATA-31-warning.md §4.4.1）と時間遅れは各系統で。STATUS cue はパネルが要る |
+| WARN-06 表のレベル | 済（表の `level`） |
+| WARN-07 文言・添字 | 一部。文言は済。memo の添字の重複（41）と init 側の表（配列の大きさを決めている）は残した |
+| WARN-08 足りないメッセージ | 未（各系統の作り直しで） |
+| WARN-09 ページ割り | 済。ただしパネルが描くのは 2 ページまでで、2 ページのときの PG はパネルの変更が要る |
+| WARN-10 更新の遅れ | 済（0.1 秒ごと） |
+| WARN-11〜21 | 未（形態警報・速度・高度警報・失速・GPWS などは、それぞれの作り直しで） |
+| WARN-22 警報系統の電源 | 一部。EIU は新しい電源のバス（1-1）。MAWEA とスピーカーの電源は分けていない |
+| WARN-23 quick start の未定義の global | 未 |
+
 ## 気づいたこと（作業の途中で）
 
+- **EICAS に出るメッセージが増えた（1-3 の後）**：前の表示は実質 1 ページ（11 行）分しか正しく出せず、2 ページ目に回ったものが見えていなかった（WARN-09）。1-3 の後は、立っているものがすべて並ぶ。例：純正 acf の `s00` の APU 始動後に、HYD PRESS SYS 2・3（demand pump の OFF で系統 2・3 が無圧）、>BRAKE SOURCE（系統 1・2・4 が低圧）、>YAW DAMPER LWR・UPR（ヨーダンパーのスイッチ OFF）、>X FEED CONFIG が加わって 20 行・2 ページ。各系統が立てている状態は前と同じ。パネルは 2 ページ目の番号（PG）を出せないので、2 ページ目があることは画面では分からない（承認待ち）。
 - 純正 acf として比べるのは `747-400.acf`（XP12）。カスタム acf はこれを元にしている（ACF_DIFF.md）。
 - カスタム acf の新しい外部オブジェクトが参照するテクスチャ 4 枚（`Exterior_Wiper.png`・`Exterior_Detail.png`・`Exterior_Detail_2.png`・`Exterior_cargo.png`）が無い（Log.txt）。3D 一式の問題で対象外。
 - Web API でフライトを開始しても、同じ機体なら機体は読み直されない（Log.txt に `Loading airplane` が出ない）。系統の状態は前のフライトから続く。試験で真っさらな状態が要るときは `-Reload`。
@@ -177,3 +204,6 @@ PLAN.md §3 と GAP_ANALYSIS.md §4・§5 の一覧。主なもの：
 - 2026-10-23 03:41：空地判定（PSEU）のモデルと組み込みをコミット（8a7632aa）。
 - 2026-10-23 03:42：X-Plane が 2 回目の応答なし（上の「気づいたこと」）。`run_scenario.ps1` を直し、起動し直してカスタム acf で `s01` 15/15（PSEU の air、BCU の air mode を含む）。
 - 2026-10-23 03:52：警報の枠組みのモデルと試験 69 件をコミット（001f345e）。カスタム acf で `s02` 63/63（PSEU の地上の確認を含む）。Lua の誤りなし。
+- 2026-10-23 03:57：試験ランナーの読み直しの修正と進み具合をコミット（66ca7677）。
+- 2026-10-23 04:0x〜：警報の組み込み（1-3 の 2 段目）。モデルに音の要求・caution ごとの beeper・CANC 済みの報告を足し、グルー `B747.87.xt.alerts.lua` を新設、古い待ち行列と表示を外した。CANC/RCL と master リセットは押した回数の dataref で渡す。表のレベルと文言を FCOM に合わせた。試験：モデル 94 件、モジュール 41 件。
+- 2026-10-23 04:20〜：X-Plane で `s03_alerts`（新シナリオ）。1 回目は Web API の長さ 0 のコマンドで押しボタンが押されたままになり 25/26（TESTING.md §4.6）。0.2 秒押す形に直してカスタム acf 26/26、純正 acf 26/26。純正 acf の `s00` 64/64。

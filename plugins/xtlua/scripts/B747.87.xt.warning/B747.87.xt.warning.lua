@@ -33,6 +33,9 @@ IF THE MESSAGE HAS BEEN CHANGED IT IS ADDED OR REMOVED FROM THE DISPLAY "QUEUE" 
 FINALLY, THE DISPLAY QUEUE IS ITERATED AND THE DISPLAY PAGES ARE BUILT TO SET UP THE VALUES
 FOR THE GENERIC TEXT INSTRUMENTS.
 
+THE ORDER, THE PAGES, CANC/RCL, THE MASTER LIGHTS, THE AURALS AND THE INHIBITS OF FCOM
+15.10-15.20 ARE IN B747.87.alert_model.lua, RUN BY B747.87.xt.alerts.lua.
+
 --]]
 
 
@@ -65,6 +68,12 @@ end
 
 local NUM_ALERT_MESSAGES = 109
 
+-- The message tables. DRindex is the slot the systems set in
+-- laminar/B747/CAS/<table>_status. level, where given, is the level FCOM
+-- gives a message whose slot is in another table (ENG FAIL p.899, ELEC GEN
+-- OFF p.822, FUEL PRES STB p.1476, DOOR U/D FLT LK p.546; the others
+-- notes/EICAS-MESSAGES.md §2); the alert model shows it at that level
+-- (B747.87.xt.alerts.lua).
 local B747_CASmemoMsg ={}
 local B747_CASadvisoryMsg={}
 local B747_CAScautionMsg={}
@@ -98,10 +107,10 @@ B747_CASwarningMsg   = {
     {DRindex = 25, name = ">VALVE TEST FAIL", status = 0},
     {DRindex = 26, name = ">VALVE TEST PASS", status = 0},
     {DRindex = 27, name = ">VLV TST IN PROG", status = 0},
-    {DRindex = 28, name = "ENG 1 FAIL", status = 0},            --
-    {DRindex = 29, name = "ENG 2 FAIL", status = 0},            --
-    {DRindex = 30, name = "ENG 3 FAIL", status = 0},            --
-    {DRindex = 31, name = "ENG 4 FAIL", status = 0}            --
+    {DRindex = 28, name = "ENG 1 FAIL", status = 0, level = "caution"},            --
+    {DRindex = 29, name = "ENG 2 FAIL", status = 0, level = "caution"},            --
+    {DRindex = 30, name = "ENG 3 FAIL", status = 0, level = "caution"},            --
+    {DRindex = 31, name = "ENG 4 FAIL", status = 0, level = "caution"}            --
 }
 
 B747_CAScautionMsg   = {
@@ -158,7 +167,7 @@ B747_CAScautionMsg   = {
     {DRindex = 50, name = ">NO LAND 3", status = 0},
     {DRindex = 51, name = ">PILOT RESPONSE", status = 0},
     {DRindex = 52, name = "SMOKE DR 5 REST", status = 0},
-    {DRindex = 53, name = ">SMOKE LAVATORY", status = 0},
+    {DRindex = 53, name = ">SMOKE LAVATORY", status = 0, level = "advisory"},
     {DRindex = 54, name = ">SMOKE LAV/COMP", status = 0},
     {DRindex = 55, name = ">SMOKE ZN B REST", status = 0},
     {DRindex = 56, name = ">SMOKE ZN F REST", status = 0},
@@ -170,16 +179,16 @@ B747_CAScautionMsg   = {
     {DRindex = 62, name = "STARTER CUTOUT 2", status = 0},      --
     {DRindex = 63, name = "STARTER CUTOUT 3", status = 0},      --
     {DRindex = 64, name = "STARTER CUTOUT 4", status = 0},      --
-    {DRindex = 65, name = "TIRE PRESSURE", status = 0},
+    {DRindex = 65, name = ">TIRE PRESSURE", status = 0, level = "advisory"},
     {DRindex = 66, name = "UNABLE RNP", status = 0},
-    {DRindex = 67, name = "FUEL PRES STAB L", status = 0},
-    {DRindex = 68, name = "FUEL PRES STAB L", status = 0},
+    {DRindex = 67, name = "FUEL PRES STB L", status = 0, level = "advisory"},
+    {DRindex = 68, name = "FUEL PRES STB R", status = 0, level = "advisory"},
     {DRindex = 69, name = "FUEL PRESS CTR L", status = 0},
     {DRindex = 70, name = "FUEL PRESS CTR R", status = 0},
-    {DRindex = 71, name = "ELEC GEN OFF 1", status = 0},
-    {DRindex = 72, name = "ELEC GEN OFF 2", status = 0},
-    {DRindex = 73, name = "ELEC GEN OFF 3", status = 0},
-    {DRindex = 74, name = "ELEC GEN OFF 4", status = 0}
+    {DRindex = 71, name = "ELEC GEN OFF 1", status = 0, level = "advisory"},
+    {DRindex = 72, name = "ELEC GEN OFF 2", status = 0, level = "advisory"},
+    {DRindex = 73, name = "ELEC GEN OFF 3", status = 0, level = "advisory"},
+    {DRindex = 74, name = "ELEC GEN OFF 4", status = 0, level = "advisory"}
 }
 
 B747_CASadvisoryMsg   = {
@@ -261,7 +270,7 @@ B747_CASadvisoryMsg   = {
     {DRindex = 75, name = "DOOR ENTRY R5", status = 0},
     {DRindex = 76, name = "DOOR L UPPER DK", status = 0},       --
     {DRindex = 77, name = "DOOR R UPPER DK", status = 0},
-    {DRindex = 78, name = "DOOR U/D FLT LK", status = 0},
+    {DRindex = 78, name = "DOOR U/D FLT LK", status = 0, level = "caution"},
     {DRindex = 79, name = "DOORS ELEC", status = 0},
     {DRindex = 80, name = "DOORS ENTRY L", status = 0},
     {DRindex = 81, name = "DOORS ENTRY R", status = 0},
@@ -336,14 +345,14 @@ B747_CASadvisoryMsg   = {
     {DRindex = 150, name = "FUEL IMBAL 2-3", status = 0},       --
     {DRindex = 151, name = ">FUEL JETT A", status = 0},
     {DRindex = 152, name = ">FUEL JETT B", status = 0},
-    {DRindex = 153, name = "FUEL OVRD CTR L", status = 0},      --
-    {DRindex = 154, name = "FUEL OVRD CTR R", status = 0},      --
+    {DRindex = 153, name = ">FUEL OVD CTR L", status = 0},      --
+    {DRindex = 154, name = ">FUEL OVD CTR R", status = 0},      --
     {DRindex = 155, name = "FUEL OVRD 2 AFT", status = 0},      --
     {DRindex = 156, name = "FUEL OVRD 3 AFT", status = 0},      --
     {DRindex = 157, name = "FUEL OVRD 2 FWD", status = 0},      --
     {DRindex = 158, name = "FUEL OVRD 3 FWD", status = 0},      --
-    {DRindex = 159, name = "FUEL PMP STAB L", status = 0},      --
-    {DRindex = 160, name = "FUEL PMP STAB R", status = 0},      --
+    {DRindex = 159, name = ">FUEL PMP STB L", status = 0},      --
+    {DRindex = 160, name = ">FUEL PMP STB R", status = 0},      --
     {DRindex = 161, name = "FUEL PUMP 1 AFT", status = 0},      --
     {DRindex = 162, name = "FUEL PUMP 2 AFT", status = 0},      --
     {DRindex = 163, name = "FUEL PUMP 3 AFT", status = 0},      --
@@ -355,7 +364,7 @@ B747_CASadvisoryMsg   = {
     {DRindex = 169, name = "FUEL RES XFR 2", status = 0},
     {DRindex = 170, name = "FUEL RES XFR 3", status = 0},
     {DRindex = 171, name = ">FUEL TANK/ENG", status = 0},       --
-    {DRindex = 172, name = ">FUEL TEMP LOW", status = 0},       --
+    {DRindex = 172, name = "FUEL TEMP LOW", status = 0},       --
     {DRindex = 173, name = "FUEL TEMP SYS", status = 0},
     {DRindex = 174, name = ">FUEL WING ISOL", status = 0},
     {DRindex = 175, name = "FUEL X FEED 1", status = 0},
@@ -408,11 +417,11 @@ B747_CASadvisoryMsg   = {
     {DRindex = 222, name = ">ICE DETECTORS", status = 0},
     {DRindex = 223, name = ">IDLE DISAGREE", status = 0},
     {DRindex = 224, name = ">IFF MODE 4", status = 0},
-    {DRindex = 225, name = ">IRS AC CENTRE", status = 0},
+    {DRindex = 225, name = ">IRS AC CENTER", status = 0},
     {DRindex = 226, name = ">IRS AC LEFT", status = 0},
     {DRindex = 227, name = ">IRS AC RIGHT", status = 0},
-    {DRindex = 228, name = "IRS CENTRE", status = 0},
-    {DRindex = 229, name = ">IRS DC CENTRE", status = 0},
+    {DRindex = 228, name = "IRS CENTER", status = 0},
+    {DRindex = 229, name = ">IRS DC CENTER", status = 0},
     {DRindex = 230, name = ">IRS DC LEFT", status = 0},
     {DRindex = 231, name = ">IRS DC RIGHT", status = 0},
     {DRindex = 232, name = "IRS LEFT", status = 0},
@@ -481,7 +490,7 @@ B747_CASadvisoryMsg   = {
     {DRindex = 295, name = "UNABLE RNP", status = 0},
     {DRindex = 296, name = "WAI VALVE LEFT", status = 0},
     {DRindex = 297, name = "WAI VALVE RIGHT", status = 0},
-    {DRindex = 298, name = ">WINDSHEAR SYS", status = 0},
+    {DRindex = 298, name = "WINDSHEAR SYS", status = 0},
     {DRindex = 299, name = ">X FEED CONFIG", status = 0},       --
     {DRindex = 300, name = ">YAW DAMPER LWR", status = 0},      --
     {DRindex = 301, name = ">YAW DAMPER UPR", status = 0},      --
@@ -553,17 +562,12 @@ B747_CASmemoMsg   = {
 --** 					            LOCAL VARIABLES                 				 **--
 --*************************************************************************************--
 
-local B747_CASwarning   = {}
-local B747_CAScaution   = {}
-local B747_CASadvisory  = {}
-local B747_CASmemo      = {}
 
 
 
 --*************************************************************************************--
 --** 				                X-PLANE DATAREFS            			    	 **--
 --*************************************************************************************--
-simDR_bus_volts               = find_dataref("sim/cockpit2/electrical/bus_volts")
 -- EIU power: left EIU on the main standby bus, centre on the CAPT transfer bus,
 -- right on the F/O transfer bus (FCOM p.800, p.804; the electrical model)
 B747DR_warning_elec_stby_main     = find_dataref("laminar/B747/electrical/bus/stby_main")
@@ -571,7 +575,6 @@ B747DR_warning_elec_xfr_capt      = find_dataref("laminar/B747/electrical/bus/xf
 B747DR_warning_elec_xfr_fo        = find_dataref("laminar/B747/electrical/bus/xfr_fo")
 
 simDR_startup_running               = find_dataref("sim/operation/prefs/startup_running")
-simDR_all_wheels_on_ground          = find_dataref("sim/flightmodel/failures/onground_any")
 simDR_ind_airspeed_kts_pilot        = find_dataref("laminar/B747/gauges/indicators/airspeed_kts_pilot")
 
 
@@ -636,6 +639,12 @@ B747DR_engine_fire              = find_dataref("sim/cockpit2/annunciators/engine
 B747DR_apu_fire                 = find_dataref("sim/operation/failures/rel_apu_fire")
 B747DR_init_warning_CD          = deferred_dataref("laminar/B747/warning/init_CD", "number")
 
+-- the crew alerting model and its glue, after the tables and the bindings.
+-- The tables are locals of this file; the glue gets them here (a table with
+-- a metatable is kept as it is in XTLua's namespace: ARCHITECTURE.md §9a).
+B747_alert_messages = setmetatable({warning = B747_CASwarningMsg, caution = B747_CAScautionMsg,
+    advisory = B747_CASadvisoryMsg, memo = B747_CASmemoMsg}, {})
+dofile("B747.87.xt.alerts.lua")
 
 
 --*************************************************************************************--
@@ -720,305 +729,7 @@ function B747_ternary(condition, ifTrue, ifFalse)
 end
 
 
------ CREW ALERT MESSAGE TABLE REMOVE ---------------------------------------------------
-function B747_removeWarning(message)
-
-    for i = #B747_CASwarning, 1, -1 do
-        if B747_CASwarning[i] == message then
-            table.remove(B747_CASwarning, i)
-            break
-        end
-    end
-
-end
-
-function B747_removeCaution(message)
-
-    for i = #B747_CAScaution, 1, -1 do
-        if B747_CAScaution[i] == message then
-            table.remove(B747_CAScaution, i)
-            break
-        end
-    end
-
-end
-
-function B747_removeAdvisory(message)
-
-    for i = #B747_CASadvisory, 1, -1 do
-        if B747_CASadvisory[i] == message then
-            table.remove(B747_CASadvisory, i)
-            break
-        end
-    end
-
-end
-
-function B747_removeMemo(message)
-    for i = #B747_CASmemo, 1, -1 do
-        if B747_CASmemo[i] == message then
-            table.remove(B747_CASmemo, i)
-            break
-        end
-    end
-
-end
-
-
-
-function cleanAllWhenOff()
-  for i = 1, #B747_CASwarningMsg do
-    B747_removeWarning(B747_CASwarningMsg[i].name)   
-    B747_CASwarningMsg[i].status=0
-  end
-  for i = 1, #B747_CAScautionMsg do
-    B747_removeCaution(B747_CAScautionMsg[i].name)
-    B747_CAScautionMsg[i].status=0
-  end
-  for i = 1, #B747_CASadvisoryMsg do
-    B747_removeAdvisory(B747_CASadvisoryMsg[i].name) 
-    B747_CASadvisoryMsg[i].status=0
-  end
-  for i = 1, #B747_CASmemoMsg do
-     B747_removeMemo(B747_CASmemoMsg[i].name)
-     B747_CASmemoMsg[i].status = 0
-  end
-
-    B747DR_master_caution = 0                                                   -- SET THE MASTER CAUTION
-    B747DR_master_caution_audio     = 0
-    B747DR_master_warning = 0
-    B747DR_warning_bell           	= 0
-    B747DR_warning_siren           	= 0
-    B747DR_warning_wailer           = 0
-    
-end
-
-function stop_caution_audio()
-    B747DR_master_caution_audio     = 0
-end
------ BUILD THE ALERT QUEUE -------------------------------------------------------------
-function B747_CAS_queue() 
-
-    ----- WARNINGS
-    for i = 1, #B747_CASwarningMsg do                                                                   -- ITERATE THE WARNINGS DATA TABLE
-
-        if B747_CASwarningMsg[i].status ~= B747DR_CAS_warning_status[B747_CASwarningMsg[i].DRindex] then -- THE WARNING STATUS HAS CHANGED
-
-            if B747DR_CAS_warning_status[B747_CASwarningMsg[i].DRindex] == 1 then                       -- WARNING IS ACTIVE
-                table.insert(B747_CASwarning, B747_CASwarningMsg[i].name)                               -- ADD TO THE WARNING QUEUE
-                B747DR_master_warning = 1
-                                                                               -- SET THE MASTER WARNING
-                if i==1 then --AP disconnect? 
-                    B747DR_warning_wailer = 1
-                end
-            elseif B747DR_CAS_warning_status[B747_CASwarningMsg[i].DRindex] == 0 then                   -- WARNING IS INACTIVE
-                B747_removeWarning(B747_CASwarningMsg[i].name)                                          -- REMOVE FROM THE WARNING QUEUE
-            end
-            B747_CASwarningMsg[i].status = B747DR_CAS_warning_status[B747_CASwarningMsg[i].DRindex]     -- RESET WARNING STATUS
-
-        end
-
-    end
-    if #B747_CASwarning == 0 and B747DR_fire_ovht_button_pos==0 then 
-      B747DR_master_warning = 0 
-    elseif B747DR_fire_ovht_button_pos==1 then 
-      B747DR_master_warning = 1 
-    end 
-    if B747DR_master_warning == 1 then
-        --is there fire?
-        if B747DR_fire_ovht_button_pos > 0 or B747DR_engine_fire > 0 or B747DR_apu_fire > 0 then
-            B747DR_warning_bell           	= 1
-        elseif B747DR_warning_wailer == 0 then
-            B747DR_warning_siren = 1
-        end   
-
-    else
-        B747DR_warning_bell           	= 0
-        B747DR_warning_siren           	= 0
-        B747DR_warning_wailer           = 0
-    end
-    ----- CAUTIONS
-    for i = 1, #B747_CAScautionMsg do                                                      -- ITERATE THE CAUTIONS DATA TABLE
-
-        if B747_CAScautionMsg[i].status ~= B747DR_CAS_caution_status[B747_CAScautionMsg[i].DRindex] then -- THE CAUTION STATUS HAS CHANGED
-
-            if B747DR_CAS_caution_status[B747_CAScautionMsg[i].DRindex] == 1 then                 -- CAUTION IS ACTIVE
-                table.insert(B747_CAScaution, B747_CAScautionMsg[i].name)                  -- ADD TO THE CAUTION QUEUE
-                B747DR_master_caution = 1                                                   -- SET THE MASTER CAUTION
-                B747DR_master_caution_audio     = 1
-                run_after_time(stop_caution_audio,1)
-            elseif B747DR_CAS_caution_status[B747_CAScautionMsg[i].DRindex] == 0 then             -- CAUTION IS INACTIVE
-                B747_removeCaution(B747_CAScautionMsg[i].name)                             -- REMOVE FROM THE CAUTION QUEUE
-            end
-            B747_CAScautionMsg[i].status = B747DR_CAS_caution_status[B747_CAScautionMsg[i].DRindex]  -- RESET CAUTION STATUS
-        end
-
-    end
-    if #B747_CAScaution == 0 then B747DR_master_caution = 0 end  
-
-    ----- ADVISORIES
-    for i = 1, #B747_CASadvisoryMsg do                                                      -- ITERATE THE CAUTIONS DATA TABLE
-
-        if B747_CASadvisoryMsg[i].status ~= B747DR_CAS_advisory_status[B747_CASadvisoryMsg[i].DRindex] then -- THE CAUTION STATUS HAS CHANGED
-
-            if B747DR_CAS_advisory_status[B747_CASadvisoryMsg[i].DRindex] == 1 then                 -- CAUTION IS ACTIVE
-                table.insert(B747_CASadvisory, B747_CASadvisoryMsg[i].name)                  -- ADD TO THE CAUTION QUEUE
-            elseif B747DR_CAS_advisory_status[B747_CASadvisoryMsg[i].DRindex] == 0 then             -- CAUTION IS INACTIVE
-                B747_removeAdvisory(B747_CASadvisoryMsg[i].name)                             -- REMOVE FROM THE CAUTION QUEUE
-            end
-            B747_CASadvisoryMsg[i].status = B747DR_CAS_advisory_status[B747_CASadvisoryMsg[i].DRindex]  -- RESET CAUTION STATUS
-
-        end
-
-    end
-
-    ----- MEMOS
-    
-    for i = 1, #B747_CASmemoMsg do                                                          -- ITERATE THE CAUTIONS DATA TABLE
-	
-        if B747_CASmemoMsg[i].status ~= B747DR_CAS_memo_status[B747_CASmemoMsg[i].DRindex] then    -- THE CAUTION STATUS HAS CHANGED
-
-            if B747DR_CAS_memo_status[B747_CASmemoMsg[i].DRindex] == 1 then                        -- CAUTION IS ACTIVE
-                table.insert(B747_CASmemo, B747_CASmemoMsg[i].name)                         -- ADD TO THE CAUTION QUEUE
-            elseif B747DR_CAS_memo_status[B747_CASmemoMsg[i].DRindex] == 0 then                    -- CAUTION IS INACTIVE
-                B747_removeMemo(B747_CASmemoMsg[i].name)                                -- REMOVE FROM THE CAUTION QUEUE
-            end
-            B747_CASmemoMsg[i].status = B747DR_CAS_memo_status[B747_CASmemoMsg[i].DRindex]         -- RESET CAUTION STATUS
-
-        end
-
-    end
-
-end
-
-
-
 local powered = false
-
-
-
------ BUILD THE CAS DISPLAY PAGES -------------------------------------------------------
-function B747_CAS_display()
-    
-    B747DR_CAS_num_msg_pages = #B747_CASwarning
-    if #B747_CASwarning < 11 then
-        B747DR_CAS_num_msg_pages = math.ceil(math.max(10, (#B747_CASwarning + #B747_CAScaution + #B747_CASadvisory + #B747_CASmemo)) / 11)
-    end
-    local numAlertPages = 10 --math.ceil((#B747_CASwarning + #B747_CAScaution + #B747_CASadvisory + #B747_CASmemo) / 11)  -- TODO:  CHANGE TO FIXED NUMBER OF PAGES (GENERIC MESSAGES)
-    local genIndex = 0
-    local lastGenIndex = 0
-
-    -- RESET ALL MESSAGES
-    --[[for x = 0, NUM_ALERT_MESSAGES do
-        B747DR_CAS_gen_warning_msg[x] = " "
-        B747DR_CAS_gen_caution_msg[x] = " "
-        B747DR_CAS_gen_advisory_msg[x] = " "
-        B747DR_CAS_gen_memo_msg[x] = " "
-    end]]
-    local set_B747DR_CAS_gen_warning_msg={}
-    local set_B747DR_CAS_gen_caution_msg={}
-    local set_B747DR_CAS_gen_advisory_msg={}
-    local set_B747DR_CAS_gen_memo_msg={}
-    for x = 0, NUM_ALERT_MESSAGES do
-        set_B747DR_CAS_gen_warning_msg[x] = 0
-        set_B747DR_CAS_gen_caution_msg[x] = 0
-        set_B747DR_CAS_gen_advisory_msg[x] = 0
-        set_B747DR_CAS_gen_memo_msg[x] = 0
-    end
-    ----- WARNINGS ----------------------------------------------------------------------
-
-    for i = #B747_CASwarning, 1, -1 do                                                      -- REVERSE ITERATE THE TABLE (GET MOST RECENT FIRST)
-
-        B747DR_CAS_gen_warning_msg[genIndex] = B747_CASwarning[i]                               -- ASSIGN ALERT TO WARNING GENERIC
-        set_B747DR_CAS_gen_warning_msg[genIndex] = 1						-- MARK IT USED
-	lastGenIndex = genIndex
-        if #B747_CASwarning < 11 then                                                       -- NUM WARNINGS FILLS OR EXCEEDS ONE PAGE
-            for page = 2, numAlertPages  do                                                 -- ITERATE ALL OTHER ALERT PAGES
-                B747DR_CAS_gen_warning_msg[((page*11)-11) + genIndex] = B747DR_CAS_gen_warning_msg[genIndex]    -- DUPLICATE THE WARNING FOR ALL PAGES
-		set_B747DR_CAS_gen_warning_msg[genIndex] = 1						-- MARK IT USED
-            end
-        end
-        genIndex = genIndex + 1                                                             -- INCREMENT THE GENERIC INDEX
-	--::continue::
-    end
-
-
-    if #B747_CASwarning < 11 then                                                           -- FIRST PAGE NOT FULL OF WARNINGS - OK TO PROCEED
-
-        if B747DR_CAS_caut_adv_display == 1 then
-
-            ----- CAUTIONS --------------------------------------------------------------
-            for i = #B747_CAScaution, 1, -1 do                                                      -- REVERSE ITERATE THE TABLE (MOST RECENT MESSAGE FIRST)
-
-                B747DR_CAS_gen_caution_msg[genIndex] = B747_CAScaution[i]                           -- ASSIGN ALERT TO CAUTION GENERIC
-		set_B747DR_CAS_gen_caution_msg[genIndex] =1						-- MARK IT USED
-                lastGenIndex = genIndex
-                genIndex = genIndex + 1                                                             -- INCREMENT THE GENERIC INDEX
-                if math.fmod(genIndex, 11) == 0 then                                                -- END OF PAGE
-                    genIndex = genIndex + #B747_CASwarning                                          -- INCREMENT THE INDEX BY THE NUM OF WARNINGS DISPLAYED (FOR NEXT PAGE)
-                end
-
-
-            end
-
-
-            ----- ADVISORIES ------------------------------------------------------------
-            for i = #B747_CASadvisory, 1, -1 do                                                     -- REVERSE ITERATE THE TABLE (MOST RECENT MESSAGE FIRST)
-
-                B747DR_CAS_gen_advisory_msg[genIndex] = B747_CASadvisory[i]                             -- ASSIGN ALERT TO ADVISORY GENERIC
-                set_B747DR_CAS_gen_advisory_msg[genIndex] = 1						-- MARK IT USED
-		lastGenIndex = genIndex
-                genIndex = genIndex + 1                                                             -- INCREMENT THE GENERIC INDEX
-                if math.fmod(genIndex, 11) == 0 then                                                -- END OF PAGE
-                    genIndex = genIndex + #B747_CASwarning                                          -- INCREMENT THE INDEX BY THE NUM OF WARNINGS DISPLAYED (FOR NEXT PAGE)
-                end
-
-            end
-
-        end
-
-
-        ----- MEMOS ---------------------------------------------------------------------
-        local memoPageCheck = 1                                                                 -- FIST MEMO PAGE CHECK FLAG
-        local increment = -1                                                                    -- INITIAL DISPLAY DIRECTION IS BOTTOM UP
-        --local lastIndex = genIndex                                                              -- SAVE THE LAST GENERIC INDEX
-        local page = math.ceil((genIndex+1) / 11)                                               -- GET CURRENT PAGE #
-        local memoStartPage = page                                                              -- ASSIGN START PAGE FOR MEMO MESSAGES
-
-        genIndex = ((memoStartPage * 10) + (memoStartPage - 1))                                 -- START DISPLAY AT BOTTOM OF CURRENT PAGE
-
-        for i = #B747_CASmemo, 1, -1 do                                                         -- REVERSE ITERATE THE TABLE (MOST RECENT MESSAGE FIRST)
-
-            -- FIRST PAGE IS FILLED
-            if memoPageCheck == 1                                                               -- OK TO PERFORM CHECK
-                and page == memoStartPage                                                       -- STILL ON START PAGE
-                and genIndex == lastGenIndex                                                    -- WE ARE AT THE LAST ADVISORY MESSAGE POSITION - START PAGE IS FILLED
-
-            -- START NEXT PAGE
-            then
-                page = page + 1                                                                 -- INCREMENT PAGE # TO STOP PAGE CHECK
-                genIndex = page * 11                                                            -- SET THE GENERIC INDEX TO BEGINNING OF NEXT PAGE
-                increment = 1                                                                   -- CHANGE DISPLAY DIRECTION TO TOP DOWM
-                memoPageCheck = 0                                                               -- SET THE FLAG TO STOP PAGE CHECK
-            end
-
-            B747DR_CAS_gen_memo_msg[genIndex] = B747_CASmemo[i]                                     -- ASSIGN MEMO TO GENERIC
-            set_B747DR_CAS_gen_memo_msg[genIndex] = 1
-	    genIndex = genIndex + increment                                                     -- ADJUST THE GENERIC INDEX
-            if math.fmod(genIndex, 10) == 0 then                                                -- END OF PAGE
-                genIndex = genIndex + #B747_CASwarning                                          -- INCREMENT THE INDEX BY THE NUM OF WARNINGS DISPLAYED (FOR NEXT PAGE)
-            end
-
-        end
-    end
-    for x = 0, NUM_ALERT_MESSAGES do
-
-      if set_B747DR_CAS_gen_warning_msg[x]==0 then B747DR_CAS_gen_warning_msg[x] = " " end
-      if set_B747DR_CAS_gen_caution_msg[x]==0 then B747DR_CAS_gen_caution_msg[x] = " " end
-      if set_B747DR_CAS_gen_advisory_msg[x]==0 then B747DR_CAS_gen_advisory_msg[x] = " " end
-      if set_B747DR_CAS_gen_memo_msg[x]==0 then B747DR_CAS_gen_memo_msg[x] = " " end
-    end
-end
 
 
 
@@ -1061,6 +772,7 @@ function B747_set_warning_all_modes()
     B747DR_init_warning_CD = 0
     B747DR_CAS_msg_page = 1
     B747DR_CAS_caut_adv_display = 1
+    B747_alerts_reset()
 
 end
 
@@ -1145,21 +857,23 @@ function after_physics()
     local eiu_power = B747DR_warning_elec_stby_main == 1 or B747DR_warning_elec_xfr_capt == 1 or B747DR_warning_elec_xfr_fo == 1
     if not eiu_power or simDR_esys1==6 then
       powered = false
-      cleanAllWhenOff()
+      B747_alerts_off()
 
       lastUpdate=simDRTime
-    elseif diff>2 and powered == true then
-      B747_CAS_queue()
-      B747_CAS_display()
+    elseif powered == true then
+      B747_alerts()
 
       B747_warnings_EICAS_msg()
 
       B747_warning_monitor_AI()
       lastUpdate=simDRTime
-    elseif diff>4 then
-      powered = true
-      lastUpdate=simDRTime
-
+    else
+      -- the EIUs start 4 s after the power comes (estimate: the old value)
+      B747_alerts_off()
+      if diff>4 then
+        powered = true
+        lastUpdate=simDRTime
+      end
     end
 end
 

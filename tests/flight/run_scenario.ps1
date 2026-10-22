@@ -211,7 +211,7 @@ foreach ($step in $spec.steps) {
             'cas' { $lines = Get-CasLines; Add-Result $step 'info' ("{0} line(s): {1}" -f $lines.Count, ($lines -join ' | ')) $lines }
             'view' {
                 # head pitch/heading in degrees from the captain's eye point
-                $presets = @{ forward = @(0, 0); panel = @(-28, 20); overhead = @(58, 48) }
+                $presets = @{ forward = @(0, 0); panel = @(-28, 20); overhead = @(58, 48); eicas = @(-22, 29) }
                 $v = if ($step.name) { $presets[$step.name] } else { @($step.the, $step.psi) }
                 if (-not $v) { throw "unknown view preset $($step.name)" }
                 Set-XPDataref 'sim/graphics/view/pilots_head_the' $v[0]

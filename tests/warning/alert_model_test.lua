@@ -291,4 +291,120 @@ do
     T.check(not out.master_caution, "landing, below 75 kt: a reset caution stays out")
 end
 
+-- the beeper: once for each caution that lights master CAUTION, also while
+-- the light is on; not for ENG SHUTDOWN (FCOM p.1552, p.902)
+do
+    local s, inp = flying()
+    alerts(inp, {})
+    run(s, inp, 0.5)
+    add(inp, "HYD PRESS SYS 1", "caution")
+    local out = A.update(s, inp, DT)
+    T.check(out.caution_beep, "beeper: a new caution")
+    out = A.update(s, inp, DT)
+    T.check(not out.caution_beep, "beeper: once")
+    add(inp, "HYD PRESS SYS 2", "caution")
+    out = A.update(s, inp, DT)
+    T.check(out.master_caution and out.caution_beep, "beeper: a second caution while master CAUTION is lit")
+    add(inp, ">ENG 3 SHUTDOWN", "caution")
+    out = A.update(s, inp, DT)
+    T.check(not out.caution_beep, "beeper: not for ENG SHUTDOWN")
+    add(inp, "ELEC BUS ISLN 1", "advisory")
+    out = A.update(s, inp, DT)
+    T.check(not out.caution_beep, "beeper: not for an advisory")
+end
+
+-- the beeper waits with the light: before start never, after the takeoff
+-- inhibit when the light comes on (FCOM p.1586, p.1594)
+do
+    local s, inp = A.new(), A.inputs()
+    alerts(inp, {{"HYD PRESS SYS 1", "caution"}})
+    local out = A.update(s, inp, DT)
+    T.check(not out.caution_beep, "beeper: not before start")
+    s, inp = A.new(), A.inputs()
+    inp.fuel_cutoff = {false, false, false, false}
+    alerts(inp, {})
+    run(s, inp, 1)
+    inp.ias = 120
+    alerts(inp, {{"HYD PRESS SYS 3", "caution"}})
+    out = run(s, inp, 1)
+    T.check(not out.caution_beep, "beeper: not during the takeoff inhibit")
+    inp.on_ground, inp.nose_gear_down, inp.radio_alt = false, false, 450
+    out = A.update(s, inp, DT)
+    T.check(out.master_caution and out.caution_beep, "beeper: when the takeoff inhibit ends")
+end
+
+-- the bell and the resettable siren stop on a master reset, the other siren
+-- does not; a new fire rings again (FCOM p.1550-1551)
+do
+    local s, inp = flying()
+    alerts(inp, {{"FIRE ENG 2", "warning"}})
+    local out = run(s, inp, 0.5)
+    T.check(out.aural.bell and not out.aural.siren, "fire: bell, no siren")
+    out = push(s, inp, "master_reset")
+    T.check(not out.aural.bell and not out.master_warning, "fire: master reset stops the bell and the light")
+    out = run(s, inp, 0.5)
+    T.check(not out.aural.bell, "fire: the bell stays off while the fire goes on")
+    add(inp, "FIRE APU", "warning")
+    out = run(s, inp, 0.5)
+    T.check(out.aural.bell and out.master_warning, "fire: a new fire rings again")
+
+    s, inp = flying()
+    alerts(inp, {{"CABIN ALTITUDE", "warning"}})
+    out = run(s, inp, 0.5)
+    T.check(out.aural.siren, "CABIN ALTITUDE: siren")
+    out = push(s, inp, "master_reset")
+    T.check(not out.aural.siren, "CABIN ALTITUDE: master reset stops the siren")
+
+    s, inp = flying()
+    alerts(inp, {{">CONFIG FLAPS", "warning"}})
+    out = run(s, inp, 0.5)
+    T.check(out.aural.siren, "CONFIG FLAPS: siren")
+    out = push(s, inp, "master_reset")
+    T.check(out.aural.siren and not out.master_warning, "CONFIG FLAPS: master reset puts the light out, not the siren")
+    alerts(inp, {})
+    out = run(s, inp, 0.2)
+    T.check(not out.aural.siren, "CONFIG FLAPS: the siren stops with the condition")
+end
+
+-- the wailer: while >AUTOPILOT DISC is shown, at least 1 s (FCOM p.1550)
+do
+    local s, inp = flying()
+    alerts(inp, {{">AUTOPILOT DISC", "warning"}})
+    local out = run(s, inp, 0.3)
+    T.check(out.aural.wailer and not out.aural.siren, "AP disconnect: wailer, no siren")
+    alerts(inp, {})
+    out = run(s, inp, 0.5)
+    T.check(out.aural.wailer, "AP disconnect: the wailer lasts 1 s")
+    out = run(s, inp, 0.3)
+    T.check(not out.aural.wailer, "AP disconnect: and then stops")
+end
+
+-- a fire past V1 rings when the takeoff inhibit ends (FCOM p.1594)
+do
+    local s, inp = A.new(), A.inputs()
+    inp.fuel_cutoff = {false, false, false, false}
+    inp.v1 = 150
+    alerts(inp, {})
+    run(s, inp, 1)
+    inp.ias = 160
+    alerts(inp, {{"FIRE ENG 4", "warning"}})
+    local out = run(s, inp, 1)
+    T.check(not out.aural.bell and not out.master_warning, "takeoff: no bell past V1")
+    inp.on_ground, inp.nose_gear_down, inp.radio_alt = false, false, 450
+    out = run(s, inp, 0.2)
+    T.check(out.aural.bell and out.master_warning, "takeoff: the bell rings at RA 400 ft")
+end
+
+-- CANC on the last page reports the hidden cautions until RCL
+do
+    local s, inp = flying()
+    alerts(inp, {{"HYD PRESS SYS 1", "caution"}})
+    local out = run(s, inp, 0.5)
+    T.check(not out.cancelled, "cancelled: nothing yet")
+    out = push(s, inp, "cancel")
+    T.check(out.cancelled, "cancelled: after CANC on the last page")
+    out = push(s, inp, "recall")
+    T.check(not out.cancelled, "cancelled: not after RCL")
+end
+
 T.done()

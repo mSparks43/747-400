@@ -181,9 +181,10 @@ simDR_autopilot_TOGA_pitch_deg      	= find_dataref("sim/cockpit2/autopilot/TOGA
 
 B747DR_button_switch_position   = find_dataref("laminar/B747/button_switch/position")
 
-B747DR_CAS_msg_page             = find_dataref("laminar/B747/CAS/msg_page")
-B747DR_CAS_num_msg_pages        = find_dataref("laminar/B747/CAS/num_msg_pages")
-B747DR_CAS_caut_adv_display     = find_dataref("laminar/B747/CAS/caut_adv_display")
+-- CANC and RCL are counted here; the alert model (B747.87.xt.alerts.lua)
+-- turns the pages and writes msg_page
+B747DR_CAS_canc_count           = find_dataref("laminar/B747/CAS/canc_count")
+B747DR_CAS_rcl_count            = find_dataref("laminar/B747/CAS/rcl_count")
 B747DR_CAS_recall_ind           = find_dataref("laminar/B747/CAS/recall_ind")
 
 B747DR_CAS_warning_status       = find_dataref("laminar/B747/CAS/warning_status")
@@ -1470,12 +1471,7 @@ end
 function B747_dsp_canc_switch_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_dsp_canc_switch_pos = 1
-        if B747DR_CAS_msg_page == B747DR_CAS_num_msg_pages then
-            B747DR_CAS_msg_page = 1
-            B747DR_CAS_caut_adv_display = 0
-        else
-            B747DR_CAS_msg_page = math.min(B747DR_CAS_num_msg_pages, B747DR_CAS_msg_page + 1)
-        end
+        B747DR_CAS_canc_count = B747DR_CAS_canc_count + 1
     elseif phase == 2 then
         B747DR_dsp_canc_switch_pos = 0
     end
@@ -1490,8 +1486,7 @@ end
 function B747_dsp_rcl_switch_CMDhandler(phase, duration)
     if phase == 0 then
         B747DR_dsp_rcl_switch_pos = 1
-        B747DR_CAS_msg_page = 1
-        B747DR_CAS_caut_adv_display = 1
+        B747DR_CAS_rcl_count = B747DR_CAS_rcl_count + 1
         B747DR_CAS_recall_ind = 1
     elseif phase == 2 then
         B747DR_dsp_rcl_switch_pos = 0

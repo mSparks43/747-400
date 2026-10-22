@@ -1,10 +1,11 @@
 -- 747-400 crew alerting without X-Plane: the EICAS message list (order,
--- pages, CANC/RCL), the master WARNING/CAUTION lights, and the inhibits of
--- FCOM 15.20 for airplane 109. Logic and sources:
--- docs/overhaul/notes/ATA-31-warning.md §3.1-3.3, §4.1, §4.2, §4.4.
--- The sounds follow the master lights in fmod/747-400.snd (beeper when
+-- pages, CANC/RCL), the master WARNING/CAUTION lights, the aural each
+-- warning asks for, and the inhibits of FCOM 15.20 for airplane 109. Logic
+-- and sources: docs/overhaul/notes/ATA-31-warning.md §3.1-3.4, §4.1, §4.2,
+-- §4.4. The sounds of fmod/747-400.snd follow the master lights (beeper when
 -- master CAUTION comes on, siren while master WARNING is on), so an
--- inhibited light is an inhibited sound too.
+-- inhibited light is an inhibited sound too; out.aural and
+-- out.caution_beep are what FCOM asks for, for a sound file that uses them.
 --
 --   local A = B747_alert_model            -- in XTLua, after dofile
 --   local A = dofile(".../B747.87.alert_model.lua")   -- in the tests
@@ -34,6 +35,22 @@ M.NO_MASTER_CAUTION = {["ENG SHUTDOWN"] = true}
 -- (FCOM p.1600-1602):
 M.LANDING_SHOWN = {["AUTOPILOT"] = true, ["AUTOTHROT DISC"] = true, ["NO AUTOLAND"] = true,
     ["SPEEDBRAKES EXT"] = true}
+
+-- The aural of each warning (FCOM p.1550-1552, airplane 109 before the SB;
+-- notes/ATA-31-warning.md §3.4). The bell and the resettable siren stop on
+-- a master reset, the other siren only when the condition goes. CONFIG GEAR
+-- caused by a closed thrust lever is resettable, by the flaps it is not: the
+-- message does not say which, so it is taken as not resettable (estimate).
+M.BELL = {["FIRE APU"] = true, ["FIRE CARGO AFT"] = true, ["FIRE CARGO FWD"] = true,
+    ["FIRE ENG"] = true, ["FIRE WHEEL WELL"] = true}
+M.SIREN_RESETTABLE = {["CABIN ALTITUDE"] = true}
+M.SIREN = {["CONFIG FLAPS"] = true, ["CONFIG GEAR"] = true, ["CONFIG GEAR CTR"] = true,
+    ["CONFIG PARK BRK"] = true, ["CONFIG SPOILERS"] = true, ["CONFIG STAB"] = true,
+    ["OVERSPEED"] = true}
+-- The wailer sounds at least 1 s; the autopilot ends the message (second
+-- push of the disconnect switch or re-engaging, FCOM p.1550, p.655).
+M.WAILER = {["AUTOPILOT DISC"] = true}
+M.WAILER_MIN_S = 1
 
 -- the class and engine number (1-4 or nil) of a message name
 function M.classify(name)
@@ -67,12 +84,15 @@ end
 function M.new()
     return {
         t = 0,
-        seen = {},            -- name -> {level, since, new, hidden, held (engine start), cancelled}
+        -- name -> {level, since, new, hidden, held (engine start), cancelled,
+        -- pending (waits for a takeoff or landing inhibit to end), announced
+        -- (lit its master light), silenced (master reset after that)}
+        seen = {},
         order = {},           -- caution and advisory names in display order
         page = 1,
         recall_s = 0,
         master_warning = false, master_caution = false,
-        pending_warning = false, pending_caution = false,
+        wailer_until = 0,
         takeoff_armed = false,   -- slow on the ground since the last flight
         to_caution = false, to_rotated_at = nil,
         to_warning = false, to_warning_at = nil,
@@ -232,41 +252,68 @@ function M.update(s, inp, dt)
     -- master lights (FCOM p.1532). During the takeoff and landing inhibits a
     -- new alert does not light them, and lights them when the inhibit ends if
     -- still there (FCOM p.1594-1595); during the pre-start inhibit it does not
-    -- light master CAUTION at all.
-    for name, rec in pairs(s.seen) do
-        if rec.new and not rec.hidden then
-            local class = M.classify(name)
-            if rec.level == "warning" then
-                if ph.to_warning and class ~= "CONFIG GEAR" then
-                    s.pending_warning = true
-                else
-                    s.master_warning = true
-                end
-            elseif rec.level == "caution" and not M.NO_MASTER_CAUTION[class] then
-                if ph.to_caution or (ph.landing_caution and not M.LANDING_SHOWN[class]) then
-                    s.pending_caution = true
-                elseif not ph.prestart_caution then
-                    s.master_caution = true
-                end
-            end
-            rec.new = false
+    -- light master CAUTION at all. The beeper sounds for each caution that
+    -- lights master CAUTION, also when it is lit already (FCOM p.1552).
+    local beep = false
+    local function announce(name, rec)
+        rec.announced, rec.pending = true, false
+        if rec.level == "warning" then
+            s.master_warning = true
+            if M.WAILER[(M.classify(name))] then s.wailer_until = s.t + M.WAILER_MIN_S end
+        else
+            s.master_caution, beep = true, true
         end
     end
-    if s.pending_warning and not ph.to_warning then s.master_warning, s.pending_warning = true, false end
-    if s.pending_caution and not ph.to_caution and not ph.landing_caution then
-        s.master_caution, s.pending_caution = true, false
+    for name, rec in pairs(s.seen) do
+        if not rec.hidden then
+            local class = M.classify(name)
+            local lights = rec.level == "warning" or (rec.level == "caution" and not M.NO_MASTER_CAUTION[class])
+            local inhibited
+            if rec.level == "warning" then
+                inhibited = ph.to_warning and class ~= "CONFIG GEAR"
+            else
+                inhibited = ph.to_caution or (ph.landing_caution and not M.LANDING_SHOWN[class])
+            end
+            if rec.new then
+                rec.new = false
+                if lights then
+                    if inhibited then
+                        rec.pending = true
+                    elseif rec.level == "warning" or not ph.prestart_caution then
+                        announce(name, rec)
+                    end
+                end
+            elseif rec.pending and not inhibited then
+                announce(name, rec)
+            end
+        end
     end
     if inp.master_reset then
         s.master_warning, s.master_caution = false, false
-        s.pending_warning, s.pending_caution = false, false
+        for _, rec in pairs(s.seen) do
+            rec.pending = false
+            if rec.announced then rec.silenced = true end
+        end
     end
     local any_warning, any_caution = false, false
     for _, rec in pairs(s.seen) do
         if not rec.hidden and rec.level == "warning" then any_warning = true end
         if not rec.hidden and rec.level == "caution" then any_caution = true end
     end
-    if not any_warning then s.master_warning, s.pending_warning = false, false end
-    if not any_caution then s.master_caution, s.pending_caution = false, false end
+    if not any_warning then s.master_warning = false end
+    if not any_caution then s.master_caution = false end
+
+    -- the aurals of the warnings shown (FCOM p.1550-1552)
+    local bell, siren = false, false
+    local wailer = s.t < s.wailer_until
+    for name, rec in pairs(s.seen) do
+        if rec.announced and not rec.hidden and rec.level == "warning" then
+            local class = M.classify(name)
+            if M.BELL[class] and not rec.silenced then bell = true end
+            if M.SIREN[class] or (M.SIREN_RESETTABLE[class] and not rec.silenced) then siren = true end
+            if M.WAILER[class] then wailer = true end
+        end
+    end
 
     -- the list ---------------------------------------------------------------
     local warnings, memos = {}, {}
@@ -345,6 +392,10 @@ function M.update(s, inp, dt)
     end
     s.order = list
     if s.page > #pages then s.page = #pages end
+    local cancelled = false
+    for _, rec in pairs(s.seen) do
+        if rec.cancelled and not rec.hidden then cancelled = true end
+    end
 
     local out = {
         pages = pages,
@@ -352,8 +403,11 @@ function M.update(s, inp, dt)
         num_pages = #pages,
         show_page_number = #pages > 1,
         recall = s.recall_s > 0,
+        cancelled = cancelled,        -- cautions or advisories hidden by CANC
         master_warning = s.master_warning,
         master_caution = s.master_caution,
+        caution_beep = beep,          -- a caution lit master CAUTION in this update
+        aural = {bell = bell, siren = siren, wailer = wailer},
         phases = ph,
     }
     s.out = out

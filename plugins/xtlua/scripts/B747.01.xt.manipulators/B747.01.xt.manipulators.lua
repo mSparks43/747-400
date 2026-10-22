@@ -116,6 +116,9 @@ B747DR_autopilot_cmd_R_mode         = find_dataref("laminar/B747/autopilot/cmd_R
 B747DR_master_warning               = find_dataref("laminar/B747/warning/master_warning")
 B747DR_master_caution               = find_dataref("laminar/B747/warning/master_caution")
 B747DR_master_caution_audio     = find_dataref("laminar/B747/warning/master_caution_audio")
+-- reset pushes, counted for the alert model (B747.87.xt.alerts.lua), which
+-- keeps the lights off after a reset
+B747DR_master_reset_count       = find_dataref("laminar/B747/warning/master_reset_count")
 --B747DR_ap_armed_roll_mode           = find_dataref("laminar/B747/autopilot/armed_roll_mode")
 --B747DR_ap_armed_pitch_mode          = find_dataref("laminar/B747/autopilot/armed_pitch_mode")
 
@@ -999,6 +1002,7 @@ function B747_warning_caution_captain_CMDhandler(phase, duration)
         B747DR_master_warning = 0
         B747DR_master_caution = 0
         B747DR_master_caution_audio     = 0
+        B747DR_master_reset_count = B747DR_master_reset_count + 1
     elseif phase == 1 then
         B747_button_switch_position_target[87] = 1
     elseif phase == 2 then
@@ -1012,6 +1016,7 @@ function B747_warning_caution_fo_CMDhandler(phase, duration)
         B747DR_master_warning = 0
         B747DR_master_caution = 0
         B747DR_master_caution_audio     = 0
+        B747DR_master_reset_count = B747DR_master_reset_count + 1
     elseif phase == 1 then
         B747_button_switch_position_target[88] = 1
     elseif phase == 2 then

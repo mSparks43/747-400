@@ -180,6 +180,31 @@ Lua が作る名前の数：dataref 1617 個、コマンド 628 個。静的に�
 
 - 乗り換え済み：電源の BCU（air mode・APU 発電機・地上ハンドリングバス）、脚レバーのロック。ほかの系統は、それぞれの作り直しで乗り換える（PROGRESS.md）。
 
+### 4.3 乗員への警報（1-3）
+
+警報のモデル（`plugins/xtlua/scripts/B747.87.xt.warning/B747.87.alert_model.lua`）を、グルー `B747.87.xt.alerts.lua` が警報モジュール（`B747.87.xt.warning.lua`）の中で 0.1 秒ごとに回す。中身は notes/ATA-31-warning.md §3・§4。
+
+- 入口は今までどおり：各系統は `laminar/B747/CAS/{warning,caution,advisory,memo}_status[n]` に 0/1 を書く。添字は変えていない。
+- 表示のレベルはメッセージ表（`B747.87.xt.warning.lua` の先頭）で決まる。`level` があれば、配列とは別のレベルで出す（例：ENG FAIL は warning の配列に書かれるが caution）。
+- 出口（名前と意味は変えていない）：
+
+| dataref | 書くもの | 読むもの |
+|---|---|---|
+| `CAS/gen_{warning,caution,advisory,memo}_msg_NNN` | ページ p の n 行目を NNN = 11(p−1)+n−1 に、その行のレベルの名前の方に書く（他のレベルは空白 1 字） | パネル（000〜021 の 2 ページ分だけ） |
+| `CAS/msg_page`・`num_msg_pages` | 見ているページ、ページ数 | パネル（PG は `num_msg_pages > 2` のときだけ） |
+| `CAS/caut_adv_display` | 0＝CANC で隠した caution/advisory がある（RCL で 1） | なし |
+| `warning/master_warning`・`master_caution` | master 灯 | 3D、FMOD（サイレンと beeper） |
+| `warning/master_caution_audio` | master CAUTION を点けた caution ごとに 1 秒 | `747-400_XP11.snd` |
+| `warning/warning_bell`・`warning_siren`・`warning_wailer` | FCOM の音の要求（リセットの可否を含む） | なし（音の結線の変更は承認待ち） |
+
+- 押した回数（1-3 で新設、init スクリプト `B747.87.warning02`）：別のプラグイン・モジュールにあるスイッチを、警報モジュールに渡す。値は押すたびに 1 増える。
+
+| 名前 | 増やす側 | 意味 |
+|---|---|---|
+| `laminar/B747/CAS/canc_count` | fltInst02 の CANC（`laminar/B747/dsp/canc_switch`、CDU の EICAS CTL ページからも） | ページ送り、最後のページで caution/advisory を隠す |
+| `laminar/B747/CAS/rcl_count` | fltInst02 の RCL（`laminar/B747/dsp/rcl_switch`） | 隠したものを戻して 1 ページ目。RECALL の表示（`CAS/recall_ind`）は今までどおり fltInst02 |
+| `laminar/B747/warning/master_reset_count` | manipulators の master リセット（`button_switch/warn_caut_capt`・`_fo`） | 両方の master 灯を消す。灯は manipulators もその場で消す |
+
 ## 5. 表示系（PFD・ND・EICAS・CDU）
 
 - 描画は、各 acf の末尾（`P` 行の後ろ）に埋め込まれた X-Plane の generic instrument で行う。数は 2850 個で、内訳は rotary 1164、text 709、pointer 293、needle 122、tape 85、rolling 24。
@@ -241,6 +266,8 @@ Lua が作る名前の数：dataref 1617 個、コマンド 628 個。静的に�
 - **グローバルの表には必ずメタテーブルを付ける**（`local M = setmetatable({}, {})`）。
   - XTLua の名前空間（`namespace_write`）は、メタテーブルの無い表を代入すると、その時点の中身を別の表にコピーする。
   - そのため、あとで元の表を書き換えても反映されない。コピーの側で無いキーを読むと、`parent` を探す処理が自分を呼び続けてスタックが溢れる（旧フォークで計器・FMC・AP が止まった原因）。
+  - コピーの側の `#`・`ipairs`・`pairs` は `__len` などのメタメソッドに頼る。手元の LuaJIT 2.1（回帰試験）はこれを無視して 0 件になる。XTLua の LuaJIT 2.1.0-beta3 がどうかは確かめていない。どちらでも同じに動くよう、新しいコードはコピーされた表を数えたり回したりしない。
+  - ファイルの `local` の表を、`dofile` した別のチャンク（グルー）に渡すときは、メタテーブル付きの表に入れてグローバルに置く（例：`B747_alert_messages`）。
 - **dataref**：
   - 新しい公開 dataref は init スクリプト（`init/scripts/<モジュール>/`）で作る。xt スクリプトの `deferred_dataref` は探すだけで、作らない。`tests/static/xt_bindings_created_test.lua` がこれを検査する。
   - 名前は既存の名前空間（`laminar/B747/<系統>/…`）に置く。INTERFACES.tsv の名前と意味は変えない（`tests/static/interfaces_test.lua`）。
