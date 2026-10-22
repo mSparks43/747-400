@@ -136,6 +136,36 @@ Lua が作る名前の数：dataref 1617 個、コマンド 628 個。静的に�
 - 名前を変えてはいけないものの一覧：[INTERFACES.tsv](INTERFACES.tsv)。3D オブジェクト・パネル計器（`DATAREF` 行と表示条件 `SHOW_EQUAL/LESS/GREATER`）・FMOD サウンド・AutoATC が参照する `laminar/*` の名前が 2029 個あり、内訳は dataref 1072、コマンド 537、実行時に作られる名前（または未定義）420。
 - 機体設定のよりどころ：`laminar/B747/simconfig`（JSON 文字列）と `laminar/B747/newsimconfig`（更新フラグ）。エンジン型式は `laminar/B747/engines/type`（§7）。
 
+### 4.1 電源の公開 dataref（1-1 で新設）
+
+電源モデル（`plugins/xtlua/scripts/B747.03.xt.electrical/B747.03.elec_model.lua`）の出力。init スクリプト `B747.03.electrical` で作り、`B747.03.xt.elec_buses.lua` が毎フレーム書く。他の系統は、電源の有無をここで判定する（`sim/cockpit2/electrical/bus_volts` はバッテリーだけでも真になるので使わない）。値は 1 が通電・閉、0 が非通電・開。配列の添字は 0 始まり。中身は notes/ATA-24.md。
+
+| 名前 `laminar/B747/electrical/…` | 型 | 中身 |
+|---|---|---|
+| `bus/ac` | array[4] | AC 1-4 |
+| `bus/dc` | array[4] | DC 1-4 |
+| `bus/utility`・`bus/galley` | array[4] | utility 1-4・galley 1-4（109。L UTILITY が 1・2、R が 3・4） |
+| `bus/sync` | array[2] | 同期バス 左・右 |
+| `bus/any_ac` | number | AC 1-4 のどれかに電源 |
+| `bus/xfr_capt`・`bus/xfr_fo` | number | CAPT・F/O transfer bus |
+| `bus/stby_main`・`bus/stby_apu` | number | main・APU standby bus |
+| `bus/bat_main`・`bus/bat_apu` | number | main・APU battery bus |
+| `bus/hot_bat_main`・`bus/hot_bat_apu` | number | main・APU hot battery bus |
+| `bus/dc_tie` | number | DC tie bus |
+| `bus/gnd_svc`・`bus/gnd_svc_util` | number | ground service bus・ground service utility bus |
+| `bus/gnd_hdlg`・`bus/gnd_hdlg_dc` | number | ground handling bus・DC ground handling bus |
+| `breaker/gcb`・`breaker/btb`・`breaker/dcir` | array[4] | GCB・BTB・DCIR 1-4 |
+| `breaker/xpc`・`breaker/apb` | array[2] | XPC 1/2（EXT）・APB 1/2（APU GEN） |
+| `breaker/ssb` | number | split system breaker |
+| `idg_connected` | array[4] | IDG の drive が接続 |
+| `air_mode`・`load_shed` | number | BCU の air mode・負荷制限の実行中 |
+| `battery/volts`・`battery/amps` | array[2] | main [0]・APU [1] バッテリーの電圧と電流（+ 放電、− 充電） |
+| `light/ext_avail`・`light/apu_avail`・`light/util_off` | array[2] | P5 の AVAIL・UTILITY OFF 灯 |
+| `light/isln`・`light/gen_off`・`light/drive` | array[4] | P5 の ISLN・GEN CONT OFF・DRIVE 灯 |
+
+- 前からある名前（`bus1hot`〜`bus4hot`、`topleftbus`・`toprightbus`、`ssb`、`utilityleft1/2`・`utilityright1/2`、`ext_pwr1_on`・`apu_pwr1_on` など、`laminar/B747/rel_esys`〜`rel_esys4`、`capt_display_power`・`fo_display_power`、`display_has_power[6-8]`、`apu_volts`）も、同じモデルから意味を保って書く（notes/ATA-24.md §6）。
+- X-Plane の電気系統は代理として残す：`cross_tie` は 1、`battery_on[0]` は BATTERY スイッチ、`gpu_on` は XPC のどれか、`APU_generator_on` は APB のどれか、`generator_on[n]` は GCB n。
+
 ## 5. 表示系（PFD・ND・EICAS・CDU）
 
 - 描画は、各 acf の末尾（`P` 行の後ろ）に埋め込まれた X-Plane の generic instrument で行う。数は 2850 個で、内訳は rotary 1164、text 709、pointer 293、needle 122、tape 85、rolling 24。

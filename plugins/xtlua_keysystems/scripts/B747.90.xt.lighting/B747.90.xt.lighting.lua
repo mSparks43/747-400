@@ -226,6 +226,13 @@ B747DR_elec_ext_pwr_1_switch_mode   = find_dataref("laminar/B747/elec_ext_pwr_1/
 B747DR_elec_apu_pwr_1_switch_mode   = find_dataref("laminar/B747/apu_pwr_1/switch_mode")
 B747DR_elec_ext_pwr_2_switch_mode   = find_dataref("laminar/B747/elec_ext_pwr_2/switch_mode")
 B747DR_elec_apu_pwr_2_switch_mode   = find_dataref("laminar/B747/apu_pwr_2/switch_mode")
+-- P5 electrical panel lights, from the electrical model (B747.03.xt.elec_buses.lua)
+B747DR_elec_light_ext_avail         = find_dataref("laminar/B747/electrical/light/ext_avail")
+B747DR_elec_light_apu_avail         = find_dataref("laminar/B747/electrical/light/apu_avail")
+B747DR_elec_light_isln              = find_dataref("laminar/B747/electrical/light/isln")
+B747DR_elec_light_gen_off           = find_dataref("laminar/B747/electrical/light/gen_off")
+B747DR_elec_light_drive             = find_dataref("laminar/B747/electrical/light/drive")
+B747DR_elec_light_util_off          = find_dataref("laminar/B747/electrical/light/util_off")
 B747DR_gear_handle 					= find_dataref("laminar/B747/actuator/gear_handle")
 --B747DR_gear_handle_position         = find_dataref("laminar/B747/gear_handle/position")
 --B747DR_flap_lever                   = find_dataref("laminar/B747/flt_ctrls/flap_lever")
@@ -1073,50 +1080,39 @@ function B747_annunciators()
     annun.b.el_eng_ctrl_03 = B747_ternary((B747DR_button_switch_position[9] < 0.5), 1, 0)
     annun.b.el_eng_ctrl_04 = B747_ternary((B747DR_button_switch_position[10] < 0.5), 1, 0)
 
-    -- ELECTRIC UTILITY POWER
-    annun.b.util_power_L = B747_ternary((B747DR_button_switch_position[11] < 0.5), 1, 0)
-    annun.b.util_power_R = B747_ternary((B747DR_button_switch_position[12] < 0.5), 1, 0)
+    -- ELECTRICAL PANEL (P5): the electrical model computes the lights
+    -- (B747.03.xt.elec_buses.lua; FCOM p.781-786) and the EXT/APU ON states
+    annun.b.util_power_L = B747DR_elec_light_util_off[0]
+    annun.b.util_power_R = B747DR_elec_light_util_off[1]
 
     -- BATTERY
     annun.b.battery_off = B747_ternary((B747DR_button_switch_position[13] < 0.5), 1, 0)
 
     -- EXTERNAL POWER
-    annun.b.ext_pwr_avail_01 = B747_ternary(((B747DR_elec_ext_pwr1_available == 1) and B747DR_elec_ext_pwr_1_switch_mode == 0), 1, 0)
-    annun.b.ext_pwr_avail_02 = B747_ternary(((B747DR_elec_ext_pwr2_available == 1) and (B747DR_elec_ext_pwr_2_switch_mode == 0)), 1, 0)
-    B747DR_elec_ext_pwr1_on= B747_ternary((B747DR_elec_ext_pwr1_available == 1) and (B747DR_elec_ext_pwr_1_switch_mode == 1), 1, 0)
-    B747DR_elec_ext_pwr2_on= B747_ternary((B747DR_elec_ext_pwr2_available == 1) and (B747DR_elec_ext_pwr_2_switch_mode == 1), 1, 0)
+    annun.b.ext_pwr_avail_01 = B747DR_elec_light_ext_avail[0]
+    annun.b.ext_pwr_avail_02 = B747DR_elec_light_ext_avail[1]
 
     -- APU GENERATOR
-    annun.b.apu_gen_avail_01 = B747_ternary(((B747DR_elec_apu_pwr1_available ==1 and B747DR_elec_apu_pwr_1_switch_mode == 0)
-        and (simDR_aircraft_on_ground == 1)
-        and (simDR_apu_running == 1)
-        and (simDR_apu_N1_pct > 95.0)),
-        1, 0)
-    annun.b.apu_gen_avail_02 = B747_ternary(((B747DR_elec_apu_pwr2_available ==1 and B747DR_elec_apu_pwr_2_switch_mode == 0)
-        and (simDR_aircraft_on_ground == 1)
-        and (simDR_apu_running == 1)
-        and (simDR_apu_N1_pct > 95.0)),
-        1, 0)
-    B747DR_elec_apu_pwr1_on = B747_ternary(((simDR_apu_gen_on == 1) and B747DR_elec_apu_pwr_1_switch_mode == 1), 1, 0)
-    B747DR_elec_apu_pwr2_on = B747_ternary(((simDR_apu_gen_on == 1) and B747DR_elec_apu_pwr_2_switch_mode == 1), 1, 0)
+    annun.b.apu_gen_avail_01 = B747DR_elec_light_apu_avail[0]
+    annun.b.apu_gen_avail_02 = B747DR_elec_light_apu_avail[1]
 
-    -- BUS TIE
-    annun.b.bus_tie_01 = B747_ternary(((simDR_cross_tie == 0) or B747DR_button_switch_position[18]==0), 1, 0)
-    annun.b.bus_tie_02 = B747_ternary(((simDR_cross_tie == 0) or B747DR_button_switch_position[19]==0), 1, 0)
-    annun.b.bus_tie_03 = B747_ternary(((simDR_cross_tie == 0) or B747DR_button_switch_position[20]==0), 1, 0)
-    annun.b.bus_tie_04 = B747_ternary(((simDR_cross_tie == 0) or B747DR_button_switch_position[21]==0), 1, 0)
+    -- BUS TIE (ISLN)
+    annun.b.bus_tie_01 = B747DR_elec_light_isln[0]
+    annun.b.bus_tie_02 = B747DR_elec_light_isln[1]
+    annun.b.bus_tie_03 = B747DR_elec_light_isln[2]
+    annun.b.bus_tie_04 = B747DR_elec_light_isln[3]
 
-    -- GENERATOR CONTROL
-    annun.b.gen_ctrl_off_01 = B747_ternary((simDR_annun_generator_off[0] == 1), 1, 0)
-    annun.b.gen_ctrl_off_02 = B747_ternary((simDR_annun_generator_off[1] == 1), 1, 0)
-    annun.b.gen_ctrl_off_03 = B747_ternary((simDR_annun_generator_off[2] == 1), 1, 0)
-    annun.b.gen_ctrl_off_04 = B747_ternary((simDR_annun_generator_off[3] == 1), 1, 0)
+    -- GENERATOR CONTROL (OFF)
+    annun.b.gen_ctrl_off_01 = B747DR_elec_light_gen_off[0]
+    annun.b.gen_ctrl_off_02 = B747DR_elec_light_gen_off[1]
+    annun.b.gen_ctrl_off_03 = B747DR_elec_light_gen_off[2]
+    annun.b.gen_ctrl_off_04 = B747DR_elec_light_gen_off[3]
 
-    -- GENERATOR DRIVE DISC
-    annun.b.gen_drive_disc_01 = B747_ternary(((simDR_generator_fail_01 == 6) or (simDR_annun_generator_off[0] == 1)), 1, 0)
-    annun.b.gen_drive_disc_02 = B747_ternary(((simDR_generator_fail_02 == 6) or (simDR_annun_generator_off[1] == 1)), 1, 0)
-    annun.b.gen_drive_disc_03 = B747_ternary(((simDR_generator_fail_03 == 6) or (simDR_annun_generator_off[2] == 1)), 1, 0)
-    annun.b.gen_drive_disc_04 = B747_ternary(((simDR_generator_fail_04 == 6) or (simDR_annun_generator_off[3] == 1)), 1, 0)
+    -- GENERATOR DRIVE
+    annun.b.gen_drive_disc_01 = B747DR_elec_light_drive[0]
+    annun.b.gen_drive_disc_02 = B747DR_elec_light_drive[1]
+    annun.b.gen_drive_disc_03 = B747DR_elec_light_drive[2]
+    annun.b.gen_drive_disc_04 = B747DR_elec_light_drive[3]
 
     -- HYDRAULIC PUMP
     annun.b.hyd_pump_01 = B747_ternary((simDR_engine_running[0] == 0) or (simDR_hyd_pump_fail_eng_01 == 6), 1, 0)

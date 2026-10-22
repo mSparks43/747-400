@@ -564,6 +564,11 @@ local B747_CASmemo      = {}
 --** 				                X-PLANE DATAREFS            			    	 **--
 --*************************************************************************************--
 simDR_bus_volts               = find_dataref("sim/cockpit2/electrical/bus_volts")
+-- EIU power: left EIU on the main standby bus, centre on the CAPT transfer bus,
+-- right on the F/O transfer bus (FCOM p.800, p.804; the electrical model)
+B747DR_warning_elec_stby_main     = find_dataref("laminar/B747/electrical/bus/stby_main")
+B747DR_warning_elec_xfr_capt      = find_dataref("laminar/B747/electrical/bus/xfr_capt")
+B747DR_warning_elec_xfr_fo        = find_dataref("laminar/B747/electrical/bus/xfr_fo")
 
 simDR_startup_running               = find_dataref("sim/operation/prefs/startup_running")
 simDR_all_wheels_on_ground          = find_dataref("sim/flightmodel/failures/onground_any")
@@ -1137,7 +1142,8 @@ debug_warning     = deferred_dataref("laminar/B747/debug/warning", "number")
 function after_physics()
   if debug_warning>0 then return end
     local diff=simDRTime-lastUpdate
-    if simDR_bus_volts[0]<5 or simDR_esys1==6 then
+    local eiu_power = B747DR_warning_elec_stby_main == 1 or B747DR_warning_elec_xfr_capt == 1 or B747DR_warning_elec_xfr_fo == 1
+    if not eiu_power or simDR_esys1==6 then
       powered = false
       cleanAllWhenOff()
 

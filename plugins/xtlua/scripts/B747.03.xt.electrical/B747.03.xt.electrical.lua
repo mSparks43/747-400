@@ -178,6 +178,9 @@ B747DR_elec_utilityleft2      	= deferred_dataref("laminar/B747/electrical/utili
 B747DR_elec_utilityright2      	= deferred_dataref("laminar/B747/electrical/utilityright2", "number")
 simDR_override_gpu               = find_dataref("sim/operation/override/override_GPU_volts")
 B747DR__gear_chocked           = deferred_dataref("laminar/B747/gear/chocked", "number")
+
+-- buses, breakers, lights, EICAS: the electrical model and its glue
+dofile("B747.03.xt.elec_buses.lua")
 --*************************************************************************************--
 --** 				       READ-WRITE CUSTOM DATAREF HANDLERS     	         	     **--
 --*************************************************************************************--
@@ -410,31 +413,6 @@ end
 
 
 
------ BATTERY ---------------------------------------------------------------------------
-function B747_battery()
-
-    if B747DR_button_switch_position[13] < 0.05
-        and simDR_battery_on[0] == 1
-    then
-        simDR_battery_on[0] = 0
-        B747DR_elec_apu_volts = 0
-    end
-
-    if B747DR_button_switch_position[13] > 0.95
-        and simDR_battery_on[0] == 0
-    then
-        simDR_battery_on[0] = 1
-
-    end
-    if simDR_battery_on[0] == 1 then
-         B747DR_elec_apu_volts = 28
-    end
-end
-
-
-
-
-
 ----- EXTERNAL POWER --------------------------------------------------------------------
 function B747_external_power()
 
@@ -474,172 +452,16 @@ function B747_external_power()
 			B747DR_elec_ext_pwr1_available = 1
 	    B747DR_elec_ext_pwr2_available = 1
 		end
-    -- EXTERNAL POWER ON/OFF
-    if (B747DR_elec_ext_pwr1_available == 1
-        and B747DR_elec_ext_pwr_1_switch_mode == 1) or (B747DR_elec_ext_pwr2_available == 1
-        and B747DR_elec_ext_pwr_2_switch_mode == 1)
-    then
-        simDR_gpu_on = 1
-    else
-		--[[	if simDR_version>=120012 then
-				simDR_override_gpu = 0
-			end]]--
-        simDR_gpu_on = 0
-    end
+    -- connecting it (X-Plane's GPU on) is the electrical model's XPC
 end
 
 
 
 
 
------ BUS TIE ---------------------------------------------------------------------------
+----- UTILITY ---------------------------------------------------------------------------
 function B747_ternary(condition, ifTrue, ifFalse)
     if condition then return ifTrue else return ifFalse end
-end
-function B747_bus_tie()
-    simDR_cross_tie = 1 -- got power src make it available always then kill off buses
---     if B747DR_button_switch_position[18] > 0.95
---         or B747DR_button_switch_position[19] > 0.95
---         or B747DR_button_switch_position[20] > 0.95
---         or B747DR_button_switch_position[21] > 0.95
---         or simDR_cross_tie == 0
---     then
---
---     elseif (B747DR_button_switch_position[18] < 0.05
---         and B747DR_button_switch_position[19] < 0.05
---         and B747DR_button_switch_position[20] < 0.05
---         and B747DR_button_switch_position[21] < 0.05)
---         and simDR_cross_tie == 1
---     then
---         simDR_cross_tie = 0
---     end
-
---     if B747DR_button_switch_position[18] < 0.05 and simDR_generator_off[0] ==1 then
---       simDR_esys0=6
---     else
---       simDR_esys0=0
---     end
---     if B747DR_button_switch_position[19] < 0.05 and simDR_generator_off[1] ==1 then
---       simDR_esys1=6
---     else
---       simDR_esys1=0
---     end
---
---     if B747DR_button_switch_position[20] < 0.05 and simDR_generator_off[2] ==1 then
---       simDR_esys2=6
---     else
---       simDR_esys2=0
---     end
---
---     if B747DR_button_switch_position[21] < 0.05 and simDR_generator_off[3] ==1 then
---       simDR_esys3=6
---     else
---       simDR_esys3=0
---     end
-
-    B747DR_simDR_esys0=B747_ternary((B747DR_elec_bus1hot ==1 or simDR_generator_off[0] ==0),0,1)
-    B747DR_simDR_esys1=B747_ternary((B747DR_elec_bus2hot ==1 or simDR_generator_off[1] ==0),0,1)
-    B747DR_simDR_esys2=B747_ternary((B747DR_elec_bus3hot ==1 or simDR_generator_off[2] ==0),0,1)
-    B747DR_simDR_esys3=B747_ternary((B747DR_elec_bus4hot ==1 or simDR_generator_off[3] ==0),0,1)
-
-    --Captain Transfer Bus simDR_esys2
-    B747DR_simDR_fo_display=B747_ternary((B747DR_simDR_esys1 < 0.05 or (B747DR_simDR_esys0 < 0.05 and B747DR_elec_standby_power_sel_pos>0)),0,6)
-    --FO Transfer Bus simDR_esys1
-    B747DR_simDR_captain_display=B747_ternary((B747DR_simDR_esys2 < 0.05 or (B747DR_simDR_esys0 < 0.05 and B747DR_elec_standby_power_sel_pos>0)  or (simDR_battery_on[0] == 1 and B747DR_elec_standby_power_sel_pos>0)),0,6)
-    if failCapt==6 and failFO==6 then --turn off individual displays later
-       simDR_esys1=6
-       simDR_esys2=6
-    else
-       simDR_esys1=0
-       simDR_esys2=0
-    end
---     B747DR_elec_ext_pwr1_on
---     B747DR_elec_ext_pwr2_on
---     B747DR_elec_apu_pwr1_on
---     B747DR_elec_apu_pwr2_on
-    B747DR_elec_topleftbus = B747_ternary((B747DR_elec_ext_pwr1_on==1 or B747DR_elec_apu_pwr1_on==1
-      or (B747DR_elec_bus1hot ==1 and simDR_generator_off[0] ==0) or (B747DR_elec_bus2hot==1 and simDR_generator_off[1] ==0)
-      or B747DR_elec_ssb==1),1,0)
-    B747DR_elec_toprightbus = B747_ternary((B747DR_elec_ext_pwr2_on==1 or B747DR_elec_apu_pwr2_on==1
-      or (B747DR_elec_bus3hot ==1 and simDR_generator_off[2] ==0) or (B747DR_elec_bus4hot==1 and simDR_generator_off[3] ==0)
-      or B747DR_elec_ssb==1),1,0)
-    local do_tie= B747_ternary(((B747DR_elec_topleftbus ==1 or B747DR_elec_toprightbus==1) and
-	(B747DR_elec_ext_pwr1_on==1 or B747DR_elec_apu_pwr1_on==1
-      or (B747DR_elec_bus1hot ==1 and simDR_generator_off[0] ==0)
-      or (B747DR_elec_bus2hot ==1 and simDR_generator_off[1] ==0)
-      or B747DR_elec_ext_pwr2_on==1 or B747DR_elec_apu_pwr2_on==1
-      or (B747DR_elec_bus3hot ==1 and simDR_generator_off[2] ==0)
-      or (B747DR_elec_bus4hot ==1 and simDR_generator_off[3] ==0))),1,0)
-    local forceTie=B747_ternary((B747DR_elec_ext_pwr1_on == 1.0 and B747DR_elec_ext_pwr2_on==0 and B747DR_elec_apu_pwr2_on==0)
-            or (B747DR_elec_ext_pwr2_on == 1.0 and B747DR_elec_ext_pwr1_on==0 and B747DR_elec_apu_pwr1_on==0)
-            or (B747DR_elec_apu_pwr1_on == 1.0 and B747DR_elec_ext_pwr2_on==0 and B747DR_elec_apu_pwr2_on==0)
-            or (B747DR_elec_apu_pwr2_on == 1.0 and B747DR_elec_ext_pwr1_on==0 and B747DR_elec_apu_pwr1_on==0),1,0)
-    local ssb = B747_ternary((B747DR_elec_ext_pwr1_on == 1.0
-            or B747DR_elec_ext_pwr2_on == 1.0
-            or B747DR_elec_apu_pwr1_on == 1.0
-            or B747DR_elec_apu_pwr2_on == 1.0
-
-            ),forceTie,do_tie)
-    B747DR_elec_ssb =B747_set_animation_position(B747DR_elec_ssb, ssb, 0.0, 1.0, 10)
-    B747DR_elec_utilityleft1  = B747_ternary((B747DR_button_switch_position[11] > 0.95 and (B747DR_elec_bus1hot ==1 or simDR_generator_off[0] ==0)),1.0,0.0)
-    B747DR_elec_utilityleft2  = B747_ternary((B747DR_button_switch_position[11] > 0.95 and (B747DR_elec_bus2hot ==1 or simDR_generator_off[1] ==0)),1.0,0.0)
-    B747DR_elec_utilityright1 = B747_ternary((B747DR_button_switch_position[12] > 0.95 and (B747DR_elec_bus3hot ==1 or simDR_generator_off[2] ==0)),1.0,0.0)
-    B747DR_elec_utilityright2 = B747_ternary((B747DR_button_switch_position[12] > 0.95 and (B747DR_elec_bus4hot ==1 or simDR_generator_off[3] ==0)),1.0,0.0)
-
-    B747DR_elec_bus1hot = B747_ternary((B747DR_button_switch_position[18] > 0.95 and (simDR_generator_off[0] ==0 or B747DR_elec_topleftbus ==1)),1,0)
-    B747DR_elec_bus2hot = B747_ternary((B747DR_button_switch_position[19] > 0.95 and (simDR_generator_off[1] ==0 or B747DR_elec_topleftbus ==1)),1,0)
-    B747DR_elec_bus3hot = B747_ternary((B747DR_button_switch_position[20] > 0.95 and (simDR_generator_off[2] ==0 or B747DR_elec_toprightbus ==1)),1,0)
-    B747DR_elec_bus4hot = B747_ternary((B747DR_button_switch_position[21] > 0.95 and (simDR_generator_off[3] ==0 or B747DR_elec_toprightbus ==1)),1,0)
-
-    if B747DR_elec_bus1hot==0 then
-        B747DR_CAS_caution_status[15]=1
-    else
-        B747DR_CAS_caution_status[15]=0
-    end
-    if B747DR_elec_bus2hot==0 then
-        B747DR_CAS_caution_status[16]=1
-    else
-        B747DR_CAS_caution_status[16]=0
-    end
-    if B747DR_elec_bus3hot==0 then
-        B747DR_CAS_caution_status[17]=1
-    else
-        B747DR_CAS_caution_status[17]=0
-    end
-    if B747DR_elec_bus4hot==0 then
-        B747DR_CAS_caution_status[18]=1
-    else
-        B747DR_CAS_caution_status[18]=0
-    end
-
- -- Captain PFD
--- First Officer PFD
--- First Officer ND
--- Captain ND
--- Upper EIACAS
--- Lower EICAS
--- FMS C
--- FMS R
--- FMS L
-    B747DR_elec_display_power[6]=6-B747DR_simDR_fo_display
-    B747DR_elec_display_power[7]=6-B747DR_simDR_fo_display
-    B747DR_elec_display_power[8]=6-B747DR_simDR_captain_display
-    if simDR_generator_off[0] ==0 or simDR_generator_off[1] ==0 then
-        B747DR_elec_apu_pwr_1_switch_mode = 0
-        B747DR_elec_ext_pwr_1_switch_mode = 0
-    end
-    if simDR_generator_off[2] ==0 or simDR_generator_off[3] ==0 then
-        B747DR_elec_apu_pwr_2_switch_mode = 0
-        B747DR_elec_ext_pwr_2_switch_mode = 0
-    end
-    --[[B747DR_elec_toprightbus
-B747DR_elec_bus1hot
-B747DR_elec_bus2hot
-B747DR_elec_bus3hot
-B747DR_elec_bus4hot
-B747DR_elec_utilityleft
-B747DR_elec_utilityright ]]
-
 end
 
 
@@ -707,41 +529,6 @@ function B747_apu()
       B747DR_elec_apu_pwr1_available      = 0
       B747DR_elec_apu_pwr2_available      = 0
     end
-    if simDR_aircraft_on_ground == 1 then
-      if (B747DR_elec_apu_pwr_1_switch_mode == 1 or B747DR_elec_apu_pwr_2_switch_mode == 1)
-             and simDR_apu_N1_pct > 95.0
-             and simDR_apu_gen_on == 0
-         then
-             simDR_apu_gen_on = 1
-	 elseif B747DR_elec_apu_pwr_1_switch_mode == 0 and B747DR_elec_apu_pwr_2_switch_mode==0 then
-	    simDR_apu_gen_on = 0
-	 end
-    elseif simDR_apu_gen_on == 1 and B747DR_elec_apu_pwr_1_switch_mode == 0 and B747DR_elec_apu_pwr_2_switch_mode==0 then
-        simDR_apu_gen_on = 0
-    end
-
-    if B747DR_elec_apu_sel_pos == 0 then
-    	simDR_apu_gen_on = 0
-    end
-
---     if simDR_aircraft_on_ground == 1 then
---         if (B747DR_elec_apu_pwr_1_switch_mode == 1 or B747DR_elec_apu_pwr_2_switch_mode == 1)
---             and simDR_apu_N1_pct > 95.0
---             and simDR_apu_gen_on == 0
---         then
---             simDR_apu_gen_on = 1
--- 	    B747DR_elec_apu_pwr1_available      = 1
--- 	    B747DR_elec_apu_pwr2_available      = 1
---         elseif B747DR_elec_apu_pwr_1_switch_mode == 0 and B747DR_elec_apu_pwr_2_switch_mode==0 then
---             simDR_apu_gen_on = 0
---         end
---     else
---         if simDR_apu_gen_on == 1 and B747DR_elec_apu_pwr_1_switch_mode == 0 and B747DR_elec_apu_pwr_2_switch_mode==0 then
---             simDR_apu_gen_on = 0
--- 	    B747DR_elec_apu_pwr1_available      = 0
--- 	    B747DR_elec_apu_pwr2_available      = 0
---         end
---     end
 
 end
 
@@ -756,99 +543,13 @@ end
 
 
 
------ GENERATORS ------------------------------------------------------------------------
-function B747_generator()
-
-    -- ENGINE #1
-    if B747DR_gen_drive_disc_status[0] == 1 then
-        simDR_generator_on[0] = 0
-    else
-        if simDR_generator_on[0] == 0
-            and B747DR_button_switch_position[22] >= 0.95
-        then
-            simDR_generator_on[0] = 1
-            B747DR_CAS_caution_status[71]=0
-        elseif simDR_generator_on[0] == 1
-            and B747DR_button_switch_position[22] <= 0.05
-        then
-            simDR_generator_on[0] = 0
-            B747DR_CAS_caution_status[71]=1
-        end
-    end
 
 
-    -- ENGINE #2
-    if B747DR_gen_drive_disc_status[1] == 1 then
-        simDR_generator_on[1] = 0
-    else
-        if simDR_generator_on[1] == 0
-                and B747DR_button_switch_position[23] >= 0.95
-        then
-            simDR_generator_on[1] = 1
-            B747DR_CAS_caution_status[72]=0
-        elseif simDR_generator_on[1] == 1
-                and B747DR_button_switch_position[23] <= 0.05
-        then
-            simDR_generator_on[1] = 0
-            B747DR_CAS_caution_status[72]=1
-        end
-    end
-
-
-    -- ENGINE #3
-    if B747DR_gen_drive_disc_status[2] == 1 then
-        simDR_generator_on[2] = 0
-    else
-        if simDR_generator_on[2] == 0
-                and B747DR_button_switch_position[24] >= 0.95
-        then
-            simDR_generator_on[2] = 1
-            B747DR_CAS_caution_status[73]=0
-        elseif simDR_generator_on[2] == 1
-                and B747DR_button_switch_position[24] <= 0.05
-        then
-            simDR_generator_on[2] = 0
-            B747DR_CAS_caution_status[73]=1
-        end
-    end
-
-
-    -- ENGINE #4
-    if B747DR_gen_drive_disc_status[3] == 1 then
-        simDR_generator_on[3] = 0
-    else
-        if simDR_generator_on[3] == 0
-                and B747DR_button_switch_position[25] >= 0.95
-        then
-            simDR_generator_on[3] = 1
-            B747DR_CAS_caution_status[74]=0
-        elseif simDR_generator_on[3] == 1
-                and B747DR_button_switch_position[25] <= 0.05
-        then
-            simDR_generator_on[3] = 0
-            B747DR_CAS_caution_status[74]=1
-        end
-    end
-
-end
-
-
-
-function batteryDrain()
-    B747DR_CAS_advisory_status[19] = 1
-    B747DR_CAS_advisory_status[20] = 1
-end
 
 ----- ELECTRICAL EICAS MESSAGES ---------------------------------------------------------
 function B747_electrical_EICAS_msg()
 
     -- APU
-    if B747DR_elec_standby_power_sel_pos==2 and is_timer_scheduled(batteryDrain) == false then
-        run_after_time(batteryDrain,10)
-    elseif B747DR_elec_standby_power_sel_pos<2 then
-        B747DR_CAS_advisory_status[19] = 0
-       --Main set in fltInst02.lua
-    end
     if (B747DR_elec_apu_sel_pos > 0.95 and simDR_apu_N1_pct < 0.1)
         or
         (B747DR_elec_apu_sel_pos < 0.05 and simDR_apu_N1_pct > 95.0 and is_timer_scheduled(B747_apu_shutdown) == false)
@@ -867,54 +568,6 @@ function B747_electrical_EICAS_msg()
         B747DR_CAS_advisory_status[14] = 1
     else
         B747DR_CAS_advisory_status[14] = 0
-    end
-
-    -- >DRIVE DISC 1
-
-    if B747DR_gen_drive_disc_status[0] == 1 then
-        B747DR_CAS_advisory_status[83] = 1
-    else
-        B747DR_CAS_advisory_status[83] = 0
-    end
-
-    -- >DRIVE DISC 2
-
-    if B747DR_gen_drive_disc_status[1] == 1 then
-        B747DR_CAS_advisory_status[84] = 1
-    else
-        B747DR_CAS_advisory_status[84] = 0
-    end
-
-    -- >DRIVE DISC 3
-
-    if B747DR_gen_drive_disc_status[2] == 1 then
-        B747DR_CAS_advisory_status[85] = 1
-    else
-        B747DR_CAS_advisory_status[85] = 0
-    end
-
-    -- >DRIVE DISC 4
-
-    if B747DR_gen_drive_disc_status[3] == 1 then
-        B747DR_CAS_advisory_status[86] = 1
-    else
-        B747DR_CAS_advisory_status[86] = 0
-    end
-
-    -- ELEC UTIL BUS L
-
-    if B747DR_button_switch_position[11] < 0.05 then
-        B747DR_CAS_advisory_status[105] = 1
-    else
-        B747DR_CAS_advisory_status[105] = 0
-    end
-
-    -- ELEC UTIL BUS R
-
-    if B747DR_button_switch_position[12] < 0.05 then
-        B747DR_CAS_advisory_status[106] = 1
-    else
-        B747DR_CAS_advisory_status[106] = 0
     end
 
     -- APU RUNNING
@@ -1052,11 +705,9 @@ function after_physics()
         do_flight_start()
     end
     flightInit=true
-    B747_battery()
     B747_external_power()
     B747_apu()
-    B747_bus_tie()
-    B747_generator()
+    B747_elec_buses()
     B747_electrical_EICAS_msg()
     B747_elec_monitor_AI()
 

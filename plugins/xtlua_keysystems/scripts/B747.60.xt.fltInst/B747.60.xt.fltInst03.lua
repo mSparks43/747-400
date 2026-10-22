@@ -266,7 +266,7 @@ end
 
 function B747_fltInst_capt_elapsed_timer()
 	
-	local power = B747_rescale(0, 0, 5, 1.0, simDR_elec_bus_volts[0]) 
+	local power = B747DR_fltInst_elec_hot_bat_main	-- main hot battery bus
 	
 	if power > 0.5 then
 	
@@ -317,7 +317,7 @@ end
 
 function B747_fltInst_capt_chrono_timer()
 	
-	local power = B747_rescale(0, 0, 5, 1.0, simDR_elec_bus_volts[0]) 
+	local power = B747DR_fltInst_elec_hot_bat_main	-- main hot battery bus
 	
 	if power > 0.5 then	
 	

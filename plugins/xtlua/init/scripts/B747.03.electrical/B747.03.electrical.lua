@@ -98,6 +98,50 @@ B747DR_simDR_esys1              = deferred_dataref("laminar/B747/rel_esys2", "nu
 B747DR_simDR_esys2              = deferred_dataref("laminar/B747/rel_esys3", "number")
 B747DR_simDR_esys3              = deferred_dataref("laminar/B747/rel_esys4", "number")
 
+-- Power of each bus, 1 powered / 0 not, from the electrical model
+-- (B747.03.elec_model.lua; docs/overhaul/ARCHITECTURE.md §4.1). Other systems
+-- read these instead of sim/cockpit2/electrical/bus_volts.
+B747DR_elec_bus_ac              = deferred_dataref("laminar/B747/electrical/bus/ac", "array[4]")
+B747DR_elec_bus_dc              = deferred_dataref("laminar/B747/electrical/bus/dc", "array[4]")
+B747DR_elec_bus_utility         = deferred_dataref("laminar/B747/electrical/bus/utility", "array[4]")
+B747DR_elec_bus_galley          = deferred_dataref("laminar/B747/electrical/bus/galley", "array[4]")
+B747DR_elec_bus_sync            = deferred_dataref("laminar/B747/electrical/bus/sync", "array[2]")
+B747DR_elec_bus_any_ac          = deferred_dataref("laminar/B747/electrical/bus/any_ac", "number")
+B747DR_elec_bus_xfr_capt        = deferred_dataref("laminar/B747/electrical/bus/xfr_capt", "number")
+B747DR_elec_bus_xfr_fo          = deferred_dataref("laminar/B747/electrical/bus/xfr_fo", "number")
+B747DR_elec_bus_stby_main       = deferred_dataref("laminar/B747/electrical/bus/stby_main", "number")
+B747DR_elec_bus_stby_apu        = deferred_dataref("laminar/B747/electrical/bus/stby_apu", "number")
+B747DR_elec_bus_bat_main        = deferred_dataref("laminar/B747/electrical/bus/bat_main", "number")
+B747DR_elec_bus_bat_apu         = deferred_dataref("laminar/B747/electrical/bus/bat_apu", "number")
+B747DR_elec_bus_hot_bat_main    = deferred_dataref("laminar/B747/electrical/bus/hot_bat_main", "number")
+B747DR_elec_bus_hot_bat_apu     = deferred_dataref("laminar/B747/electrical/bus/hot_bat_apu", "number")
+B747DR_elec_bus_dc_tie          = deferred_dataref("laminar/B747/electrical/bus/dc_tie", "number")
+B747DR_elec_bus_gnd_svc         = deferred_dataref("laminar/B747/electrical/bus/gnd_svc", "number")
+B747DR_elec_bus_gnd_svc_util    = deferred_dataref("laminar/B747/electrical/bus/gnd_svc_util", "number")
+B747DR_elec_bus_gnd_hdlg        = deferred_dataref("laminar/B747/electrical/bus/gnd_hdlg", "number")
+B747DR_elec_bus_gnd_hdlg_dc     = deferred_dataref("laminar/B747/electrical/bus/gnd_hdlg_dc", "number")
+-- breakers, 1 closed
+B747DR_elec_breaker_gcb         = deferred_dataref("laminar/B747/electrical/breaker/gcb", "array[4]")
+B747DR_elec_breaker_btb         = deferred_dataref("laminar/B747/electrical/breaker/btb", "array[4]")
+B747DR_elec_breaker_dcir        = deferred_dataref("laminar/B747/electrical/breaker/dcir", "array[4]")
+B747DR_elec_breaker_xpc         = deferred_dataref("laminar/B747/electrical/breaker/xpc", "array[2]")
+B747DR_elec_breaker_apb         = deferred_dataref("laminar/B747/electrical/breaker/apb", "array[2]")
+B747DR_elec_breaker_ssb         = deferred_dataref("laminar/B747/electrical/breaker/ssb", "number")
+-- IDG drive connected 1/0, BCU air mode, load shedding in progress
+B747DR_elec_idg_connected       = deferred_dataref("laminar/B747/electrical/idg_connected", "array[4]")
+B747DR_elec_air_mode            = deferred_dataref("laminar/B747/electrical/air_mode", "number")
+B747DR_elec_load_shed           = deferred_dataref("laminar/B747/electrical/load_shed", "number")
+-- main [0] and APU [1] battery: volts, amps (+ discharge, - charge)
+B747DR_elec_battery_volts       = deferred_dataref("laminar/B747/electrical/battery/volts", "array[2]")
+B747DR_elec_battery_amps        = deferred_dataref("laminar/B747/electrical/battery/amps", "array[2]")
+-- P5 panel lights, 1 lit (before the lights test and brightness)
+B747DR_elec_light_ext_avail     = deferred_dataref("laminar/B747/electrical/light/ext_avail", "array[2]")
+B747DR_elec_light_apu_avail     = deferred_dataref("laminar/B747/electrical/light/apu_avail", "array[2]")
+B747DR_elec_light_isln          = deferred_dataref("laminar/B747/electrical/light/isln", "array[4]")
+B747DR_elec_light_gen_off       = deferred_dataref("laminar/B747/electrical/light/gen_off", "array[4]")
+B747DR_elec_light_drive         = deferred_dataref("laminar/B747/electrical/light/drive", "array[4]")
+B747DR_elec_light_util_off      = deferred_dataref("laminar/B747/electrical/light/util_off", "array[2]")
+
 
 
 -- STANDBY POWER
