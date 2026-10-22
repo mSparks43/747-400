@@ -1,0 +1,363 @@
+-- 747-400 crew alerting without X-Plane: the EICAS message list (order,
+-- pages, CANC/RCL), the master WARNING/CAUTION lights, and the inhibits of
+-- FCOM 15.20 for airplane 109. Logic and sources:
+-- docs/overhaul/notes/ATA-31-warning.md §3.1-3.3, §4.1, §4.2, §4.4.
+-- The sounds follow the master lights in fmod/747-400.snd (beeper when
+-- master CAUTION comes on, siren while master WARNING is on), so an
+-- inhibited light is an inhibited sound too.
+--
+--   local A = B747_alert_model            -- in XTLua, after dofile
+--   local A = dofile(".../B747.87.alert_model.lua")   -- in the tests
+--   local s = A.new()
+--   local inp = A.inputs()                -- fill it every frame
+--   local out = A.update(s, inp, dt)
+
+local M = setmetatable({}, {})
+B747_alert_model = M
+
+M.LINES = 11
+M.RECALL_SHOW_S = 1          -- RECALL stays 1 s after RCL is released, FCOM p.1528
+
+-- Message classes, matched on the name without its caret and engine number
+-- ("ENG 1 FAIL" and "ELEC GEN OFF 1" both give their class).
+-- Hidden on the ground while that engine's FUEL CONTROL is CUTOFF or its fire
+-- switch is out (FCOM p.1586):
+M.PRESTART_HIDDEN = {["ELEC GEN OFF"] = true, ["ENG CONTROL"] = true, ["ENG SHUTDOWN"] = true,
+    ["ENG EEC MODE"] = true, ["ENG FAIL"] = true, ["ENG OIL PRESS"] = true, ["HYD PRESS ENG"] = true,
+    ["NAI VALVE"] = true}
+-- Still shown during an engine start (FCOM p.1587):
+M.START_SHOWN = {["BLEED"] = true, ["ENG AUTOSTART"] = true, ["ENG FUEL VALVE"] = true,
+    ["ENG SHUTDOWN"] = true, ["ENG START VLV"] = true, ["STARTER CUTOUT"] = true}
+-- Cautions that do not light master CAUTION (FCOM p.902, p.1552):
+M.NO_MASTER_CAUTION = {["ENG SHUTDOWN"] = true}
+-- Cautions that still light master CAUTION during the landing inhibit
+-- (FCOM p.1600-1602):
+M.LANDING_SHOWN = {["AUTOPILOT"] = true, ["AUTOTHROT DISC"] = true, ["NO AUTOLAND"] = true,
+    ["SPEEDBRAKES EXT"] = true}
+
+-- the class and engine number (1-4 or nil) of a message name
+function M.classify(name)
+    local bare = name:gsub("^>", "")
+    local engine = tonumber(bare:match("%f[%d]([1-4])%f[%D]"))
+    local class = bare:gsub("%s*%f[%d][1-4]%f[%D]", ""):gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
+    return class, engine
+end
+
+function M.inputs()
+    return {
+        -- the alerts whose condition is true now: {name = "...", level =
+        -- "warning"|"caution"|"advisory"|"memo"}
+        active = {},
+        cancel = false, recall = false,          -- CANC and RCL pushed this frame
+        recall_held = false,                     -- RCL held down
+        master_reset = false,                    -- master WARNING/CAUTION reset pushed
+        on_ground = true,                        -- PSEU
+        fuel_cutoff = {true, true, true, true},  -- FUEL CONTROL CUTOFF
+        fire_switch_out = {false, false, false, false},
+        engine_start = false,                    -- an engine start is in progress (START pulled
+                                                 -- until idle, abort or 5 min: FCOM p.1587)
+        ias = 0, v1 = 0,                         -- kt; v1 0 = not set
+        pitch = 0,                               -- deg, for the takeoff inhibit without V1
+        radio_alt = 0,                           -- ft
+        nose_gear_down = true,                   -- NG compressed (PSEU)
+        land_2_3 = false,                        -- LAND 2 or LAND 3 on the PFD
+    }
+end
+
+function M.new()
+    return {
+        t = 0,
+        seen = {},            -- name -> {level, since, new, hidden, held (engine start), cancelled}
+        order = {},           -- caution and advisory names in display order
+        page = 1,
+        recall_s = 0,
+        master_warning = false, master_caution = false,
+        pending_warning = false, pending_caution = false,
+        takeoff_armed = false,   -- slow on the ground since the last flight
+        to_caution = false, to_rotated_at = nil,
+        to_warning = false, to_warning_at = nil,
+        liftoff_at = nil, nose_liftoff_at = nil, was_on_ground = true,
+        landing_at = nil,
+        out = nil,
+    }
+end
+
+-- Inhibit windows of this frame. FCOM p.1586-1587, p.1593-1595, p.1600-1602.
+local function phases(s, inp)
+    local ph = {}
+    local all_cutoff = inp.fuel_cutoff[1] and inp.fuel_cutoff[2] and inp.fuel_cutoff[3] and inp.fuel_cutoff[4]
+    ph.prestart_caution = inp.on_ground and all_cutoff             -- master CAUTION and beeper
+    ph.engine_start = inp.engine_start
+
+    -- the takeoff inhibits arm on a takeoff roll only: the aircraft has been
+    -- slow on the ground since it last flew (estimate; the landing roll
+    -- passes 80 kt the other way)
+    if inp.on_ground and inp.ias < 30 then s.takeoff_armed = true end
+    if not inp.on_ground then s.takeoff_armed = false end
+
+    -- takeoff, master CAUTION: from 80 kt to RA 400 ft or 20 s after
+    -- rotation; after a rejected takeoff above 80 kt, until below 75 kt
+    if s.takeoff_armed and inp.ias >= 80 and not s.to_caution then s.to_caution = true end
+    if s.to_caution then
+        if inp.on_ground and not inp.nose_gear_down and not s.to_rotated_at then s.to_rotated_at = s.t end
+        if (inp.on_ground and inp.ias < 75) or (not inp.on_ground and inp.radio_alt > 400)
+                or (s.to_rotated_at and s.t - s.to_rotated_at > 20) then
+            s.to_caution, s.to_rotated_at = false, nil
+        end
+    end
+    -- takeoff, master WARNING (siren and bell): from V1 (or 5 deg of pitch
+    -- without V1) to RA 400 ft or 25 s later (ATA31 p.180, p.196)
+    local at_v1 = (inp.v1 > 0 and inp.ias >= inp.v1) or (inp.v1 <= 0 and inp.pitch > 5)
+    if s.takeoff_armed and inp.on_ground and at_v1 and not s.to_warning_at then
+        s.to_warning, s.to_warning_at = true, s.t
+    end
+    if s.to_warning and ((not inp.on_ground and inp.radio_alt > 400) or s.t - s.to_warning_at > 25) then
+        s.to_warning = false
+    end
+    if inp.on_ground and inp.ias < 30 then s.to_warning, s.to_warning_at = false, nil end
+    ph.to_caution = s.to_caution
+    ph.to_warning = s.to_warning
+
+    -- lift-off and nose gear lift-off, for the message inhibits
+    if s.was_on_ground and not inp.on_ground then s.liftoff_at = s.t end
+    if inp.on_ground then s.liftoff_at = nil end
+    if inp.nose_gear_down then s.nose_liftoff_at = nil
+    elseif not s.nose_liftoff_at then s.nose_liftoff_at = s.t end
+    s.was_on_ground = inp.on_ground
+    -- messages hidden: CONFIG GEAR from lift-off to RA 800 ft or 140 s after
+    -- the nose gear lifted off; ENG FAIL on the ground; TCAS OFF on the
+    -- ground and below RA 400 ft; WINDSHEAR SYS from 80 kt to RA 400 ft and
+    -- back
+    ph.config_gear_hidden = s.liftoff_at ~= nil and inp.radio_alt <= 800
+        and s.nose_liftoff_at ~= nil and s.t - s.nose_liftoff_at <= 140
+    ph.eng_fail_hidden = inp.on_ground
+    ph.tcas_off_hidden = inp.on_ground or inp.radio_alt < 400
+    ph.windshear_sys_hidden = (inp.on_ground and inp.ias >= 80) or (not inp.on_ground and inp.radio_alt < 400)
+
+    -- landing, master CAUTION: from LAND 2/3 below RA 200 ft until 75 kt,
+    -- 40 s, or a go-around through RA 800 ft
+    if not s.landing_at and inp.land_2_3 and not inp.on_ground and inp.radio_alt <= 200 then
+        s.landing_at = s.t
+    end
+    if s.landing_at and ((inp.on_ground and inp.ias < 75) or s.t - s.landing_at > 40
+            or (not inp.on_ground and inp.radio_alt > 800)) then
+        s.landing_at = nil
+    end
+    ph.landing_caution = s.landing_at ~= nil
+    return ph
+end
+
+-- whether a message is hidden from the list now
+local function hidden(name, ph, inp)
+    local class, engine = M.classify(name)
+    if engine and M.PRESTART_HIDDEN[class] and inp.on_ground
+            and (inp.fuel_cutoff[engine] or inp.fire_switch_out[engine]) then
+        return true
+    end
+    if class == "ENG FAIL" and ph.eng_fail_hidden then return true end
+    if class == "CONFIG GEAR" and ph.config_gear_hidden then return true end
+    if class == "TCAS OFF" and ph.tcas_off_hidden then return true end
+    if class == "WINDSHEAR SYS" and ph.windshear_sys_hidden then return true end
+    return false
+end
+
+-- cautions and advisories: cautions first, each newest first
+local function alert_order(s)
+    return function(a, b)
+        local ra, rb = s.seen[a], s.seen[b]
+        if ra.level ~= rb.level then return ra.level == "caution" end
+        if ra.since ~= rb.since then return ra.since > rb.since end
+        return a < b
+    end
+end
+
+-- the pages shown: warnings on top of every page, then the page's share of
+-- cautions and advisories; memos fill the last page from the bottom, newest
+-- lowest (FCOM p.1528, p.1548-1549). Memos that do not fit get a page of
+-- their own (estimate: FCOM does not say).
+local function layout(warnings, list, memos)
+    local W = math.min(#warnings, M.LINES)
+    local per_page = M.LINES - W
+    local alert_pages = (per_page <= 0) and 1 or math.max(1, math.ceil(#list / per_page))
+    local pages = {}
+    for p = 1, alert_pages do
+        local lines = {}
+        for i = 1, W do lines[#lines + 1] = {text = warnings[i], level = "warning"} end
+        if per_page > 0 then
+            for i = (p - 1) * per_page + 1, math.min(#list, p * per_page) do
+                lines[#lines + 1] = {text = list[i].name, level = list[i].level}
+            end
+        end
+        pages[p] = lines
+    end
+    if per_page > 0 and #memos > 0 then
+        local last = pages[#pages]
+        if M.LINES - #last < #memos then
+            last = {}
+            for i = 1, W do last[#last + 1] = {text = warnings[i], level = "warning"} end
+            pages[#pages + 1] = last
+        end
+        local first_memo = math.max(1, #memos - (M.LINES - #last) + 1)
+        local blanks = M.LINES - #last - (#memos - first_memo + 1)
+        for _ = 1, blanks do last[#last + 1] = false end
+        for i = first_memo, #memos do last[#last + 1] = {text = memos[i], level = "memo"} end
+    end
+    return pages, per_page
+end
+
+function M.update(s, inp, dt)
+    s.t = s.t + dt
+    local ph = phases(s, inp)
+
+    -- new and cleared alerts ---------------------------------------------
+    local now = {}
+    for _, a in ipairs(inp.active) do now[a.name] = a.level end
+    for name in pairs(s.seen) do
+        if not now[name] then s.seen[name] = nil end
+    end
+    for name, level in pairs(now) do
+        local rec = s.seen[name]
+        if not rec then
+            -- a new caution/advisory during an engine start waits for its end
+            local held = ph.engine_start and (level == "caution" or level == "advisory")
+                and not M.START_SHOWN[(M.classify(name))]
+            rec = {level = level, since = s.t, new = true, held = held, cancelled = false}
+            s.seen[name] = rec
+        elseif rec.held and not ph.engine_start then
+            rec.held, rec.since, rec.new = false, s.t, true
+        end
+        rec.hidden = rec.held or hidden(name, ph, inp)
+    end
+
+    -- master lights (FCOM p.1532). During the takeoff and landing inhibits a
+    -- new alert does not light them, and lights them when the inhibit ends if
+    -- still there (FCOM p.1594-1595); during the pre-start inhibit it does not
+    -- light master CAUTION at all.
+    for name, rec in pairs(s.seen) do
+        if rec.new and not rec.hidden then
+            local class = M.classify(name)
+            if rec.level == "warning" then
+                if ph.to_warning and class ~= "CONFIG GEAR" then
+                    s.pending_warning = true
+                else
+                    s.master_warning = true
+                end
+            elseif rec.level == "caution" and not M.NO_MASTER_CAUTION[class] then
+                if ph.to_caution or (ph.landing_caution and not M.LANDING_SHOWN[class]) then
+                    s.pending_caution = true
+                elseif not ph.prestart_caution then
+                    s.master_caution = true
+                end
+            end
+            rec.new = false
+        end
+    end
+    if s.pending_warning and not ph.to_warning then s.master_warning, s.pending_warning = true, false end
+    if s.pending_caution and not ph.to_caution and not ph.landing_caution then
+        s.master_caution, s.pending_caution = true, false
+    end
+    if inp.master_reset then
+        s.master_warning, s.master_caution = false, false
+        s.pending_warning, s.pending_caution = false, false
+    end
+    local any_warning, any_caution = false, false
+    for _, rec in pairs(s.seen) do
+        if not rec.hidden and rec.level == "warning" then any_warning = true end
+        if not rec.hidden and rec.level == "caution" then any_caution = true end
+    end
+    if not any_warning then s.master_warning, s.pending_warning = false, false end
+    if not any_caution then s.master_caution, s.pending_caution = false, false end
+
+    -- the list ---------------------------------------------------------------
+    local warnings, memos = {}, {}
+    for name, rec in pairs(s.seen) do
+        if not rec.hidden and rec.level == "warning" then warnings[#warnings + 1] = name end
+        if not rec.hidden and rec.level == "memo" then memos[#memos + 1] = name end
+    end
+    table.sort(warnings, function(a, b)
+        if s.seen[a].since ~= s.seen[b].since then return s.seen[a].since > s.seen[b].since end
+        return a < b
+    end)
+    table.sort(memos, function(a, b)       -- oldest first: the newest is the lowest line
+        if s.seen[a].since ~= s.seen[b].since then return s.seen[a].since < s.seen[b].since end
+        return a < b
+    end)
+    local per_page = M.LINES - math.min(#warnings, M.LINES)
+
+    -- cautions and advisories keep their place between frames; new ones go
+    -- to the top of the page being looked at (FCOM p.1549)
+    local list = {}
+    local listed = {}
+    for _, name in ipairs(s.order) do
+        local rec = s.seen[name]
+        if rec and not rec.hidden and not rec.cancelled and rec.level ~= "warning" and rec.level ~= "memo" then
+            list[#list + 1] = name
+            listed[name] = true
+        end
+    end
+    local fresh = {}
+    for name, rec in pairs(s.seen) do
+        if not listed[name] and not rec.hidden and not rec.cancelled
+                and (rec.level == "caution" or rec.level == "advisory") then
+            fresh[#fresh + 1] = name
+        end
+    end
+    table.sort(fresh, alert_order(s))
+    if #fresh > 0 then
+        local at = #list + 1
+        if per_page > 0 then at = math.min(at, (s.page - 1) * per_page + 1) end
+        for i = #fresh, 1, -1 do table.insert(list, at, fresh[i]) end
+    end
+
+    local function entries(names)
+        local e = {}
+        for i, name in ipairs(names) do e[i] = {name = name, level = s.seen[name].level} end
+        return e
+    end
+    local pages = layout(warnings, entries(list), memos)
+
+    -- CANC: next page, and on the last page the cautions and advisories go
+    -- (warnings and memos stay). RCL: everything back, in order, page 1.
+    -- With warnings filling the page, CANC does nothing. (FCOM p.1530, p.1549)
+    if inp.recall then
+        for _, rec in pairs(s.seen) do rec.cancelled = false end
+        list = {}
+        for name, rec in pairs(s.seen) do
+            if not rec.hidden and (rec.level == "caution" or rec.level == "advisory") then list[#list + 1] = name end
+        end
+        table.sort(list, alert_order(s))
+        s.page = 1
+        pages = layout(warnings, entries(list), memos)
+    elseif inp.cancel and per_page > 0 then
+        if s.page < #pages then
+            s.page = s.page + 1
+        else
+            for _, name in ipairs(list) do s.seen[name].cancelled = true end
+            list = {}
+            s.page = 1
+            pages = layout(warnings, {}, memos)
+        end
+    end
+    if inp.recall or inp.recall_held then
+        s.recall_s = M.RECALL_SHOW_S
+    else
+        s.recall_s = math.max(0, s.recall_s - dt)
+    end
+    s.order = list
+    if s.page > #pages then s.page = #pages end
+
+    local out = {
+        pages = pages,
+        page = s.page,
+        num_pages = #pages,
+        show_page_number = #pages > 1,
+        recall = s.recall_s > 0,
+        master_warning = s.master_warning,
+        master_caution = s.master_caution,
+        phases = ph,
+    }
+    s.out = out
+    return out
+end
+
+return M
