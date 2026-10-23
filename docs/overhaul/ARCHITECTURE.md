@@ -193,9 +193,9 @@ Lua が作る名前の数：dataref 1617 個、コマンド 628 個。静的に�
 | `CAS/gen_{warning,caution,advisory,memo}_msg_NNN` | ページ p の n 行目を NNN = 11(p−1)+n−1 に、その行のレベルの名前の方に書く（他のレベルは空白 1 字） | パネル（000〜021 の 2 ページ分だけ） |
 | `CAS/msg_page`・`num_msg_pages` | 見ているページ、ページ数 | パネル（PG は `num_msg_pages > 2` のときだけ） |
 | `CAS/caut_adv_display` | 0＝CANC で隠した caution/advisory がある（RCL で 1） | なし |
-| `warning/master_warning`・`master_caution` | master 灯 | 3D、FMOD（サイレンと beeper） |
-| `warning/master_caution_audio` | master CAUTION を点けた caution ごとに 1 秒 | `747-400_XP11.snd` |
-| `warning/warning_bell`・`warning_siren`・`warning_wailer` | FCOM の音の要求（リセットの可否を含む） | なし（音の結線の変更は承認待ち） |
+| `warning/master_warning`・`master_caution` | master 灯 | 3D |
+| `warning/master_caution_audio` | master CAUTION を点けた caution、beeper のある advisory ごとに 1 秒 | `.snd` の beeper（`747-400_custom.snd`・手元の `747-400.snd`・`747-400_XP11.snd`） |
+| `warning/warning_bell`・`warning_siren`・`warning_wailer` | FCOM の音の要求（リセットの可否を含む） | `.snd` のベル・サイレン・wailer（`747-400_custom.snd`・手元の `747-400.snd`。FIRE/OVHT TEST のベルは試験ボタンのまま） |
 
 - 押した回数（1-3 で新設、init スクリプト `B747.87.warning02`）：別のプラグイン・モジュールにあるスイッチを、警報モジュールに渡す。値は押すたびに 1 増える。
 

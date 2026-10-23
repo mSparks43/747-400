@@ -2,10 +2,9 @@
 -- pages, CANC/RCL), the master WARNING/CAUTION lights, the aural each
 -- warning asks for, and the inhibits of FCOM 15.20 for airplane 109. Logic
 -- and sources: docs/overhaul/notes/ATA-31-warning.md §3.1-3.4, §4.1, §4.2,
--- §4.4. The sounds of fmod/747-400.snd follow the master lights (beeper when
--- master CAUTION comes on, siren while master WARNING is on), so an
--- inhibited light is an inhibited sound too; out.aural and
--- out.caution_beep are what FCOM asks for, for a sound file that uses them.
+-- §4.4. The sound files (fmod/747-400_custom.snd, the same as the local
+-- 747-400.snd) play out.aural (bell, siren, wailer) and the beeper from
+-- out.caution_beep, through the datarefs B747.87.xt.alerts.lua writes.
 --
 --   local A = B747_alert_model            -- in XTLua, after dofile
 --   local A = dofile(".../B747.87.alert_model.lua")   -- in the tests
