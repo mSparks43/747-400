@@ -88,6 +88,7 @@
   - `bash tests/run.sh`：`tests/**/*_test.lua` を 1 本ずつ LuaJIT で回す。
   - `bash tests/syntax_check.sh`：機体の Lua（git 管理のもの）と試験の構文チェック（`luajit -bl`）。
   - `luajit tests/tools/same_behaviour.lua <入力> [git の版]`：挙動を変えない変更の確認（下）。
+  - `luajit tests/tools/panel_names.lua [acf]`：acf のパネルが使う laminar/ の名前のうち、INTERFACES.tsv に無いものを、INTERFACES.tsv の行の形で出す。カスタム acf のパネルを変えたら回して、出た行を INTERFACES.tsv に足す（名前の順）。
 - 構成：
 
 | 置き場所 | 中身 |
