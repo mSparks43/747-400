@@ -74,6 +74,16 @@ frames(1)
 T.equal(get("laminar/B747/warning/master_caution"), 0, "master reset: master CAUTION out and stays out")
 T.equal(get("laminar/B747/warning/master_reset_count"), 1, "master reset: counted")
 
+-- BLEED ISLN L, an advisory with the beeper: the pulse without master CAUTION
+-- (FCOM p.619)
+rt:set(ADVISORY, 35, 1)
+frames(0.3)
+T.check(slot_of("advisory", "BLEED ISLN L") ~= nil, "BLEED ISLN L: shown")
+T.equal(get("laminar/B747/warning/master_caution_audio"), 1, "BLEED ISLN L: the beeper pulse")
+T.equal(get("laminar/B747/warning/master_caution"), 0, "BLEED ISLN L: no master CAUTION")
+rt:set(ADVISORY, 35, 0)
+frames(1.2)
+
 -- a warning: master WARNING and the siren request
 rt:set(WARNING, 1, 1)               -- CABIN ALTITUDE
 frames(0.5)

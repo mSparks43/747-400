@@ -313,6 +313,30 @@ do
     T.check(not out.caution_beep, "beeper: not for an advisory")
 end
 
+-- BLEED ISLN L, R and BLEED HP ENG are advisories with the beeper, without
+-- master CAUTION; >BLEED ISLN APU has none (FCOM p.619)
+do
+    local s, inp = flying()
+    alerts(inp, {})
+    run(s, inp, 0.5)
+    add(inp, "BLEED ISLN L", "advisory")
+    local out = A.update(s, inp, DT)
+    T.check(out.caution_beep, "beeper: BLEED ISLN L")
+    T.check(not out.master_caution, "BLEED ISLN L: no master CAUTION")
+    out = A.update(s, inp, DT)
+    T.check(not out.caution_beep, "beeper: BLEED ISLN L once")
+    add(inp, "BLEED HP ENG 3", "advisory")
+    out = A.update(s, inp, DT)
+    T.check(out.caution_beep, "beeper: BLEED HP ENG 3")
+    add(inp, ">BLEED ISLN APU", "advisory")
+    out = A.update(s, inp, DT)
+    T.check(not out.caution_beep, "beeper: not for >BLEED ISLN APU")
+    s, inp = A.new(), A.inputs()
+    alerts(inp, {{"BLEED ISLN R", "advisory"}})
+    out = A.update(s, inp, DT)
+    T.check(not out.caution_beep, "beeper: BLEED ISLN R not before start")
+end
+
 -- the beeper waits with the light: before start never, after the takeoff
 -- inhibit when the light comes on (FCOM p.1586, p.1594)
 do

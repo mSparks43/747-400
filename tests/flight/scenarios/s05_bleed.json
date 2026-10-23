@@ -1,6 +1,6 @@
 {
   "name": "s05_bleed",
-  "description": "空圧（1-5）の X-Plane での確認。エンジン運転中の地上で開始し、ISOLATION L を OFF（VALVE 灯は移動中だけ点く）、ENGINE BLEED 1 を OFF（PRSOV 閉、OFF 灯、>BLEED 1 OFF）、その状態で NAI 1 を ON（PRV が開いてナセルに空気が行く）にして、弁・圧・P5 の灯・EICAS を見る。期待値は FCOM 2.10-2.50 と LH36（notes/ATA-36.md）。圧の値は推定。",
+  "description": "空圧（1-5）の X-Plane での確認。エンジン運転中の地上で開始し、ISOLATION L を OFF（VALVE 灯は移動中だけ点く）、ENGINE BLEED 1 を OFF（PRSOV 閉、OFF 灯、>BLEED 1 OFF）、その状態で NAI 1 を ON（PRV が開いてナセルに空気が行く）にして、弁・圧・P5 の灯・EICAS を見る。最後に AC bus 1 を切った状態で ISOLATION L を OFF（弁は動けない）にし、10 秒の不一致で出る BLEED ISLN L と beeper の合図を見る。期待値は FCOM 2.10-2.50 と LH36（notes/ATA-36.md）。圧の値は推定。",
   "reload": true,
   "flight": {
     "runway_start": { "airport_id": "RJAA", "runway": "34L" },
@@ -94,6 +94,30 @@
     { "do": "check", "note": "VALVE 灯 消灯", "dref": "laminar/B747/annunciator/brightness_ratio[72]", "op": "==", "value": 0 },
     { "do": "check", "note": "OFF 灯 消灯", "dref": "laminar/B747/annunciator/brightness_ratio[75]", "op": "==", "value": 0 },
     { "do": "cas", "note": "復旧後" },
+
+    { "do": "mark", "note": "AC bus 1 なしで ISOLATION L OFF" },
+    { "do": "switch", "note": "GEN CONT 1 OFF", "dref": "laminar/B747/button_switch/position[22]", "value": 0, "cmd": "laminar/B747/button_switch/elec_gen_ctrl_1" },
+    { "do": "switch", "note": "BUS TIE 1 OFF", "dref": "laminar/B747/button_switch/position[18]", "value": 0, "cmd": "laminar/B747/button_switch/elec_bus_tie_1" },
+    { "do": "wait", "note": "AC bus 1 が落ちる", "dref": "laminar/B747/electrical/bus/ac[0]", "op": "==", "value": 0, "timeout": 10 },
+    { "do": "sleep", "seconds": 12 },
+    { "do": "cas", "note": "AC bus 1 なし" },
+    { "do": "cmd", "note": "master リセットで、AC bus 1 を失って出た caution の灯を消す", "name": "laminar/B747/button_switch/warn_caut_capt", "duration": 0.2 },
+    { "do": "sleep", "seconds": 1.5 },
+    { "do": "check", "note": "前提：master CAUTION が消えている", "dref": "laminar/B747/warning/master_caution", "op": "==", "value": 0 },
+    { "do": "switch", "note": "ISOLATION L OFF（ISLN L のモーターは AC bus 1）", "dref": "laminar/B747/button_switch/position[75]", "value": 0, "cmd": "laminar/B747/button_switch/bleed_air_isln_vlv_L" },
+    { "do": "check", "note": "弁は開のまま（LH36 p.86。電源が無いと止まるのは推定）", "dref": "laminar/B747/air/isolation_valve_L_pos", "op": "==", "value": 1 },
+    { "do": "check", "note": "スイッチと弁が不一致なので VALVE 灯（FCOM p.576）", "dref": "laminar/B747/air/light/isln_valve[0]", "op": "==", "value": 1 },
+    { "do": "check", "note": "10 秒たつまで BLEED ISLN L は出ない", "dref": "laminar/B747/CAS/advisory_status[35]", "op": "==", "value": 0 },
+    { "do": "wait", "note": "10 秒の不一致で BLEED ISLN L（ATA30_32_35_36 p.22）", "dref": "laminar/B747/CAS/advisory_status[35]", "op": "==", "value": 1, "timeout": 13 },
+    { "do": "wait", "note": "beeper の合図（FCOM p.619：advisory で beeper あり）", "dref": "laminar/B747/warning/master_caution_audio", "op": "==", "value": 1, "timeout": 1 },
+    { "do": "check", "note": "master CAUTION は点かない", "dref": "laminar/B747/warning/master_caution", "op": "==", "value": 0 },
+    { "do": "cas", "note": "BLEED ISLN L" },
+    { "do": "switch", "note": "ISOLATION L ON（スイッチと弁が一致）", "dref": "laminar/B747/button_switch/position[75]", "value": 1, "cmd": "laminar/B747/button_switch/bleed_air_isln_vlv_L" },
+    { "do": "wait", "note": "VALVE 灯が消える", "dref": "laminar/B747/air/light/isln_valve[0]", "op": "==", "value": 0, "timeout": 2 },
+    { "do": "wait", "note": "BLEED ISLN L が消える", "dref": "laminar/B747/CAS/advisory_status[35]", "op": "==", "value": 0, "timeout": 3 },
+    { "do": "switch", "note": "BUS TIE 1 AUTO", "dref": "laminar/B747/button_switch/position[18]", "value": 1, "cmd": "laminar/B747/button_switch/elec_bus_tie_1" },
+    { "do": "switch", "note": "GEN CONT 1 ON", "dref": "laminar/B747/button_switch/position[22]", "value": 1, "cmd": "laminar/B747/button_switch/elec_gen_ctrl_1" },
+    { "do": "wait", "note": "AC bus 1 が戻る", "dref": "laminar/B747/electrical/bus/ac[0]", "op": "==", "value": 1, "timeout": 15 },
     { "do": "view", "name": "forward" },
     { "do": "record_stop" }
   ]

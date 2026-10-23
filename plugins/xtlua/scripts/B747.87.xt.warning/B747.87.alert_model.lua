@@ -31,6 +31,8 @@ M.START_SHOWN = {["BLEED"] = true, ["ENG AUTOSTART"] = true, ["ENG FUEL VALVE"] 
     ["ENG SHUTDOWN"] = true, ["ENG START VLV"] = true, ["STARTER CUTOUT"] = true}
 -- Cautions that do not light master CAUTION (FCOM p.902, p.1552):
 M.NO_MASTER_CAUTION = {["ENG SHUTDOWN"] = true}
+-- Advisories that sound the beeper, without master CAUTION (FCOM p.619):
+M.ADVISORY_BEEPER = {["BLEED HP ENG"] = true, ["BLEED ISLN L"] = true, ["BLEED ISLN R"] = true}
 -- Cautions that still light master CAUTION during the landing inhibit
 -- (FCOM p.1600-1602):
 M.LANDING_SHOWN = {["AUTOPILOT"] = true, ["AUTOTHROT DISC"] = true, ["NO AUTOLAND"] = true,
@@ -253,21 +255,27 @@ function M.update(s, inp, dt)
     -- new alert does not light them, and lights them when the inhibit ends if
     -- still there (FCOM p.1594-1595); during the pre-start inhibit it does not
     -- light master CAUTION at all. The beeper sounds for each caution that
-    -- lights master CAUTION, also when it is lit already (FCOM p.1552).
+    -- lights master CAUTION, also when it is lit already (FCOM p.1552), and
+    -- for the advisories of M.ADVISORY_BEEPER, which wait out the same
+    -- inhibits (estimate: FCOM gives no inhibits for them).
     local beep = false
     local function announce(name, rec)
         rec.announced, rec.pending = true, false
         if rec.level == "warning" then
             s.master_warning = true
             if M.WAILER[(M.classify(name))] then s.wailer_until = s.t + M.WAILER_MIN_S end
-        else
+        elseif rec.level == "caution" then
             s.master_caution, beep = true, true
+        else
+            beep = true
         end
     end
     for name, rec in pairs(s.seen) do
         if not rec.hidden then
             local class = M.classify(name)
-            local lights = rec.level == "warning" or (rec.level == "caution" and not M.NO_MASTER_CAUTION[class])
+            -- lights a master light or sounds the beeper
+            local calls = rec.level == "warning" or (rec.level == "caution" and not M.NO_MASTER_CAUTION[class])
+                or (rec.level == "advisory" and M.ADVISORY_BEEPER[class])
             local inhibited
             if rec.level == "warning" then
                 inhibited = ph.to_warning and class ~= "CONFIG GEAR"
@@ -276,7 +284,7 @@ function M.update(s, inp, dt)
             end
             if rec.new then
                 rec.new = false
-                if lights then
+                if calls then
                     if inhibited then
                         rec.pending = true
                     elseif rec.level == "warning" or not ph.prestart_caution then

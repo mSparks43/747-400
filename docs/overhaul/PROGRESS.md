@@ -120,6 +120,7 @@ PLAN.md §3 に書いた。要点：
   - 離陸の抑止は、地上で 30 kt 未満になった後の離陸滑走でだけ働く（着陸滑走で 80 kt を逆向きに通るのを離陸と取らないため）。
   - CONFIG GEAR のサイレンは master リセットで止まらない方にした（原因がレバーかフラップかを、メッセージだけでは区別できない。FCOM p.1551）。
   - wailer は >AUTOPILOT DISC の表示中、最低 1 秒（表示を消すのは AP の側）。
+  - beeper のある advisory（BLEED ISLN L・R、BLEED HP ENG）の beeper は、caution と同じ抑止（始動前・離陸・着陸など）で待たせる（FCOM に記載なし）。
   - memo が最後のページに入りきらないときは、memo だけのページを作る（FCOM に記載なし）。
   - 火災ハンドルを「引いた」とみなすのは、動きの途中の値 `pos_arm` が 0.5 を超えたとき。
 - 油圧（1-4。`B747.19.hyd_model.lua` に「estimate」と書いてある）：
@@ -173,7 +174,7 @@ PLAN.md §3 に書いた。要点：
 | WARN-01 CANC 後の新しいメッセージ | 済（メッセージごとの CANC 済みの印） |
 | WARN-02 サイレンの結線 | 一部。Lua 側の要求（`warning_siren`・`warning_bell`・`warning_wailer`。リセットの可否つき）は済。`.snd` はまだ master WARNING 灯でサイレンを鳴らす（`.snd` の変更は承認待ち） |
 | WARN-03 bell | 一部。Lua 側の要求は済（master リセットで止まる）。`.snd` は X-Plane の火災 annunciator のまま。FIRE APU・CARGO などのメッセージ自体は火災（3-4）で |
-| WARN-04 caution ごとの beeper | 一部。caution ごとの 1 秒の `master_caution_audio` は済（`747-400_XP11.snd` が使う）。`747-400.snd` は master CAUTION の立ち上がりで鳴らすまま（承認待ち） |
+| WARN-04 caution ごとの beeper | 一部。caution ごとの 1 秒の `master_caution_audio` は済（`747-400_XP11.snd` が使う）。beeper のある advisory（BLEED ISLN L・R、BLEED HP ENG。FCOM p.619）も同じ合図を出す（master CAUTION は点けない）。`747-400.snd` は master CAUTION の立ち上がりで鳴らすまま（承認済み、これから） |
 | WARN-05 抑止 | 一部。始動前・始動中・離陸・着陸は済。他のメッセージによる抑止（notes/ATA-31-warning.md §4.4.1）と時間遅れは各系統で。STATUS cue はパネルが要る |
 | WARN-06 表のレベル | 済（表の `level`） |
 | WARN-07 文言・添字 | 一部。文言は済。memo の添字の重複（41）と init 側の表（配列の大きさを決めている）は残した |
@@ -232,7 +233,7 @@ PLAN.md §3 に書いた。要点：
 - **X-Plane 自身の抽気の mode と isolation valve は連動している**：X-Plane（acf は `_has_full_bleed_air 0`）は、`bleed_air_mode` を 4（APU）にすると isolation valve を両方閉じ、5（auto）と 2 で両方開け、0 で両方閉じる。片方の弁を閉じると mode は 0 になる（Web API で確かめた）。1-5 の組み込みの最初の版は、APU だけのとき mode 4 を書いた。そのため X-Plane のエアスターターに APU の空気が届かず、カスタム acf の `s00` で 4 発とも回らなかった（モデルの始動弁は開いていた。X-Plane の弁を Web API で開けると回り出した）。前のコードも mode を書いていたが、読まずに書いていたので最初の 1 回しか届かず、毎フレーム読んで書いていた isolation valve の方が効いて、結果として弁が開いていた。グルーは mode だけを、ダクトに空気があれば 5、無ければ 0 にする。`s00`・`s05` に X-Plane の mode と弁の確認を足した。
 - **XTLua は X-Plane の dataref への書き込みをキャッシュと比べる**：読むと次のフレームでキャッシュを X-Plane から読み直し、書くとキャッシュと違うときだけ次のフレームで 1 回 X-Plane に渡す（XTLua のソース xpmtdatarefs.cpp）。読まずに同じ値を書き続けると、X-Plane が値を変えた後は直らない（Web API で cross tie を 0 にすると、毎フレーム 1 を書いている電源のグルーが戻さなかった）→ X-Plane の dataref は毎フレーム読んで、違うときだけ書く（ARCHITECTURE.md §9a、TESTING.md §1.2）。電源のグルー（X-Plane の cross tie・バッテリー・GPU・APU 発電機・発電機）は読まずに書いているので、別のコミットで直す。
 - `s00` の始動は AUTOSTART OFF のままの手動始動（START を引き、N2 20 % で FUEL CONTROL を RUN）。AUTOSTART ON のときは、START を引くと始動弁は準備だけで、FUEL CONTROL を RUN にすると EEC が開く（FCOM p.879）。新しい空圧のモデルはこれに従う。AI の自動始動（B747.95.xt.AI）は AUTOSTART ON・パック OFF で「START → すぐ RUN」なので、この順で動く。
-- **advisory なのに beeper が鳴るメッセージ**：FCOM p.619（2.50.1）の表では、BLEED ISLN L・R と BLEED HP ENG 1〜4 は「Advisory、Beeper」（改訂で足された行）。警報モデルは beeper を caution にしか鳴らさないので、警報モデルの側で足す（1-5 の次のコミット）。テキスト化した FCOM では、ほかにも「Advisory Beeper」に見える行（>CREW OXY LOW、ENG EEC MODE、ENG START VLV、IRS MOTION、UNABLE RNP）があるが、原本のページ（p.545、p.899、p.902、p.1430）では列のずれで、beeper は無い。
+- **advisory なのに beeper が鳴るメッセージ**：FCOM p.619（2.50.1）の表では、BLEED ISLN L・R と BLEED HP ENG 1〜4 は「Advisory、Beeper」（改訂で足された行）。警報モデルは beeper を caution にしか鳴らさなかったので、advisory の beeper を足した（master CAUTION は点けない）。テキスト化した FCOM では、ほかにも「Advisory Beeper」に見える行（>CREW OXY LOW、ENG EEC MODE、ENG START VLV、IRS MOTION、UNABLE RNP）があるが、原本のページ（p.545、p.899、p.902、p.1430）では列のずれで、beeper は無い。
 - **ピトー加熱がエンジンの抽気圧を見ている**：防氷モジュールは、どれかのエンジンの `bleed_air_psi` が 12 psi を超えることを「エンジン運転中」の代わりに使っている。新しい空圧では PRV が閉じると 0 になるので、4 基とも ENGINE BLEED が OFF（NAI も OFF）だとピトー加熱が切れる。始動のときも、始動弁が閉じてから PRV が開くまでの 15 秒だけ遅れる。防氷（3-2）で「エンジン運転中」に直す。
 - P5 の抽気パネルは機長の目の位置から遠く、斜めにしか見えない。試験キットの視点に視野角を足し、`bleed`（pitch 19、heading 70、視野角 25°）で灯が読めるようにした。視野角は次の視点とシナリオの終わりで元に戻す。
 
