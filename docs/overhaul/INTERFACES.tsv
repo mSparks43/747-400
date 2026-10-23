@@ -1775,6 +1775,13 @@ laminar/B747/hydraulics/sel_dial/dmd_pump_03_dn	command	obj	B747.20.hydraulics,B
 laminar/B747/hydraulics/sel_dial/dmd_pump_03_up	command	obj	B747.20.hydraulics,B747.20.xt.hydraulics
 laminar/B747/hydraulics/sel_dial/dmd_pump_04_dn	command	obj	B747.20.hydraulics,B747.20.xt.hydraulics
 laminar/B747/hydraulics/sel_dial/dmd_pump_04_up	command	obj	B747.20.hydraulics,B747.20.xt.hydraulics
+laminar/B747/hydraulics/synoptic/aux	dataref	panel	B747.19.hydraulicsmodel
+laminar/B747/hydraulics/synoptic/dem	dataref	panel	B747.19.hydraulicsmodel
+laminar/B747/hydraulics/synoptic/edp	dataref	panel	B747.19.hydraulicsmodel
+laminar/B747/hydraulics/synoptic/rsvr_press	dataref	panel	B747.19.hydraulicsmodel
+laminar/B747/hydraulics/synoptic/sov	dataref	panel	B747.19.hydraulicsmodel
+laminar/B747/hydraulics/synoptic/text_auto	dataref	panel	B747.19.hydraulicsmodel
+laminar/B747/hydraulics/synoptic/text_off	dataref	panel	B747.19.hydraulicsmodel
 laminar/B747/hydraulics/temp_1	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
 laminar/B747/hydraulics/temp_2	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel
 laminar/B747/hydraulics/temp_3	dataref	panel	B747.19.hydraulicsmodel,B747.19.xt.hydraulicsmodel

@@ -216,6 +216,7 @@ Lua が作る名前の数：dataref 1617 個、コマンド 628 個。静的に�
 - 書く dataref（名前と意味は前と同じ。notes/ATA-29.md §6.2）：`hydraulics/pressure_1〜4`（系統圧、psi）、`edp_pressure_n`・`dem_pressure_n`・`aux_pressure`（ポンプの出口圧）、`dem_mode_n`（セレクタ。-1 AUX、0 OFF、1 AUTO、2 ON）、`valve_n`（1＝供給遮断弁が開で EDP が ON）、`pressure_13`・`23`・`24`・`234`（synoptic の不作動の絵）、`res_n`・`restotal_n`（作動油量。正規量 1.00 の比）、`temp_n`（℃）、`indicators/hydraulic_pressure_1_2_4`（ブレーキ accumulator 計）、`EICAS2/stat/RF`・`LO`（[1]〜[4]）。
 - 新設（1-4、init スクリプト `B747.19.hydraulicsmodel`）：`laminar/B747/hydraulics/light/eng_press`・`dem_press`・`sys_fault`（[0]〜[3]＝系統 1〜4）、`light/brake_source`。照明モジュールが P5 の ENGINE PRESS・DEMAND PRESS・SYS FAULT と機長側の BRAKE SOURCE の灯に使う。
 - EICAS：caution 9（>BRAKE SOURCE）、40〜43（HYD PRESS SYS）、advisory 200・201（HYD CONTROL 1・4）、202〜205（HYD OVHT SYS）、206〜209（HYD PRESS DEM）、210〜213（HYD PRESS ENG）、218〜221（>HYD QTY LOW）。
+- カスタム acf の HYD synoptic 用（HYD-18・19、2026-10-23、init スクリプト `B747.19.hydraulicsmodel`）：`hydraulics/synoptic/edp`・`dem`（[0]〜[3]。記号の状態 0 ON（空の記号）、1 ON 琥珀、2 AUTO 琥珀、3 AUTO シアン、4 OFF 琥珀。EDP は 0・1・4 だけ）、`synoptic/aux`（0 OFF 白、1 待機（シアン）、2 運転（白）、3 琥珀）、`synoptic/sov`（[0]〜[3]、1＝開）、`synoptic/rsvr_press`（[0]〜[3]、1＝RSVR PRESS）、`synoptic/text_off`・`text_auto`（パネルの gen_text が書く文字 "OFF"・"AUTO"）。状態はモデルの `M.SYN_*`。純正 acf は前からの `valve_n`・`dem_mode_n` を使い続ける。
 - X-Plane の油圧は「常に加圧、故障を書かない」（notes/ATA-29.md §6.1）。`B747.20` はポンプの故障（`rel_hydpmp*`）を書かなくなった。X-Plane の漏れ故障（`rel_hydleak*`）は、グルーが作動油量を減らす形で受ける。
 
 ### 4.5 空圧（1-5）

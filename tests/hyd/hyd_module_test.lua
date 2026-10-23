@@ -49,6 +49,17 @@ end
 T.equal(get(CAUTION, 9), 1, "preflight: >BRAKE SOURCE")
 T.equal(get(HYD .. "light/brake_source"), 1, "preflight: BRAKE SOURCE light")
 T.equal(get(HYD .. "res_1"), 1, "preflight: quantity 1.00 (no random value, HYD-16)")
+-- the custom acf's HYD synoptic (codes: B747.19.hyd_model.lua M.SYN_*)
+local SYN = HYD .. "synoptic/"
+for n = 1, 4 do
+    T.equal(get(SYN .. "edp", n - 1), 1, "preflight: synoptic EDP " .. n .. " ON amber (engine stopped)")
+    T.equal(get(SYN .. "dem", n - 1), 4, "preflight: synoptic DEM " .. n .. " OFF")
+    T.equal(get(SYN .. "sov", n - 1), 1, "preflight: synoptic SOV " .. n .. " open")
+    T.equal(get(SYN .. "rsvr_press", n - 1), 0, "preflight: no RSVR PRESS " .. n .. " with APU bleed")
+end
+T.equal(get(SYN .. "aux"), 0, "preflight: synoptic AUX OFF")
+T.equal(get(SYN .. "text_off"), "OFF", "synoptic: the word OFF for gen_text")
+T.equal(get(SYN .. "text_auto"), "AUTO", "synoptic: the word AUTO for gen_text")
 
 -- system 4 AUX first (FCOM p.119)
 rt:set(SEL, 3, -1)
@@ -56,6 +67,8 @@ frames(3)
 T.check(get(HYD .. "aux_pressure") > 2900, "AUX: aux_pressure")
 T.check(get(HYD .. "pressure_4") > 2900, "AUX: system 4 pressure")
 T.equal(get(HYD .. "dem_mode_4"), -1, "AUX: synoptic selector")
+T.equal(get(SYN .. "aux"), 2, "AUX: synoptic AUX running")
+T.equal(get(SYN .. "dem", 3), 4, "AUX: synoptic DEM 4 OFF")
 T.equal(get(HYD .. "light/sys_fault", 3), 0, "AUX: SYS FAULT 4 out")
 T.equal(get(HYD .. "light/dem_press", 3), 1, "AUX: DEMAND PRESS 4 on")
 T.equal(get(ADVISORY, 209), 1, "AUX: HYD PRESS DEM 4")
@@ -90,6 +103,10 @@ end
 T.equal(get(HYD .. "dem_pressure_2"), 0, "engines: ACMP 2 stopped")
 T.equal(get(HYD .. "aux_pressure"), 0, "engines: AUX pump stopped")
 T.check(get(HYD .. "pressure_dsp_1") >= 2800, "engines: synoptic pressure")
+for n = 1, 4 do
+    T.equal(get(SYN .. "edp", n - 1), 0, "engines: synoptic EDP " .. n .. " empty")
+    T.equal(get(SYN .. "dem", n - 1), 3, "engines: synoptic DEM " .. n .. " AUTO (cyan)")
+end
 
 -- ENGINE pump 1 OFF: ADP 1 keeps system 1, ENGINE PRESS and HYD PRESS ENG
 rt:set(SW, 30, 0)
@@ -98,6 +115,9 @@ T.equal(get(HYD .. "light/eng_press", 0), 1, "EDP 1 off: ENGINE PRESS 1")
 T.equal(get(ADVISORY, 210), 1, "EDP 1 off: HYD PRESS ENG 1")
 T.check(get(HYD .. "dem_pressure_1") > 2900 and get(HYD .. "pressure_1") > 2800, "EDP 1 off: ADP 1 holds system 1")
 T.equal(get(HYD .. "valve_1"), 0, "EDP 1 off: synoptic shows the engine pump off")
+T.equal(get(SYN .. "edp", 0), 4, "EDP 1 off: synoptic EDP 1 OFF")
+T.equal(get(SYN .. "sov", 0), 1, "EDP 1 off: synoptic SOV 1 still open")
+T.equal(get(SYN .. "dem", 0), 0, "EDP 1 off: synoptic DEM 1 running (empty)")
 rt:set(SW, 30, 1)
 frames(16)
 
@@ -128,5 +148,17 @@ end
 rt:set(SW, 31, 1)
 frames(4)
 T.equal(get(STATUS, 1), 0, "STATUS: HYD PRESS ENG 2 gone with its pump ON")
+
+-- fire switch 3: the synoptic's SOV 3 closes; EDP 3 shows ON amber
+rt:set("laminar/B747/fire/engine03/ext_switch/pos_arm", 1)
+frames(4)
+T.equal(get(SYN .. "sov", 2), 0, "fire 3: synoptic SOV 3 closed")
+T.equal(get(SYN .. "edp", 2), 1, "fire 3: synoptic EDP 3 ON amber")
+rt:set("laminar/B747/fire/engine03/ext_switch/pos_arm", 0)
+-- no bleed: the reservoirs lose pressure (5 min, estimate): RSVR PRESS
+rt:set("laminar/B747/air/duct_pressure_L", 0)
+rt:set("laminar/B747/air/duct_pressure_R", 0)
+frames(900)
+T.equal(get(SYN .. "rsvr_press", 0), 1, "no bleed: synoptic RSVR PRESS 1")
 
 T.done()

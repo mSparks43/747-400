@@ -132024,7 +132024,7 @@ GROUP LOWER EICAS POWER
             POS 1419.000000 81.500000
             IMAGE CRT Displays/EICAS Lower/HYD/d_auto
             DATAREF 
-            SHOW_EQUAL 1.000000 laminar/B747/hydraulics/dem_mode_1
+            SHOW_EQUAL 3.000000 laminar/B747/hydraulics/synoptic/dem[0]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132042,33 +132042,37 @@ GROUP LOWER EICAS POWER
             CLICK_DX 0
             CLICK_DY 0
 
-          gen_rotary dem_1 off
-            POS 1419.500000 81.500000
-            IMAGE CRT Displays/EICAS Lower/HYD/d_off
-            DATAREF 
-            SHOW_EQUAL 0.000000 laminar/B747/hydraulics/dem_mode_1
-            HIDE
+          gen_text dem_1 off amber
+            POS 1499.860000 80.500000
+            IMAGE CRT Displays/TEXT/TXT.2.28.amber
+            DATAREF laminar/B747/hydraulics/synoptic/text_off[0]
+            SHOW_EQUAL 4.000000 laminar/B747/hydraulics/synoptic/dem[0]
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
             BUS_SRC 2
             KEY_FRAME 0.000000 0.000000 1.000000
-            KEY_FRAME 1.000000 6.000000
-            DIGITS 1
-            ROTARY_TYPE NO_CLICK
-            CLICK_RADIUS 0.000000
-            CLICK_RADIUS_DY 0.000000
-            OFFSET 0.000000
-            STEP1 1.000000
-            STEP2 1.000000
-            CURSOR DEFAULT
-            CLICK_DX 0
-            CLICK_DY 0
+            KEY_FRAME 1.000000 1.000000
+            OFFSET_X -100
+            OFFSET_Y -11.000000
+
+          gen_text dem_1 auto amber
+            POS 1493.480000 80.500000
+            IMAGE CRT Displays/TEXT/TXT.2.28.amber
+            DATAREF laminar/B747/hydraulics/synoptic/text_auto[0]
+            SHOW_EQUAL 2.000000 laminar/B747/hydraulics/synoptic/dem[0]
+            LIGHT_MODE GLASS_AUTO
+            LIGHT_RHEOSTAT 10
+            BUS_SRC 2
+            KEY_FRAME 0.000000 0.000000 1.000000
+            KEY_FRAME 1.000000 1.000000
+            OFFSET_X -100
+            OFFSET_Y -11.000000
 
           gen_rotary dem_2 auto
             POS 1566.000000 82.500000
             IMAGE CRT Displays/EICAS Lower/HYD/d_auto
             DATAREF 
-            SHOW_EQUAL 1.000000 laminar/B747/hydraulics/dem_mode_2
+            SHOW_EQUAL 3.000000 laminar/B747/hydraulics/synoptic/dem[1]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132086,33 +132090,37 @@ GROUP LOWER EICAS POWER
             CLICK_DX 0
             CLICK_DY 0
 
-          gen_rotary dem_2 off
-            POS 1567.500000 82.500000
-            IMAGE CRT Displays/EICAS Lower/HYD/d_off
-            DATAREF 
-            SHOW_EQUAL 0.000000 laminar/B747/hydraulics/dem_mode_2
-            HIDE
+          gen_text dem_2 off amber
+            POS 1646.860000 81.500000
+            IMAGE CRT Displays/TEXT/TXT.2.28.amber
+            DATAREF laminar/B747/hydraulics/synoptic/text_off[0]
+            SHOW_EQUAL 4.000000 laminar/B747/hydraulics/synoptic/dem[1]
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
             BUS_SRC 2
             KEY_FRAME 0.000000 0.000000 1.000000
-            KEY_FRAME 1.000000 6.000000
-            DIGITS 1
-            ROTARY_TYPE NO_CLICK
-            CLICK_RADIUS 0.000000
-            CLICK_RADIUS_DY 0.000000
-            OFFSET 0.000000
-            STEP1 1.000000
-            STEP2 1.000000
-            CURSOR DEFAULT
-            CLICK_DX 0
-            CLICK_DY 0
+            KEY_FRAME 1.000000 1.000000
+            OFFSET_X -100
+            OFFSET_Y -11.000000
+
+          gen_text dem_2 auto amber
+            POS 1640.480000 81.500000
+            IMAGE CRT Displays/TEXT/TXT.2.28.amber
+            DATAREF laminar/B747/hydraulics/synoptic/text_auto[0]
+            SHOW_EQUAL 2.000000 laminar/B747/hydraulics/synoptic/dem[1]
+            LIGHT_MODE GLASS_AUTO
+            LIGHT_RHEOSTAT 10
+            BUS_SRC 2
+            KEY_FRAME 0.000000 0.000000 1.000000
+            KEY_FRAME 1.000000 1.000000
+            OFFSET_X -100
+            OFFSET_Y -11.000000
 
           gen_rotary dem_3 auto
             POS 1712.000000 80.500000
             IMAGE CRT Displays/EICAS Lower/HYD/d_auto
             DATAREF 
-            SHOW_EQUAL 1.000000 laminar/B747/hydraulics/dem_mode_3
+            SHOW_EQUAL 3.000000 laminar/B747/hydraulics/synoptic/dem[2]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132130,33 +132138,37 @@ GROUP LOWER EICAS POWER
             CLICK_DX 0
             CLICK_DY 0
 
-          gen_rotary dem_3 off
-            POS 1712.500000 80.500000
-            IMAGE CRT Displays/EICAS Lower/HYD/d_off
-            DATAREF 
-            SHOW_EQUAL 0.000000 laminar/B747/hydraulics/dem_mode_3
-            HIDE
+          gen_text dem_3 off amber
+            POS 1792.860000 79.500000
+            IMAGE CRT Displays/TEXT/TXT.2.28.amber
+            DATAREF laminar/B747/hydraulics/synoptic/text_off[0]
+            SHOW_EQUAL 4.000000 laminar/B747/hydraulics/synoptic/dem[2]
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
             BUS_SRC 2
             KEY_FRAME 0.000000 0.000000 1.000000
-            KEY_FRAME 1.000000 6.000000
-            DIGITS 1
-            ROTARY_TYPE NO_CLICK
-            CLICK_RADIUS 0.000000
-            CLICK_RADIUS_DY 0.000000
-            OFFSET 0.000000
-            STEP1 1.000000
-            STEP2 1.000000
-            CURSOR DEFAULT
-            CLICK_DX 0
-            CLICK_DY 0
+            KEY_FRAME 1.000000 1.000000
+            OFFSET_X -100
+            OFFSET_Y -11.000000
+
+          gen_text dem_3 auto amber
+            POS 1786.480000 79.500000
+            IMAGE CRT Displays/TEXT/TXT.2.28.amber
+            DATAREF laminar/B747/hydraulics/synoptic/text_auto[0]
+            SHOW_EQUAL 2.000000 laminar/B747/hydraulics/synoptic/dem[2]
+            LIGHT_MODE GLASS_AUTO
+            LIGHT_RHEOSTAT 10
+            BUS_SRC 2
+            KEY_FRAME 0.000000 0.000000 1.000000
+            KEY_FRAME 1.000000 1.000000
+            OFFSET_X -100
+            OFFSET_Y -11.000000
 
           gen_rotary dem_4 auto
             POS 1859.000000 81.500000
             IMAGE CRT Displays/EICAS Lower/HYD/d_auto
             DATAREF 
-            SHOW_EQUAL 1.000000 laminar/B747/hydraulics/dem_mode_4
+            SHOW_EQUAL 3.000000 laminar/B747/hydraulics/synoptic/dem[3]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132174,11 +132186,37 @@ GROUP LOWER EICAS POWER
             CLICK_DX 0
             CLICK_DY 0
 
-          gen_rotary dem_4 off
-            POS 1860.500000 81.500000
+          gen_text dem_4 off amber
+            POS 1939.860000 80.500000
+            IMAGE CRT Displays/TEXT/TXT.2.28.amber
+            DATAREF laminar/B747/hydraulics/synoptic/text_off[0]
+            SHOW_EQUAL 4.000000 laminar/B747/hydraulics/synoptic/dem[3]
+            LIGHT_MODE GLASS_AUTO
+            LIGHT_RHEOSTAT 10
+            BUS_SRC 2
+            KEY_FRAME 0.000000 0.000000 1.000000
+            KEY_FRAME 1.000000 1.000000
+            OFFSET_X -100
+            OFFSET_Y -11.000000
+
+          gen_text dem_4 auto amber
+            POS 1933.480000 80.500000
+            IMAGE CRT Displays/TEXT/TXT.2.28.amber
+            DATAREF laminar/B747/hydraulics/synoptic/text_auto[0]
+            SHOW_EQUAL 2.000000 laminar/B747/hydraulics/synoptic/dem[3]
+            LIGHT_MODE GLASS_AUTO
+            LIGHT_RHEOSTAT 10
+            BUS_SRC 2
+            KEY_FRAME 0.000000 0.000000 1.000000
+            KEY_FRAME 1.000000 1.000000
+            OFFSET_X -100
+            OFFSET_Y -11.000000
+
+          gen_rotary aux off
+            POS 1997.000000 81.500000
             IMAGE CRT Displays/EICAS Lower/HYD/d_off
             DATAREF 
-            SHOW_LESS 0.000000 laminar/B747/hydraulics/dem_mode_4
+            SHOW_EQUAL 0.000000 laminar/B747/hydraulics/synoptic/aux
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132203,7 +132241,7 @@ GROUP LOWER EICAS POWER
             POS 1487.500000 21.500000
             IMAGE CRT Displays/EICAS Lower/HYD/valve_on
             DATAREF 
-            SHOW_GREATER 0.950000 laminar/B747/hydraulics/valve_1
+            SHOW_EQUAL 1.000000 laminar/B747/hydraulics/synoptic/sov[0]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132225,7 +132263,7 @@ GROUP LOWER EICAS POWER
             POS 1487.000000 20.500000
             IMAGE CRT Displays/EICAS Lower/HYD/valve_off
             DATAREF 
-            SHOW_LESS 0.100000 laminar/B747/hydraulics/valve_1
+            SHOW_EQUAL 0.000000 laminar/B747/hydraulics/synoptic/sov[0]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132247,7 +132285,7 @@ GROUP LOWER EICAS POWER
             POS 1487.500000 140.000000
             IMAGE CRT Displays/EICAS Lower/HYD/edp_off
             DATAREF 
-            SHOW_LESS 0.100000 laminar/B747/hydraulics/valve_1
+            SHOW_EQUAL 4.000000 laminar/B747/hydraulics/synoptic/edp[0]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132269,7 +132307,7 @@ GROUP LOWER EICAS POWER
             POS 1634.500000 21.500000
             IMAGE CRT Displays/EICAS Lower/HYD/valve_on
             DATAREF 
-            SHOW_GREATER 0.950000 laminar/B747/hydraulics/valve_2
+            SHOW_EQUAL 1.000000 laminar/B747/hydraulics/synoptic/sov[1]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132291,7 +132329,7 @@ GROUP LOWER EICAS POWER
             POS 1634.000000 20.500000
             IMAGE CRT Displays/EICAS Lower/HYD/valve_off
             DATAREF 
-            SHOW_LESS 0.100000 laminar/B747/hydraulics/valve_2
+            SHOW_EQUAL 0.000000 laminar/B747/hydraulics/synoptic/sov[1]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132313,7 +132351,7 @@ GROUP LOWER EICAS POWER
             POS 1634.500000 140.000000
             IMAGE CRT Displays/EICAS Lower/HYD/edp_off
             DATAREF 
-            SHOW_LESS 0.100000 laminar/B747/hydraulics/valve_2
+            SHOW_EQUAL 4.000000 laminar/B747/hydraulics/synoptic/edp[1]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132335,7 +132373,7 @@ GROUP LOWER EICAS POWER
             POS 1781.500000 21.500000
             IMAGE CRT Displays/EICAS Lower/HYD/valve_on
             DATAREF 
-            SHOW_GREATER 0.950000 laminar/B747/hydraulics/valve_3
+            SHOW_EQUAL 1.000000 laminar/B747/hydraulics/synoptic/sov[2]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132357,7 +132395,7 @@ GROUP LOWER EICAS POWER
             POS 1781.000000 20.500000
             IMAGE CRT Displays/EICAS Lower/HYD/valve_off
             DATAREF 
-            SHOW_LESS 0.100000 laminar/B747/hydraulics/valve_3
+            SHOW_EQUAL 0.000000 laminar/B747/hydraulics/synoptic/sov[2]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132379,7 +132417,7 @@ GROUP LOWER EICAS POWER
             POS 1781.500000 140.000000
             IMAGE CRT Displays/EICAS Lower/HYD/edp_off
             DATAREF 
-            SHOW_LESS 0.100000 laminar/B747/hydraulics/valve_3
+            SHOW_EQUAL 4.000000 laminar/B747/hydraulics/synoptic/edp[2]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132401,7 +132439,7 @@ GROUP LOWER EICAS POWER
             POS 1927.500000 21.500000
             IMAGE CRT Displays/EICAS Lower/HYD/valve_on
             DATAREF 
-            SHOW_GREATER 0.950000 laminar/B747/hydraulics/valve_4
+            SHOW_EQUAL 1.000000 laminar/B747/hydraulics/synoptic/sov[3]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132423,7 +132461,7 @@ GROUP LOWER EICAS POWER
             POS 1927.000000 20.500000
             IMAGE CRT Displays/EICAS Lower/HYD/valve_off
             DATAREF 
-            SHOW_LESS 0.100000 laminar/B747/hydraulics/valve_4
+            SHOW_EQUAL 0.000000 laminar/B747/hydraulics/synoptic/sov[3]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10
@@ -132445,7 +132483,97 @@ GROUP LOWER EICAS POWER
             POS 1927.500000 140.000000
             IMAGE CRT Displays/EICAS Lower/HYD/edp_off
             DATAREF 
-            SHOW_LESS 0.100000 laminar/B747/hydraulics/valve_4
+            SHOW_EQUAL 4.000000 laminar/B747/hydraulics/synoptic/edp[3]
+            HIDE
+            LIGHT_MODE GLASS_AUTO
+            LIGHT_RHEOSTAT 10
+            BUS_SRC 2
+            KEY_FRAME 0.000000 0.000000 1.000000
+            KEY_FRAME 1.000000 6.000000
+            DIGITS 1
+            ROTARY_TYPE NO_CLICK
+            CLICK_RADIUS 0.000000
+            CLICK_RADIUS_DY 0.000000
+            OFFSET 0.000000
+            STEP1 1.000000
+            STEP2 1.000000
+            CURSOR DEFAULT
+            CLICK_DX 0
+            CLICK_DY 0
+
+        END_GROUP
+        GROUP rsvr press
+          gen_rotary rsvr_press_1
+            POS 1511.500000 -72.000000
+            IMAGE CRT Displays/EICAS Lower/HYD/rsvr_press
+            DATAREF 
+            SHOW_EQUAL 1.000000 laminar/B747/hydraulics/synoptic/rsvr_press[0]
+            HIDE
+            LIGHT_MODE GLASS_AUTO
+            LIGHT_RHEOSTAT 10
+            BUS_SRC 2
+            KEY_FRAME 0.000000 0.000000 1.000000
+            KEY_FRAME 1.000000 6.000000
+            DIGITS 1
+            ROTARY_TYPE NO_CLICK
+            CLICK_RADIUS 0.000000
+            CLICK_RADIUS_DY 0.000000
+            OFFSET 0.000000
+            STEP1 1.000000
+            STEP2 1.000000
+            CURSOR DEFAULT
+            CLICK_DX 0
+            CLICK_DY 0
+
+          gen_rotary rsvr_press_2
+            POS 1657.500000 -72.000000
+            IMAGE CRT Displays/EICAS Lower/HYD/rsvr_press
+            DATAREF 
+            SHOW_EQUAL 1.000000 laminar/B747/hydraulics/synoptic/rsvr_press[1]
+            HIDE
+            LIGHT_MODE GLASS_AUTO
+            LIGHT_RHEOSTAT 10
+            BUS_SRC 2
+            KEY_FRAME 0.000000 0.000000 1.000000
+            KEY_FRAME 1.000000 6.000000
+            DIGITS 1
+            ROTARY_TYPE NO_CLICK
+            CLICK_RADIUS 0.000000
+            CLICK_RADIUS_DY 0.000000
+            OFFSET 0.000000
+            STEP1 1.000000
+            STEP2 1.000000
+            CURSOR DEFAULT
+            CLICK_DX 0
+            CLICK_DY 0
+
+          gen_rotary rsvr_press_3
+            POS 1804.500000 -72.000000
+            IMAGE CRT Displays/EICAS Lower/HYD/rsvr_press
+            DATAREF 
+            SHOW_EQUAL 1.000000 laminar/B747/hydraulics/synoptic/rsvr_press[2]
+            HIDE
+            LIGHT_MODE GLASS_AUTO
+            LIGHT_RHEOSTAT 10
+            BUS_SRC 2
+            KEY_FRAME 0.000000 0.000000 1.000000
+            KEY_FRAME 1.000000 6.000000
+            DIGITS 1
+            ROTARY_TYPE NO_CLICK
+            CLICK_RADIUS 0.000000
+            CLICK_RADIUS_DY 0.000000
+            OFFSET 0.000000
+            STEP1 1.000000
+            STEP2 1.000000
+            CURSOR DEFAULT
+            CLICK_DX 0
+            CLICK_DY 0
+
+          gen_rotary rsvr_press_4
+            POS 1952.500000 -72.000000
+            IMAGE CRT Displays/EICAS Lower/HYD/rsvr_press
+            DATAREF 
+            SHOW_EQUAL 1.000000 laminar/B747/hydraulics/synoptic/rsvr_press[3]
             HIDE
             LIGHT_MODE GLASS_AUTO
             LIGHT_RHEOSTAT 10

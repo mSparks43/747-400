@@ -290,4 +290,58 @@ do
     T.check(out.sys[1].status_ovht, "STATUS: HYD OVHT SYS 1 above 104 °C")
 end
 
+-- HYD synoptic pump symbols (ATA29_32 p.105-106, FCOM p.1486-1488): a pump
+-- giving pressure is the empty symbol; DEM AUTO cyan while not commanded,
+-- OFF amber with the selector OFF (and system 4 on AUX), ON or AUTO amber
+-- when commanded and low; EDP OFF with its switch OFF, ON amber when low;
+-- AUX OFF white, cyan on standby, white running, amber when it cannot run
+do
+    local s, inp = parked()
+    power(inp)
+    local out = run(s, inp, 3)
+    for n = 1, 4 do
+        T.equal(out.sys[n].syn_edp, H.SYN_ON_AMBER, "synoptic: EDP " .. n .. " ON amber with the engine stopped")
+        T.equal(out.sys[n].syn_dem, H.SYN_OFF, "synoptic: DEM " .. n .. " OFF with the selector OFF")
+    end
+    T.equal(out.syn_aux, H.SYN_AUX_OFF, "synoptic: AUX OFF while not selected")
+    inp.demand_sel[4] = -1                      -- AUX: the AUX pump runs on the ground
+    out = run(s, inp, 3)
+    T.equal(out.syn_aux, H.SYN_AUX_ON, "synoptic: AUX running (white, empty)")
+    T.equal(out.sys[4].syn_dem, H.SYN_OFF, "synoptic: DEM 4 OFF with the selector on AUX (FCOM p.1486)")
+    inp.gh_ac = false                           -- no ground handling bus: the AUX pump stops
+    out = run(s, inp, 3)
+    T.equal(out.syn_aux, H.SYN_AUX_AMBER, "synoptic: AUX amber when it cannot run (estimate)")
+    inp.gh_ac = true
+
+    engines_running(inp)
+    inp.demand_sel[4] = -1
+    out = run(s, inp, 20)
+    for n = 1, 4 do
+        T.equal(out.sys[n].syn_edp, H.SYN_ON, "synoptic: EDP " .. n .. " empty with its engine running")
+    end
+    for n = 1, 3 do
+        T.equal(out.sys[n].syn_dem, H.SYN_AUTO, "synoptic: DEM " .. n .. " AUTO (cyan) while not needed")
+    end
+    T.equal(out.syn_aux, H.SYN_AUX_STANDBY, "synoptic: AUX cyan while EDP 4 gives pressure")
+    inp.demand_sel[4] = 1
+
+    inp.engine_pump[2] = false                  -- ENGINE pump 2 OFF: DEM 2 runs on demand
+    out = run(s, inp, 5)
+    T.equal(out.sys[2].syn_edp, H.SYN_OFF, "synoptic: EDP 2 OFF with its switch OFF")
+    T.equal(out.sys[2].syn_dem, H.SYN_ON, "synoptic: DEM 2 running in AUTO shows the empty symbol")
+    inp.ac[2] = false                           -- and no AC bus 2: commanded, no pressure
+    out = run(s, inp, 5)
+    T.equal(out.sys[2].syn_dem, H.SYN_AUTO_AMBER, "synoptic: DEM 2 AUTO amber, commanded and low")
+    inp.demand_sel[2] = 2
+    out = run(s, inp, 1)
+    T.equal(out.sys[2].syn_dem, H.SYN_ON_AMBER, "synoptic: DEM 2 ON amber with the selector ON and low")
+    inp.ac[2], inp.engine_pump[2], inp.demand_sel[2] = true, true, 1
+
+    inp.fire_out[3] = true                      -- fire switch 3: SOV closed, EDP 3 depressurised
+    out = run(s, inp, 5)
+    T.check(not out.sys[3].sov_open, "synoptic: SOV 3 closed by the fire switch")
+    T.equal(out.sys[3].syn_edp, H.SYN_ON_AMBER, "synoptic: EDP 3 ON amber (switch ON, no pressure)")
+    T.check(out.sys[3].sov_open == false and out.sys[2].sov_open, "synoptic: only SOV 3 closed")
+end
+
 T.done()

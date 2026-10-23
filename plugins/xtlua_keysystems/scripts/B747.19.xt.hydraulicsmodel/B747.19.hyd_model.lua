@@ -37,6 +37,12 @@ M.BRAKE_PSI = {[4] = 1200, [1] = 1500, [2] = 1500}   -- brake source selection (
                                 -- system 2's switch value estimated)
 M.ACC_PRECHARGE_PSI, M.ACC_GAS_IN3 = 750, 200        -- brake accumulator (ATA29_32 p.408)
 
+-- HYD synoptic pump symbols (ATA29_32 p.105-106). ON (white) is the empty
+-- symbol: both figures draw a pump that gives pressure without a word
+-- (FCOM p.1486, ATA29_32 p.107). The engine pump uses ON, ON_AMBER and OFF.
+M.SYN_ON, M.SYN_ON_AMBER, M.SYN_AUTO_AMBER, M.SYN_AUTO, M.SYN_OFF = 0, 1, 2, 3, 4
+M.SYN_AUX_OFF, M.SYN_AUX_STANDBY, M.SYN_AUX_ON, M.SYN_AUX_AMBER = 0, 1, 2, 3
+
 -- flow at the rated pressure, gpm (ATA29_32 p.26, p.68, p.84)
 M.EDP_GPM, M.ADP_GPM, M.ACMP_GPM, M.AUX_GPM = 37.5, 32, 6, 5.7
 -- estimates (the sources give no values): leakage of a system, the bleed duct
@@ -93,7 +99,8 @@ end
 function M.new()
     local s = {t = 0, first = true, acc_psi = M.ACC_PRECHARGE_PSI, rsvr_psi = 0, sys = {}}
     local out = {sys = {}, aux_psi = 0, aux_running = false, brake_source = 0, brake_psi = 0,
-        acc_psi = M.ACC_PRECHARGE_PSI, brake_source_alert = false, normal_brakes = false}
+        acc_psi = M.ACC_PRECHARGE_PSI, brake_source_alert = false, normal_brakes = false,
+        syn_aux = M.SYN_AUX_OFF}
     for n = 1, 4 do
         s.sys[n] = {
             psi = 0, qty = 1.0, temp = 15,
@@ -102,6 +109,7 @@ function M.new()
             ready_t = 0,                          -- ACMP: time since the selector left OFF
             flaps_t = M.ADP_FLAPS_HOLD_S,         -- ADP: time since the flaps came up in the air
             edp_low_t = 0, sys_low_t = 0, dem_low_t = 0,
+            dem_low_any_t = 0,                    -- demand pump output low, commanded or not
         }
         out.sys[n] = {
             psi = 0, edp_psi = 0, dem_psi = 0, qty = 1.0, temp = 15,
@@ -112,6 +120,7 @@ function M.new()
             control = false,
             status_eng = true, status_dem = false, status_ovht = false, status_rsvr = true,
             status_hydim = true,
+            syn_edp = M.SYN_ON_AMBER, syn_dem = M.SYN_OFF,
         }
     end
     s.out = out
@@ -285,6 +294,30 @@ function M.update(s, inp, dt)
         o.status_ovht = o.ovht
         o.status_rsvr = o.rsvr_low
         o.status_hydim = not hydim
+
+        -- HYD synoptic (ATA29_32 p.105-106): the pump symbols from the
+        -- switches and the pressure switches, which wait as the lights do
+        -- (estimate). With system 4 on AUX its demand pump shows OFF (FCOM
+        -- p.1486).
+        if ss.dem_low then ss.dem_low_any_t = ss.dem_low_any_t + dt else ss.dem_low_any_t = 0 end
+        if not inp.engine_pump[n] then o.syn_edp = M.SYN_OFF
+        elseif edp_low2 then o.syn_edp = M.SYN_ON_AMBER
+        else o.syn_edp = M.SYN_ON end
+        if sel <= 0 then o.syn_dem = M.SYN_OFF
+        elseif on then
+            if ss.dem_low_any_t >= M.ALERT_DELAY_S then o.syn_dem = M.SYN_ON_AMBER else o.syn_dem = M.SYN_ON end
+        elseif not commanded then o.syn_dem = M.SYN_AUTO
+        elseif dem_low2 then o.syn_dem = M.SYN_AUTO_AMBER
+        else o.syn_dem = M.SYN_ON end
+        -- the AUX pump: cyan while the engine pump gives pressure, white while
+        -- it runs, amber while it cannot (estimate: the source gives white and
+        -- amber the same condition)
+        if n == 4 then
+            if not aux then out.syn_aux = M.SYN_AUX_OFF
+            elseif not edp_low2 then out.syn_aux = M.SYN_AUX_STANDBY
+            elseif out.aux_running then out.syn_aux = M.SYN_AUX_ON
+            else out.syn_aux = M.SYN_AUX_AMBER end
+        end
     end
 
     -- brake source: system 4, then 1, then 2, then the accumulator, which

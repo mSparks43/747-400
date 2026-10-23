@@ -33,6 +33,13 @@ B747DR_hyd_CAS_advisory         = find_dataref("laminar/B747/CAS/advisory_status
 B747DR_hyd_CAS_status           = find_dataref("laminar/B747/CAS/status_status")
 B747DR_hyd_stat_RF              = find_dataref("laminar/B747/EICAS2/stat/RF")
 B747DR_hyd_stat_LO              = find_dataref("laminar/B747/EICAS2/stat/LO")
+B747DR_hyd_syn_edp              = find_dataref("laminar/B747/hydraulics/synoptic/edp")
+B747DR_hyd_syn_dem              = find_dataref("laminar/B747/hydraulics/synoptic/dem")
+B747DR_hyd_syn_aux              = find_dataref("laminar/B747/hydraulics/synoptic/aux")
+B747DR_hyd_syn_sov              = find_dataref("laminar/B747/hydraulics/synoptic/sov")
+B747DR_hyd_syn_rsvr_press       = find_dataref("laminar/B747/hydraulics/synoptic/rsvr_press")
+B747DR_hyd_syn_text_off         = find_dataref("laminar/B747/hydraulics/synoptic/text_off")
+B747DR_hyd_syn_text_auto        = find_dataref("laminar/B747/hydraulics/synoptic/text_auto")
 
 -- estimates: flow for the pressure the flight controls take (their old
 -- pressure budget, B747.19.xt.hydraulics_override.lua), and the brake
@@ -169,7 +176,15 @@ local function write_outputs(out)
         B747DR_hyd_CAS_status[STATUS_OVHT + n - 1] = flag(o.status_ovht)
         B747DR_hyd_CAS_status[STATUS_RSVR + n - 1] = flag(o.status_rsvr)
         B747DR_hyd_CAS_status[STATUS_HYDIM + n - 1] = flag(o.status_hydim)
+        -- the custom acf's HYD synoptic (ACF_DIFF.md §5)
+        B747DR_hyd_syn_edp[n - 1] = o.syn_edp
+        B747DR_hyd_syn_dem[n - 1] = o.syn_dem
+        B747DR_hyd_syn_sov[n - 1] = flag(o.sov_open)
+        B747DR_hyd_syn_rsvr_press[n - 1] = flag(o.rsvr_low)
     end
+    B747DR_hyd_syn_aux = out.syn_aux
+    if B747DR_hyd_syn_text_off ~= "OFF" then B747DR_hyd_syn_text_off = "OFF" end
+    if B747DR_hyd_syn_text_auto ~= "AUTO" then B747DR_hyd_syn_text_auto = "AUTO" end
     B747DR_hyd_light_brake_source = flag(out.brake_source_alert)
     B747DR_hyd_CAS_caution[CAUTION_BRAKE_SOURCE] = flag(out.brake_source_alert)
 end
