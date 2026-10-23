@@ -198,13 +198,21 @@ end
 -- X-Plane's electrics as stand-ins (notes §6): the battery follows the
 -- BATTERY switch (the sounds test battery_on), the GPU any XPC, the APU
 -- generator any APB, generator n GCB n; the cross tie stays closed so that
--- X-Plane's buses have power whenever any source does.
+-- X-Plane's buses have power whenever any source does. Each is read first:
+-- XTLua passes on only a value that differs from the one it holds, so a
+-- value X-Plane changed itself would otherwise stay (TESTING.md §1.2).
 local function write_xplane(out)
-    simDR_cross_tie = 1
-    simDR_battery_on[0] = flag(out.xp.battery_on)
-    simDR_gpu_on = flag(out.xp.gpu_on)
-    simDR_apu_gen_on = flag(out.xp.apu_gen_on)
-    for n = 1, 4 do simDR_generator_on[n - 1] = flag(out.xp.generator_on[n]) end
+    if simDR_cross_tie ~= 1 then simDR_cross_tie = 1 end
+    local v = flag(out.xp.battery_on)
+    if simDR_battery_on[0] ~= v then simDR_battery_on[0] = v end
+    v = flag(out.xp.gpu_on)
+    if simDR_gpu_on ~= v then simDR_gpu_on = v end
+    v = flag(out.xp.apu_gen_on)
+    if simDR_apu_gen_on ~= v then simDR_apu_gen_on = v end
+    for n = 1, 4 do
+        v = flag(out.xp.generator_on[n])
+        if simDR_generator_on[n - 1] ~= v then simDR_generator_on[n - 1] = v end
+    end
 end
 
 -- Switch requests and DRIVE DISC flags the model dropped go back to the
