@@ -36,6 +36,7 @@
   - メタテーブルの無い global テーブルの、無い添字を読むとスタックが溢れる。
   - チャンクをまたいで local は見えない。XTLua 独自の `dofile` の戻り値。1 回だけのコマンドには phase 2 が来ない。
   - Web API で XTLua の double 型 dataref に小数を書くと HTTP 400 になる。
+  - X-Plane の dataref に、前に書いたのと同じ値を書いても X-Plane には渡らない。X-Plane が値を変えた後は、そのモジュールが読み直すまで直らない（XTLua の xpmtdatarefs.cpp：書くとキャッシュと比べ、違うときだけ次のフレームで 1 回渡す。読むと次のフレームで X-Plane から読み直す。2026-10-23 に、Web API で cross tie を書き換えると、毎フレーム書いている電源のグルーが元に戻さないことを確かめた）→ X-Plane の dataref は毎フレーム読んで、違うときだけ書く。X-Plane なしの試験（`tests/lib/xtlua.lua`）はこれを再現しない。
 
 ### 1.3 記録データ（`tests_old/data`）
 
@@ -97,7 +98,7 @@
 | `tests/static/*_test.lua` | 全系統に共通の検査。xt スクリプトの dataref が init で作られているか、`INTERFACES.tsv` の名前が残っているか、全モジュール（26）が X-Plane なしで読み込み・`flight_start`・60 フレームを Lua の誤りなしに通るか（`modules_run_test.lua`） |
 | `tests/tools/same_behaviour.lua` | 挙動を変えない変更（コードの切り出しなど）の確認。作業ツリーと git の版で同じモジュールを同じ入力・同じ乱数の種で回し、毎フレーム、書かれた dataref・実行したコマンド・print の行を比べる。20・30・45 fps で回す |
 | `tests/tools/scenarios/*.lua` | `same_behaviour.lua` の入力。`hydraulics_afds.lua` は油圧モジュール（AFDS の制御則・ヨーダンパー・スラットを含む） |
-| `tests/<系統>/*_test.lua` | 系統ごとの試験（作り直しと一緒に書く）。`tests/elec/`：電源モデルの単体と、XTLua で動かした電源モジュール。`tests/gear/`：空地判定（PSEU）の単体と、XTLua で動かした脚モジュール。`tests/warning/`：警報のモデルの単体と、XTLua で動かした警報モジュール（manipulators の master リセットと fltInst の CANC・RCL も一緒に読み込む）。`tests/hyd/`：油圧のモデルの単体と、XTLua で動かした油圧モジュール（B747.20 も一緒に読み込む） |
+| `tests/<系統>/*_test.lua` | 系統ごとの試験（作り直しと一緒に書く）。`tests/elec/`：電源モデルの単体と、XTLua で動かした電源モジュール。`tests/gear/`：空地判定（PSEU）の単体と、XTLua で動かした脚モジュール。`tests/warning/`：警報のモデルの単体と、XTLua で動かした警報モジュール（manipulators の master リセットと fltInst の CANC・RCL も一緒に読み込む）。`tests/hyd/`：油圧のモデルの単体と、XTLua で動かした油圧モジュール（B747.20 も一緒に読み込む）。`tests/bleed/`：空圧のモデルの単体と、XTLua で動かした空調モジュール（抽気のグルーを含む） |
 
 - `tests/lib/xtlua.lua`（XTLua の再現）：
   - 本物の `plugins/<instance>/init.lua` を新しい環境で読み、`run_module_in_namespace()` でモジュールを読み込む。`dofile` はモジュールのフォルダから読む。名前空間の動き（bare table のコピーなど）も XTLua と同じに出る。
@@ -125,8 +126,8 @@
 | 置き場所 | 中身 |
 |---|---|
 | `tests/flight/xp.ps1` | Web API クライアント。`/api/capabilities` の確認、名前→ID の解決とキャッシュ、dataref の読み書き（文字列の dataref は復号する）、コマンドの実行、フライトの開始、スクリーンショットの取得。コマンド行からも使える（`caps`・`get`・`set`・`cmd`・`flight`・`shot`・`find`） |
-| `tests/flight/run_scenario.ps1` | シナリオの実行。手順を順に実行し、条件を待ち（タイムアウト付き）、判定する。結果は JSON と Markdown で書く。手順の種類はファイルの先頭に一覧がある（`switch`・`wait`・`check`・`snapshot`・`cas`・`view`・`shot` など）。`view` の型：`forward`（前）、`panel`（機長席から計器盤）、`overhead`（機長席から P5 の電源パネル）、`eicas`（機長席から upper EICAS を中央に） |
-| `tests/flight/scenarios/` | シナリオの定義。`s00_baseline_start`（駐機から電源投入・APU・4 発始動）、`s01_ap_basic`（空中から A/P の ALT HOLD・HDG・V/S。機体を読み直す）、`s02_elec_panel`（エンジン運転中に P5 の電源パネルを操作。機体を読み直す）、`s03_alerts`（エンジン運転中に BUS TIE 2・GEN CONT 2 で advisory と caution を出し、EICAS の並び・master CAUTION とリセット・CANC/RCL を見る。機体を読み直す）、`s04_hydraulics`（エンジン運転中に ENGINE pump 1・DEMAND 1 を切り、油圧・P5 の灯・EICAS・synoptic を見る。機体を読み直す） |
+| `tests/flight/run_scenario.ps1` | シナリオの実行。手順を順に実行し、条件を待ち（タイムアウト付き）、判定する。結果は JSON と Markdown で書く。手順の種類はファイルの先頭に一覧がある（`switch`・`wait`・`check`・`snapshot`・`cas`・`view`・`shot` など）。`view` の型：`forward`（前）、`panel`（機長席から計器盤）、`overhead`（機長席から P5 の電源パネル）、`eicas`（機長席から upper EICAS を中央に）、`bleed`（P5 の抽気パネルを視野角 25° で拡大）。`{the, psi, fov}` で向きと視野角を直接書ける。視野角は次の `view` とシナリオの終わりで、始めの値に戻す |
+| `tests/flight/scenarios/` | シナリオの定義。`s00_baseline_start`（駐機から電源投入・APU・4 発始動）、`s01_ap_basic`（空中から A/P の ALT HOLD・HDG・V/S。機体を読み直す）、`s02_elec_panel`（エンジン運転中に P5 の電源パネルを操作。機体を読み直す）、`s03_alerts`（エンジン運転中に BUS TIE 2・GEN CONT 2 で advisory と caution を出し、EICAS の並び・master CAUTION とリセット・CANC/RCL を見る。機体を読み直す）、`s04_hydraulics`（エンジン運転中に ENGINE pump 1・DEMAND 1 を切り、油圧・P5 の灯・EICAS・synoptic を見る。機体を読み直す）、`s05_bleed`（エンジン運転中に ISOLATION L・ENGINE BLEED 1・NAI 1 を操作し、弁・ダクト圧・P5 の VALVE と OFF の灯・>BLEED 1 OFF を見る。機体を読み直す） |
 | `tests/flight/fwl/B747_flighttest.lua` | FlyWithLua 用の記録スクリプト。毎フレームの記録、イベント、最大・最小。コマンド（`FlyWithLua/B747_flighttest/start`・`stop`・`mark`）を Web API から操作する。747 以外の機体では何もしない。X-Plane の `Resources/plugins/FlyWithLua/Scripts/` に写して使う |
 | `tests/flight/runs/<日時>_<シナリオ>_<acf>/` | 出力。`session.csv`、`events.csv`、`summary.txt`、`result.json`・`result.md`、スクリーンショット、その回の `Log.txt`（全体と、誤りらしい行の抜粋）。git の管理外 |
 

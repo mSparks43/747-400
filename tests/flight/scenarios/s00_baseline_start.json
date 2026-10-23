@@ -105,6 +105,9 @@
       "laminar/B747/air/duct_pressure_L", "laminar/B747/air/duct_pressure_R", "laminar/B747/air/duct_pressure_C",
       "sim/flightmodel/weight/m_fuel_total" ] },
     { "do": "cas", "note": "始動前" },
+    { "do": "check", "note": "X-Plane 自身の抽気は auto（5。4 の APU にすると X-Plane は isolation valve を閉じ、エアスターターに空気が届かない）", "dref": "sim/cockpit2/pressurization/actuators/bleed_air_mode", "op": "==", "value": 5 },
+    { "do": "check", "note": "X-Plane の isolation valve L が開", "dref": "sim/cockpit2/bleedair/actuators/isol_valve_left", "op": "==", "value": 1 },
+    { "do": "check", "note": "X-Plane の isolation valve R が開", "dref": "sim/cockpit2/bleedair/actuators/isol_valve_right", "op": "==", "value": 1 },
 
     { "do": "mark", "note": "ENG 4 始動" },
     { "do": "switch", "note": "START 4", "cite": "FCOM p.879 (7.20.9)",

@@ -104,6 +104,11 @@ B747DR_outflow_valve_pos_R          = deferred_dataref("laminar/B747/air/outflow
 B747DR_landing_altitude             = deferred_dataref("laminar/B747/air/landing_altitude", "number")
 
 B747_duct_pressure_C                = deferred_dataref("laminar/B747/air/duct_pressure_C", "number")
+-- the bleed air model's P5 lights (B747.55.xt.bleed.lua, read by the
+-- lighting module): SYS FAULT 1-4, ISLN VALVE L/R, APU VALVE (1 = on)
+B747DR_bleed_light_sys_fault        = deferred_dataref("laminar/B747/air/light/sys_fault", "array[4]")
+B747DR_bleed_light_isln_valve       = deferred_dataref("laminar/B747/air/light/isln_valve", "array[2]")
+B747DR_bleed_light_apu_valve        = deferred_dataref("laminar/B747/air/light/apu_valve", "number")
 
 
 B747DR_pressure_EICAS1_display_status = deferred_dataref("laminar/B747/air/pressurization/EICAS1_display_status", "number")

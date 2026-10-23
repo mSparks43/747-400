@@ -163,7 +163,10 @@ simDR_window_heat_fail              = find_dataref("sim/operation/failures/rel_i
 --simDR_window_ice                    = find_dataref("sim/flightmodel/failures/window_ice")
 simDR_OAT=find_dataref("sim/weather/temperature_ambient_c")
 
-simDR_engine_bleed_air_fail         = find_dataref("sim/cockpit2/annunciators/bleed_air_fail")
+-- the bleed air model's P5 lights (B747.55.xt.bleed.lua)
+B747DR_light_bleed_sys_fault        = find_dataref("laminar/B747/air/light/sys_fault")
+B747DR_light_bleed_isln_valve       = find_dataref("laminar/B747/air/light/isln_valve")
+B747DR_light_bleed_apu_valve        = find_dataref("laminar/B747/air/light/apu_valve")
 
 simDR_gear_deploy_ratio             = find_dataref("sim/flightmodel2/gear/deploy_ratio")
 simDR_aircraft_altitude             = find_dataref("sim/cockpit2/gauges/indicators/altitude_ft_pilot")
@@ -1333,26 +1336,10 @@ function B747_annunciators()
     annun.b.temp_pack_reset = 0
 
     -- BLEED AIR
-    annun.b.bleed_air_isolation_L = 0.0
-    if (B747DR_button_switch_position[75] > 0.95 and B747DR_bleed_air_iso_vlv_L_pos < 1.0)
-        or (B747DR_button_switch_position[75] < 0.01 and B747DR_bleed_air_iso_vlv_L_pos > 0.0)
-    then
-        annun.b.bleed_air_isolation_L = 1.0
-    end
-
-    annun.b.bleed_air_isolation_R = 0.0
-    if (B747DR_button_switch_position[76] > 0.95 and B747DR_bleed_air_iso_vlv_R_pos < 1.0)
-        or (B747DR_button_switch_position[76] < 0.01 and B747DR_bleed_air_iso_vlv_R_pos > 0.0)
-    then
-        annun.b.bleed_air_isolation_R = 1.0
-    end
-
-    annun.b.apu_bleed_air = 0.0
-    if simDR_apu_running==1 and ((B747DR_button_switch_position[81] > 0.95 and B747DR_bleed_air_apu_vlv_pos < 1.0)
-        or (B747DR_button_switch_position[81] < 0.01 and B747DR_bleed_air_apu_vlv_pos > 0.0))
-    then
-        annun.b.apu_bleed_air = 1.0
-    end
+    -- VALVE lights: the valve moving or not where commanded (FCOM p.576)
+    annun.b.bleed_air_isolation_L = B747DR_light_bleed_isln_valve[0]
+    annun.b.bleed_air_isolation_R = B747DR_light_bleed_isln_valve[1]
+    annun.b.apu_bleed_air = B747DR_light_bleed_apu_valve
 
     annun.b.engine_bleed_air_01 = B747_ternary((B747DR_bleed_air_engine1_vlv_pos == 0.0), 1, 0)
     annun.b.engine_bleed_air_02 = B747_ternary((B747DR_bleed_air_engine2_vlv_pos == 0.0), 1, 0)
@@ -1429,10 +1416,10 @@ function B747_annunciators()
     annun.a.fire_bottle_APU_disch = 0
 
     -- ENGINE BLEED AIR SYS FAULT
-    annun.a.eng_bleed_air_sys_fault_01 = B747_ternary((simDR_engine_bleed_air_fail[0] == 1), 1, 0)
-    annun.a.eng_bleed_air_sys_fault_02 = B747_ternary((simDR_engine_bleed_air_fail[1] == 1), 1, 0)
-    annun.a.eng_bleed_air_sys_fault_03 = B747_ternary((simDR_engine_bleed_air_fail[2] == 1), 1, 0)
-    annun.a.eng_bleed_air_sys_fault_04 = B747_ternary((simDR_engine_bleed_air_fail[3] == 1), 1, 0)
+    annun.a.eng_bleed_air_sys_fault_01 = B747DR_light_bleed_sys_fault[0]
+    annun.a.eng_bleed_air_sys_fault_02 = B747DR_light_bleed_sys_fault[1]
+    annun.a.eng_bleed_air_sys_fault_03 = B747DR_light_bleed_sys_fault[2]
+    annun.a.eng_bleed_air_sys_fault_04 = B747DR_light_bleed_sys_fault[3]
 
     -- START SWITCHES
     annun.a.start_vlv_open_01 = B747DR_bleed_air_engine1_start_valve_pos

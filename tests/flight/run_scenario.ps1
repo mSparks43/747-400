@@ -25,8 +25,12 @@
 #   sleep   {seconds}
 #   snapshot {drefs: [...]}                      log values
 #   cas                                          log the EICAS message lines
-#   view    {name} | {the, psi}                  turn the pilot's head: a preset
-#                                                (forward, panel, overhead) or pitch/heading
+#   view    {name} | {the, psi, [fov]}           turn the pilot's head: a preset
+#                                                (forward, panel, overhead, eicas, bleed)
+#                                                or pitch/heading, with a field of view
+#                                                for a close look (bleed: the P5 bleed
+#                                                panel at 25 deg); the user's comes back
+#                                                with the next view and at the end
 #   shot    {name}                               screenshot
 # Every step may carry "note" (shown in the report) and "cite" (source page).
 param(
@@ -153,6 +157,7 @@ if ($Reload) {
 }
 $loaded = Get-XPDataref 'sim/aircraft/view/acf_relative_path'
 Add-Result @{ do = 'aircraft' } 'info' $loaded
+$fov0 = Get-XPDataref 'sim/graphics/view/field_of_view_deg'
 
 $stopped = $false
 foreach ($step in $spec.steps) {
@@ -210,14 +215,18 @@ foreach ($step in $spec.steps) {
             }
             'cas' { $lines = Get-CasLines; Add-Result $step 'info' ("{0} line(s): {1}" -f $lines.Count, ($lines -join ' | ')) $lines }
             'view' {
-                # head pitch/heading in degrees from the captain's eye point
-                $presets = @{ forward = @(0, 0); panel = @(-28, 20); overhead = @(58, 48); eicas = @(-22, 29) }
-                $v = if ($step.name) { $presets[$step.name] } else { @($step.the, $step.psi) }
+                # head pitch/heading in degrees from the captain's eye point, and
+                # a field of view for a close look (back to the user's after)
+                $presets = @{ forward = @(0, 0); panel = @(-28, 20); overhead = @(58, 48); eicas = @(-22, 29)
+                    bleed = @(19, 70, 25) }
+                $v = if ($step.name) { $presets[$step.name] } else { @($step.the, $step.psi, $step.fov) }
                 if (-not $v) { throw "unknown view preset $($step.name)" }
+                $fov = if ($v.Count -gt 2 -and $v[2]) { $v[2] } else { $fov0 }
+                Set-XPDataref 'sim/graphics/view/field_of_view_deg' $fov
                 Set-XPDataref 'sim/graphics/view/pilots_head_the' $v[0]
                 Set-XPDataref 'sim/graphics/view/pilots_head_psi' $v[1]
                 Start-Sleep -Seconds 1
-                Add-Result $step 'info' ("view pitch {0} heading {1}" -f $v[0], $v[1])
+                Add-Result $step 'info' ("view pitch {0} heading {1} fov {2}" -f $v[0], $v[1], $fov)
             }
             'shot' {
                 $f = Save-XPScreenshot (Join-Path $out ("shot_{0:D2}_{1}.png" -f ($results.Count + 1), $step.name))
@@ -234,6 +243,7 @@ foreach ($step in $spec.steps) {
         }
     }
 }
+if (-not $stopped) { try { Set-XPDataref 'sim/graphics/view/field_of_view_deg' $fov0 } catch { } }
 
 # collect the recorder output and the Log.txt lines of this run
 foreach ($f in 'session.csv', 'events.csv', 'summary.txt') {

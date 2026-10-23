@@ -215,6 +215,16 @@ Lua が作る名前の数：dataref 1617 個、コマンド 628 個。静的に�
 - EICAS：caution 9（>BRAKE SOURCE）、40〜43（HYD PRESS SYS）、advisory 200・201（HYD CONTROL 1・4）、202〜205（HYD OVHT SYS）、206〜209（HYD PRESS DEM）、210〜213（HYD PRESS ENG）、218〜221（>HYD QTY LOW）。
 - X-Plane の油圧は「常に加圧、故障を書かない」（notes/ATA-29.md §6.1）。`B747.20` はポンプの故障（`rel_hydpmp*`）を書かなくなった。X-Plane の漏れ故障（`rel_hydleak*`）は、グルーが作動油量を減らす形で受ける。
 
+### 4.5 空圧（1-5）
+
+抽気のモデル（`plugins/xtlua_keysystems/scripts/B747.55.xt.air/B747.55.bleed_model.lua`）を、グルー `B747.55.xt.bleed.lua` が空調モジュール（`B747.55.xt.air.lua`）の中で毎フレーム回す（`after_physics` で機器冷却の前、`B747_bleed()`）。中身は notes/ATA-36.md §2〜§4。前の抽気のコード（源の最大値を取る作り、乱数の上限）は外した。パック・与圧・機器冷却は空調（3-1）で作り直すまで前のまま。
+
+- 読むもの：P5 の抽気パネル（`button_switch/position` の [75] ISLN L、[76] ISLN R、[77]〜[80] ENGINE BLEED 1〜4、[81] APU）、NAI（[68]〜[71]）、START（`toggle_switch/position` [16]〜[19]）、AUTOSTART（`button_switch/position` [45]）、FUEL CONTROL、エンジン火災スイッチ（`pos_arm`）、N2（`engines/display_N2`）、APU の N1 とセレクタ、AC・DC バス（`electrical/bus/ac`・`dc`）、パックのセレクタ、主翼防氷弁、demand pump 1・4（ADP）の出口圧、高度計の高度、X-Plane の故障 `rel_APU_press`（APU が空気を出さない）。
+- 書く dataref（名前と意味は前と同じ）：`air/engineN/bleed_air_psi`（PRV の下流の圧。ナセル防氷とピトー加熱が読む）、`engineN/bleed_valve_pos`（PRSOV。ENGINE BLEED の OFF 灯と synoptic）、`engineN/bleed_start_valve_pos`（始動弁。エンジンが読んでスターターを回す）、`isolation_valve_L_pos`・`R_pos`、`apu/bleed_valve_pos`、`duct_pressure_L`・`C`・`R`（主翼防氷、ADP、EICAS のダクト圧）。X-Plane には `bleed_air_mode` だけを書く（ダクトに空気があれば 5 auto、無ければ 0 off）。X-Plane はこの mode に連動して自分の isolation valve を開閉する（4 APU では両方閉じ、X-Plane のエアスターターに APU の空気が届かない）ので、isolation valve には書かない。X-Plane の与圧とエアスターターはこれで動く。
+- 新設（1-5、init スクリプト `B747.55.air`）：`laminar/B747/air/light/sys_fault`（[0]〜[3]）、`light/isln_valve`（[0] L、[1] R）、`light/apu_valve`。照明モジュールが P5 の SYS FAULT・VALVE 灯に使う（`brightness_ratio` の [118]〜[121]、[72]・[73]、[74]）。
+- EICAS（advisory）：22〜25（BLD n OVHT/PRV）、34（>BLEED ISLN APU）、35・36（BLEED ISLN L・R）、39〜42（>BLEED n OFF）。
+- 流量は「パック 1 台＝1」の単位で数え、ダクト圧は源の圧から使う量に応じて下げる。値の多くは推定（PROGRESS.md「推定で作った部分」）。過熱の入力はモデルにあるが、つなぐ故障がまだ無い。
+
 ## 5. 表示系（PFD・ND・EICAS・CDU）
 
 - 描画は、各 acf の末尾（`P` 行の後ろ）に埋め込まれた X-Plane の generic instrument で行う。数は 2850 個で、内訳は rotary 1164、text 709、pointer 293、needle 122、tape 85、rolling 24。
@@ -283,6 +293,7 @@ Lua が作る名前の数：dataref 1617 個、コマンド 628 個。静的に�
   - 名前は既存の名前空間（`laminar/B747/<系統>/…`）に置く。INTERFACES.tsv の名前と意味は変えない（`tests/static/interfaces_test.lua`）。
   - 判定に使う dataref は毎フレーム読む（最初の読みが 0 になる問題への対策。TESTING.md §1.2）。
   - 書いた値は X-Plane に非同期で反映されるので、同じフレームで読み直して判定しない。
+  - X-Plane 自身の dataref（`sim/…`）に書くときは、毎フレーム読んでから、違うときだけ書く。XTLua は前に書いた値と同じ値を X-Plane に渡さないので、X-Plane が自分で値を変えた後（フライトの読み込みなど）は、読まない限り直らない（XTLua の xpmtdatarefs.cpp。TESTING.md §1.2）。
 - **時間**：経過時間は dt として受け取り、フレームレートに頼らない（例：「1 フレームに 0.005 動かす」は使わない）。
 
 ## 9. 開発・試験の環境（2026-10-23 時点）
