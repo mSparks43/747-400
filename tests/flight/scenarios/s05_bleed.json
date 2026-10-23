@@ -96,6 +96,8 @@
     { "do": "cas", "note": "復旧後" },
 
     { "do": "mark", "note": "AC bus 1 なしで ISOLATION L OFF" },
+    { "do": "switch", "note": "CTR L ポンプ OFF（中央タンクが少ないと燃料系が 60 秒後に FUEL PRESS CTR を出して master CAUTION を点けるので、この確認の間は止める）", "dref": "laminar/B747/button_switch/position[52]", "value": 0, "cmd": "laminar/B747/button_switch/fuel_ctr_wing_tnk_pump_L" },
+    { "do": "switch", "note": "CTR R ポンプ OFF", "dref": "laminar/B747/button_switch/position[53]", "value": 0, "cmd": "laminar/B747/button_switch/fuel_ctr_wing_tnk_pump_R" },
     { "do": "switch", "note": "GEN CONT 1 OFF", "dref": "laminar/B747/button_switch/position[22]", "value": 0, "cmd": "laminar/B747/button_switch/elec_gen_ctrl_1" },
     { "do": "switch", "note": "BUS TIE 1 OFF", "dref": "laminar/B747/button_switch/position[18]", "value": 0, "cmd": "laminar/B747/button_switch/elec_bus_tie_1" },
     { "do": "wait", "note": "AC bus 1 が落ちる", "dref": "laminar/B747/electrical/bus/ac[0]", "op": "==", "value": 0, "timeout": 10 },
