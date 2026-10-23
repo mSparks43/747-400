@@ -19,6 +19,8 @@ M.PRSOV_MIN_PSI = 10            -- PRSOV needs 10 psi to open (LH36 p.74)
 M.PRV_START_DELAY_S = 15        -- PRV opens 15 s after the start valve closed (LH36 p.48)
 M.OVHT_DELAY_S = 5              -- overheat switch (LH36 p.100)
 M.DISAGREE_S = 10               -- BLEED ISLN L/R, >BLEED ISLN APU (ATA30_32_35_36 p.22, p.28)
+M.ASCTU_BUS, M.ASCTU_DELAY_S = {1, 3}, 20  -- BLEED ASCTU A, B (status): channel A on DC bus 1,
+                                -- B on DC bus 3, 20 s without (ATA30_32_35_36 p.16; LH36 p.92)
 M.APU_N1, M.APU_DELAY_S = 95, 2 -- APU bleed valve: N1 95 % + 2 s (LH36 p.88-89)
 M.N2_RUNNING = 50               -- >BLEED n OFF with the engine above 50 % N2 (LH36 p.68)
 M.START_SL_PSI, M.START_PER_KFT = 25, 1   -- start air needed: estimate from FCOM p.183 (30 psi
@@ -75,10 +77,11 @@ function M.new()
         duct = {0, 0, 0}, isln_disagree_t = {0, 0}, apu_disagree_t = 0, demand = {0, 0, 0},
         target = {0, 0, 0},
         -- per section, its group (index) and the group's pressure, flow and use
-        grp = {1, 1, 1}, grp_psi = {0, 0, 0}, grp_cap = {0, 0, 0}, grp_use = {0, 0, 0}}
+        grp = {1, 1, 1}, grp_psi = {0, 0, 0}, grp_cap = {0, 0, 0}, grp_use = {0, 0, 0},
+        asctu_t = {0, 0}}
     local out = {eng = {}, isln_pos = {1, 1}, apu_pos = 0, duct = {0, 0, 0},
         isln_alert = {false, false}, apu_alert = false, apu_valve_cmd = false,
-        isln_light = {false, false}, apu_light = false}
+        isln_light = {false, false}, apu_light = false, asctu_alert = {false, false}}
     for n = 1, 4 do
         s.eng[n] = {ovht_t = 0, ovht_latch = false, last_on = true, start_closed_t = M.PRV_START_DELAY_S,
             start_open = false, hpsov_cmd = true, prv_cmd = true, prsov_cmd = true}
@@ -284,6 +287,12 @@ function M.update(s, inp, dt)
     else s.apu_disagree_t = 0 end
     out.apu_alert = s.apu_disagree_t >= M.DISAGREE_S
     out.apu_pos = s.apu_pos
+
+    -- BLEED ASCTU A, B: a channel without its DC bus for 20 s
+    for c = 1, 2 do
+        if inp.dc[M.ASCTU_BUS[c]] then s.asctu_t[c] = 0 else s.asctu_t[c] = s.asctu_t[c] + dt end
+        out.asctu_alert[c] = s.asctu_t[c] >= M.ASCTU_DELAY_S
+    end
 
     s.first = false
     return out

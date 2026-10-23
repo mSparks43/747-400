@@ -204,6 +204,9 @@ Lua が作る名前の数：dataref 1617 個、コマンド 628 個。静的に�
 | `laminar/B747/CAS/canc_count` | fltInst02 の CANC（`laminar/B747/dsp/canc_switch`、CDU の EICAS CTL ページからも） | ページ送り、最後のページで caution/advisory を隠す |
 | `laminar/B747/CAS/rcl_count` | fltInst02 の RCL（`laminar/B747/dsp/rcl_switch`） | 隠したものを戻して 1 ページ目。RECALL の表示（`CAS/recall_ind`）は今までどおり fltInst02 |
 | `laminar/B747/warning/master_reset_count` | manipulators の master リセット（`button_switch/warn_caut_capt`・`_fo`） | 両方の master 灯を消す。灯は manipulators もその場で消す |
+- STATUS（WARN-17、2026-10-23）：各系統は `laminar/B747/CAS/status_status[n]`（64 個）に 0/1 を書く。名前の表は `B747.87.xt.warning.lua` の `B747_CASstatusMsg`。枠の割り当て：0〜19 油圧（HYD PRESS ENG・DEM、HYD OVHT SYS、HYD RSVR PRESS、HYDIM）、20〜24 空圧（BLEED ASCTU A・B、BLEED ISLN L・R・APU）、25〜28 電源（DRIVE DISC 1〜4）。
+  - グルーが書くもの：STATUS ページの行を `CAS/gen_status_msg_NNN`（NNN = 11(p−1)+n−1、新しいものが先頭）、ページ数を `STAT/num_msg_pages`（fltInst02 の STAT スイッチがこれでページを送り、最後のページで閉じる）、cue を `CAS/status_cue`、cue の文字を `CAS/status_cue_text`（"STATUS"）。STATUS ページ（`dsp/synoptic_display` = 2）を出すと、そのとき出ているメッセージは「見た」になり、cue が消える。
+  - パネル：カスタム acf だけが STATUS ページの行・PG と主 EICAS の cue を描く（ACF_DIFF.md §5）。
 
 ### 4.4 油圧（1-4）
 

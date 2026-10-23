@@ -141,6 +141,17 @@ for i = 0, NUM_ALERT_MESSAGES do
 end
 
 
+-- STATUS messages (FCOM p.1545, p.1549): the systems raise them in
+-- status_status[n] (the table B747_CASstatusMsg, B747.87.xt.warning.lua);
+-- the alert glue writes the STATUS page lines (page p, line n in
+-- gen_status_msg_NNN with NNN = 11 (p - 1) + n - 1) and the STATUS cue
+B747DR_CAS_status_status        = deferred_dataref("laminar/B747/CAS/status_status", "array[64]")
+B747DR_CAS_gen_status_msg = {}
+for i = 0, NUM_ALERT_MESSAGES do
+    B747DR_CAS_gen_status_msg[i] = deferred_dataref(string.format("laminar/B747/CAS/gen_status_msg_%03d", i), "string")
+end
+B747DR_CAS_status_cue_text      = deferred_dataref("laminar/B747/CAS/status_cue_text", "string")
+
 B747DR_CAS_recall_ind           = deferred_dataref("laminar/B747/CAS/recall_ind", "number")
 B747DR_CAS_sec_eng_exceed_cue   = deferred_dataref("laminar/B747/CAS/sec_eng_exceed_cue", "number")
 B747DR_CAS_status_cue           = deferred_dataref("laminar/B747/CAS/status_cue", "number")

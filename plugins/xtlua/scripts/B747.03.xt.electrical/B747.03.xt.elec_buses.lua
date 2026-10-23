@@ -13,6 +13,7 @@ simDR_elec_engine_N2            = find_dataref("sim/flightmodel/engine/ENGN_N2_"
 B747DR_elec_engine_type         = find_dataref("laminar/B747/engines/type")
 B747DR_elec_pseu_air            = find_dataref("laminar/B747/gear/air_ground/pri_air")
 
+B747DR_elec_CAS_status          = find_dataref("laminar/B747/CAS/status_status")
 B747DR_elec_bus_ac              = find_dataref("laminar/B747/electrical/bus/ac")
 B747DR_elec_bus_dc              = find_dataref("laminar/B747/electrical/bus/dc")
 B747DR_elec_bus_utility         = find_dataref("laminar/B747/electrical/bus/utility")
@@ -69,6 +70,8 @@ local ADV_GEN_OFF = 100            -- ELEC GEN OFF 1-4: 100-103 (advisory, 109)
 local ADV_SSB_OPEN = 104
 local ADV_UTIL_BUS = 105           -- ELEC UTIL BUS L/R: 105-106
 local ADV_STBY_BUS_APU, ADV_STBY_BUS_MAIN = 276, 277
+-- STATUS slots (laminar/B747/CAS/status_status, B747.87.xt.warning.lua)
+local STATUS_DRIVE_DISC = 25        -- DRIVE DISC 1-4: 25-28 (LH24 p.64)
 
 local function read_inputs(inp)
     inp.engine_type = B747DR_elec_engine_type
@@ -184,6 +187,9 @@ local function write_cas(out)
         B747DR_CAS_advisory_status[ADV_BUS_ISLN + n - 1] = flag(cas.bus_isln[n])
         B747DR_CAS_advisory_status[ADV_DRIVE + n - 1] = flag(cas.drive[n])
         B747DR_CAS_advisory_status[ADV_DRIVE_DISC + n - 1] = flag(cas.drive_disc[n])
+        -- the EIUs keep DRIVE DISC n until the CMC erases it; here it goes
+        -- with the drive reset (simplified: there is no CMC erase)
+        B747DR_elec_CAS_status[STATUS_DRIVE_DISC + n - 1] = flag(cas.drive_disc[n])
     end
     B747DR_CAS_advisory_status[ADV_SSB_OPEN] = flag(cas.ssb_open)
     B747DR_CAS_advisory_status[ADV_UTIL_BUS] = flag(cas.util_bus[1])

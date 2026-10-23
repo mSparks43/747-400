@@ -81,4 +81,22 @@ T.equal(get(AIR .. "isolation_valve_L_pos"), 0, "ISLN L closed")
 T.equal(get(AIR .. "light/isln_valve", 0), 0, "ISLN L closed: VALVE light out")
 T.equal(get(ADVISORY, 35), 0, "ISLN L closed as commanded: no BLEED ISLN L")
 
+-- the STATUS messages (laminar/B747/CAS/status_status): ISLN R switched OFF
+-- without AC bus 3 stays open: BLEED ISLN R advisory and status after 10 s
+-- (ATA30_32_35_36 p.24); DC bus 1 lost for 20 s: BLEED ASCTU A (p.16)
+local STATUS = "laminar/B747/CAS/status_status"
+rt:set("laminar/B747/electrical/bus/ac", 2, 0)
+rt:set(SW, 76, 0)
+frames(11)
+T.equal(get(ADVISORY, 36), 1, "ISLN R stuck: BLEED ISLN R")
+T.equal(get(STATUS, 23), 1, "ISLN R stuck: STATUS BLEED ISLN R")
+T.equal(get(STATUS, 22), 0, "ISLN R stuck: no STATUS BLEED ISLN L")
+rt:set(SW, 76, 1)
+rt:set("laminar/B747/electrical/bus/ac", 2, 1)
+rt:set("laminar/B747/electrical/bus/dc", 0, 0)
+frames(21)
+T.equal(get(STATUS, 23), 0, "ISLN R as commanded again: STATUS gone")
+T.equal(get(STATUS, 20), 1, "DC bus 1 lost 20 s: STATUS BLEED ASCTU A")
+T.equal(get(STATUS, 21), 0, "DC bus 1 lost: no BLEED ASCTU B")
+
 T.done()

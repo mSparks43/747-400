@@ -431,4 +431,73 @@ do
     T.check(not out.cancelled, "cancelled: not after RCL")
 end
 
+-- STATUS messages: the newest on top, 11 lines a page; the cue for one not
+-- shown yet, gone when the STATUS page is shown (FCOM p.1528, p.1545, p.1549)
+do
+    local s, inp = A.new(), A.inputs()          -- on the ground before engine start
+    inp.status_active = {"HYDIM 1"}
+    local out = run(s, inp, 0.5)
+    inp.status_active = {"HYDIM 1", "DRIVE DISC 2"}
+    out = run(s, inp, 0.5)
+    T.equal(out.status_pages[1][1], "DRIVE DISC 2", "STATUS: the newest on top")
+    T.equal(out.status_pages[1][2], "HYDIM 1", "STATUS: the older below")
+    T.equal(out.status_num_pages, 1, "STATUS: one page")
+    T.check(out.status_cue, "STATUS cue: new messages before engine start")
+    inp.status_page_shown = true
+    out = run(s, inp, 0.2)
+    T.check(not out.status_cue, "STATUS cue: gone with the STATUS page shown")
+    inp.status_page_shown = false
+    out = run(s, inp, 0.2)
+    T.check(not out.status_cue, "STATUS cue: stays gone for the messages seen")
+    local twelve = {}
+    for n = 1, 4 do twelve[#twelve + 1] = "HYD PRESS ENG " .. n; twelve[#twelve + 1] = "HYDIM " .. n end
+    for n = 1, 4 do twelve[#twelve + 1] = "DRIVE DISC " .. n end
+    inp.status_active = twelve
+    out = run(s, inp, 0.2)
+    T.equal(out.status_num_pages, 2, "STATUS: twelve messages make two pages")
+    T.equal(#out.status_pages[2], 1, "STATUS: one line on page 2")
+    T.check(out.status_cue, "STATUS cue: for the new ones")
+    inp.status_active = {}
+    out = run(s, inp, 0.2)
+    T.equal(#out.status_pages[1], 0, "STATUS: cleared messages go")
+    T.check(not out.status_cue, "STATUS cue: none without messages")
+end
+
+-- the STATUS cue waits from engine start until 30 min after lift-off, and
+-- from RA 800 ft until 75 kt on landing (FCOM p.1593, p.1600)
+do
+    local s, inp = A.new(), A.inputs()
+    run(s, inp, 0.5)
+    inp.fuel_cutoff = {false, true, true, true}  -- engine 1 started
+    run(s, inp, 0.5)
+    inp.status_active = {"HYD PRESS DEM 2"}
+    local out = run(s, inp, 0.5)
+    T.check(not out.status_cue, "STATUS cue: not after engine start")
+    T.equal(out.status_pages[1][1], "HYD PRESS DEM 2", "STATUS: the message is listed all the same")
+    inp.fuel_cutoff = {true, true, true, true}  -- shut down again on the ground
+    out = run(s, inp, 0.5)
+    T.check(out.status_cue, "STATUS cue: back with every FUEL CONTROL CUTOFF on the ground")
+    inp.fuel_cutoff = {false, true, true, true}
+    out = run(s, inp, 0.5)
+    T.check(not out.status_cue, "STATUS cue: inhibited by the next start")
+    inp.on_ground, inp.nose_gear_down, inp.radio_alt, inp.ias = false, false, 3000, 250
+    out = run(s, inp, 29 * 60)
+    T.check(not out.status_cue, "STATUS cue: not 29 min after lift-off")
+    out = run(s, inp, 2 * 60)
+    T.check(out.status_cue, "STATUS cue: 31 min after lift-off")
+    inp.status_page_shown = true
+    run(s, inp, 0.2)
+    inp.status_page_shown = false
+    inp.radio_alt = 700
+    inp.status_active = {"HYD PRESS DEM 2", "BLEED ASCTU A"}
+    out = run(s, inp, 0.5)
+    T.check(not out.status_cue, "STATUS cue: not below RA 800 ft on the approach")
+    inp.on_ground, inp.radio_alt, inp.ias = true, 0, 120
+    out = run(s, inp, 1)
+    T.check(not out.status_cue, "STATUS cue: not on the landing roll above 75 kt")
+    inp.ias = 70
+    out = run(s, inp, 0.2)
+    T.check(out.status_cue, "STATUS cue: below 75 kt")
+end
+
 T.done()

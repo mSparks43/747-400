@@ -260,6 +260,34 @@ do
     T.check(out.sys[1].edp_on, "no DC 1: EDP 1 pressurises with its switch OFF")
     T.check(out.sys[4].control, "no DC 1: HYD CONTROL 4 (HYDIM-4 on DC bus 1, estimate)")
     T.check(not out.sys[1].control, "no DC 1: no HYD CONTROL 1 (HYDIM-1 on DC bus 4)")
+    T.check(out.sys[4].status_hydim and not out.sys[1].status_hydim, "no DC 1: STATUS HYDIM 4 only")
+end
+
+-- STATUS messages (ATA29_32 p.137): HYD PRESS ENG with the engine pump
+-- below 1400 psi, HYD PRESS DEM only while the demand pump runs low with
+-- its engine running, HYD RSVR PRESS without bleed, HYD OVHT SYS above 104 °C
+do
+    local s, inp = parked()
+    power(inp)
+    local out = run(s, inp, 3)
+    T.check(out.sys[2].status_eng, "STATUS: HYD PRESS ENG 2 with the engine stopped")
+    T.check(not out.sys[2].status_dem, "STATUS: no HYD PRESS DEM 2 with the engine stopped")
+    T.check(not out.sys[2].status_rsvr and not out.sys[2].status_hydim, "STATUS: reservoir and HYDIM fine")
+    engines_running(inp)
+    out = run(s, inp, 20)
+    for n = 1, 4 do
+        T.check(not out.sys[n].status_eng and not out.sys[n].status_dem, "STATUS: none with engine " .. n .. " running")
+    end
+    inp.demand_sel[3] = 2                       -- DEMAND 3 ON, with no AC bus 3: no pressure
+    inp.ac[3] = false
+    out = run(s, inp, 5)
+    T.check(out.sys[3].status_dem, "STATUS: HYD PRESS DEM 3 with its pump commanded and low")
+    inp.duct_psi[1], inp.duct_psi[2] = 0, 0
+    out = run(s, inp, 900)
+    T.check(out.sys[1].status_rsvr, "STATUS: HYD RSVR PRESS 1 without bleed")
+    inp.oat = 90                                 -- 90 + 30 °C with the pumps running
+    out = run(s, inp, 3600)
+    T.check(out.sys[1].status_ovht, "STATUS: HYD OVHT SYS 1 above 104 °C")
 end
 
 T.done()

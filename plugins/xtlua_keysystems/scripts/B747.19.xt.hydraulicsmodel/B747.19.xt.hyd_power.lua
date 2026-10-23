@@ -30,6 +30,7 @@ B747DR_hyd_light_sys_fault      = find_dataref("laminar/B747/hydraulics/light/sy
 B747DR_hyd_light_brake_source   = find_dataref("laminar/B747/hydraulics/light/brake_source")
 B747DR_hyd_CAS_caution          = find_dataref("laminar/B747/CAS/caution_status")
 B747DR_hyd_CAS_advisory         = find_dataref("laminar/B747/CAS/advisory_status")
+B747DR_hyd_CAS_status           = find_dataref("laminar/B747/CAS/status_status")
 B747DR_hyd_stat_RF              = find_dataref("laminar/B747/EICAS2/stat/RF")
 B747DR_hyd_stat_LO              = find_dataref("laminar/B747/EICAS2/stat/LO")
 
@@ -48,6 +49,12 @@ local ADV_OVHT = 202                -- HYD OVHT SYS 1-4: 202-205
 local ADV_PRESS_DEM = 206           -- HYD PRESS DEM 1-4: 206-209
 local ADV_PRESS_ENG = 210           -- HYD PRESS ENG 1-4: 210-213
 local ADV_QTY_LOW = 218             -- >HYD QTY LOW 1-4: 218-221
+-- STATUS slots (laminar/B747/CAS/status_status, B747.87.xt.warning.lua)
+local STATUS_PRESS_ENG = 0          -- HYD PRESS ENG 1-4: 0-3
+local STATUS_PRESS_DEM = 4          -- HYD PRESS DEM 1-4: 4-7
+local STATUS_OVHT = 8               -- HYD OVHT SYS 1-4: 8-11
+local STATUS_RSVR = 12              -- HYD RSVR PRESS 1-4: 12-15
+local STATUS_HYDIM = 16             -- HYDIM 1-4: 16-19
 local ENGINE_PUMP_SWITCH = 30       -- button_switch/position[30-33]: ENGINE pump 1-4
 
 local hyd_state = H.new()
@@ -157,6 +164,11 @@ local function write_outputs(out)
         B747DR_hyd_CAS_advisory[ADV_PRESS_ENG + n - 1] = flag(o.press_eng)
         B747DR_hyd_CAS_advisory[ADV_QTY_LOW + n - 1] = flag(o.qty_low)
         if ADV_CONTROL[n] then B747DR_hyd_CAS_advisory[ADV_CONTROL[n]] = flag(o.control) end
+        B747DR_hyd_CAS_status[STATUS_PRESS_ENG + n - 1] = flag(o.status_eng)
+        B747DR_hyd_CAS_status[STATUS_PRESS_DEM + n - 1] = flag(o.status_dem)
+        B747DR_hyd_CAS_status[STATUS_OVHT + n - 1] = flag(o.status_ovht)
+        B747DR_hyd_CAS_status[STATUS_RSVR + n - 1] = flag(o.status_rsvr)
+        B747DR_hyd_CAS_status[STATUS_HYDIM + n - 1] = flag(o.status_hydim)
     end
     B747DR_hyd_light_brake_source = flag(out.brake_source_alert)
     B747DR_hyd_CAS_caution[CAUTION_BRAKE_SOURCE] = flag(out.brake_source_alert)

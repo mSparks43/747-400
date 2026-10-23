@@ -107579,6 +107579,19 @@ GROUP Upper EICAS
           CLICK_DX 0
           CLICK_DY 0
 
+        gen_text STATUS cue
+          POS 1977.000000 826.500000
+          IMAGE CRT Displays/TEXT/TXT.8.27.blue
+          DATAREF laminar/B747/CAS/status_cue_text[0]
+          SHOW_EQUAL 1.000000 laminar/B747/CAS/status_cue
+          LIGHT_MODE GLASS_AUTO
+          LIGHT_RHEOSTAT 9
+          BUS_SRC 2
+          KEY_FRAME 0.000000 0.000000 1.000000
+          KEY_FRAME 1.000000 1.000000
+          OFFSET_X -100
+          OFFSET_Y -11.000000
+
         GROUP Page #
           SHOW_GREATER 1.000000 laminar/B747/CAS/num_msg_pages
           gen_rotary PG Label
@@ -124192,6 +124205,1396 @@ GROUP LOWER EICAS POWER
             IS_VERTICAL 1
             OFFSET 0.000000
 
+        END_GROUP
+        GROUP Status Messages
+          GROUP Page 1
+            SHOW_EQUAL 1.000000 laminar/B747/STAT/msg_page
+            gen_text STATUS MESSAGE
+              POS 1570.000000 97.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_000[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 73.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_001[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 49.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_002[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 25.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_003[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 1.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_004[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -23.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_005[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -47.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_006[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -71.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_007[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -95.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_008[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -119.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_009[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -143.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_010[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+          END_GROUP
+          GROUP Page 2
+            SHOW_EQUAL 2.000000 laminar/B747/STAT/msg_page
+            gen_text STATUS MESSAGE
+              POS 1570.000000 97.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_011[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 73.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_012[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 49.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_013[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 25.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_014[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 1.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_015[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -23.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_016[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -47.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_017[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -71.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_018[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -95.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_019[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -119.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_020[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -143.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_021[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+          END_GROUP
+          GROUP Page 3
+            SHOW_EQUAL 3.000000 laminar/B747/STAT/msg_page
+            gen_text STATUS MESSAGE
+              POS 1570.000000 97.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_022[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 73.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_023[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 49.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_024[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 25.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_025[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 1.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_026[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -23.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_027[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -47.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_028[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -71.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_029[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -95.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_030[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -119.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_031[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -143.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_032[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+          END_GROUP
+          GROUP Page 4
+            SHOW_EQUAL 4.000000 laminar/B747/STAT/msg_page
+            gen_text STATUS MESSAGE
+              POS 1570.000000 97.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_033[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 73.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_034[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 49.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_035[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 25.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_036[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 1.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_037[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -23.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_038[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -47.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_039[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -71.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_040[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -95.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_041[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -119.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_042[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -143.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_043[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+          END_GROUP
+          GROUP Page 5
+            SHOW_EQUAL 5.000000 laminar/B747/STAT/msg_page
+            gen_text STATUS MESSAGE
+              POS 1570.000000 97.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_044[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 73.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_045[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 49.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_046[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 25.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_047[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 1.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_048[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -23.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_049[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -47.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_050[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -71.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_051[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -95.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_052[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -119.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_053[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -143.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_054[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+          END_GROUP
+          GROUP Page 6
+            SHOW_EQUAL 6.000000 laminar/B747/STAT/msg_page
+            gen_text STATUS MESSAGE
+              POS 1570.000000 97.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_055[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 73.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_056[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 49.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_057[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 25.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_058[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 1.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_059[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -23.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_060[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -47.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_061[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -71.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_062[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -95.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_063[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -119.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_064[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -143.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_065[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+          END_GROUP
+          GROUP Page 7
+            SHOW_EQUAL 7.000000 laminar/B747/STAT/msg_page
+            gen_text STATUS MESSAGE
+              POS 1570.000000 97.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_066[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 73.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_067[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 49.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_068[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 25.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_069[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 1.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_070[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -23.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_071[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -47.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_072[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -71.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_073[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -95.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_074[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -119.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_075[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -143.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_076[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+          END_GROUP
+          GROUP Page 8
+            SHOW_EQUAL 8.000000 laminar/B747/STAT/msg_page
+            gen_text STATUS MESSAGE
+              POS 1570.000000 97.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_077[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 73.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_078[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 49.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_079[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 25.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_080[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 1.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_081[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -23.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_082[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -47.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_083[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -71.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_084[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -95.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_085[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -119.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_086[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -143.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_087[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+          END_GROUP
+          GROUP Page 9
+            SHOW_EQUAL 9.000000 laminar/B747/STAT/msg_page
+            gen_text STATUS MESSAGE
+              POS 1570.000000 97.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_088[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 73.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_089[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 49.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_090[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 25.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_091[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 1.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_092[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -23.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_093[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -47.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_094[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -71.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_095[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -95.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_096[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -119.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_097[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -143.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_098[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+          END_GROUP
+          GROUP Page 10
+            SHOW_EQUAL 10.000000 laminar/B747/STAT/msg_page
+            gen_text STATUS MESSAGE
+              POS 1570.000000 97.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_099[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 73.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_100[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 49.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_101[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 25.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_102[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 1.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_103[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -23.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_104[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -47.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_105[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -71.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_106[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -95.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_107[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -119.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_108[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+            gen_text STATUS MESSAGE
+              POS 1570.000000 -143.000000
+              IMAGE CRT Displays/TEXT/TXT.2.28.white
+              DATAREF laminar/B747/CAS/gen_status_msg_109[0]
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 1.000000
+              OFFSET_X -100
+              OFFSET_Y -11.000000
+
+          END_GROUP
+          GROUP Page #
+            SHOW_GREATER 1.000000 laminar/B747/STAT/num_msg_pages
+            gen_rotary PG Label
+              POS 1690.000000 -157.000000
+              IMAGE CRT Displays/EICAS Upper/EICAS_cas_pg
+              DATAREF 
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 1.000000 6.000000
+              DIGITS 1
+              ROTARY_TYPE NO_CLICK
+              CLICK_RADIUS 0.000000
+              CLICK_RADIUS_DY 0.000000
+              OFFSET 0.000000
+              STEP1 1.000000
+              STEP2 1.000000
+              CURSOR DEFAULT
+              CLICK_DX 0
+              CLICK_DY 0
+
+            gen_LED LED
+              POS 1714.000000 -157.000000
+              IMAGE CRT Displays/LED/LED_4.20R.xxXX#0.white
+              DATAREF laminar/B747/STAT/msg_page
+              LIGHT_MODE GLASS_AUTO
+              LIGHT_RHEOSTAT 10
+              BUS_SRC 2
+              KEY_FRAME 0.000000 0.000000 1.000000
+              KEY_FRAME 10.000000 10.000000
+              DIGITS 2
+              DECIMALS 0
+              PERIOD_WIDTH 0
+              LED_ROWS 1
+              ROUNDING ROUND_ROUND
+
+          END_GROUP
         END_GROUP
       END_GROUP
       GROUP ELEC Synoptic

@@ -4,11 +4,13 @@
 -- RCL pushes (counted by fltInst02), the master reset pushes (counted by the
 -- manipulators) and the inputs of the inhibits; runs the model 10 times a
 -- second and writes the EICAS lines, the page, the master lights, the 1 s
--- caution pulse and the aural requests. B747.87.xt.warning.lua loads it
--- after its message tables and bindings and uses their bindings (binding a
--- number dataref again under the same name would write 0 to it).
+-- caution pulse and the aural requests, and the STATUS page lines and cue.
+-- B747.87.xt.warning.lua loads it after its message tables and bindings and
+-- uses their bindings (binding a number dataref again under the same name
+-- would write 0 to it).
 -- The panel draws page p, line n from CAS/gen_<level>_msg_NNN with
--- NNN = 11 (p - 1) + n - 1, and only pages 1 and 2 (747-400.acf).
+-- NNN = 11 (p - 1) + n - 1 (the custom acf pages 1-10, the stock acf 1-2),
+-- and the STATUS page the same way from CAS/gen_status_msg_NNN (custom acf).
 dofile("B747.87.alert_model.lua")
 local A = B747_alert_model
 
@@ -29,6 +31,11 @@ B747DR_alert_afds_status        = find_dataref("laminar/B747/autopilot/AFDS/stat
 simDR_alert_engine_N2           = find_dataref("sim/flightmodel/engine/ENGN_N2_")
 simDR_alert_pitch               = find_dataref("sim/flightmodel/position/theta")
 simDR_alert_radio_alt           = find_dataref("sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot")
+-- the STATUS page: shown on the secondary EICAS, paged by the STAT switch
+-- (fltInst02, in the other plugin)
+B747DR_alert_synoptic_display   = find_dataref("laminar/B747/dsp/synoptic_display")
+B747DR_STAT_msg_page            = find_dataref("laminar/B747/STAT/msg_page")
+B747DR_STAT_num_msg_pages       = find_dataref("laminar/B747/STAT/num_msg_pages")
 
 local ALERT_PERIOD_S = 0.1     -- estimate: the sources give no rate (the old code ran every 2 s)
 local START_MAX_S = 300        -- the start inhibit ends 5 min after START is pulled (FCOM p.1587)
@@ -37,6 +44,8 @@ local START_IDLE_N2 = 60       -- %, estimate: min idle is 61.6 % N2 on the CF6 
 local START_SWITCH = 16        -- toggle_switch/position[16-19]: START 1-4 pulled
 local SLOTS = 110              -- CAS/gen_*_msg_000-109: 10 pages of 11 lines
 local LEVELS = {"warning", "caution", "advisory", "memo"}
+local STATUS_PAGE = 2          -- dsp/synoptic_display: the STATUS page
+local STATUS_CUE_TEXT = "STATUS"
 
 -- every message of the tables: the status array it is raised in, its slot,
 -- and the entry handed to the model (its level may differ from the array's,
@@ -54,6 +63,12 @@ add_messages(B747_alert_messages.warning, "warning")
 add_messages(B747_alert_messages.caution, "caution")
 add_messages(B747_alert_messages.advisory, "advisory")
 add_messages(B747_alert_messages.memo, "memo")
+-- the STATUS messages: their slot in CAS/status_status and their name
+local status_messages = {}
+for i = 1, #B747_alert_messages.status do
+    local m = B747_alert_messages.status[i]
+    status_messages[#status_messages + 1] = {index = m.DRindex, name = m.name}
+end
 
 local alert_state = A.new()
 local alert_inputs = A.inputs()
@@ -65,7 +80,7 @@ local start_since = {}         -- engine -> time START was pulled, while its sta
 local start_over = {}          -- engine -> its start ended with START still pulled
 local counts = {}              -- last value of each push counter
 local pushes = {cancel = 0, recall = 0, master_reset = 0}
-local shown = {warning = {}, caution = {}, advisory = {}, memo = {}}   -- text written per slot
+local shown = {warning = {}, caution = {}, advisory = {}, memo = {}, status = {}}   -- text written per slot
 local arrays = {}
 
 local function flag(v)
@@ -115,6 +130,12 @@ local function read_inputs(inp, t)
     for _, m in ipairs(messages) do
         if arrays[m.array][m.index] > 0.5 then active[#active + 1] = m.entry end
     end
+    local status_active = inp.status_active
+    for i = #status_active, 1, -1 do status_active[i] = nil end
+    for _, m in ipairs(status_messages) do
+        if B747DR_CAS_status_status[m.index] > 0.5 then status_active[#status_active + 1] = m.name end
+    end
+    inp.status_page_shown = B747DR_alert_synoptic_display == STATUS_PAGE
 
     inp.on_ground = B747DR_alert_pseu_air == 0
     inp.nose_gear_down = B747DR_alert_ng_compressed == 1
@@ -150,9 +171,23 @@ local function set_slot(level, slot, text)
         B747DR_CAS_gen_caution_msg[slot] = text
     elseif level == "advisory" then
         B747DR_CAS_gen_advisory_msg[slot] = text
-    else
+    elseif level == "memo" then
         B747DR_CAS_gen_memo_msg[slot] = text
+    else
+        B747DR_CAS_gen_status_msg[slot] = text
     end
+end
+
+-- the STATUS page lines, and its page count for the STAT switch; the page
+-- shown comes back into range when pages go (the STAT datarefs belong to
+-- the other plugin: each is read before it is written, TESTING.md §1.2)
+local function write_status(pages, num_pages)
+    for slot = 0, SLOTS - 1 do
+        local page = pages[math.floor(slot / A.LINES) + 1]
+        set_slot("status", slot, (page and page[slot % A.LINES + 1]) or " ")
+    end
+    if B747DR_STAT_num_msg_pages ~= num_pages then B747DR_STAT_num_msg_pages = num_pages end
+    if B747DR_STAT_msg_page > num_pages then B747DR_STAT_msg_page = num_pages end
 end
 
 -- each line goes to the slot of its level, the other levels' slots blank
@@ -177,13 +212,16 @@ local function write_outputs(out, t)
     B747DR_CAS_caut_adv_display = 1 - flag(out.cancelled)
     B747DR_master_warning = flag(out.master_warning)
     B747DR_master_caution = flag(out.master_caution)
-    -- 1 s pulse for each caution that lights master CAUTION
-    -- (747-400_XP11.snd plays it; 747-400.snd plays master_caution)
+    -- 1 s pulse for each caution that lights master CAUTION and each
+    -- advisory with the beeper: the .snd beeper plays it
     if out.caution_beep then caution_audio_until = t + 1 end
     B747DR_master_caution_audio = flag(t < caution_audio_until)
     B747DR_warning_bell = flag(out.aural.bell)
     B747DR_warning_siren = flag(out.aural.siren)
     B747DR_warning_wailer = flag(out.aural.wailer)
+    write_status(out.status_pages, out.status_num_pages)
+    B747DR_CAS_status_cue = flag(out.status_cue)
+    if B747DR_CAS_status_cue_text ~= STATUS_CUE_TEXT then B747DR_CAS_status_cue_text = STATUS_CUE_TEXT end
 end
 
 -- a new flight: no messages seen yet
@@ -232,4 +270,6 @@ function B747_alerts_off()
     B747DR_warning_bell = 0
     B747DR_warning_siren = 0
     B747DR_warning_wailer = 0
+    write_status({}, 1)
+    B747DR_CAS_status_cue = 0
 end

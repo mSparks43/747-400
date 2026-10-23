@@ -243,4 +243,19 @@ do
     T.check(not out.apu_valve_cmd, "APU valve without DC bus 2: no command")
 end
 
+-- BLEED ASCTU A, B (status): channel A without DC bus 1, B without DC bus 3,
+-- for 20 s (ATA30_32_35_36 p.16; LH36 p.92)
+do
+    local s, inp = B.new(), B.inputs()
+    run(s, inp, 1)
+    inp.dc[3] = false
+    local out = run(s, inp, 19)
+    T.check(not out.asctu_alert[2], "ASCTU B: not before 20 s")
+    out = run(s, inp, 2)
+    T.check(out.asctu_alert[2] and not out.asctu_alert[1], "ASCTU B after 20 s without DC bus 3, not A")
+    inp.dc[3] = true
+    out = run(s, inp, 0.1)
+    T.check(not out.asctu_alert[2], "ASCTU B gone with DC bus 3 back")
+end
+
 T.done()

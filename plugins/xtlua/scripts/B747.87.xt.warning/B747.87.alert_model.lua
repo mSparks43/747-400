@@ -17,6 +17,10 @@ B747_alert_model = M
 
 M.LINES = 11
 M.RECALL_SHOW_S = 1          -- RECALL stays 1 s after RCL is released, FCOM p.1528
+-- The STATUS cue waits from engine start until 30 min after lift-off, and
+-- from RA 800 ft until 75 kt on landing (FCOM p.1593, p.1600)
+M.STATUS_CUE_AFTER_LIFTOFF_S = 1800
+M.STATUS_CUE_LANDING_RA, M.STATUS_CUE_LANDING_IAS = 800, 75
 
 -- Message classes, matched on the name without its caret and engine number
 -- ("ENG 1 FAIL" and "ELEC GEN OFF 1" both give their class).
@@ -79,6 +83,8 @@ function M.inputs()
         radio_alt = 0,                           -- ft
         nose_gear_down = true,                   -- NG compressed (PSEU)
         land_2_3 = false,                        -- LAND 2 or LAND 3 on the PFD
+        status_active = {},                      -- the STATUS messages raised now (names)
+        status_page_shown = false,               -- the STATUS page on the secondary EICAS
     }
 end
 
@@ -99,6 +105,10 @@ function M.new()
         to_warning = false, to_warning_at = nil,
         liftoff_at = nil, nose_liftoff_at = nil, was_on_ground = true,
         landing_at = nil,
+        -- STATUS: name -> {since, viewed (shown on the STATUS page)}; the cue
+        -- windows: since engine start, flown since then, landing
+        status_seen = {},
+        status_start = false, status_flown = false, status_landing = false,
         out = nil,
     }
 end
@@ -165,6 +175,21 @@ local function phases(s, inp)
         s.landing_at = nil
     end
     ph.landing_caution = s.landing_at ~= nil
+
+    -- STATUS cue: from engine start, taken as a FUEL CONTROL in RUN on the
+    -- ground (estimate), until 30 min after lift-off, or until all are
+    -- CUTOFF again on the ground; after a flight a new start begins it
+    -- again. And from RA 800 ft until 75 kt on landing (FCOM p.1593, p.1600).
+    if inp.on_ground then
+        if all_cutoff then s.status_flown, s.status_start = false, false
+        elseif not s.status_flown then s.status_start = true end
+        if inp.ias < M.STATUS_CUE_LANDING_IAS then s.status_landing = false end
+    else
+        s.status_flown = true
+        if s.liftoff_at and s.t - s.liftoff_at >= M.STATUS_CUE_AFTER_LIFTOFF_S then s.status_start = false end
+        s.status_landing = not s.status_start and inp.radio_alt < M.STATUS_CUE_LANDING_RA
+    end
+    ph.status_cue_inhibit = s.status_start or s.status_landing
     return ph
 end
 
@@ -404,6 +429,42 @@ function M.update(s, inp, dt)
         if rec.cancelled and not rec.hidden then cancelled = true end
     end
 
+    -- STATUS messages: the newest on top, 11 lines a page; the cue while one
+    -- has not been shown on the STATUS page, outside its inhibits (FCOM
+    -- p.1528, p.1545, p.1549)
+    local status_now = {}
+    for _, name in ipairs(inp.status_active) do status_now[name] = true end
+    for name in pairs(s.status_seen) do
+        if not status_now[name] then s.status_seen[name] = nil end
+    end
+    local status_list = {}
+    for name in pairs(status_now) do
+        local rec = s.status_seen[name]
+        if not rec then
+            rec = {since = s.t, viewed = false}
+            s.status_seen[name] = rec
+        end
+        if inp.status_page_shown then rec.viewed = true end
+        status_list[#status_list + 1] = name
+    end
+    table.sort(status_list, function(a, b)
+        local ra, rb = s.status_seen[a], s.status_seen[b]
+        if ra.since ~= rb.since then return ra.since > rb.since end
+        return a < b
+    end)
+    local status_pages = {}
+    for p = 1, math.max(1, math.ceil(#status_list / M.LINES)) do
+        local lines = {}
+        for i = (p - 1) * M.LINES + 1, math.min(#status_list, p * M.LINES) do lines[#lines + 1] = status_list[i] end
+        status_pages[p] = lines
+    end
+    local status_cue = false
+    if not ph.status_cue_inhibit then
+        for _, rec in pairs(s.status_seen) do
+            if not rec.viewed then status_cue = true end
+        end
+    end
+
     local out = {
         pages = pages,
         page = s.page,
@@ -415,6 +476,9 @@ function M.update(s, inp, dt)
         master_caution = s.master_caution,
         caution_beep = beep,          -- a caution lit master CAUTION in this update
         aural = {bell = bell, siren = siren, wailer = wailer},
+        status_pages = status_pages,  -- lists of names, 11 a page
+        status_num_pages = #status_pages,
+        status_cue = status_cue,
         phases = ph,
     }
     s.out = out

@@ -31,6 +31,8 @@ M.ADP_FLAPS_HOLD_S = 10         -- ADP keeps running in the air after the flaps 
 M.OVHT_C = 104                  -- case drain temperature (p.100)
 M.QTY_LO, M.QTY_RF = 0.34, 0.75 -- p.116; RF on the ground only (FCOM p.1489)
 M.RSVR_PSI, M.RSVR_LOW_PSI = 45, 6.3      -- reservoir pressurisation (p.38)
+M.ENGINE_RUNNING_N2 = 50        -- HYD PRESS DEM (status) waits for its engine (p.137; the
+                                -- running speed is an estimate: starter cutout is at 50 %)
 M.BRAKE_PSI = {[4] = 1200, [1] = 1500, [2] = 1500}   -- brake source selection (ATA29_32 p.390;
                                 -- system 2's switch value estimated)
 M.ACC_PRECHARGE_PSI, M.ACC_GAS_IN3 = 750, 200        -- brake accumulator (ATA29_32 p.408)
@@ -108,6 +110,8 @@ function M.new()
             light_eng_press = true, light_dem_press = true, light_sys_fault = true,
             press_sys = false, press_eng = false, press_dem = false, ovht = false, qty_low = false,
             control = false,
+            status_eng = true, status_dem = false, status_ovht = false, status_rsvr = true,
+            status_hydim = true,
         }
     end
     s.out = out
@@ -273,6 +277,14 @@ function M.update(s, inp, dt)
         o.press_eng = edp_low2 and not sys_low2
         o.press_dem = o.light_dem_press and not sys_low2
         o.qty_low = o.lo
+        -- STATUS (ATA29_32 p.137): each pump's output below 1400 psi (the
+        -- demand pump while it is commanded and its engine runs), above
+        -- 104 °C, the reservoir below 6.3 psig, the HYDIM bus inactive
+        o.status_eng = edp_low2
+        o.status_dem = dem_low2 and inp.n2[n] >= M.ENGINE_RUNNING_N2
+        o.status_ovht = o.ovht
+        o.status_rsvr = o.rsvr_low
+        o.status_hydim = not hydim
     end
 
     -- brake source: system 4, then 1, then 2, then the accumulator, which

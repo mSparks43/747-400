@@ -23,6 +23,7 @@ local WARNING = "laminar/B747/CAS/warning_status"
 local CAUTION = "laminar/B747/CAS/caution_status"
 local ADVISORY = "laminar/B747/CAS/advisory_status"
 local MEMO = "laminar/B747/CAS/memo_status"
+local STATUS = "laminar/B747/CAS/status_status"
 local FUEL_CONTROL = "laminar/B747/fuel/fuel_control/toggle_sw_pos"
 -- the slot of page 1 showing a text at a level, or nil (fltInst02 adds
 -- messages of its own to these inputs, e.g. >AIRSPEED LOW)
@@ -83,6 +84,25 @@ T.equal(get("laminar/B747/warning/master_caution_audio"), 1, "BLEED ISLN L: the 
 T.equal(get("laminar/B747/warning/master_caution"), 0, "BLEED ISLN L: no master CAUTION")
 rt:set(ADVISORY, 35, 0)
 frames(1.2)
+
+-- a STATUS message: the STATUS page line, the page count the STAT switch
+-- pages with, and the cue, gone once the STATUS page is shown (FCOM p.1528,
+-- p.1549)
+rt:set(STATUS, 16, 1)               -- HYDIM 1
+frames(0.3)
+T.equal(get("laminar/B747/CAS/gen_status_msg_000"), "HYDIM 1", "STATUS: the message on line 1")
+T.equal(get("laminar/B747/STAT/num_msg_pages"), 1, "STATUS: one page for the STAT switch")
+T.equal(get("laminar/B747/CAS/status_cue"), 1, "STATUS cue: a new message")
+T.equal(get("laminar/B747/CAS/status_cue_text"), "STATUS", "STATUS cue: its text")
+rt:command("laminar/B747/dsp/stat_switch", 0.1)
+frames(0.3)
+T.equal(get("laminar/B747/dsp/synoptic_display"), 2, "STAT: the STATUS page shown")
+T.equal(get("laminar/B747/CAS/status_cue"), 0, "STATUS cue: gone with the STATUS page shown")
+rt:set(STATUS, 16, 0)
+frames(0.3)
+T.equal(get("laminar/B747/CAS/gen_status_msg_000"), " ", "STATUS: the line blank when the message goes")
+rt:command("laminar/B747/dsp/stat_switch", 0.1)
+frames(0.3)
 
 -- a warning: master WARNING and the siren request
 rt:set(WARNING, 1, 1)               -- CABIN ALTITUDE

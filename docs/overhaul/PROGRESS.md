@@ -2,7 +2,7 @@
 
 次のセッションは、ここと [PLAN.md](PLAN.md) を読んでから続きに入る。
 
-最終更新：2026-10-23 朝（1-5 空圧）
+最終更新：2026-10-23 昼（1-3 の STATUS）
 
 ## いまどこか
 
@@ -17,21 +17,21 @@
 - **段階 1**：
   - 1-1（電源）：モデル（4fb1fa46）と、機体への組み込み（f38d0baf。電源モジュール、P5 の灯、EICAS、表示器と時計の電源）まで。X-Plane でカスタム acf の `s02_elec_panel` 63/63・`s00` 64/64、純正 acf の `s02` 63/63・`s00` 64/64。残りは使う側の乗り換え（下）。
   - 1-2（空地判定、PSEU）：モデル・脚モジュールへの組み込み・公開 dataref まで。乗り換え済みは電源の BCU（air mode など）、脚レバーのロック、逆推力のロックアウト（前脚を含む全輪の接地 → 主脚左右の接地）。X-Plane で地上（`s02`、両 acf）と空中（`s01`、カスタム acf）の判定を確認。残りの系統は各作り直しで。
-  - 1-3（警報の枠組み）：モデル（001f345e）と、機体への組み込みまで（警報モジュールの新しいグルー、fltInst02 の CANC/RCL と manipulators の master リセットは押した回数の dataref で渡す、メッセージ表のレベルと文言を FCOM に合わせた）。試験はモデル 94 件・モジュール 41 件、X-Plane の `s03_alerts`。残りは下の「警報（1-3）の GAP の状態」。
+  - 1-3（警報の枠組み）：モデル（001f345e）と、機体への組み込みまで（警報モジュールの新しいグルー、fltInst02 の CANC/RCL と manipulators の master リセットは押した回数の dataref で渡す、メッセージ表のレベルと文言を FCOM に合わせた）。試験はモデル 94 件・モジュール 41 件、X-Plane の `s03_alerts`。STATUS ページと STATUS cue（WARN-17）も済（油圧・空圧・電源が status メッセージを立てる）。残りは下の「警報（1-3）の GAP の状態」。
   - 1-4（油圧）：モデル（0df481e3）と、機体への組み込みまで（油圧モジュールの圧・synoptic・accumulator 計、P5 の灯、EICAS、X-Plane の油圧に故障を書かない、X-Plane の漏れ故障を作動油量で受ける、舵面の系統の組の誤り HYD-06・07）。試験はモデル 94 件・モジュール 68 件、X-Plane の `s04_hydraulics`。残りは下の「油圧（1-4）の GAP の状態」。
   - 1-5（空圧）：モデルと、空調モジュールへの組み込みまで（エンジン 4 基の HPSOV・PRV・PRSOV・始動弁、3 区画のダクトと ISLN、APU 弁、需要に応じたダクト圧、P5 の SYS FAULT・VALVE 灯、EICAS）。前の抽気のコードは外した。試験はモデル 71 件・モジュール 19 件、X-Plane の `s05_bleed`（カスタム acf）。残りは下の「空圧（1-5）の GAP の状態」。
 
 ## 次にやること
 
-1. 承認済みのパネル（カスタム acf）の変更の残り：1-3 の STATUS、1-4 の HYD synoptic・STATUS・リザーバ与圧、1-1 の synoptic の ISLN・DRIVE の箱、1-5 のダクト圧の表示条件（PNEU-09。空調 3-1 と一緒に）。済：`.snd` の警報音、1-3 の PG と 3〜10 ページ、1-5 のダクト圧の色（PNEU-10）。変更の一覧は ACF_DIFF.md §5。
+1. 承認済みのパネル（カスタム acf）の変更の残り：1-4 の HYD synoptic（HYD-19）・リザーバ与圧（HYD-18）、1-1 の synoptic の ISLN・DRIVE の箱、1-5 のダクト圧の表示条件（PNEU-09。空調 3-1 と一緒に）。済：`.snd` の警報音、1-3 の PG と 3〜10 ページ、1-3 の STATUS ページと cue、1-5 のダクト圧の色（PNEU-10）。変更の一覧は ACF_DIFF.md §5。
 2. 段階 2 の最初は 2-1（APU）。1-1 と 1-5 に依存（PLAN.md）。
 3. 1-5（空圧）の残り：故障の入れ方（過熱、過圧、HPSOV・PRV の固着、ダクトリーク）、地上空気の操作、スターターがダクト圧で回ること（エンジン 2-3）。
-4. 1-4（油圧）の残り：脚・ブレーキ・ステアリング・逆推力・stab trim・ヨーダンパーの「油圧で動くか」（HYD-09・11・12）は、それぞれの作り直しで、モデルの負荷の表（`B747_hyd_model.LOADS`）を使って入れる。リザーバ与圧と STATUS のメッセージの表示はパネルが要る（承認済み。上の 1）。
+4. 1-4（油圧）の残り：脚・ブレーキ・ステアリング・逆推力・stab trim・ヨーダンパーの「油圧で動くか」（HYD-09・11・12）は、それぞれの作り直しで、モデルの負荷の表（`B747_hyd_model.LOADS`）を使って入れる。リザーバ与圧の表示はパネルが要る（承認済み。上の 1）。STATUS のメッセージは済（HYD-20）。
 5. 1-1（電源）の残り：電源の有無を `bus_volts` で見ている系統を、バスごとの dataref（ARCHITECTURE.md §4.1）に乗り換える。どれも後の作り直し（空圧 1-5、空調 3-1、燃料 2-2、IRS と無線、照明、操縦系統 4-1）と絡むので、1-2 と同じく各系統の作り直しのときに行う（2026-10-23 に決めた。利用者の確認待ち）。
    - 済：表示器（fltInst02。機長 PFD・ND は APU standby、upper EICAS は main standby、ほかは F/O transfer）、EICAS の計算（warning。EIU のどれかに電源）、時計の計時（fltInst03・04。main hot battery bus）、ELEC パネルの灯（lighting）。
    - 残り：燃料のポンプと弁（fuel：AC・utility・battery bus の割り当て。APU の DC 燃料ポンプとの関係があるので 2-2 と一緒に）、装備冷却（air：DC bus。抽気弁は 1-5 で乗り換えた）、IRS と NAV RAD（fms）、表示灯の輝度（lighting：`bus_volts[0]`・`[2]`）、客室灯（lighting）、ヨーダンパー（fltCtrls：`battery_array_on`）、STAT ページの main バッテリー（X-Plane の値）。
 6. 1-2（空地判定）の残り：`onground_any` を読んでいる 16 モジュール（autopilot、fms、fltInst02、antiice、fltCtrls、EEC、engines、fuel、hydraulicsmodel、gear の autobrake、manipulators、fdr、lighting など）を、PSEU の dataref（ARCHITECTURE.md §4.2）に乗り換える。どの信号（pri/alt の AIR・GND、前脚圧縮）を使うかは notes/ATA-32.md §4.1 の表。各系統の作り直しのときに行う。
-7. 1-3 の残り：他のメッセージによる抑止（notes/ATA-31-warning.md §4.4.1）と時間遅れは、各系統の作り直しで表に足す。音（`.snd`）とパネル（PG・3 ページ目以降・STATUS）は承認済み（上の 1）。
+7. 1-3 の残り：他のメッセージによる抑止（notes/ATA-31-warning.md §4.4.1）と時間遅れは、各系統の作り直しで表に足す。音（`.snd`）とパネル（PG・3 ページ目以降・STATUS）は済。
 8. R-3 は、作り直しが先になる系統の害の大きい誤りだけ、合間に入れる。
 
 ## 段階 T の状態
@@ -97,6 +97,8 @@ PLAN.md §3 に書いた。要点：
 - 推定で作った値（下の一覧）は承認。「推定」の印は残す。
 - カスタム acf と `747-400_custom.snd` は git に入れた（936222b0）。`overhaul` は origin に push してよい。
 - FlyWithLua の `please read the manual.lua` は利用者が消した。
+- upstream（本家 mSparks43）には push しない。push は origin（Gakugaku87/747-400）だけ（利用者、2026-10-23 昼）。upstream の push 先は `no_push` にした（戻すときは `git remote set-url --push upstream https://github.com/mSparks43/747-400.git`）。
+- PLAN の次の項目（フェーズ）に移るときは、承認を求めずに進める。区切りごとの結果の報告は続ける（利用者、2026-10-23 昼）。
 
 ## 推定で作った部分
 
@@ -121,6 +123,10 @@ PLAN.md §3 に書いた。要点：
   - CONFIG GEAR のサイレンは master リセットで止まらない方にした（原因がレバーかフラップかを、メッセージだけでは区別できない。FCOM p.1551）。
   - wailer は >AUTOPILOT DISC の表示中、最低 1 秒（表示を消すのは AP の側）。
   - beeper のある advisory（BLEED ISLN L・R、BLEED HP ENG）の beeper は、caution と同じ抑止（始動前・離陸・着陸など）で待たせる（FCOM に記載なし）。
+  - STATUS cue の「エンジン始動から」の抑止は、地上で FUEL CONTROL のどれかが RUN になったときから。地上で全部 CUTOFF に戻ったら解く（FCOM は「エンジン始動からリフトオフ 30 分後まで」とだけ書く）。
+  - STATUS ページのメッセージの文字は白（FCOM・LH24 の図は白黒で、色の記載が無い）。配置は LH24 p.65 の図（バッテリーの値の下、舵面の図の左）に合わせた。
+  - 油圧の HYD PRESS DEM（status）は、そのエンジンの N2 が 50 % 以上のときだけ（資料は「エンジンが止まっている間は出さない」とだけ書く）。
+  - 電源の DRIVE DISC n（status）は、IDG が切り離されている間だけ出す（実機の EIU は CMC で消すまで残す。CMC が無いので簡略化）。
   - memo が最後のページに入りきらないときは、memo だけのページを作る（FCOM に記載なし）。
   - 火災ハンドルを「引いた」とみなすのは、動きの途中の値 `pos_arm` が 0.5 を超えたとき。
 - 油圧（1-4。`B747.19.hyd_model.lua` に「estimate」と書いてある）：
@@ -163,7 +169,8 @@ PLAN.md §3 に書いた。要点：
 | ELEC-14 ELCU と load shed | 済（発電機の台数で決める簡略版） |
 | ELEC-15 DC とバッテリー母線 | 済 |
 | ELEC-16 バッテリーの表示 | 一部。APU バッテリーと BAT DISCH は済。STAT の main バッテリーは X-Plane の値のまま |
-| ELEC-17〜18、21〜24 | 未 |
+| ELEC-17〜18、21〜22、24 | 未 |
+| ELEC-23 EICAS status | 一部。DRIVE DISC n は済（IDG が切り離されている間。実機は CMC で消すまで残る）。ELEC DRIVE、BAT CHARGER、ELEC TR UNIT、ELEC IDG VALVE は故障の仕組みが要る |
 | ELEC-19 air mode | 済 |
 | ELEC-20 故障 dataref の上書き | 済（書くのをやめた） |
 
@@ -181,7 +188,8 @@ PLAN.md §3 に書いた。要点：
 | WARN-08 足りないメッセージ | 未（各系統の作り直しで） |
 | WARN-09 ページ割り | 済。カスタム acf のパネルは 2 ページ目から PG を出し、10 ページまで描く（ACF_DIFF.md §5）。純正 acf は 2 ページまでのまま |
 | WARN-10 更新の遅れ | 済（0.1 秒ごと） |
-| WARN-11〜21 | 未（形態警報・速度・高度警報・失速・GPWS などは、それぞれの作り直しで） |
+| WARN-11〜16、18〜21 | 未（形態警報・速度・高度警報・失速・GPWS などは、それぞれの作り直しで） |
+| WARN-17 STATUS | 済。STATUS メッセージ（新しい順、11 行ずつ、STAT でページ送り）と STATUS cue（エンジン始動からリフトオフ 30 分後まで、着陸の RA 800 ft〜75 kt は出さない）。カスタム acf の STATUS ページにメッセージ行と PG、主 EICAS に cue（ACF_DIFF.md §5）。メッセージは資料に出てくる分から（油圧・空圧・電源）。secondary engine exceedance cue での抑止は未（その cue が無い） |
 | WARN-22 警報系統の電源 | 一部。EIU は新しい電源のバス（1-1）。MAWEA とスピーカーの電源は分けていない |
 | WARN-23 quick start の未定義の global | 未 |
 
@@ -206,7 +214,8 @@ PLAN.md §3 に書いた。要点：
 | HYD-16 作動油量 | 済（乱数をやめ 1.00 から。RF は地上だけ） |
 | HYD-17 油温 | 一部（ポンプ運転で上がる一次遅れ。燃料の冷却は無し） |
 | HYD-18 リザーバ与圧 | 一部（モデルにはある。表示はパネルが要る） |
-| HYD-19・20 synoptic・STATUS の表現 | 未（パネルが要る） |
+| HYD-19 synoptic の表現 | 未（パネルが要る） |
+| HYD-20 STATUS メッセージ | 済（HYD PRESS ENG・HYD PRESS DEM・HYD OVHT SYS・HYD RSVR PRESS・HYDIM：ATA29_32 p.137） |
 | HYD-21 スタンドパイプ | 済 |
 | HYD-22 FLT CONTROL HYD POWER | 未 |
 | HYD-23 カスタム acf の舵面別割り当て | 未（要確認） |
@@ -217,7 +226,7 @@ PLAN.md §3 に書いた。要点：
 |---|---|
 | PNEU-01 需要と供給 | 済（区画ごとに使う量と出せる量からダクト圧。値は推定） |
 | PNEU-02 エンジンの弁 | 済（HPSOV・PRV・PRSOV、逆流防止、始動時の逆流、始動弁が閉じてから PRV が開くまで 15 秒、過熱ラッチとスイッチでのリセット、>BLEED n OFF は N2 50 % 以上）。高圧段との切替は近似 |
-| PNEU-03 故障と警報 | 一部。過熱（SYS FAULT、BLD n OVHT/PRV）はモデルにあるが、つなぐ故障がまだ無い（X-Plane に相当する故障が無い）。過圧の BLEED n、BLEED HP ENG、BLD DUCT LEAK は未（故障の入れ方と、火災・過熱検知 3-4 で） |
+| PNEU-03 故障と警報 | 一部。過熱（SYS FAULT、BLD n OVHT/PRV）はモデルにあるが、つなぐ故障がまだ無い（X-Plane に相当する故障が無い）。過圧の BLEED n、BLEED HP ENG、BLD DUCT LEAK は未（故障の入れ方と、火災・過熱検知 3-4 で）。STATUS の BLEED ASCTU A・B（DC bus 1・3 が 20 秒無い）と BLEED ISLN L・R・APU は済 |
 | PNEU-04 BLEED ISLN と VALVE 灯 | 済（弁は 2 秒で動く。VALVE 灯は移動中と不一致。10 秒の不一致で BLEED ISLN L・R、>BLEED ISLN APU）。BLEED ISLN の beeper は警報モデルの側で（下の「気づいたこと」） |
 | PNEU-05 APU 弁 | 済（APU RUNNING＝N1 95 % ＋ 2 秒、セレクタ OFF で閉、AC bus 2 のモーター、DC bus 2 の制御）。APU の消火ハンドルは 3D に無い（火災 3-4 で） |
 | PNEU-06 ISLN の電源 | 済（L は AC bus 1、R は AC bus 3。電源が無いと止まる） |
@@ -300,3 +309,4 @@ PLAN.md §3 に書いた。要点：
 - 2026-10-23 09:1x：`.snd` の警報音（サイレン・ベル・wailer・beeper）を警報モデルの要求に結んだ。`747-400_custom.snd` を変え、手元の `747-400.snd`（skip-worktree、利用者の 3D 一式）も同じにした（git には入らない。元は `D:\747-400-local-assets\files\fmod\747-400.snd`）。カスタム acf で `s03` 26/26、Log.txt に新しい音の誤りなし。
 - 2026-10-23 09:2x〜09:3x：純正 acf で `s00` 67/67、`s05` 64/64。`s05` の 1 回目は 60/62：純正 acf は中央タンクが 1,300 kg 以下でポンプが ON なので、燃料系が 60 秒後に FUEL PRESS CTR を出し、BLEED ISLN L の確認の間に master CAUTION を点けた。この確認の間は中央タンクのポンプを止めるようにした。Lua の誤りなし。
 - 2026-10-23 09:3x〜09:4x：承認済みのパネルの変更の最初の分をカスタム acf に入れた（EICAS の PG を 2 ページ目から、3〜10 ページ、ダクト圧の色の境と右の数字。ACF_DIFF.md §5）。変更前の acf は `D:\747-400-local-assets\acf_backup\`。X-Plane で、外観（chase 視点）が変わらないこと、2 ページのときの PG 1、3 ページ目と PG 3、ダクト圧の琥珀 0・白 40（主 EICAS と ECS synoptic）を画像で確かめた。
+- 2026-10-23 09:4x〜12:5x：STATUS（WARN-17）。警報モデルに STATUS メッセージの並び（新しい順、11 行ずつ）と STATUS cue（STATUS ページを出すと見たことになる。エンジン始動からリフトオフ 30 分後まで・着陸の RA 800 ft〜75 kt は出さない）を足し、グルーが STATUS ページの行・ページ数・cue を書く。status メッセージを立てる側：油圧（HYD PRESS ENG・DEM、HYD OVHT SYS、HYD RSVR PRESS、HYDIM）、空圧（BLEED ASCTU A・B、BLEED ISLN L・R・APU）、電源（DRIVE DISC 1〜4）。カスタム acf の STATUS ページにメッセージ行と PG、主 EICAS に cue（ACF_DIFF.md §5）。試験はすべて通る（13 本）。X-Plane（カスタム acf）：エンジン停止・バッテリーで 14 件・2 ページ・cue、STAT でページ送りと閉じる、cue が消える。エンジン運転中（読み直し後）は新しい順で cue は抑止。APU 発電機の給電で STATUS ページを画像で見て、1 行目が APU BATT の値に重なっていたので、行を 14 px 下げた。外観（chase 視点）は変わらない。Lua の誤りなし。

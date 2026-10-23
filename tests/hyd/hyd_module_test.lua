@@ -24,6 +24,7 @@ local HYD = "laminar/B747/hydraulics/"
 local SEL = HYD .. "dmd_pump/sel_dial_pos"
 local CAUTION = "laminar/B747/CAS/caution_status"
 local ADVISORY = "laminar/B747/CAS/advisory_status"
+local STATUS = "laminar/B747/CAS/status_status"
 local SW = "laminar/B747/button_switch/position"
 
 -- cold and dark, ENGINE pumps ON; then power and APU bleed
@@ -114,5 +115,18 @@ rt:set("sim/operation/failures/rel_hydleak", 0)
 frames(1)
 T.equal(get(HYD .. "res_" .. n), 1, "leak cleared: quantity back to 1.00")
 T.equal(get(ADVISORY, 217 + n), 0, "leak cleared: no >HYD QTY LOW")
+
+-- STATUS slots (laminar/B747/CAS/status_status, ATA29_32 p.137): engines
+-- running, ENGINE pump 2 OFF: HYD PRESS ENG 2 (slot 1) and nothing else
+rt:set(SW, 31, 0)
+frames(4)
+T.equal(get(STATUS, 1), 1, "STATUS: HYD PRESS ENG 2 with its pump OFF")
+T.equal(get(STATUS, 0), 0, "STATUS: no HYD PRESS ENG 1")
+for slot = 4, 19 do
+    T.equal(get(STATUS, slot), 0, "STATUS: slot " .. slot .. " clear")
+end
+rt:set(SW, 31, 1)
+frames(4)
+T.equal(get(STATUS, 1), 0, "STATUS: HYD PRESS ENG 2 gone with its pump ON")
 
 T.done()

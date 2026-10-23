@@ -89,6 +89,8 @@ rt:set("laminar/B747/electrical/generator/drive_disc_status", 0, 1)
 frames(1)
 T.equal(get("laminar/B747/electrical/idg_connected", 0), 0, "DRIVE DISC 1: IDG 1 disconnected")
 T.equal(get(ADVISORY, 83), 1, "DRIVE DISC 1: >DRIVE DISC 1")
+T.equal(get("laminar/B747/CAS/status_status", 25), 1, "DRIVE DISC 1: STATUS DRIVE DISC 1 (LH24 p.64)")
+T.equal(get("laminar/B747/CAS/status_status", 26), 0, "DRIVE DISC 1: no STATUS DRIVE DISC 2")
 T.equal(get("sim/cockpit2/electrical/generator_on", 0), 0, "DRIVE DISC 1: X-Plane generator 1 off")
 
 -- STANDBY POWER OFF: >STBY BUS MAIN and APU, captain's displays off

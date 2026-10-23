@@ -548,6 +548,41 @@ B747_CASmemoMsg   = {
     {DRindex = 45, name = "SPEEDBRAKE ARMED", status = 0},
 }
 
+-- STATUS messages, on the secondary EICAS STATUS page (FCOM p.1545, p.1549).
+-- FCOM has no list (they are in the DDG); these come from the maintenance
+-- manuals. The systems raise them in laminar/B747/CAS/status_status[DRindex].
+local B747_CASstatusMsg = {
+    {DRindex = 0, name = "HYD PRESS ENG 1"},      -- ATA29_32 p.137
+    {DRindex = 1, name = "HYD PRESS ENG 2"},
+    {DRindex = 2, name = "HYD PRESS ENG 3"},
+    {DRindex = 3, name = "HYD PRESS ENG 4"},
+    {DRindex = 4, name = "HYD PRESS DEM 1"},
+    {DRindex = 5, name = "HYD PRESS DEM 2"},
+    {DRindex = 6, name = "HYD PRESS DEM 3"},
+    {DRindex = 7, name = "HYD PRESS DEM 4"},
+    {DRindex = 8, name = "HYD OVHT SYS 1"},
+    {DRindex = 9, name = "HYD OVHT SYS 2"},
+    {DRindex = 10, name = "HYD OVHT SYS 3"},
+    {DRindex = 11, name = "HYD OVHT SYS 4"},
+    {DRindex = 12, name = "HYD RSVR PRESS 1"},
+    {DRindex = 13, name = "HYD RSVR PRESS 2"},
+    {DRindex = 14, name = "HYD RSVR PRESS 3"},
+    {DRindex = 15, name = "HYD RSVR PRESS 4"},
+    {DRindex = 16, name = "HYDIM 1"},
+    {DRindex = 17, name = "HYDIM 2"},
+    {DRindex = 18, name = "HYDIM 3"},
+    {DRindex = 19, name = "HYDIM 4"},
+    {DRindex = 20, name = "BLEED ASCTU A"},       -- ATA30_32_35_36 p.16
+    {DRindex = 21, name = "BLEED ASCTU B"},
+    {DRindex = 22, name = "BLEED ISLN L"},        -- ATA30_32_35_36 p.24
+    {DRindex = 23, name = "BLEED ISLN R"},
+    {DRindex = 24, name = "BLEED ISLN APU"},
+    {DRindex = 25, name = "DRIVE DISC 1"},        -- LH24 p.64
+    {DRindex = 26, name = "DRIVE DISC 2"},
+    {DRindex = 27, name = "DRIVE DISC 3"},
+    {DRindex = 28, name = "DRIVE DISC 4"},
+}
+
 
 
 
@@ -620,6 +655,12 @@ for i = 0, NUM_ALERT_MESSAGES do
 end
 
 
+B747DR_CAS_status_status        = deferred_dataref("laminar/B747/CAS/status_status", "array[64]")
+B747DR_CAS_gen_status_msg = {}
+for i = 0, NUM_ALERT_MESSAGES do
+    B747DR_CAS_gen_status_msg[i] = deferred_dataref(string.format("laminar/B747/CAS/gen_status_msg_%03d", i), "string")
+end
+B747DR_CAS_status_cue_text      = deferred_dataref("laminar/B747/CAS/status_cue_text", "string")
 B747DR_CAS_recall_ind           = deferred_dataref("laminar/B747/CAS/recall_ind", "number")
 B747DR_CAS_sec_eng_exceed_cue   = deferred_dataref("laminar/B747/CAS/sec_eng_exceed_cue", "number")
 B747DR_CAS_status_cue           = deferred_dataref("laminar/B747/CAS/status_cue", "number")
@@ -643,7 +684,7 @@ B747DR_init_warning_CD          = deferred_dataref("laminar/B747/warning/init_CD
 -- The tables are locals of this file; the glue gets them here (a table with
 -- a metatable is kept as it is in XTLua's namespace: ARCHITECTURE.md §9a).
 B747_alert_messages = setmetatable({warning = B747_CASwarningMsg, caution = B747_CAScautionMsg,
-    advisory = B747_CASadvisoryMsg, memo = B747_CASmemoMsg}, {})
+    advisory = B747_CASadvisoryMsg, memo = B747_CASmemoMsg, status = B747_CASstatusMsg}, {})
 dofile("B747.87.xt.alerts.lua")
 
 

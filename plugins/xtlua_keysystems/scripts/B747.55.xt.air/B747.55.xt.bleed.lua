@@ -19,6 +19,7 @@ B747DR_bleed_light_sys_fault    = find_dataref("laminar/B747/air/light/sys_fault
 B747DR_bleed_light_isln_valve   = find_dataref("laminar/B747/air/light/isln_valve")
 B747DR_bleed_light_apu_valve    = find_dataref("laminar/B747/air/light/apu_valve")
 simDR_bleed_fail_apu_press      = find_dataref("sim/operation/failures/rel_APU_press")
+B747DR_bleed_CAS_status         = find_dataref("laminar/B747/CAS/status_status")
 
 local BLEED_SWITCH = 77         -- button_switch/position[77-80]: ENGINE BLEED 1-4
 local NAI_SWITCH = 68           -- button_switch/position[68-71]: NAI 1-4
@@ -31,6 +32,10 @@ local ADV_OVHT = 22             -- BLD 1-4 OVHT/PRV: 22-25
 local ADV_ISLN_APU = 34         -- >BLEED ISLN APU
 local ADV_ISLN = 35             -- BLEED ISLN L, R: 35-36
 local ADV_OFF = 39              -- >BLEED 1-4 OFF: 39-42
+-- STATUS slots (laminar/B747/CAS/status_status, B747.87.xt.warning.lua)
+local STATUS_ASCTU = 20         -- BLEED ASCTU A, B: 20-21
+local STATUS_ISLN = 22          -- BLEED ISLN L, R: 22-23
+local STATUS_ISLN_APU = 24      -- BLEED ISLN APU
 
 local bleed_state = B.new()
 local bleed_inputs = B.inputs()
@@ -104,6 +109,13 @@ local function write_outputs(out)
     B747DR_CAS_advisory_status[ADV_ISLN] = flag(out.isln_alert[1])
     B747DR_CAS_advisory_status[ADV_ISLN + 1] = flag(out.isln_alert[2])
     B747DR_CAS_advisory_status[ADV_ISLN_APU] = flag(out.apu_alert)
+    -- the STATUS messages of the same disagreements (ATA30_32_35_36 p.24)
+    -- and of the ASCTU channels
+    B747DR_bleed_CAS_status[STATUS_ISLN] = flag(out.isln_alert[1])
+    B747DR_bleed_CAS_status[STATUS_ISLN + 1] = flag(out.isln_alert[2])
+    B747DR_bleed_CAS_status[STATUS_ISLN_APU] = flag(out.apu_alert)
+    B747DR_bleed_CAS_status[STATUS_ASCTU] = flag(out.asctu_alert[1])
+    B747DR_bleed_CAS_status[STATUS_ASCTU + 1] = flag(out.asctu_alert[2])
 
     -- X-Plane's own bleed air feeds its pressurisation and its air starters.
     -- X-Plane ties its isolation valves to the mode (4 APU closes both, so
