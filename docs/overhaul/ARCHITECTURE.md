@@ -160,10 +160,12 @@ Lua が作る名前の数：dataref 1617 個、コマンド 628 個。静的に�
 | `idg_connected` | array[4] | IDG の drive が接続 |
 | `air_mode`・`load_shed` | number | BCU の air mode・負荷制限の実行中 |
 | `battery/volts`・`battery/amps` | array[2] | main [0]・APU [1] バッテリーの電圧と電流（+ 放電、− 充電） |
+| `battery/stat_amps` | array[2] | 同じ電流の符号なし（カスタム acf の STAT ページの A-DC、2026-10-23） |
 | `light/ext_avail`・`light/apu_avail`・`light/util_off` | array[2] | P5 の AVAIL・UTILITY OFF 灯 |
 | `light/isln`・`light/gen_off`・`light/drive` | array[4] | P5 の ISLN・GEN CONT OFF・DRIVE 灯 |
 
 - 前からある名前（`bus1hot`〜`bus4hot`、`topleftbus`・`toprightbus`、`ssb`、`utilityleft1/2`・`utilityright1/2`、`ext_pwr1_on`・`apu_pwr1_on` など、`laminar/B747/rel_esys`〜`rel_esys4`、`capt_display_power`・`fo_display_power`、`display_has_power[6-8]`、`apu_volts`）も、同じモデルから意味を保って書く（notes/ATA-24.md §6）。
+- カスタム acf の ELEC synoptic は ISLN の枠を `breaker/btb`、DRIVE の枠を `light/drive`（IDG の油圧低）で、STAT ページのバッテリーは `battery/volts`・`battery/stat_amps` で出す（ACF_DIFF.md §5）。純正 acf は前のまま（スイッチ位置、エンジン滑油圧、X-Plane のバッテリー）。
 - X-Plane の電気系統は代理として残す：`cross_tie` は 1、`battery_on[0]` は BATTERY スイッチ、`gpu_on` は XPC のどれか、`APU_generator_on` は APB のどれか、`generator_on[n]` は GCB n。
 
 ### 4.2 空地判定（PSEU）の公開 dataref（1-2 で新設）

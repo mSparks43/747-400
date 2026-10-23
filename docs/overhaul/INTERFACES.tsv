@@ -1119,6 +1119,9 @@ laminar/B747/electrical/apu_volts	dataref	panel	B747.03.electrical,B747.03.xt.el
 laminar/B747/electrical/auto_ignit/sel_dial_dn	command	obj	B747.03.electrical,B747.03.xt.electrical
 laminar/B747/electrical/auto_ignit/sel_dial_pos	dataref	obj,snd	B747.03.electrical,B747.03.xt.electrical
 laminar/B747/electrical/auto_ignit/sel_dial_up	command	obj	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/battery/stat_amps	dataref	panel	B747.03.electrical
+laminar/B747/electrical/battery/volts	dataref	panel	B747.03.electrical
+laminar/B747/electrical/breaker/btb	dataref	panel	B747.03.electrical
 laminar/B747/electrical/bus1hot	dataref	panel	B747.03.electrical,B747.03.xt.electrical
 laminar/B747/electrical/bus2hot	dataref	panel	B747.03.electrical,B747.03.xt.electrical
 laminar/B747/electrical/bus3hot	dataref	panel	B747.03.electrical,B747.03.xt.electrical
@@ -1127,6 +1130,7 @@ laminar/B747/electrical/connect_power	command	autoatc	B747.03.electrical,B747.03
 laminar/B747/electrical/display_has_power	dataref	panel	B747.03.electrical
 laminar/B747/electrical/ext_pwr1_on	dataref	panel,snd	B747.03.electrical,B747.03.xt.electrical
 laminar/B747/electrical/ext_pwr2_on	dataref	panel,snd	B747.03.electrical,B747.03.xt.electrical
+laminar/B747/electrical/light/drive	dataref	panel	B747.03.electrical
 laminar/B747/electrical/ssb	dataref	panel	B747.03.electrical,B747.03.xt.electrical
 laminar/B747/electrical/standby_power/sel_dial_dn	command	obj	B747.03.electrical,B747.03.xt.electrical
 laminar/B747/electrical/standby_power/sel_dial_pos	dataref	obj,snd	B747.03.electrical,B747.03.xt.electrical

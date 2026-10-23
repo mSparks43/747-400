@@ -123935,7 +123935,7 @@ GROUP LOWER EICAS POWER
           gen_LED V-DC
             POS 1637.000000 185.000000
             IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
-            DATAREF sim/cockpit2/electrical/battery_voltage_indicated_volts[0]
+            DATAREF laminar/B747/electrical/battery/volts[0]
             SHOW_LESS 1.900000 [0]
             SHOW_GREATER 2.190000 [3]
             HIDE
@@ -123953,7 +123953,7 @@ GROUP LOWER EICAS POWER
           gen_LED A-DC
             POS 1790.000000 185.000000
             IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
-            DATAREF sim/cockpit2/electrical/battery_amps[0]
+            DATAREF laminar/B747/electrical/battery/stat_amps[0]
             SHOW_LESS 1.900000 [0]
             SHOW_GREATER 2.190000 [3]
             HIDE
@@ -123974,7 +123974,7 @@ GROUP LOWER EICAS POWER
           gen_LED V-DC 2
             POS 1637.000000 130.000000
             IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
-            DATAREF laminar/B747/electrical/apu_volts
+            DATAREF laminar/B747/electrical/battery/volts[1]
             SHOW_LESS 1.900000 [0]
             SHOW_GREATER 2.190000 [3]
             HIDE
@@ -123992,7 +123992,7 @@ GROUP LOWER EICAS POWER
           gen_LED A-DC 2
             POS 1790.000000 130.000000
             IMAGE CRT Displays/LED/LED_3.26B.xx###0.white
-            DATAREF sim/cockpit/electrical/generator_apu_amps
+            DATAREF laminar/B747/electrical/battery/stat_amps[1]
             SHOW_LESS 1.900000 [0]
             SHOW_GREATER 2.190000 [3]
             HIDE
@@ -125735,7 +125735,7 @@ GROUP LOWER EICAS POWER
           POS 1436.500000 212.500000
           IMAGE CRT Displays/EICAS Lower/ELEC/isln
           DATAREF 
-          SHOW_LESS 0.950000 laminar/B747/button_switch/position[18]
+          SHOW_EQUAL 0.000000 laminar/B747/electrical/breaker/btb[0]
           HIDE
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 10
@@ -125779,7 +125779,7 @@ GROUP LOWER EICAS POWER
           POS 1592.500000 212.500000
           IMAGE CRT Displays/EICAS Lower/ELEC/isln
           DATAREF 
-          SHOW_LESS 0.950000 laminar/B747/button_switch/position[19]
+          SHOW_EQUAL 0.000000 laminar/B747/electrical/breaker/btb[1]
           HIDE
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 10
@@ -125845,7 +125845,7 @@ GROUP LOWER EICAS POWER
           POS 1825.500000 212.500000
           IMAGE CRT Displays/EICAS Lower/ELEC/isln
           DATAREF 
-          SHOW_LESS 0.950000 laminar/B747/button_switch/position[20]
+          SHOW_EQUAL 0.000000 laminar/B747/electrical/breaker/btb[2]
           HIDE
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 10
@@ -125889,7 +125889,7 @@ GROUP LOWER EICAS POWER
           POS 1981.500000 212.500000
           IMAGE CRT Displays/EICAS Lower/ELEC/isln
           DATAREF 
-          SHOW_LESS 0.950000 laminar/B747/button_switch/position[21]
+          SHOW_EQUAL 0.000000 laminar/B747/electrical/breaker/btb[3]
           HIDE
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 10
@@ -126497,7 +126497,7 @@ GROUP LOWER EICAS POWER
           POS 1436.500000 -119.500000
           IMAGE CRT Displays/EICAS Lower/ELEC/drive
           DATAREF 
-          SHOW_GREATER 0.100000 laminar/B747/engines/EICAS2_oil_press_status[0]
+          SHOW_EQUAL 1.000000 laminar/B747/electrical/light/drive[0]
           HIDE
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 10
@@ -126519,7 +126519,7 @@ GROUP LOWER EICAS POWER
           POS 1592.500000 -119.500000
           IMAGE CRT Displays/EICAS Lower/ELEC/drive
           DATAREF 
-          SHOW_GREATER 0.100000 laminar/B747/engines/EICAS2_oil_press_status[1]
+          SHOW_EQUAL 1.000000 laminar/B747/electrical/light/drive[1]
           HIDE
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 10
@@ -126541,7 +126541,7 @@ GROUP LOWER EICAS POWER
           POS 1824.500000 -119.500000
           IMAGE CRT Displays/EICAS Lower/ELEC/drive
           DATAREF 
-          SHOW_GREATER 0.100000 laminar/B747/engines/EICAS2_oil_press_status[2]
+          SHOW_EQUAL 1.000000 laminar/B747/electrical/light/drive[2]
           HIDE
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 10
@@ -126563,7 +126563,7 @@ GROUP LOWER EICAS POWER
           POS 1981.500000 -119.500000
           IMAGE CRT Displays/EICAS Lower/ELEC/drive
           DATAREF 
-          SHOW_GREATER 0.100000 laminar/B747/engines/EICAS2_oil_press_status[3]
+          SHOW_EQUAL 1.000000 laminar/B747/electrical/light/drive[3]
           HIDE
           LIGHT_MODE GLASS_AUTO
           LIGHT_RHEOSTAT 10

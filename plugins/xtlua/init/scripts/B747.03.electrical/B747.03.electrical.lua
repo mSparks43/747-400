@@ -134,6 +134,8 @@ B747DR_elec_load_shed           = deferred_dataref("laminar/B747/electrical/load
 -- main [0] and APU [1] battery: volts, amps (+ discharge, - charge)
 B747DR_elec_battery_volts       = deferred_dataref("laminar/B747/electrical/battery/volts", "array[2]")
 B747DR_elec_battery_amps        = deferred_dataref("laminar/B747/electrical/battery/amps", "array[2]")
+-- the current the custom acf's STAT page shows (A-DC, without the sign)
+B747DR_elec_battery_stat_amps   = deferred_dataref("laminar/B747/electrical/battery/stat_amps", "array[2]")
 -- P5 panel lights, 1 lit (before the lights test and brightness)
 B747DR_elec_light_ext_avail     = deferred_dataref("laminar/B747/electrical/light/ext_avail", "array[2]")
 B747DR_elec_light_apu_avail     = deferred_dataref("laminar/B747/electrical/light/apu_avail", "array[2]")

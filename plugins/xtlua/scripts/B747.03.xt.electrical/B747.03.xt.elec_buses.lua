@@ -44,6 +44,7 @@ B747DR_elec_air_mode            = find_dataref("laminar/B747/electrical/air_mode
 B747DR_elec_load_shed           = find_dataref("laminar/B747/electrical/load_shed")
 B747DR_elec_battery_volts       = find_dataref("laminar/B747/electrical/battery/volts")
 B747DR_elec_battery_amps        = find_dataref("laminar/B747/electrical/battery/amps")
+B747DR_elec_battery_stat_amps   = find_dataref("laminar/B747/electrical/battery/stat_amps")
 B747DR_elec_light_ext_avail     = find_dataref("laminar/B747/electrical/light/ext_avail")
 B747DR_elec_light_apu_avail     = find_dataref("laminar/B747/electrical/light/apu_avail")
 B747DR_elec_light_isln          = find_dataref("laminar/B747/electrical/light/isln")
@@ -139,6 +140,8 @@ local function write_buses(out)
     B747DR_elec_battery_volts[1] = out.battery.apu.volts
     B747DR_elec_battery_amps[0] = out.battery.main.amps
     B747DR_elec_battery_amps[1] = out.battery.apu.amps
+    B747DR_elec_battery_stat_amps[0] = math.abs(out.battery.main.amps)
+    B747DR_elec_battery_stat_amps[1] = math.abs(out.battery.apu.amps)
 end
 
 -- The names the ELEC synoptic, the P5 panel, the displays and the sounds

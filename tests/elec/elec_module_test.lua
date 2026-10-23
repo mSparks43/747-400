@@ -38,6 +38,12 @@ T.equal(get("laminar/B747/electrical/fo_display_power"), 6, "battery: F/O's disp
 T.equal(get("laminar/B747/electrical/display_has_power", 8), 6, "battery: left CDU on main standby")
 T.equal(get("sim/cockpit2/electrical/battery_on", 0), 1, "battery: X-Plane battery follows the switch")
 T.equal(get("laminar/B747/electrical/light/drive", 0), 1, "battery: DRIVE light")
+-- the STAT page's battery values (custom acf): the model's volts and the
+-- current without its sign (FCOM p.793)
+local amps = get("laminar/B747/electrical/battery/amps", 0)
+T.check(amps > 0, "battery: the main battery discharges (+)")
+T.equal(get("laminar/B747/electrical/battery/stat_amps", 0), amps, "battery: STAT A-DC is the discharge current")
+T.check(get("laminar/B747/electrical/battery/volts", 0) > 20, "battery: STAT V-DC from the model")
 
 -- APU running; APU GEN 1 pushed (the manipulator sets switch_mode 1)
 rt:set("sim/cockpit2/electrical/APU_N1_percent", 100)
@@ -75,6 +81,9 @@ T.equal(get("laminar/B747/electrical/apu_pwr1_on"), 0, "engines: APU GEN 1 ON li
 for i = 100, 103 do T.equal(get(ADVISORY, i), 0, "engines: no ELEC GEN OFF " .. i) end
 for i = 71, 74 do T.equal(get(CAUTION, i), 0, "engines: ELEC GEN OFF never a caution (109) " .. i) end
 T.equal(get("laminar/B747/electrical/light/drive", 0), 0, "engines: DRIVE light out")
+amps = get("laminar/B747/electrical/battery/amps", 0)
+T.check(amps < 0, "engines: the main battery charges (-)")
+T.equal(get("laminar/B747/electrical/battery/stat_amps", 0), -amps, "engines: STAT A-DC without the sign")
 
 -- BUS TIE 2 OFF: ISLN light and ELEC BUS ISLN 2
 rt:set(SW, 19, 0)
